@@ -1,6 +1,20 @@
 # nlpUnitConverter
 Unit conversion tool based on a natural language interface.
 
+# To Setup
+ npm install
+
+# To Build
+ grunt build
+
+# To Test
+ grunt test
+
+
+# To test you can run
+node build/src/eparser.js -i ./data/sample-1.txt
+
+# Notes
 TIME is a type of MEASUREMENT.
 by default TIME should be expressed in seconds or sec.
 TIME can be expressed in minutes or min, one minute is sixty seconds.

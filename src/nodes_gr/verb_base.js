@@ -256,7 +256,15 @@ class VerbBase {
                 return [ true, {'verb' : node.getTokenId(),'verbSubj': m0subj[0], 'verbObj': obj}];
             }
         }
-
+        // check if only obj
+        if (m3.length) {
+            let obj = m3;
+            m0subj  = Utils.checkChildLinks(node, 'nmod:(in)?to');
+            if (m0subj) {
+                assert.equal(m0subj.length,1,'Un-Implemented.' + m0subj.length);
+                return [ true, {verb: node.getTokenId(), verbSubj: m0subj[0], verbObj: obj}]
+            }
+        }
 
 
         // check if parent is connected as cop:NN
@@ -279,13 +287,14 @@ class VerbBase {
                     console.log(" mWhen = " + node.nodes.getNodeMap(mWhen[0]).getValues());
                 }
 */
-                if (p.node.getPOS().match(/^(NN|JJ)/) &&
+                if (p.node.getPOS().match(/^(NN|JJ|EX)/) &&
                     m0subj.length) {
                     assert.equal(m0subj.length,1,'Un-Implemented.' + m0subj.length);
                     let subj = m0subj[0];
                     let obj;
-
                     obj = p.node.getValues();
+
+
                     if (dbg) {
                         console.log('  - VerbBase2['+node.getToken()+'] subj :' + node.nodes.getNodeMap(subj).getToken() +
                             ' of obj : ' + obj);

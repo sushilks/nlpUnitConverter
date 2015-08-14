@@ -22,7 +22,7 @@ class NMod {
         return 'nmod [' + this.getValues() + ']';
     }
     static getMatchToken() {
-        return ['.*:NN.*','.*:JJ.*'];
+        return ['.*:NN.*','.*:JJ.*', '.*:EX'];
     }
 
     static checkValid(nodeList, node) {

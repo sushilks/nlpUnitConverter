@@ -76,9 +76,14 @@ function parse(data, gr, dbg = false) {
             parseNodes(dep, dep.getTokens(), rootId, 'root');
         }
     }
-    console.log('--------------------------------------------------');
     let rt = pp.getSentenceDep(0).getRootToken();
-    console.log('Processing :: ' + pp.getSentence(0) + ' ROOT:' + rt + '[' + pp.getTokens(0).getToken(rt) + ']');
+    if (dbg) {
+        console.log('--------------------------------------------------');
+        console.log('Processing :: ' + pp.getSentence(0) + ' ROOT:' +
+            rt + '[' + pp.getTokens(0).getToken(rt) + ']');
+    } else {
+        console.log('Processing :: ' + pp.getSentence(0));
+    }
     let nd = new Nodes(pp.getSentenceDep(0), dbg);
     nd.processAllGrammar();
     if (dbg) {
@@ -90,17 +95,22 @@ function parse(data, gr, dbg = false) {
     }
 //    nd.analyze();
     //console.log('res = ' + res);
-    console.log("List of Grammar Matches Found ")
-    for (idx in nd.grMatches) {
-        console.log('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
-            + '] Matched Text  ::' + nd.grMatches[idx].text());
-    }
-    console.log("List of Expresive Matches Found ")
-    for (idx in nd.expMatches) {
-        console.log('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
-            + '] Matched Text  ::' + nd.expMatches[idx].text());
-        nd.expMatches[idx].exec(gr);
+    if (dbg) {
+        console.log("List of Grammar Matches Found ")
+        for (idx in nd.grMatches) {
+            console.log('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
+                + '] Matched Text  ::' + nd.grMatches[idx].text());
         }
+        console.log("List of Expresive Matches Found ")
+        for (idx in nd.expMatches) {
+            console.log('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
+                + '] Matched Text  ::' + nd.expMatches[idx].text());
+            nd.expMatches[idx].exec(gr);
+        }
+    }
+    for (idx in nd.expMatches) {
+        nd.expMatches[idx].exec(gr);
+    }
     return res;
 }
 
@@ -147,23 +157,28 @@ Not able to parse even simple constructs right now. need to analyze them a bit.
 let nlp = new NLPClient();
 let gr = {};
 
-if (args.txt && args.txt !== '') {
-    process(nlp, args.txt, gr, args.debug)
-        .then(function (r) {
-            console.log("Done r=" + r);
-        });
-} else if (args.input && args.input !== '') {
+if (args.input && args.input !== '') {
     var contents = FS.readFileSync(args.input).toString();
     let txt = contents.split('\n');
+    if (args.txt && args.txt !== '') {
+        txt.push(args.txt);
+    }
     processList(nlp, txt, gr, function () {
-        console.log(' Status of the graph created so far');
-        for (var gkey in gr) {
-            console.log("gkey="+gkey);
-            console.log('Details of Graph: key=' + gkey + '  ::  ' + gr[gkey].toString());
-            console.log('   Details of Nodes:' + JSON.stringify(gr[gkey].nodes(true)));
-            console.log('   Details of Edges:' + JSON.stringify(gr[gkey].edges(true)));
+        if (args.debug) {
+            console.log(' Status of the graph created so far');
+            for (var gkey in gr) {
+                console.log("gkey=" + gkey);
+                console.log('Details of Graph: key=' + gkey + '  ::  ' + gr[gkey].toString());
+                console.log('   Details of Nodes:' + JSON.stringify(gr[gkey].nodes(true)));
+                console.log('   Details of Edges:' + JSON.stringify(gr[gkey].edges(true)));
+            }
         }
     });
+} else if (args.txt && args.txt !== '') {
+        process(nlp, args.txt, gr, args.debug)
+            .then(function (r) {
+                console.log("Done r=" + r);
+            });
 } else {
     process(nlp, 'Time is  defined to be a Measure.')
         .then(function (r) {

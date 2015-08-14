@@ -5,3 +5,7 @@ There are 60 Seconds in 1 Minute.
 There are 60 Minutes in 1 Hour.
 There are 24 Hours in 1 Day.
 There are 7 Days in 1 Week.
+How many Minutes make 1 Day?
+How many Hours are there in 12 Week?
+Convert 54 Hours into Seconds.
+How many Seconds are there in 2.485 Hours.

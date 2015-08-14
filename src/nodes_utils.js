@@ -240,11 +240,12 @@ function textToNumberFeach(dt, w) {
     var x = Small[w];
     if (x != null) {
         dt.g = dt.g + x;
-    }
-    else if (w == "hundred") {
+    } else if (w.match(/^[ 0-9.]*$/)) {
+        let num = parseFloat(w);
+        dt.g = dt.g + num;
+    } else if (w == "hundred") {
         dt.g = dt.g * 100;
-    }
-    else {
+    } else {
         x = Magnitude[w];
         if (x != null) {
             dt.n = dt.n + dt.g * x
@@ -256,17 +257,20 @@ function textToNumberFeach(dt, w) {
     }
 }
 export function textToNumber(s) {
-    let num1 = parseFloat(s);
+/*    let num1 = parseFloat(s);
     if (num1) {
-        return num1;
+        console.log("OUTPUT FLOAT = " + num1);
+        //return num1;
     }
-
+    */
     let a = s.toString().split(/[\s-]+/);
     let dt = {};
     dt.n = 0;
     dt.g = 0;
     a.forEach(textToNumberFeach.bind(null,dt));
-    return dt.n + dt.g;
+    let ret = dt.n + dt.g;
+    //console.log("OUTPUT FINAL " + dt.n + ' ' +  dt.g + ' = ' + ret);
+    return ret;
 }
 
 

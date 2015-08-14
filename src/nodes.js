@@ -141,10 +141,10 @@ class Nodes {
         if (GRRules.length) {
             for (let GRM of GRRules)
             {
-                this.dbg && console.log('  - gGrMapper Hit with tkn [' + tkn + ']');
+                this.dbg && console.log('  - gGrMapper Checking with tkn [' + tkn + ']');
                 let found = GRM.checkValid(this, nd);
-                if (this.dbg) {
-                    console.log('\tFound ' + found);
+                if (this.dbg && found[0]) {
+                    console.log('\tFound ' + JSON.stringify(found[1]));
                 }
                 if (found[0]) {
                     let grHandle = new GRM(this, found[1]);
