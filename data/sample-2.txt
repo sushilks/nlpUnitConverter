@@ -1,0 +1,26 @@
+Length is a type of measure.
+Units for Length are Meters, CentiMeters, KiloMeters, Line, Yard, Miles and League.
+Units for Length are Fathom, NauticalMile, Furlong, HorseLength.
+Units for Length are Chain, Rod, AstronomicalUnit, LightYear, Parsec, HubbleLength.
+Units for Length are Foot, Inch.
+There are 1000 Meters in a KiloMeter.
+There are 10 CentiMeters in a Meter.
+One Foot is 12 Inch.
+One Inch is 2.54 CentiMeters.
+12 Lines is one Inch.
+One Yard is 3 Foot.
+One Mile is 5280 Foot.
+One League is 3 Miles.
+One Fathom is 2 Yards.
+One NauticalMile is 1852 Meters.
+One Chain is 20.1 Meters.
+One Rod is 5 Meters.
+One AstronomicalUnit is 149,597,870,700 Meters.
+One LightYear is 9,460,730,472,580.8 KiloMeters.
+One Parsec is 3.26156 LightYears.
+One HubbleLength is 306593922 Parsec.
+One Furlong is 201 Meters.
+One HorseLength is 2.4 Meters.
+
+
+

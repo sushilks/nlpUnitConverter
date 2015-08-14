@@ -75,7 +75,8 @@ class Units {
         }
         let re1 = verbSubj.match(/unit/i);
         if (re1 && verbWho !== '' && verbObj !== '') {
-            let r = [true, {'unitsFor': verbWho, 'units' : verbObj.split(',')}];
+            let vo = verbObj.replace('>compound>', ',');
+            let r = [true, {'unitsFor': verbWho, 'units' : vo.split(',')}];
             //console.log("RETURNING r=" + JSON.stringify(r));
             return r;
         }

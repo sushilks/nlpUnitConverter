@@ -14,6 +14,16 @@ Unit conversion tool based on a natural language interface.
 # To test you can run
 node build/src/eparser.js -i ./data/sample-1.txt
 
+#Examples
+  961  node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 12 KiloMeters to LightYears.'
+  962  node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 12 KiloMeters to LightYears.'
+  963  node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 12 million KiloMeters to LightYears.'
+  964  node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 12 billion KiloMeters to LightYears.'
+  965  node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 20102 billion KiloMeters to LightYears.'
+  966  node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 parsec to LightYears.'
+  967  node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 Parsec to LightYears.'
+  968  node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 Parsec to Foot.'
+  
 # Notes
 TIME is a type of MEASUREMENT.
 by default TIME should be expressed in seconds or sec.

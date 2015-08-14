@@ -105,7 +105,6 @@ function parse(data, gr, dbg = false) {
         for (idx in nd.expMatches) {
             console.log('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
                 + '] Matched Text  ::' + nd.expMatches[idx].text());
-            nd.expMatches[idx].exec(gr);
         }
     }
     for (idx in nd.expMatches) {
@@ -132,18 +131,18 @@ function process(client, txt, gr={}, dbg=false) {
             });
         });
 }
-function processList(client, txtList, gr, fn) {
+function processList(client, txtList, gr, dbg, fn) {
     let t = txtList.shift();
     if (t === '') {
         if (txtList.length)
-            return processList(client, txtList, gr, fn);
+            return processList(client, txtList, gr, dbg, fn);
         fn();
         return;
     }
-    return process(client, t, gr)
+    return process(client, t, gr, dbg)
     .then(function(r) {
             if (txtList.length) {
-                processList(client, txtList, gr, fn);
+                processList(client, txtList, gr, dbg, fn);
             } else {
                 fn();
             }
@@ -163,7 +162,7 @@ if (args.input && args.input !== '') {
     if (args.txt && args.txt !== '') {
         txt.push(args.txt);
     }
-    processList(nlp, txt, gr, function () {
+    processList(nlp, txt, gr, args.debug, function () {
         if (args.debug) {
             console.log(' Status of the graph created so far');
             for (var gkey in gr) {

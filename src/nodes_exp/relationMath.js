@@ -13,7 +13,7 @@ class relationMath {
         this.conv = matchResult.conv;
         this.nodes = nodes;
         this.dbg = nodes.dbg;
-        this.name = 'Converter';
+        this.name = 'Relation';
     }
 
     static getMatchToken() {
@@ -43,6 +43,10 @@ class relationMath {
         for (let k in gr) {
             let g = gr[k];
             if (g.hasNode(nFrom) && g.hasNode(nTo)) {
+                if (this.dbg) {
+                    console.log(this.getName() + ' :: Adding to graph From: ' +
+                        nFrom + ' TO: ' + nTo + ' Conv : ' + this.getConv());
+                }
                 g.addEdge(nFrom, nTo, {conv: this.getConv()});
                 g.addEdge(nTo, nFrom, {conv: 1.0/this.getConv()});
                 return;
@@ -113,6 +117,39 @@ class relationMath {
             }
             return [true, { 'nodeFrom' : nd1, 'nodeTo' : nd2, 'conv' : num2/num1}]
         }
+
+        re1 = verbSubj.match(/([^,>]*)(>nummod>)([^,>]*)/)
+        re2 = verbObj.match(/([^,>]*)(>nummod>)([^,>]*)/);
+
+        if ((re1 && !re2 && verbObj !== '') || (!re1 && re2 && verbSubj !== '')) {
+            let num1, num2;
+            let nd1, nd2;
+            if (re1) {
+                if (re1[2] === ',') {
+                    num1 = Utils.textToNumber(re1[1]);
+                    nd1 = re1[3];
+                } else {
+                    num1 = Utils.textToNumber(re1[3]);
+                    nd1 = re1[1];
+                }
+                nd2 = verbObj;
+                num2 = 1;
+            } else {
+                nd1 = verbSubj;
+                num1 = 1;
+                if (re2[2] === ',') {
+                    num2 = Utils.textToNumber(re2[1]);
+                    nd2 = re2[3];
+                } else {
+                    num2 = Utils.textToNumber(re2[3]);
+                    nd2 = re2[1];
+                }
+
+            }
+            return [true, { 'nodeFrom' : nd1, 'nodeTo' : nd2, 'conv' : num2/num1}]
+        }
+
+
         return [false, {}];
     }
 }

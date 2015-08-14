@@ -236,7 +236,8 @@ const Magnitude = {
     'nonillion':    1000000000000000000000000000000,
     'decillion':    1000000000000000000000000000000000,
 };
-function textToNumberFeach(dt, w) {
+function textToNumberFeach(dt, word) {
+    let w = word.toLowerCase().replace(/,/g,'');
     var x = Small[w];
     if (x != null) {
         dt.g = dt.g + x;
