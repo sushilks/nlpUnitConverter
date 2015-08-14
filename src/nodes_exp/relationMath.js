@@ -36,7 +36,20 @@ class relationMath {
         return this.getName() + ' from [' + this.getNodeFrom() + '] to [' +
             this.getNodeTo() + '] conversionFactor:' + this.getConv();
     }
+    exec(gr) {
+//        console.log('Adding to graph:' + this.getName());
+        let nFrom = this.getNodeFrom().replace(/s$/,'');
+        let nTo = this.getNodeTo().replace(/s$/,'');
+        for (let k in gr) {
+            let g = gr[k];
+            if (g.hasNode(nFrom) && g.hasNode(nTo)) {
+                g.addEdge(nFrom, nTo, {conv: this.getConv()});
+                g.addEdge(nTo, nFrom, {conv: 1.0/this.getConv()});
+                return;
+            }
+        }
 
+    }
     static checkValid(gr) {
         const VerbMatch = ['is', 'are'];
 

@@ -37,7 +37,9 @@ class DefaultUnit {
             '] is [' +
             this.getDefaultUnit() + ']';
     }
-
+    exec(gr) {
+        console.log('Adding to graph:' + this.getName());
+    }
     static checkValid(gr) {
         const VerbMatch = ['is', 'expressed', 'specified'];
 

@@ -1,12 +1,12 @@
 'use strict';
 
+var Utils = require('./nodes_utils');
+var FS = require('fs');
 
 var gNodeMapper = {}; /** To hold different node types */
 var gGrMapper = {};   /** To hold different grammer rules */
 var gExpMapper = {};   /** To hold different grammer rules */
 
-var Utils = require('./nodes_utils');
-var FS = require('fs');
 var normalizedPath = require('path').join(__dirname);
 
 /** Load and init the nodes */
@@ -48,7 +48,16 @@ class Nodes {
         this.dbg = dbg;
         this.grMatches = []; /** store all the grammar matches **/
         this.expMatches = [];
+        this.diGraph = {};
     }
+    createGraph(name, attr = {}) {
+    }
+    getGraph(name) {
+        console.log("getGraph [" + name + "] = " + this.diGraph[name]);
+
+        return this.diGraph[name];
+    }
+
     getTokens() {
         return this.tkn;
     }

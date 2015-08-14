@@ -3,7 +3,6 @@
 //import * as utils from './node_utils';
 var Utils = require('../nodes_utils');
 var assert = require('assert');
-//var Jsnx = requie('jsnetworkx');
 /*
 This node should create a new graph and install it.
 Details of the graph :-
@@ -49,6 +48,13 @@ class DefineMeasure {
         }
         return r;
     }
+
+    exec(gr) {
+        //console.log('Adding to graph:' + this.getName());
+        let g = Utils.createGraph(gr, this.getSubject(), { type : this.getType()});
+        //console.log(' New Graph Name = ' + JSON.stringify(g.toString()));
+    }
+
 
     static checkValid(gr) {
         const VerbMatch = ['is', 'define', 'defined'];

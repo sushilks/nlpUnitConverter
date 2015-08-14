@@ -32,7 +32,21 @@ class Units {
         return this.getName() + ' for [' + this.getUnitsFor() + '] are [' +
             this.getUnits() + ']';
     }
-
+    exec(gr) {
+        //console.log('Adding to graph:' + this.getName());
+        //console.log('Graph name:' + this.getUnitsFor());
+        let nm = this.getUnitsFor();
+        let g = gr[nm];
+        if (!g) {
+            console.trace('ERROR: Dont know about [' + nm + ']');
+        }
+        let units = this.getUnits();
+        units.forEach(function(x) {
+            //console.log(' UNIT =  ' + x)
+            let r = x.replace(/s$/,'');
+            g.addNode( r, {unitFor: nm});
+        });
+    }
     static checkValid(gr) {
         const VerbMatch = ['is', 'expressed', 'are'];
 

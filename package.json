@@ -27,8 +27,7 @@
     "grunt-run": "",
     "stanford-corenlp": "0.3.3",
     "argparse":"~1.0",
-    "jsnetworkx":"",
-    "lazy":""
+    "jsnetworkx":"~0.3"
   },
  "license": "MIT",
   "engines": {

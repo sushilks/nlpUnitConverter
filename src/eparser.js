@@ -8,7 +8,6 @@ var NLPClient = require('./nlp_client.js');
 var NLPPP = require('./nlp_pp');
 var Nodes = require('./nodes.js');
 var FS = require('fs');
-var Lazy = require('lazy');
 
 //import NLPPP from './nlp_pp';
 //var ToDefine = require('./to_define');
@@ -56,7 +55,7 @@ function parseNodes(dep, tokens, tknid, linkType, level) {
     }
  }
 
-function parse(data, dbg = false) {
+function parse(data, gr, dbg = false) {
     var pp = new NLPPP();
     var res = pp.read(data.body);
     if (dbg) {
@@ -100,7 +99,8 @@ function parse(data, dbg = false) {
     for (idx in nd.expMatches) {
         console.log('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
             + '] Matched Text  ::' + nd.expMatches[idx].text());
-    }
+        nd.expMatches[idx].exec(gr);
+        }
     return res;
 }
 
@@ -108,11 +108,11 @@ function parse(data, dbg = false) {
   * Send a text to the Client get the
   * nlp response and process it
   */
-function process(client, txt, dbg=false) {
+function process(client, txt, gr={}, dbg=false) {
     return new Promise(
         function(resolve, reject) {
             client.req(txt).then(function(res) {
-                parse(res, dbg);
+                parse(res, gr, dbg);
             }, function(err) {
                 reject(err);
             }).then(function(res) {
@@ -122,17 +122,20 @@ function process(client, txt, dbg=false) {
             });
         });
 }
-function processList(client, txtList) {
+function processList(client, txtList, gr, fn) {
     let t = txtList.shift();
     if (t === '') {
         if (txtList.length)
-            return processList(client, txtList);
+            return processList(client, txtList, gr, fn);
+        fn();
         return;
     }
-    return process(client, t)
+    return process(client, t, gr)
     .then(function(r) {
             if (txtList.length) {
-                processList(client, txtList);
+                processList(client, txtList, gr, fn);
+            } else {
+                fn();
             }
     });
 }
@@ -142,24 +145,25 @@ Not able to parse even simple constructs right now. need to analyze them a bit.
 */
 
 let nlp = new NLPClient();
+let gr = {};
+
 if (args.txt && args.txt !== '') {
-    process(nlp, args.txt, args.debug)
+    process(nlp, args.txt, gr, args.debug)
         .then(function (r) {
             console.log("Done r=" + r);
         });
 } else if (args.input && args.input !== '') {
     var contents = FS.readFileSync(args.input).toString();
     let txt = contents.split('\n');
-    processList(nlp, txt);
-/*
-    new Lazy(FS.createReadStream(args.input))
-    .lines
-        .map(String)
-    .map(function(line){
-            console.log("LINE + "+line);
-            //return process(nlp, txt);
-        });
-        */
+    processList(nlp, txt, gr, function () {
+        console.log(' Status of the graph created so far');
+        for (var gkey in gr) {
+            console.log("gkey="+gkey);
+            console.log('Details of Graph: key=' + gkey + '  ::  ' + gr[gkey].toString());
+            console.log('   Details of Nodes:' + JSON.stringify(gr[gkey].nodes(true)));
+            console.log('   Details of Edges:' + JSON.stringify(gr[gkey].edges(true)));
+        }
+    });
 } else {
     process(nlp, 'Time is  defined to be a Measure.')
         .then(function (r) {

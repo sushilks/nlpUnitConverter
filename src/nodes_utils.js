@@ -1,4 +1,5 @@
 'use strict';
+var Jsnx = require('jsnetworkx');
 
 function nodeAdd_(nmap, d, fn) {
     if (!(d in nmap)) {
@@ -269,4 +270,10 @@ export function textToNumber(s) {
 }
 
 
+export function createGraph(gr, name, attr) {
+    attr.name = name;
+    gr[name] = new Jsnx.DiGraph(null, attr);
+    console.log('CREATED [' + name + '] = ' + gr[name]);
+    return gr[name];
+}
 
