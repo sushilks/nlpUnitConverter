@@ -1,0 +1,7 @@
+zTime is a type of measure.
+Units for zTime are Hours, Minutes, Seconds, Days, Weeks.
+Default unit for zTime is Seconds.
+There are 60 Seconds in 1 Minute.
+There are 60 Minutes in 1 Hour.
+There are 24 Hours in 1 Day.
+There are 7 Days in 1 Week.

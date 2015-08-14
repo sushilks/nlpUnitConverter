@@ -1,0 +1,150 @@
+
+'use strict';
+/*
+
+A Node needs the following capabilities
+- Is it of type:VB* and token:is
+- Is it of type:NN* and has a child with link:cop and child-type:VB* and child-token:is
+
+need access to parent node with link type.
+
+*/
+
+
+class BaseNode {
+    constructor(nodes, tknId, level, noprocess) {
+        let name = tknId + '_' + nodes.tkn.getToken(tknId) + '_' + nodes.tkn.getTokenPOS(tknId);
+        this.name = (name === undefined) ? 'Unnamed-Node' : name;
+        this.dbg = nodes.dbg;
+        this.nodes = nodes;
+        this.tknId = tknId;
+        this.level = level;
+        this.children = {};
+        this.parent = {};
+        this.grProcessingOngoing = false;
+        this.grProcessingDone = false;
+        this.grMatches = [];
+        if (this.dbg) {
+            console.log(this.tabs() + ' Creating Node with Name : ' + this.name);
+        }
+        if (noprocess === true) {
+            this.nd = null;
+        } else {
+            this.nd = this.process(tknId);
+        }
+        nodes.setNodeMap(tknId, this);
+    }
+    static getMatchToken() {
+        return 'DEFAULT';
+    }
+
+    tabs() {
+        let t = '';
+        for (var i = 0; i < this.level; ++i) {
+            t += '\t';
+        } 
+        return t;
+    }
+
+    isGrammarProcessingDone() {
+        return this.grProcessingDone;
+    }
+    setGrammarProcessingDone(b = true) {
+        this.grProcessingDone = b;
+    }
+    addGrammarMatch(gr) {
+        this.grMatches.push(gr);
+    }
+    getGrammarMatches() {
+        return this.grMatches;
+    }
+    getChildren() {
+        return this.children;
+    }
+    getChild(loc) {
+        return this.children[loc];
+    }
+    getDep(loc) {
+        return this.children[loc].dep;
+    }
+    getListOfPos() {
+        return Object.keys(this.children);
+    }
+    getToken() {
+        return this.nodes.tkn.getToken(this.tknId);
+    }
+    getTokenId() {
+        return this.tknId;
+    }
+    getTokenPOS() {
+        return this.nodes.tkn.getTokenPOS(this.tknId);
+    }
+    getPOS() {
+        return this.nodes.tkn.getTokenPOS(this.tknId);
+    }
+    // this function may be overwritten by inheritance.
+    getValues() {
+        let g = this.getGrammarMatches();
+        if (g.length === 0) {
+            return this.getToken();
+        }
+        // not sure how to handle more than one grammar match
+        let ret = '';
+        let first = true;
+        for (let idx in g) {
+            if (!first) {
+                ret = ret + ',';
+            }
+            ret = ret + g[idx].getValues();
+            first = false;
+        }
+        return ret;
+    }
+
+    noOfChildren() {
+        return Object.keys(this.children).length;
+    }
+
+    print(tab) {
+        tab = (tab === undefined) ? 0 : tab;
+        var tg = '';
+        for (var i = 0; i < tab; ++i ){
+            tg += '\t';
+        }
+        console.log(tg + 'Node[' + this.name + ']:: List of children[' +
+            this.noOfChildren() + ']');
+        for (var loc in this.children) {
+            this.children[loc].node.print(tab + 1);
+        }
+    }
+    getParent() {
+        return this.parent;
+    }
+    addParent(node, type) {
+        this.parent.node = node;
+        this.parent.type = type;
+    }
+    addChild(tkn, type) {
+        if (this.dbg) {
+            console.log(this.tabs() + ' BASE:: addChild adding tkn:' + tkn + ' linktype:' + type);
+        }
+        this.children[tkn] = {
+            'type': type,
+            'node': this.nodes.process(tkn, this.level + 1),
+        };
+        this.children[tkn].node.addParent(this, this.children[tkn].type);
+    }
+    // create the tree of all the nodes that are connected.
+    process(tknid) {
+        let dep = this.nodes.dep;
+        let children = dep.getChildNodes(tknid);
+        for (let idx in children) {
+            let tkn = children[idx].tokenIdx;
+            let type = children[idx].type;
+            this.addChild(tkn, type);
+        }
+    }
+}
+
+export default BaseNode;
+

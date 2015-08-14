@@ -1,0 +1,38 @@
+{
+  "name": "nlpUnitConverter",
+  "description": "NLP based unit covertor",
+  "version": "1.0.0",
+  "scripts": {
+    "preinstall": "npm install grunt-cli",
+    "compile": "grunt compile",
+    "lint": "grunt lint",
+    "test": "mocha --compiler js:babel/register"
+  },
+  "contributors": [
+  ],
+  "devDependencies": {
+    "source-map-support":"",
+    "grunt": "~0.4",
+    "grunt-cli": "~0.1",
+    "load-grunt-configs": "~0.4",
+    "load-grunt-tasks": "~3.2",
+
+    "grunt-mocha-cli": "~1.13",
+    "mocha": "~2.2",
+    "grunt-contrib-clean": "~0.6",
+    "grunt-eslint": "~16.0",
+    "babel": "~5.6",
+    "babel-eslint":"~3.1",
+    "grunt-babel": "~5.0",
+    "grunt-run": "",
+    "stanford-corenlp": "0.3.3",
+    "argparse":"~1.0",
+    "jsnetworkx":"",
+    "lazy":""
+  },
+ "license": "MIT",
+  "engines": {
+    "node": ">=0.10.33",
+    "npm": ">=1.4.28"
+  }
+}
