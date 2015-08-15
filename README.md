@@ -23,7 +23,7 @@ node build/src/eparser.js -i ./data/sample-1.txt
   966  node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 parsec to LightYears.'
   967  node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 Parsec to LightYears.'
   968  node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 Parsec to Foot.'
-  
+
 # Notes
 TIME is a type of MEASUREMENT.
 by default TIME should be expressed in seconds or sec.

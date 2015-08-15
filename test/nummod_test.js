@@ -72,7 +72,7 @@ describe('Grammar nummod Test ::', function() {
     }).bind(null, txt, res));
 
     txt = 'I walked 3,490 steps today.';
-    res =['[steps>nummod>3,490]'];
+    res =['[steps>nummod>3490]'];
     it(txt, (function(txt, res) {
         return process(nlp, txt)
             .then(function(ret) {
