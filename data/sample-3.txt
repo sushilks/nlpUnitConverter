@@ -1,3 +1,31 @@
+> Define a Measure
+if the verb node type is 'define', 'is or 'defined' and the type is 'measure' then
+   Exec: {
+     gr = Utils.createGrpah(this.getSubject(), { type : this.getType()});
+     Utils.addToGrpahDB(gr);
+     }
+> Define a Unit
+if the verb node subject is '/unit/i' and both Object and SubjectWho is specified
+   Exec: {
+    let units = verbObj.replae('>compound>', ',').split(',');
+    let unitFor = verbWho;
+    let gr = Utils.getGrpah(unitFor);
+    if (!gr) {
+        console.trace('Error:: Dont know about the type:' + unitFor);
+    }
+    units.forEach(function(x) {
+       let r = x.replace(/s$/,'');
+       g.addNode(r, {unitFor: nm});
+    });
+   }
+
+> Relationship  Math
+
+
+
+> Question Convertion
+
+
 Length is a type of measure.
 Units for Length are Meters, CentiMeters, KiloMeters, Line, Yard, Miles and League.
 Units for Length are Fathom, NauticalMile, Furlong, HorseLength.
@@ -21,5 +49,6 @@ One Parsec is 3.26156 LightYears.
 One HubbleLength is 306593922 Parsec.
 One Furlong is 201 Meters.
 One HorseLength is 2.4 Meters.
+
 
 

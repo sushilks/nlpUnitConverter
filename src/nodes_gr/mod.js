@@ -35,7 +35,8 @@ class MOD {
             let ndToken = node.getToken();
             for (let tid of t1) {
                 let ndPOS = nodeList.getNodeMap(tid).getTokenPOS();
-                if (ndPOS.match(/(JJ|WRB)/)) {
+                //if (ndPOS.match(/(JJ|WRB)/)) {
+                if (true) {
                     if (nodeList.dbg) {
                         console.log('  -     MOD[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(tid)
                             + ']:' + tid);

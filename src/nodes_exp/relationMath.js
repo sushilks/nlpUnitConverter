@@ -52,10 +52,10 @@ class relationMath {
                 return;
             }
         }
-
+        console.log('ERROR Unable to add relation between [' + nFrom + '] and [' + nTo + '], one of these nodes are defined');
     }
     static checkValid(gr) {
-        const VerbMatch = ['is', 'are'];
+        const VerbMatch = ['is', 'are', 'make', 'makes', 'equals'];
 
         /*
          Grammar IDX = 2 :: Grammar Type [VerbBase] Matched Text  ::VerbBase verb=[is]
@@ -85,6 +85,7 @@ class relationMath {
         let verbWho = gr.getSubjectWho();
         let verbWhen = gr.getObjectWhen();
         let verbWhat = gr.getObjectWhat();
+        let verbSubjWhat = gr.getSubjectWhat();
 
         if (gr.dbg) {
             console.log('     verb:' + verb + ' SUBJ:' + gr.getSubject() + ' OBJ:' + gr.getObject());
@@ -95,8 +96,8 @@ class relationMath {
         if (!Utils.checkMatchAny(verb, VerbMatch)) {
             return [false, {}];
         }
-        let re1 = verbSubj.match(/([^,>]*)(>nummod>|,)([^,>]*)/);
-        let re2 = verbObj.match(/([^,>]*)(>nummod>|,)([^,>]*)/);
+        let re1 = verbSubj.match(/([^,>]*)(>nummod>)([^,>]*)/);
+        let re2 = verbObj.match(/([^,>]*)(>nummod>)([^,>]*)/);
         if (re1 && re2) {
             let num1, num2;
             let nd1, nd2;
@@ -133,6 +134,14 @@ class relationMath {
                     nd1 = re1[1];
                 }
                 nd2 = verbObj;
+                let objRe = nd2.match(/equal>nmod:to>([^,>]*)/);
+                if (objRe) {
+                    nd2 = objRe[1];
+                } else if (nd2.match(/>/) || (verbSubjWhat !== '' && verbSubjWhat !== verbObj)) {
+                    // if the object has any modifier
+                    // safe to ignore it.
+                    return [false, {}];
+                }
                 num2 = 1;
             } else {
                 nd1 = verbSubj;

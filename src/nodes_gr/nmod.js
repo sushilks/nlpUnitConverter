@@ -31,7 +31,7 @@ class NMod {
             assert.equal(t1.length,1,'Un-Implemented.' + t1.length);
             let ndToken = node.getToken();
             let ndPOS = nodeList.getNodeMap(t1[0]).getTokenPOS();
-            if (ndPOS.match(/(NN|JJ)/)) {
+            if (ndPOS.match(/(NN|JJ|CD)/)) {
                 if (nodeList.dbg) {
                     console.log('  - COMPOUND[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(t1[0])
                         + ']:' + t1[0] );

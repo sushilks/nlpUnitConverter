@@ -38,7 +38,9 @@ class QConvert {
         let nTo = this.convTo.replace(/s$/,'');
         for (let k in gr) {
             let g = gr[k];
+            //console.log('LOOKING FOR [' + nFrom + '] [' + nTo + ']');
             if (g.hasNode(nFrom) && g.hasNode(nTo)) {
+                //console.log("FOUDN NODES 1");
                 let sp = Jsnx.shortestPath(g, {source: nFrom, target: nTo});
                 if (this.dbg) {
                     console.log('SHORTEST PATH From:' + nFrom + ' TO:' + nTo +
@@ -72,6 +74,7 @@ class QConvert {
         let verbSubj = gr.getSubjectOnly(); //nodes.getNodeMap(gr.verbSubj).getValues();
         let verbObj = gr.getObjectOnly(); //nodes.getNodeMap(gr.verbObj).getValues();
         let verbWho = gr.getSubjectWho();
+        let verbSubjWhat = gr.getSubjectWhat();
         let verbWhen = gr.getObjectWhen();
         let verbWhat = gr.getObjectWhat();
 
@@ -103,9 +106,24 @@ class QConvert {
         }
         {
             //ubjOnly:Weeks ObjectOnly:there>dep>many>mod>How ObjectWhat:Hours>nummod>three million
+            let re1 = verbObj.match(/([^,>]*)>mod>how,([^,>]*)>mod>many/i);
+            let re2 = verbSubj.match(/([^>,]*)>nummod>([^>,]*)/i);
+            if (re1 && re2) {
+                let r = [true, {'convTo': re1[1], 'convFrom': re2[1], 'fromValue': re2[2]}];
+                //console.log("RETURNING r=" + JSON.stringify(r));
+                return r;
+            }
+            if (re2 && verbObj.match(/what/i) && verbSubjWhat !== '') {
+                let r = [true, {'convTo': verbSubjWhat, 'convFrom': re2[1], 'fromValue': re2[2]}];
+                //console.log("RETURNING r=" + JSON.stringify(r));
+                return r;
+            }
+        }
+        {
+            //ubjOnly:Weeks ObjectOnly:there>dep>many>mod>How ObjectWhat:Hours>nummod>three million
             let re1 = verbObj.match(/.*many.*how/i);
             let re2 = verbWhat.match(/([^>,]*)>nummod>([^>,]*)/i);
-            if (re1 && re2) {
+            if (re1  && re2) {
                 let r = [true, {'convTo': verbSubj, 'convFrom': re2[1], 'fromValue': re2[2]}];
                 //console.log("RETURNING r=" + JSON.stringify(r));
                 return r;

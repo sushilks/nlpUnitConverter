@@ -1,0 +1,10 @@
+Money is a type of measure.
+Units of Money are Cents, Pennies, Quarters, Dollars, Dimes and Nickels.
+One Pennie is one Cent.
+Five Pennies is a Nickel.
+2 Nickels is a Dime.
+25 Cents is a Quarter.
+4 Quarters is a Dollar.
+Units for Money are FooFoo, Cudly.
+50 Dollars is equal to one FooFoo.
+33 FooFoo is equal to one Cudly.

@@ -67,3 +67,6 @@ There are 60 seconds in one minute.
 
 
 ---------
+add suport for --
+// How much is 10 Foot in Inch?
+

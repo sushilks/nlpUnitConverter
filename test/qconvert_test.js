@@ -3,7 +3,7 @@ var TUtils = require('./test_utils.js');
 var NLPClient = require('./../src/nlp_client.js');
 var assert = require('assert');
 
-describe('Grammar Type:Default Test', function() {
+describe('Explanation Type:Question Converstion Test', function() {
     let nlp ;
 
     before(()=>{
@@ -13,8 +13,8 @@ describe('Grammar Type:Default Test', function() {
 
     var txt, res;
 
-    txt = 'Units for zTime are Hours, Minutes, Seconds, Days, Weeks.';
-    res = 'Units for [zTime] are [Hours,Minutes,Seconds,Days,Weeks]';
+    txt = 'Convert 60 xx to yy.';
+    res = 'QConv Convert From [xx] Value [60] TO [yy]';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -22,8 +22,8 @@ describe('Grammar Type:Default Test', function() {
             });
     }).bind(null, txt, res));
 
-    txt = 'unit for zTime is Hours, Minutes, Seconds, Days and Weeks.';
-    res = 'Units for [zTime] are [Hours,Minutes,Seconds,Days,Weeks]';
+    txt = 'How many YY are there in  60 XX?';
+    res = 'QConv Convert From [xx] Value [60] TO [yy]';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -31,8 +31,8 @@ describe('Grammar Type:Default Test', function() {
             });
     }).bind(null, txt, res));
 
-    txt = 'unit for zTime is Hours.';
-    res = 'Units for [zTime] are [Hours]';
+    txt = 'How many YY in 60 XX?';
+    res = 'QConv Convert From [xx] Value [60] TO [yy]';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -40,15 +40,5 @@ describe('Grammar Type:Default Test', function() {
             });
     }).bind(null, txt, res));
 
-    /*
-    txt = 'unit for measuring zTime is Minutes, Hours.';
-    res = 'Units for [zTime] are [Minutes, Hours]';
-    it(txt, (function(txt, res) {
-        return process(nlp, txt)
-            .then(function(ret) {
-                assert.equal(ret, res);
-            });
-    }).bind(null, txt, res));
-*/
 
 });

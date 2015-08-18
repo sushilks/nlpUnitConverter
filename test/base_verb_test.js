@@ -1,58 +1,7 @@
 'use strict';
-import { install } from 'source-map-support';
-install();
-
-
+var TUtils = require('./test_utils.js');
 var NLPClient = require('./../src/nlp_client.js');
-var NLPPP = require('./../src/nlp_pp');
-var Nodes = require('./../src/nodes.js');
 var assert = require('assert');
-var port = 8990;
-
-
-function parse(data, dbg = false) {
-    var pp = new NLPPP();
-    var res = pp.read(data.body);
-    //let rt = pp.getSentenceDep(0).getRootToken();
-    //console.log('Processing :: ' + pp.getSentence(0) + ' ROOT:' + rt + '[' + pp.getTokens(0).getToken(rt) + ']');
-    let nd = new Nodes(pp.getSentenceDep(0), dbg);
-    nd.processAllGrammar();
-    res = [];
-    /*
-    for (let idx in nd.grMatches) {
-        if (false) {
-            console.log('\tFOUND Grammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].grName()
-                + '] Matched Text  ::' + nd.grMatches[idx].text());
-        }
-     res.push(nd.grMatches[idx].text());
-    }*/
-    for (let idx in nd.grMatches) {
-        if (false) {
-            console.log('\t Grammar IDX = ' + idx + ' :: GR Type [' + nd.grMatches[idx].getName()
-                + '] Matched Text  ::' + nd.grMatches[idx].text());
-        }
-        if (nd.grMatches[idx].getName().match(/VerbBase/)) {
-            res.push(nd.grMatches[idx].dict());
-        }
-    }
-    return res;
-}
-
-
-function process(client, txt, dbg = false) {
-    return new Promise(
-        function(resolve, reject) {
-            client.req(txt).then(function(res) {
-                return parse(res, dbg);
-            }, function(err) {
-                reject(err);
-            }).then(function(res) {
-                resolve(res);
-            }, function(err) {
-                console.log('ERROR when processing request :: ' + err.stack);
-            });
-        });
-}
 
 describe('Grammar VerbBase Test ::', function() {
     var nlp ;
@@ -70,11 +19,12 @@ describe('Grammar VerbBase Test ::', function() {
         obj : 'hours,minutes,days,months,seconds',
         subjOnly : 'units',
         subjWho : 'time',
+        subjWhat : '',
         objOnly : 'hours,minutes,days,months,seconds',
         objWhat : '',
         objWhen : '' };
     it(txt, (function(txt, res) {
-        return process(nlp, txt)
+        return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
                 assert.deepEqual(ret[0], res);
             });
@@ -86,11 +36,12 @@ describe('Grammar VerbBase Test ::', function() {
         obj : 'min>nummod>one',
         subjOnly : 'sec>nummod>60',
         subjWho : '',
+        subjWhat : 'min>nummod>one',
         objOnly : 'min>nummod>one',
         objWhat : '',
         objWhen : '' };
     it(txt, (function(txt, res) {
-        return process(nlp, txt)
+        return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
                 assert.deepEqual(ret[0], res);
             });
@@ -103,28 +54,30 @@ describe('Grammar VerbBase Test ::', function() {
         obj : 'minute>nummod>one',
         subjOnly : 'seconds>nummod>60',
         subjWho : '',
+        subjWhat : '',
         objOnly : 'minute>nummod>one',
         objWhat : '',
         objWhen : '' };
     it(txt, (function(txt, res) {
-        return process(nlp, txt)
+        return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
                 assert.deepEqual(ret[0], res);
             });
     }).bind(null, txt, res));
 
-    txt = 'there is 60 sec in one min';
+    txt = 'there are 60 sec in a min.';
     res = {
-        verb : 'is',
-        subj : 'sec>nmod:in>min>nummod>one,sec>nummod>60',
-        obj : 'min>nummod>one',
+        verb : 'are',
+        subj : 'sec>nmod:in>min,sec>nummod>60',
+        obj : 'min',
         subjOnly : 'sec>nummod>60',
         subjWho : '',
-        objOnly : 'min>nummod>one',
+        subjWhat : 'min',
+        objOnly : 'min',
         objWhat : '',
         objWhen : '' };
     it(txt, (function(txt, res) {
-        return process(nlp, txt)
+        return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
                 assert.deepEqual(ret[0], res);
             });
@@ -137,11 +90,12 @@ describe('Grammar VerbBase Test ::', function() {
         obj : 'equal>nmod:to>Minute>nummod>one',
         subjOnly : 'Seconds>nummod>60',
         subjWho : '',
+        subjWhat : '',
         objOnly : 'equal>nmod:to>Minute>nummod>one',
         objWhat : '',
         objWhen : '' };
     it(txt, (function(txt, res) {
-        return process(nlp, txt)
+        return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
                 assert.deepEqual(ret[0], res);
             });
@@ -155,11 +109,12 @@ describe('Grammar VerbBase Test ::', function() {
         obj : 'Minute>nummod>one',
         subjOnly : 'Seconds>nummod>60',
         subjWho : '',
+        subjWhat : '',
         objOnly : 'Minute>nummod>one',
         objWhat : '',
         objWhen : '' };
     it(txt, (function(txt, res) {
-        return process(nlp, txt)
+        return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
                 assert.deepEqual(ret[0], res);
             });

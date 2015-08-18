@@ -38,6 +38,11 @@ ADD
      We find them very pleasant. (Object complement)
      http://grammar.about.com/od/c/g/complterm.htm
 
+   How much is 10 Foot in Meters?
+   "How much" - verbDep...
+    "10 Foot" - Subject
+    "Meters" - SubjectWhat
+
 
  // by default water is in liquid state.
  //  subj/Who - Water
@@ -79,9 +84,11 @@ class VerbBase {
         r.obj = this.getObject();
         r.subjOnly = this.getSubjectOnly();
         r.subjWho = this.getSubjectWho();
+        r.subjWhat = this.getSubjectWhat();
         r.objOnly = this.getObjectOnly();
         r.objWhat = this.getObjectWhat();
         r.objWhen = this.getObjectWhen();
+
         return r;
     }
     text() {
@@ -92,6 +99,9 @@ class VerbBase {
         }
         if (this.getSubjectWho()) {
             r = r + ' SubjWho:' + this.getSubjectWho();
+        }
+        if (this.getSubjectWhat()) {
+            r = r + ' SubjWhat:' + this.getSubjectWhat();
         }
         if (this.getObjectOnly()) {
             r = r + ' ObjectOnly:' + this.getObjectOnly();
@@ -118,6 +128,15 @@ class VerbBase {
         }
         return '';
     }
+    getSubjectWhat() {
+        let subj = this.getSubject();
+        let re = subj.match(/[^,]*>nmod:(in)>([^,]*)/);
+        if (re && re.length) {
+            return re[2];
+        }
+        return '';
+    }
+
     getSubjectOnly() {
         let subj = this.getSubject().split(',');
         let ret = [];
@@ -252,7 +271,7 @@ class VerbBase {
 
             if (m1nmod.length) {
                 assert.equal(m1nmod.length,1,'Un-Implemented.' + m1nmod.length);
-                let obj = m1nmod;
+                let obj = m1nmod; // HACK This should not be obj ... enhance so SubjWhat can be passed directly from here. 
                 return [ true, {'verb' : node.getTokenId(),'verbSubj': m0subj[0], 'verbObj': obj}];
             }
         }
@@ -287,7 +306,7 @@ class VerbBase {
                     console.log(" mWhen = " + node.nodes.getNodeMap(mWhen[0]).getValues());
                 }
 */
-                if (p.node.getPOS().match(/^(NN|JJ|EX)/) &&
+                if (//p.node.getPOS().match(/^(NN|JJ|EX|WP)/) &&
                     m0subj.length) {
                     assert.equal(m0subj.length,1,'Un-Implemented.' + m0subj.length);
                     let subj = m0subj[0];
