@@ -33,6 +33,7 @@ class Compound {
     }
 
     static checkValid(nodeList, node) {
+       // Utils.checkAndProcessChildNodeGrammar(nodeList, node);
         let t1 = Utils.checkChildLinks(node, 'compound');
         if (t1 && t1.length) {
             assert.equal(t1.length,1,'Un-Implemented.' + t1.length);

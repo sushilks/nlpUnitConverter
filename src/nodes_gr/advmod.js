@@ -3,7 +3,7 @@
 var Utils = require('../nodes_utils');
 var assert = require('assert');
 
-class MOD {
+class AdvMOD {
     constructor(nodes, matchResult) {
         this.nodes = nodes;
         this.modList = matchResult.mod;
@@ -50,4 +50,4 @@ class MOD {
     }
 }
 
-export default MOD;
+export default AdvMOD;

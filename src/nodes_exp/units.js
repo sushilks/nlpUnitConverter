@@ -1,46 +1,30 @@
 'use strict';
 
 var Utils = require('../nodes_utils');
+var BaseExp = require('./base_exp.js');
 //var assert = require('assert');
 
 /*
 */
 
-class Units {
+class Units extends BaseExp {
     constructor(nodes, matchResult) {
-        this.unitsFor = matchResult.unitsFor;
-        this.units = matchResult.units;
-        this.nodes = nodes;
-        this.dbg = nodes.dbg;
+        super(nodes, matchResult);
         this.name = 'Units';
     }
 
     static getMatchToken() {
         return ['VerbBase'];
     }
-
-    getName() {
-        return this.name;
-    }
-    getUnitsFor() {
-        return this.unitsFor;
-    }
-    getUnits() {
-        return this.units;
-    }
-    text() {
-        return this.getName() + ' for [' + this.getUnitsFor() + '] are [' +
-            this.getUnits() + ']';
-    }
     exec(gr) {
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());
-        let nm = this.getUnitsFor();
+        let nm = this.result.unitsFor;
         let g = gr[nm];
         if (!g) {
             console.trace('ERROR: Dont know about [' + nm + ']');
         }
-        let units = this.getUnits();
+        let units = this.result.units;
         units.forEach(function(x) {
             //console.log(' UNIT =  ' + x)
             let r = x.replace(/s$/,'');
@@ -57,26 +41,17 @@ class Units {
                 ' obj:' + gr.verbObj);
         }
         let nodes = gr.nodes;
-        let verb = gr.getVerb(); //nodes.getNodeMap(gr.verb).getValues();
-        let verbSubj = gr.getSubjectOnly(); //nodes.getNodeMap(gr.verbSubj).getValues();
-        let verbObj = gr.getObjectOnly(); //nodes.getNodeMap(gr.verbObj).getValues();
-        let verbWho = gr.getSubjectWho();
-        let verbWhen = gr.getObjectWhen();
-        let verbWhat = gr.getObjectWhat();
-
+        let vb = gr.dict();
         if (gr.dbg) {
-            console.log('     verb:' + verb + ' SUBJ:' + gr.getSubject() + ' OBJ:' + gr.getObject());
-            console.log('     subjOnly:' + gr.getSubjectOnly() + ' WHO:' + gr.getSubjectWho());
-            console.log('     objOnly:' + gr.getObjectOnly() + ' WHEN:' + gr.getObjectWhen()
-            + ' WHAT:' + gr.getObjectWhat());
+            console.log('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
         }
-        if (!Utils.checkMatchAny(verb, VerbMatch)) {
+        if (!Utils.checkMatchAny(vb.verb, VerbMatch)) {
             return [false, {}];
         }
-        let re1 = verbSubj.match(/unit/i);
-        if (re1 && verbWho !== '' && verbObj !== '') {
-            let vo = verbObj.replace('>compound>', ',');
-            let r = [true, {'unitsFor': verbWho, 'units' : vo.split(',')}];
+        let re1 = Utils.kMatch(vb, 'subj', /unit/i);
+        if (re1 && 'subjWho' in vb && 'obj' in vb) {
+            let vo = vb.obj.replace('>compound>', ' ');
+            let r = [true, {'unitsFor': vb.subjWho, 'units' : vo.split(' ')}];
             //console.log("RETURNING r=" + JSON.stringify(r));
             return r;
         }

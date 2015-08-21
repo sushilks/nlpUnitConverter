@@ -112,7 +112,22 @@ class Nodes {
     processAllGrammar() {
         for (var tidx = 1; tidx <= this.dep.getTokensCount(); tidx++) {
             let lnd = this.getNodeMap(tidx);
-            if (lnd && !lnd.grProcessingDone) {
+            if (lnd && !lnd.grProcessingDone && !lnd.getTokenPOS().match(/VB/)) {
+                if (this.dbg) {
+                    console.log('Processing Grammar for token ' + tidx + '   val = '
+                        + this.tkn.getToken(tidx ) + ' ND = ' + lnd
+                        + ' ND.tkn:' + lnd.getToken());
+                }
+                let res = this.processGr(tidx);
+//                if (this.dbg) {
+//                    console.log('  - Grammar Processing of lnd resulted in ' + lnd + ' res = ' + res);
+//                }
+            }
+        }
+
+        for (var tidx = 1; tidx <= this.dep.getTokensCount(); tidx++) {
+            let lnd = this.getNodeMap(tidx);
+            if (lnd && lnd.getTokenPOS().match(/VB/)) {
                 if (this.dbg) {
                     console.log('Processing Grammar for token ' + tidx + '   val = '
                         + this.tkn.getToken(tidx ) + ' ND = ' + lnd
@@ -136,17 +151,19 @@ class Nodes {
         let nd = this.getNodeMap(tknId);
         if (nd.grProcessingOngoing) return false;
         nd.grProcessingOngoing = true;
+        //console.trace("processGr:"+tknId);
         let GRRules = Utils.findGrammarRules(gGrMapper, tkn, pos);
         let ruleHitCount = 0;
         if (GRRules.length) {
             for (let GRM of GRRules)
             {
-                this.dbg && console.log('  - gGrMapper Checking with tkn [' + tkn + ']');
                 let found = GRM.checkValid(this, nd);
                 if (this.dbg && found[0]) {
+                    console.log('  - gGrMapper Checking with tkn [' + tkn + ']');
                     console.log('\tFound ' + JSON.stringify(found[1]));
                 }
                 if (found[0]) {
+
                     let grHandle = new GRM(this, found[1]);
                     this.dbg && console.log('\tAdding Grammar Node:' + grHandle.getName());
                     nd.addGrammarMatch(grHandle);
@@ -156,6 +173,7 @@ class Nodes {
             }
             nd.setGrammarProcessingDone();
             nd.grProcessingOngoing = false;
+            this.dbg && console.log('processGr:' + tknId + ' RETURN.');
             return (ruleHitCount > 0);
         } else {
             this.dbg && console.log('  - gGrMapper no hit found for tkn [' + tkn + ']');

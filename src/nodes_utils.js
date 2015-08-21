@@ -21,6 +21,14 @@ export function nodeInit(nmap, fn) {
     return fn;
 }
 
+// Make sure the  node is precessed for grammar
+// and then get the value of the node.
+export function getNodeValues(nodeList, tknId) {
+    let nd = nodeList.getNodeMap(tknId);
+    checkAndProcessNodeGrammar(nodeList, nd);
+    return nd.getValues();
+}
+
 // Check and make sure all the child nodes for the current nodes
 // have there grammar processed.
 export function checkAndProcessNodeGrammar(nodeList, node) {
@@ -151,6 +159,12 @@ export function checkMatchAny(itm1, itm2) {
     }
 }
 
+export function kMatch(dict, key, re) {
+    if (key in dict && dict[key]) {
+        return dict[key].match(re);
+    }
+    return undefined;
+}
 /*
 
 export function checkRegExpMatchArray(re, arr) {

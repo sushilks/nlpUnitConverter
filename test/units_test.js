@@ -14,7 +14,7 @@ describe('Grammar Type:Default Test', function() {
     var txt, res;
 
     txt = 'Units for zTime are Hours, Minutes, Seconds, Days, Weeks.';
-    res = 'Units for [zTime] are [Hours,Minutes,Seconds,Days,Weeks]';
+    res = 'Units Data [{"unitsFor":"zTime","units":["Hours","Minutes","Seconds","Days","Weeks"]}]';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -23,7 +23,7 @@ describe('Grammar Type:Default Test', function() {
     }).bind(null, txt, res));
 
     txt = 'unit for zTime is Hours, Minutes, Seconds, Days and Weeks.';
-    res = 'Units for [zTime] are [Hours,Minutes,Seconds,Days,Weeks]';
+    res = 'Units Data [{"unitsFor":"zTime","units":["Hours","Minutes","Seconds","Days","Weeks"]}]';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -32,7 +32,7 @@ describe('Grammar Type:Default Test', function() {
     }).bind(null, txt, res));
 
     txt = 'unit for zTime is Hours.';
-    res = 'Units for [zTime] are [Hours]';
+    res = 'Units Data [{"unitsFor":"zTime","units":["Hours"]}]';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {

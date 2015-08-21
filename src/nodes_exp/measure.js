@@ -2,6 +2,7 @@
 
 //import * as utils from './node_utils';
 var Utils = require('../nodes_utils');
+var BaseExp = require('./base_exp.js');
 var assert = require('assert');
 /*
 This node should create a new graph and install it.
@@ -16,71 +17,59 @@ g.addNode(nodeid, {data...});
 g.addEdge(n1, n2, {data....});
 */
 
-class DefineMeasure {
+class DefineMeasure extends BaseExp {
     constructor(nodes, matchResult) {
-        this.subj = matchResult.gr.verbSubj;
-        this.type = matchResult.gr.verbObj;
-        this.gr = matchResult.gr;
-        this.nodes = nodes;
-        this.dbg = nodes.dbg;
+        super(nodes, matchResult);
         this.name = 'DefineMeasure';
     }
     static getMatchToken() {
         return ['VerbBase'];
     }
-    getName() {
-        return this.name;
-    }
-    text() {
-        return 'DefineMeasure [' + this.getSubject() +
-        '] to be of type [' +
-        this.getType() + ']';
-    }
-    getSubject() {
-        return this.nodes.getNodeMap(this.subj).getValues();
-    }
-    getType() {
-        let r = this.nodes.getNodeMap(this.type).getValues().split('>');
-        for (var idx in r) {
-            if (!Utils.checkMatchAny(r[idx], ['type', 'unit', 'subset', /nmod.*/])) {
-                return r[idx];
-            }
-        }
-        return r;
-    }
-
     exec(gr) {
         //console.log('Adding to graph:' + this.getName());
-        let g = Utils.createGraph(gr, this.getSubject(), { type : this.getType()});
+        let g = Utils.createGraph(gr, this.result.subj, { type : this.result.type});
         //console.log(' New Graph Name = ' + JSON.stringify(g.toString()));
     }
-
 
     static checkValid(gr) {
         const VerbMatch = ['is', 'define', 'defined'];
         const ObjMatch = [/measure/i];
 
         // check if there is a subject + object and they are connected by regex
-        if (gr.dbg) {
-            console.log('     verb:' + gr.verb +
-                ' subj:' + gr.verbSubj +
-                ' obj:' + gr.verbObj);
-        }
         let nodes = gr.nodes;
-        let verb = gr.getVerb(); //nodes.getNodeMap(gr.verb).getValues();
-        let verbSubj = gr.getSubject(); //nodes.getNodeMap(gr.verbSubj).getValues();
-        let verbObj = gr.getObject(); //nodes.getNodeMap(gr.verbObj).getValues();
+        let vb = gr.dict(); //nodes.getNodeMap(gr.verb).getValues();
         if (gr.dbg) {
-            console.log('     verb:' + verb + ' subj:' + verbSubj + ' obj:' + verbObj);
+            console.log('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
         }
 
-        if (!Utils.checkMatchAny(verb, VerbMatch)) {
+        if (!Utils.checkMatchAny(vb.verb, VerbMatch)) {
             return [false, {}];
         }
-        if (!Utils.checkMatchAny(verbObj, ObjMatch)) {
+        let obj = '';
+        if ('obj' in vb) {
+            obj = vb.obj;
+            if ('objWhat' in vb) {
+                obj = vb.objWhat;
+            }
+            let re1 = obj.match(/([^>]*)>compound>type/i);
+            if (re1) {
+                obj = re1[1];
+            }
+        } else if ('comp' in vb) {
+            obj = nodes.getNodeMap(vb.comp).getValues();
+            let re1 = obj.match(/([^>]*)>nmod:([^>]*)>([^>]*)/i);
+            if (re1) obj = re1[3];
+        } else if ('verbModWhat' in vb && 'verbMod' in vb &&
+                   vb.verbMod.match(/defined/i)) {
+            obj = vb.verbModWhat;
+        } else {
             return [false, {}];
         }
-        return [true, {'gr': gr}];
+
+        if (!Utils.checkMatchAny(obj, ObjMatch)) {
+            return [false, {}];
+        }
+        return [true, {subj: vb.subj, type: obj}];
     }
 }
 

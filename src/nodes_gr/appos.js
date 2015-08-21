@@ -16,7 +16,7 @@ class APPOS {
     getValues() {
         let val = this.nodes.getNodeMap(this.selfNodeId).getToken();
         for (let tid of this.apposList) {
-            val = val + ',' + this.nodes.getNodeMap(tid).getValues();
+            val = val + ' ' + this.nodes.getNodeMap(tid).getValues();
         }
         return val;
     }
@@ -24,10 +24,11 @@ class APPOS {
         return 'apppos [' + this.getValues() + ']';
     }
     static getMatchToken() {
-        return ['.*:NN.*', '.*:CD.*'];
+        return ['.*:NN.*', '.*:CD.*', '.*:JJ.*'];
     }
 
     static checkValid(nodeList, node) {
+        //Utils.checkAndProcessChildNodeGrammar(nodeList, node);
         let t1 = Utils.checkChildLinks(node, 'appos|conj:and');
         if (t1 && t1.length) {
             let retList = [];

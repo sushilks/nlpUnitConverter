@@ -3,7 +3,9 @@
 //import * as utils from './node_utils';
 var Utils = require('../nodes_utils');
 var assert = require('assert');
-
+var NMod = require('./nmod');
+var AdvMod = require('./advmod');
+var DEP = require('./dep');
 /*
 NN----(subj)---->VB(is/defined)---xcomp/nmod--->NN
 NN1---(subj)--->NN2 with NN2--cop->VBZ(is)
@@ -24,21 +26,21 @@ ADD
     - Who or what performs the action (that is the agent)
  Object : A noun.. that is affected by the action of a verb
     or that completes the meaning of a preposition
-    Marie wrote a poem
+ Marie wrote a poem
       Object(direct) = Poem
       Subj = Marie
       Verb = Wrote
-    Marie sent me an email.
+ Marie sent me an email.
      object(dobj) = email
      object(iobj) = me
      subj = Marie
      Verb = sent
   Complement : A word that completes the predicate in a sentence.
-     My glass is empty (subject complemt)
-     We find them very pleasant. (Object complement)
+ My glass is empty (subject complemt)
+ We find them very pleasant. (Object complement)
      http://grammar.about.com/od/c/g/complterm.htm
 
-   How much is 10 Foot in Meters?
+ How much is 10 Foot in Meters?
    "How much" - verbDep...
     "10 Foot" - Subject
     "Meters" - SubjectWhat
@@ -56,14 +58,21 @@ ADD
  // who  : Water (nmod:of -> subj)
 
 
-*/
+ Time is defined to be a type of Measure.
+ The default unit for foo is Zque.
+ By default time is expressed in minutes.
+
+ */
 
 class VerbBase {
     constructor(nodes, matchResult) {
         this.name = 'VerbBase'
-        this.verbSubj = matchResult.verbSubj;
+        this.vb = matchResult.vb;
+        /*
+        verbSubj = matchResult.verbSubj;
         this.verbObj = matchResult.verbObj;
         this.verb = matchResult.verb;
+        */
         this.nodes = nodes;
         this.dbg = nodes.dbg;
     }
@@ -72,260 +81,146 @@ class VerbBase {
         return ['.*:VB.*'];
     }
     getValues() {
-        return this.nodes.getTokens().getToken(this.verb);
+        return this.vb.verb;//this.nodes.getTokens().getToken(this.verb);
     }
     getName() {
         return this.name;
     }
     dict() {
-        let r = {};
-        r.verb = this.getVerb();
-        r.subj = this.getSubject();
-        r.obj = this.getObject();
-        r.subjOnly = this.getSubjectOnly();
-        r.subjWho = this.getSubjectWho();
-        r.subjWhat = this.getSubjectWhat();
-        r.objOnly = this.getObjectOnly();
-        r.objWhat = this.getObjectWhat();
-        r.objWhen = this.getObjectWhen();
-
-        return r;
+        return this.vb;
     }
     text() {
-        let r = 'VerbBase verb=[' + this.getVerb() + '] Subj=[' + this.getSubject() +
-        '] Object=[' + this.getObject() + ']';
-        if (this.getSubjectOnly()) {
-            r = r + ' SubjOnly:' + this.getSubjectOnly();
-        }
-        if (this.getSubjectWho()) {
-            r = r + ' SubjWho:' + this.getSubjectWho();
-        }
-        if (this.getSubjectWhat()) {
-            r = r + ' SubjWhat:' + this.getSubjectWhat();
-        }
-        if (this.getObjectOnly()) {
-            r = r + ' ObjectOnly:' + this.getObjectOnly();
-        }
-        if (this.getObjectWhat()) {
-            r = r + ' ObjectWhat:' + this.getObjectWhat();
-        }
-        if (this.getObjectWhen()) {
-            r = r + ' ObjectWhen:' + this.getObjectWhen();
-        }
+        let r = this.name + ':: ' + JSON.stringify(this.vb);
         return r;
+
     }
     getVerb() {
-        return this.nodes.getNodeMap(this.verb).getValues();
-    }
-    getSubject() {
-        return this.nodes.getNodeMap(this.verbSubj).getValues();
-    }
-    getSubjectWho() {
-        let subj = this.getSubject();
-        let re = subj.match(/[^,]*>nmod:(of|for)>([^,]*)/);
-        if (re && re.length) {
-            return re[2];
-        }
-        return '';
-    }
-    getSubjectWhat() {
-        let subj = this.getSubject();
-        let re = subj.match(/[^,]*>nmod:(in)>([^,]*)/);
-        if (re && re.length) {
-            return re[2];
-        }
-        return '';
+        return this.vb.verb;//this.nodes.getNodeMap(this.verb).getValues();
     }
 
-    getSubjectOnly() {
-        let subj = this.getSubject().split(',');
-        let ret = [];
-        let nd = '';
-        for (let dt of subj) {
-            let re = dt.match(/([^,>]*)>nmod:/);
-            if (!re) {
-                ret.push(dt);
-            } else {
-                nd = re[1];
+
+    static processNode(ntype, rawObj, ret) {
+        let processed = '';
+        {// When
+            let marker = 'agent';
+            processed = marker;
+            let re = rawObj.match(new RegExp('[^,]*>nmod:(' + marker+ ')>([^,]*)'));
+            if (re && re.length) {
+                ret[ntype + 'When'] = re[2];
             }
         }
-        let r = ret.join(',');
-        if (r === '') {
-            r = nd;
-        }
-        return r;
-    }
-    getObject() {
-        let r;
-        // check the link types,
-        // if link type has nmod then add the nmod as part of returned
-        // value.
-        if (this.verbObj.length == 1) {
-            let linkType =Utils.getChildLink(this.nodes, this.verb, this.verbObj);
-            r = this.nodes.getNodeMap(this.verbObj).getValues();
-            if (linkType.match(/nmod:/)){
-                r = this.getVerb() + '>' + linkType + '>' + r;
+        {// Who
+            let marker = 'for|by|to|tmod';
+            processed = marker;
+            let re = rawObj.match(new RegExp('[^,]*>nmod:(' + marker+ ')>([^,]*)'));
+            if (re && re.length) {
+                ret[ntype + 'Who'] = re[2];
             }
-            return r;
-        } else {
-            r = [];
-            for (var idx of this.verbObj) {
-                let nd = this.nodes.getNodeMap(idx);
-                let linkType =Utils.getChildLink(this.nodes, this.verb, idx);
-                if (linkType.match(/nmod:/)){
-                    r.push(this.getVerb() + '>' + linkType + '>' + nd.getValues());
+        }
+        {//What
+            let marker = 'in|of|as|into';
+            processed += '|' + marker;
+            //console.log('--------------------------- ' + marker + ' == ' + rawObj);
+            let re = rawObj.match(new RegExp('[^,]*>nmod:(' + marker + ')>([^,]*)'));
+            //console.log(re);
+            if (re && re.length) {
+                ret[ntype + 'What'] = re[2];
+            }
+        }
+        { //Only
+            let obj = rawObj.split(',');
+            let ret_ = [];
+            let nd='';
+            for (let dt of obj) {
+                let re = dt.match(new RegExp('([^,>]*)>nmod:(' + processed + ')'));
+                if (!re) {
+                    ret_.push(dt);
                 } else {
-                    r.push(nd.getValues());
+                    nd = re[1];
                 }
             }
-            return r.join(',');
-        }
-    }
-    getObjectOnly() {
-        let subj = this.getObject().split(',');
-        let ret = [];
-        let nd='';
-        for (let dt of subj) {
-            let re = dt.match(/([^,>]*)>nmod:(by|agent|in)/);
-            if (!re) {
-                ret.push(dt);
-            } else {
-                nd = re[1];
+            let r = ret_.join(',');
+            if (r === '') {
+                r = nd;
+            }
+            if (r !== '' && r.length != 0) {
+                ret[ntype] = r;
             }
         }
-        let r = ret.join(',');
-        if (r === '') {
-            r = nd;
-        }
-        return r;
-    }
-    getObjectWhen() {
-        let subj = this.getObject();
-        let re = subj.match(/[^,]*>nmod:(by|agent)>([^,]*)/);
-        if (re && re.length) {
-            return re[2];
-        }
-        return '';
-    }
-
-    getObjectWhat() {
-        let subj = this.getObject();
-        let re = subj.match(/[^,]*>nmod:(in)>([^,]*)/);
-        if (re && re.length) {
-            return re[2];
-        }
-        return '';
     }
 
     static checkValid(nodeList, node) {
         let dbg = nodeList.dbg;
-        // should not be needed
-        // as the trigger is based on match token
-        /*
-        if (!node.getPOS().match(/^VB/)) {
-            return [false, {}];
-        }
-        if (!Utils.checkNodeValuesMatchAny(node, ['is', 'define', 'defined'])) {
-            return [false, {}];
-        }
-        */
         // Make sure all child nodes are processed
         Utils.checkAndProcessChildNodeGrammar(nodeList, node);
 
-        // check pattern 1
-        // NN----(subj)---->VB(is/defined)---xcomp/nmod--->NN
-        let m0subj = Utils.checkChildLinks(node, '[nc]subj(pass)?');
-        let m1comp = Utils.checkChildLinks(node, '[xc]comp');
-        let m2mod  = Utils.checkChildLinks(node, '(n|adv)mod:.*');
-        let m3 = Utils.checkChildLinks(node, 'dobj');
-        if (m0subj.length && (m1comp.length || m2mod.length || m3.length)) {
-            assert.equal(m0subj.length,1,'Un-Implemented.' + m0subj.length);
-            //assert((m1comp.length === 0 || m1comp.length === 1) &&
-            //    (m2mod.length === 0 || m2mod.length === 1), 'Un-Implemented.' + m1comp.length + '.' + m2mod.length);
-            let subj = m0subj[0];
-            let obj;
-            if (m1comp.length) {
-                obj = m1comp;
-            } else if(m2mod.length) {
-                obj = m2mod;
-            } else {
-                obj = m3;
-            }
-            if (dbg) {
-                console.log('  - SUBJ: ' + subj + ' obj: ' + obj);
-                let objStr = '';
-                for (let obj_ of obj) {
-                    objStr += node.nodes.getNodeMap(obj_).getToken() + ',';
-                }
-                console.log('  - VerbBase['+node.getToken()+'] subj:' + node.nodes.getNodeMap(subj).getToken() +
-                    ' of obj :' + objStr);
-            }
-            return [ true, {'verb' : node.getTokenId(),'verbSubj': subj, 'verbObj': obj}];
-        }
-        // check if only subj
-        if (m0subj.length) {
-            // check if subj is connected by nmod:in
-            assert.equal(m0subj.length,1,'Un-Implemented.' + m0subj.length);
-            let subjNode = node.nodes.getNodeMap(m0subj[0]);
-            let m1nmod = Utils.checkChildLinks(subjNode, 'nmod:in');
+        let ret = {};
 
-            if (m1nmod.length) {
-                assert.equal(m1nmod.length,1,'Un-Implemented.' + m1nmod.length);
-                let obj = m1nmod; // HACK This should not be obj ... enhance so SubjWhat can be passed directly from here. 
-                return [ true, {'verb' : node.getTokenId(),'verbSubj': m0subj[0], 'verbObj': obj}];
-            }
-        }
-        // check if only obj
-        if (m3.length) {
-            let obj = m3;
-            m0subj  = Utils.checkChildLinks(node, 'nmod:(in)?to');
-            if (m0subj) {
-                assert.equal(m0subj.length,1,'Un-Implemented.' + m0subj.length);
-                return [ true, {verb: node.getTokenId(), verbSubj: m0subj[0], verbObj: obj}]
-            }
-        }
-
-
-        // check if parent is connected as cop:NN
+        let verbNode = node;
+        let cop = null;
+        // check if this is a verb connected to NN by 'cop'
         {
-            let p = node.getParent();
+            let p = verbNode.getParent();
             if (p && p.type && p.type.match(/cop/)) {
-                // make sure this nodes is processed before proceeding
                 Utils.checkAndProcessNodeGrammar(nodeList, p.node);
-                let m0subj = Utils.checkChildLinks(p.node, '[nc]subj(pass)?');
-                /*
-                 let mWho = [];
-                 if (m0subj.length){
-                 mWho = Utils.checkChildLinks(node.nodes.getNodeMap(m0subj[0]), 'nmod:of');
-                 if (mWho.length) {
-                 console.log(" mWHO = " + node.nodes.getNodeMap(mWho[0]).getValues());
-                 }
-                 }
-                let mWhen = Utils.checkChildLinks(p.node, 'nmod:by');
-                if (mWhen.length) {
-                    console.log(" mWhen = " + node.nodes.getNodeMap(mWhen[0]).getValues());
-                }
-*/
-                if (//p.node.getPOS().match(/^(NN|JJ|EX|WP)/) &&
-                    m0subj.length) {
-                    assert.equal(m0subj.length,1,'Un-Implemented.' + m0subj.length);
-                    let subj = m0subj[0];
-                    let obj;
-                    obj = p.node.getValues();
-
-
-                    if (dbg) {
-                        console.log('  - VerbBase2['+node.getToken()+'] subj :' + node.nodes.getNodeMap(subj).getToken() +
-                            ' of obj : ' + obj);
-                    }
-                    return [true, {'verb' : node.getTokenId(), 'verbSubj': subj, 'verbObj': [p.node.getTokenId()] }];
-                }
+                cop = verbNode;
+                verbNode = p.node;
             }
         }
-        if (dbg) {
-            console.log('  - VerbBase : Did not find a match.');
+        // populate the verb
+        ret.verb =  Utils.getNodeValues(nodeList, node.getTokenId());
+        {
+            let mr;
+            let vn = node;
+            mr = NMod.checkValid(nodeList, vn);
+            if (mr[0]) {
+                ret.rawVerbMod = new NMod(vn.nodes, mr[1]).getValues();
+                VerbBase.processNode('verbMod', ret.rawVerbMod, ret);
+            }
+            mr = AdvMod.checkValid(nodeList, vn);
+            if (mr[0]) {
+                ret.rawVerbAdvMod = new AdvMod(vn.nodes, mr[1]).getValues();
+                VerbBase.processNode('verbMod', ret.rawVerbAdvMod, ret);
+            }
+            mr = DEP.checkValid(nodeList, vn);
+            if (mr[0]) {
+                ret.verbDep = new DEP(vn.nodes, mr[1]).getValues();
+            }
         }
-        return [false, {}];
+
+        // process subj
+        let findSubj = Utils.checkChildLinks(verbNode, '[nc]subj(pass)?');
+        if (findSubj.length) {
+            assert.equal(findSubj.length,1,'More then one Subject is Un-Implemented.' + findSubj.length);
+            ret.rawSubj = Utils.getNodeValues(nodeList, findSubj[0]);
+            VerbBase.processNode('subj', ret.rawSubj, ret);
+        }
+        // process object
+        let findDObj = Utils.checkChildLinks(verbNode, 'dobj');
+        let findIObj = Utils.checkChildLinks(verbNode, 'iobj');
+        assert.equal(findIObj.length,0,'Indirect object is Un-Implemented.');
+        if (cop) {
+            findDObj.push(verbNode.getTokenId());
+        }
+        if (findDObj.length) {
+            let oval = [];
+            for (let obj_ of findDObj) {
+                oval.push(Utils.getNodeValues(nodeList, obj_));
+            }
+            ret.rawObj = oval.join(',');
+            VerbBase.processNode('obj', ret.rawObj, ret);
+        }
+        // process [xc]comp
+        let XCcomp = Utils.checkChildLinks(verbNode, '[xc]comp');
+        if (XCcomp.length) {
+            assert.equal(XCcomp.length, 1, 'more than one [xc]comp is Un-Implemented.' + XCcomp.length);
+            ret.comp = XCcomp[0]; // this will be just a tokenID...
+        }
+        if (ret.rawSubj || ret.rawObj || (ret.rawVerbAdvMod && ret.rawVerbMod) || (ret.verbModWho && ret.verbModWhat)) {
+            return [true, {vb: ret}];
+        } else {
+            return [false, {}];
+        }
     }
 }
 

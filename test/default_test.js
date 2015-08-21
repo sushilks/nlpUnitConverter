@@ -20,31 +20,31 @@ describe('Grammar Type:Default Test', function() {
     it('By default time is expressed in minutes.', ()=>{
         return TUtils.processExp(nlp, 'By default time is expressed in minutes.')
             .then(function(res) {
-                assert.equal(res, 'Default [unit] for [time] is [minutes]');
+                assert.equal(res, 'DefaultValue Data [{"defaultWhat":"unit","defaultFor":"time","default":"minutes"}]');
             });
     });
     it('The default unit for foo is Zque.', ()=>{
         return TUtils.processExp(nlp, 'The default unit for foo is Zque.')
             .then(function(res) {
-                assert.equal(res[0], 'Default [unit] for [foo] is [Zque]');
+                assert.equal(res[0], 'DefaultValue Data [{"defaultWhat":"unit","defaultFor":"foo","default":"Zque"}]');
             });
     });
     it('The default state of water is liquid.', ()=>{
         return TUtils.processExp(nlp, 'The default state of water is liquid.')
             .then(function(res) {
-                assert.equal(res, 'Default [state] for [water] is [liquid]');
+                assert.equal(res, 'DefaultValue Data [{"defaultWhat":"state","defaultFor":"water","default":"liquid"}]');
             });
     });
     it('default state of water is liquid.', ()=>{
         return TUtils.processExp(nlp, 'default state of water is liquid.')
             .then(function(res) {
-                assert.equal(res, 'Default [state] for [water] is [liquid]');
+                assert.equal(res, 'DefaultValue Data [{"defaultWhat":"state","defaultFor":"water","default":"liquid"}]');
             });
     });
     it('Default state of ZWater is pLiquid.', ()=>{
         return TUtils.processExp(nlp, 'Default state of ZWater is pLiquid.')
             .then(function(res) {
-                assert.equal(res, 'Default [state] for [ZWater] is [pLiquid]');
+                assert.equal(res, 'DefaultValue Data [{"defaultWhat":"state","defaultFor":"ZWater","default":"pLiquid"}]');
             });
     });
     it('neg-2', ()=>{
@@ -56,14 +56,14 @@ describe('Grammar Type:Default Test', function() {
     it('the default nature of people is to be good.', ()=>{
         return TUtils.processExp(nlp, 'the default nature of people is to be good.')
             .then(function(res) {
-                assert.equal(res, 'Default [nature] for [people] is [good]');
+                assert.equal(res, 'DefaultValue Data [{"defaultWhat":"nature","defaultFor":"people","default":"good"}]');
             });
     });
 
-    it('By default Time is in specified in Minutes.', ()=>{
-        return TUtils.processExp(nlp, 'By default Time is in specified in Minutes.')
+    it('By default Time is specified in Minutes.', ()=>{
+        return TUtils.processExp(nlp, 'By default Time is specified in Minutes.')
             .then(function(res) {
-                assert.equal(res, 'Default [unit] for [Time] is [Minutes]');
+                assert.equal(res, 'DefaultValue Data [{"defaultWhat":"unit","defaultFor":"Time","default":"Minutes"}]');
             });
     });
 
