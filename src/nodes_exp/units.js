@@ -50,11 +50,11 @@ class Units extends BaseExp {
         }
         let re1 = Utils.kMatch(vb, 'subj', /unit/i);
         if (re1 && 'subjWho' in vb && 'obj' in vb) {
-            let rep1 = vb.obj.match(',([^,>]*)>compound>');
-            let vo = vb.obj;//.replace('>compound>', ' ').replace(',', ' ');
-            if(rep1) {
-                vo = vo.replace(',' + rep1[1] + '>compound>', ' ' + rep1[1] + ' ');
-            }
+            //let rep1 = vb.obj.match(',([^,>]*)>compound>');
+            let vo = vb.obj.replace('>compound>', ' ');
+            //if(rep1) {
+            //    vo = vo.replace(',' + rep1[1] + '>compound>', ' ' + rep1[1] + ' ');
+           // }
             //console.log('UNIT = [' + vo + ']');
             let r = [true, {'unitsFor': vb.subjWho, 'units' : vo.split(' ')}];
             //console.log("RETURNING r=" + JSON.stringify(r));
