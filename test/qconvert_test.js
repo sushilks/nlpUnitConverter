@@ -67,6 +67,24 @@ describe('Explanation Type:Question Converstion Test', function() {
             });
     }).bind(null, txt, res));
 
+    txt = 'How many XX are there in two YY?';
+    res = 'QConv Data [{"convTo":"XX","convFrom":"YY","fromValue":2}]';
+    it(txt, (function(txt, res) {
+        return TUtils.processExp(nlp, txt)
+            .then(function(ret) {
+                assert.equal(ret, res);
+            });
+    }).bind(null, txt, res));
+
+    txt = 'How many XX are in 2 YY?';
+    res = 'QConv Data [{"convTo":"XX","convFrom":"YY","fromValue":2}]';
+    it(txt, (function(txt, res) {
+        return TUtils.processExp(nlp, txt)
+            .then(function(ret) {
+                assert.equal(ret, res);
+            });
+    }).bind(null, txt, res));
+
 
     /*
         txt = 'How many YY in 60 XX?';
