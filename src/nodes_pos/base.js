@@ -89,16 +89,19 @@ class BaseNode {
             return this.getToken();
         }
         // not sure how to handle more than one grammar match
-        let ret = '';
-        let first = true;
+        let ret = [];
+        let r = '';
         for (let idx in g) {
-            if (!first) {
-                ret = ret + ',';
+            if (g[idx].getName().match(/(appos|compound)/i)) {
+                r = g[idx].getValues(r);
+            } else {
+                ret.push(g[idx].getValues());
             }
-            ret = ret + g[idx].getValues();
-            first = false;
         }
-        return ret;
+        if (r !== '') {
+            ret.push(r);
+        }
+        return ret.join(',');
     }
 
     noOfChildren() {

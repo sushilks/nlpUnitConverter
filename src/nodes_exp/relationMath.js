@@ -84,8 +84,15 @@ class relationMath extends BaseExp {
             n2Name = re2[1];
             n2Cnt = Utils.textToNumber(re2[2]);
         } else if (dt2 != '') {
-            n2Name = dt2;
-            n2Cnt = 1;
+            // check for 'Twenty Moo is equal to 4 hundred Boo.'
+            let rdt2 = dt2.match(/(.*) ([^ ]*)$/);
+            if (rdt2) {
+                n2Cnt = Utils.textToNumber(rdt2[1]);
+                n2Name = rdt2[2];
+            } else {
+                n2Name = dt2;
+                n2Cnt = 1;
+            }
         }
         if (n1Name === '' || n2Name === '') {
             return [false, {}];

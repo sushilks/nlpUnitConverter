@@ -40,7 +40,7 @@ describe('Explanation Type:RelationMath Test', function() {
     }).bind(null, txt, res));
 
     txt = 'Twenty Moo is equal to 4 hundred Boo.';
-    res = 'Relation Data [{"nodeFrom":"Moo","nodeTo":"Boo","conv":0.05}]';
+    res = 'Relation Data [{"nodeFrom":"Moo","nodeTo":"Boo","conv":20}]';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {

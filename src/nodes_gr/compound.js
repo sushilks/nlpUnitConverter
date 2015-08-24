@@ -14,15 +14,13 @@ class Compound {
     getName() {
         return 'Compound';
     }
-    getValues() {
+    getValues( r = '') {
+        let val = (r !== '') ? r : this.nodes.getNodeMap(this.selfNodeId).getToken();
         if (this.isNumber) {
-            return this.nodes.getNodeMap(this.compoundToken).getValues() + ' ' +
-                this.nodes.getTokens().getToken(this.selfNodeId);
-
+            return this.nodes.getNodeMap(this.compoundToken).getValues() + ' ' + val;
         } else {
-            return this.nodes.getTokens().getToken(this.selfNodeId) + '>compound>' +
+            return val + '>compound>' +
                 this.nodes.getNodeMap(this.compoundToken).getValues();
-
         }
     }
     text() {

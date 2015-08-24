@@ -13,8 +13,8 @@ class APPOS {
     getName() {
         return 'appos';
     }
-    getValues() {
-        let val = this.nodes.getNodeMap(this.selfNodeId).getToken();
+    getValues(r = '') {
+        let val = (r !== '') ? r : this.nodes.getNodeMap(this.selfNodeId).getToken();
         for (let tid of this.apposList) {
             val = val + ' ' + this.nodes.getNodeMap(tid).getValues();
         }

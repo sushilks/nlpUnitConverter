@@ -76,6 +76,7 @@ describe('Explanation Type:Question Converstion Test', function() {
             });
     }).bind(null, txt, res));
 
+    /*
     txt = 'How many XX are in 2 YY?';
     res = 'QConv Data [{"convTo":"XX","convFrom":"YY","fromValue":2}]';
     it(txt, (function(txt, res) {
@@ -85,8 +86,6 @@ describe('Explanation Type:Question Converstion Test', function() {
             });
     }).bind(null, txt, res));
 
-
-    /*
         txt = 'How many YY in 60 XX?';
         res = 'QConv Convert From [xx] Value [60] TO [yy]';
         it(txt, (function(txt, res) {
