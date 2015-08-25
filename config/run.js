@@ -5,11 +5,42 @@
 module.exports = function (grunt, options) {
     var fn = {};
     fn.tasks = {};
+    fn.tasks.shell =  {
+        'server-bg' : {
+            command: 'node src/corenlp_server.js >& server-bg.log',
+            options: {
+                async: true,
+                stopIfStarted: true,
+                stdout: false,
+                stderr: true,
+                execOptions: {
+                    cwd: './'
+                }
+            }
+        },
+        'server-bg-wait' : {
+            command: 'sleep 2',
+            options: {
+                async: false,
+                stdout: false,
+                stderr: false,
+            }
+        },
+        'server-bg-kill' : {
+            command: 'pkill -f "node src/corenlp_server.js" ',
+            options: {
+                async: false,
+                stdout: false,
+                stderr: false,
+                failOnError: false
+            }
+        }
+    };
     fn.tasks.run = {
         'server': {
                 cmd: 'node',
                 args: [
-                 'src/corenlp_server.js'
+                    'src/corenlp_server.js'
                  ]
         },
         'client': {
