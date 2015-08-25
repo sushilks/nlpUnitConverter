@@ -26,6 +26,14 @@ module.exports = function (grunt, options) {
                 stderr: false,
             }
         },
+        'server-bg-status' : {
+            command: 'ps -eaf | grep "node src/corenlp_server.js" | grep -v grep',
+            options: {
+                async: false,
+                stdout: true,
+                stderr: false,
+            }
+        },
         'server-bg-kill' : {
             command: 'pkill -f "node src/corenlp_server.js" ',
             options: {

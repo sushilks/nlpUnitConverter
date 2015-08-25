@@ -64,6 +64,7 @@ module.exports = function (grunt) {
     grunt.registerTask('run-client', ['run:client']);
     grunt.registerTask('run-client-debug', ['run:client-debug']);
     grunt.registerTask('run-server', ['run:server']);
-    grunt.registerTask('start-server-bg', ['shell:server-bg-kill', 'shell:server-bg', 'shell:server-bg-wait']);
-    grunt.registerTask('stop-server-bg', ['shell:server-bg-kill']);
+    grunt.registerTask('server-start', ['shell:server-bg-kill', 'shell:server-bg', 'shell:server-bg-wait']);
+    grunt.registerTask('server-stop', ['shell:server-bg-kill']);
+    grunt.registerTask('server-status', ['shell:server-bg-status']);
 };
