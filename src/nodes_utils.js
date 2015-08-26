@@ -29,6 +29,10 @@ export function getNodeValues(nodeList, tknId) {
     return nd.getValues();
 }
 
+export function normalizeUnit(dt) {
+    return dt.toLowerCase().replace(/(s|ses|shes|ches|xes|zes)$/,'');
+}
+
 // Check and make sure all the child nodes for the current nodes
 // have there grammar processed.
 export function checkAndProcessNodeGrammar(nodeList, node) {
@@ -292,7 +296,7 @@ export function textToNumber(s) {
 export function createGraph(gr, name, attr) {
     attr.name = name;
     gr[name] = new Jsnx.DiGraph(null, attr);
-    console.log('CREATED [' + name + '] = ' + gr[name]);
+    //console.log('CREATED [' + name + '] = ' + gr[name]);
     return gr[name];
 }
 

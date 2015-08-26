@@ -8,6 +8,8 @@ var NLPClient = require('./nlp_client.js');
 var NLPPP = require('./nlp_pp');
 var Nodes = require('./nodes.js');
 var FS = require('fs');
+var Ut = require('util');
+var readline = require('readline');
 
 //import NLPPP from './nlp_pp';
 //var ToDefine = require('./to_define');
@@ -25,6 +27,9 @@ parser.addArgument(
 parser.addArgument(
     [ '-d', '--debug'],
     { help: 'debug mode', action:'storeTrue'});
+parser.addArgument(
+    [ '-c', '--cli'],
+    { help: 'start a CLI', action:'storeTrue'});
 parser.addArgument(
     [ '-p', '--port'],
     { help: 'port on which server is running'});
@@ -77,12 +82,13 @@ function parse(data, gr, dbg = false) {
         }
     }
     let rt = pp.getSentenceDep(0).getRootToken();
+    let log_dt = '';
     if (dbg) {
         console.log('--------------------------------------------------');
         console.log('Processing :: ' + pp.getSentence(0) + ' ROOT:' +
             rt + '[' + pp.getTokens(0).getToken(rt) + ']');
     } else {
-        console.log('Processing :: ' + pp.getSentence(0));
+        log_dt = 'Processing :: ' + pp.getSentence(0);
     }
     let nd = new Nodes(pp.getSentenceDep(0), dbg);
     nd.processAllGrammar();
@@ -106,6 +112,14 @@ function parse(data, gr, dbg = false) {
             console.log('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
                 + '] Matched Text  ::' + nd.expMatches[idx].text());
         }
+    } else {
+        log_dt += ' \tParsedMeaning[';
+        for (idx in nd.expMatches) {
+            //console.log('   Exp[' + idx + '-' + nd.expMatches[idx].getName()
+            //    + ']::' + nd.expMatches[idx].text());
+            log_dt += nd.expMatches[idx].getName() + ' ';
+        }
+        console.log(log_dt + ']');
     }
     for (idx in nd.expMatches) {
         nd.expMatches[idx].exec(gr);
@@ -117,7 +131,7 @@ function parse(data, gr, dbg = false) {
   * Send a text to the Client get the
   * nlp response and process it
   */
-function process(client, txt, gr={}, dbg=false) {
+function processText(client, txt, gr={}, dbg=false) {
     return new Promise(
         function(resolve, reject) {
             client.req(txt).then(function(res) {
@@ -139,7 +153,7 @@ function processList(client, txtList, gr, dbg, fn) {
         fn();
         return;
     }
-    return process(client, t, gr, dbg)
+    return processText(client, t, gr, dbg)
     .then(function(r) {
             if (txtList.length) {
                 processList(client, txtList, gr, dbg, fn);
@@ -172,33 +186,27 @@ if (args.input && args.input !== '') {
                 console.log('   Details of Edges:' + JSON.stringify(gr[gkey].edges(true)));
             }
         }
+        if (args.cli) {
+            var rl = readline.createInterface({
+                input:process.stdin,
+                output: process.stdout
+            });
+            rl.setPrompt('>');
+            rl.prompt();
+            rl.on('line', function(line){
+                processText(nlp, line, gr, args.debug)
+                .then(function(r){
+                        rl.prompt();
+                    });
+            }).on('close', function() {
+                console.log('Done with CLI');
+            });
+        }
+
     });
 } else if (args.txt && args.txt !== '') {
-        process(nlp, args.txt, gr, args.debug)
+        processText(nlp, args.txt, gr, args.debug)
             .then(function (r) {
                 console.log("Done r=" + r);
             });
-} else {
-    process(nlp, 'Time is  defined to be a Measure.')
-        .then(function (r) {
-            return process(nlp, 'Time is a Measure.');
-        })
-        .then(function (r) {
-            return process(nlp, 'Time is defined as a Measure.');
-        })
-        .then(function (r) {
-            return process(nlp, 'Time is a type of Measure.');
-        })
-        .then(function (r) {
-            return process(nlp, 'Time is of type Measure.');
-        })
-        .then(function (r) {
-            return process(nlp, 'Time is defined to be a type of Measure.');
-        })
-        .then(function (r) {
-            return process(nlp, 'Measuring time is fun.');
-        })
-        .then(function (r) {
-            return process(nlp, 'time passes by quick.');
-        });
 }

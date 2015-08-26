@@ -3,21 +3,10 @@
 var Utils = require('../nodes_utils');
 var BaseExp = require('./base_exp.js');
 
-//var assert = require('assert');
-
-/*
-*/
 
 class relationMath extends BaseExp {
     constructor(nodes, matchResult) {
         super(nodes, matchResult);
-        /*
-        this.nodeFrom = matchResult.nodeFrom;
-        this.nodeTo = matchResult.nodeTo;
-        this.conv = matchResult.conv;
-        this.nodes = nodes;
-        this.dbg = nodes.dbg;
-        */
         this.name = 'Relation';
     }
 
@@ -26,8 +15,8 @@ class relationMath extends BaseExp {
     }
     exec(gr) {
 //        console.log('Adding to graph:' + this.getName());
-        let nFrom = this.result.nodeFrom.replace(/s$/,'');
-        let nTo = this.result.nodeTo.replace(/s$/,'');
+        let nFrom = Utils.normalizeUnit(this.result.nodeFrom);
+        let nTo = Utils.normalizeUnit(this.result.nodeTo);
         for (let k in gr) {
             let g = gr[k];
             if (g.hasNode(nFrom) && g.hasNode(nTo)) {

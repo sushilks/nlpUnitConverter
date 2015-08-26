@@ -23,8 +23,8 @@ class QConvert extends BaseExp {
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());
 
-        let nFrom = this.result.convFrom.replace(/s$/,'');
-        let nTo = this.result.convTo.replace(/s$/,'');
+        let nFrom = Utils.normalizeUnit(this.result.convFrom);
+        let nTo = Utils.normalizeUnit(this.result.convTo);
         for (let k in gr) {
             let g = gr[k];
             //console.log('LOOKING FOR [' + nFrom + '] [' + nTo + ']');
@@ -77,6 +77,10 @@ class QConvert extends BaseExp {
         {
             let re1 = Utils.kMatch(vb, 'subj', /([^>,]*).*many.*how/i);
             let re2 = Utils.kMatch(vb, 'obj', /([^>,]*)>nummod>([^>,]*)/i);
+            if (!re2) {
+                re2 = Utils.kMatch(vb, 'verbModWhat', /([^>,]*)>nummod>([^>,]*)/i);
+            }
+
 
             if (re1 && re2) {
                 let r = [true, {'convTo': re1[1], 'convFrom': re2[1], 'fromValue': re2[2]}];

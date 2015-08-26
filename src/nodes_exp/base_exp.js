@@ -1,10 +1,6 @@
 'use strict';
 
 var Utils = require('../nodes_utils');
-//var assert = require('assert');
-
-/*
-*/
 
 class ExpBase {
     constructor(nodes, matchResult) {

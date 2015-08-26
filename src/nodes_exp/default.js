@@ -4,8 +4,6 @@ var Utils = require('../nodes_utils');
 var BaseExp = require('./base_exp.js');
 var assert = require('assert');
 
-/*
-*/
 
 class DefaultUnit extends BaseExp {
     constructor(nodes, matchResult) {

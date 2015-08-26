@@ -4,7 +4,7 @@ var NLP = require('stanford-corenlp');
 
 var config = {
 
-    'nlpPath': '/Users/sushil/homework/corenlp', //the path of corenlp
+    'nlpPath': './corenlp', //the path of corenlp
     'version': '3.5.2', //what version of corenlp are you using
     'annotators': ['tokenize', 'ssplit', 'pos', 'lemma', 'ner', 'parse', 'dcoref'] //optional!
 

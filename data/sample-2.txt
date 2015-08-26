@@ -7,7 +7,7 @@ There are 1000 Meters in a KiloMeter.
 There are 10 CentiMeters in a Meter.
 One Foot is 12 Inch.
 One Inch is 2.54 CentiMeters.
-12 Lines is one Inch.
+12 Line is one Inch.
 One Yard is 3 Foot.
 One Mile is 5280 Foot.
 One League is 3 Miles.

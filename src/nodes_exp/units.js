@@ -27,8 +27,7 @@ class Units extends BaseExp {
         let units = this.result.units;
         units.forEach(function(x) {
             //console.log(' UNIT =  ' + x)
-            let r = x.replace(/s$/,'');
-            g.addNode( r, {unitFor: nm});
+            g.addNode( x, {unitFor: nm});
         });
     }
     static checkValid(gr) {
@@ -52,11 +51,12 @@ class Units extends BaseExp {
         if (re1 && 'subjWho' in vb && 'obj' in vb) {
             //let rep1 = vb.obj.match(',([^,>]*)>compound>');
             let vo = vb.obj.replace('>compound>', ' ');
-            //if(rep1) {
-            //    vo = vo.replace(',' + rep1[1] + '>compound>', ' ' + rep1[1] + ' ');
-           // }
-            //console.log('UNIT = [' + vo + ']');
-            let r = [true, {'unitsFor': vb.subjWho, 'units' : vo.split(' ')}];
+            vo = vo.toLowerCase();
+            let voa = vo.split(' ');
+            for(let idx in voa) {
+                voa[idx] = Utils.normalizeUnit(voa[idx]);
+            }
+            let r = [true, {'unitsFor': vb.subjWho, 'units' : voa}];
             //console.log("RETURNING r=" + JSON.stringify(r));
             return r;
         }
