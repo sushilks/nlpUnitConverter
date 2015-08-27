@@ -73,9 +73,10 @@ press 'Ctrl-D' to exit the CLI
 
 It's possible to enable debug while in CLI by running the following commands (This is work in progress and not working right now. 
 Primarily becase the debug objects are disconnected and the eparser module is unable to reach the other debug modules to set the config).
-'>enable debug .*'
+
+`>enable debug .*`
 or
-'>enable debug 
+`>enable debug eparser:.*` 
 
 ## Debugging 
 The code uses debug module, so debuggin is enabled by setting the "DEBUG" variable 
