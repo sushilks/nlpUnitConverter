@@ -2,6 +2,7 @@
 
 var Utils = require('../nodes_utils');
 var assert = require('assert');
+var dbg = require('debug')('node:gr:appos');
 
 class APPOS {
     constructor(nodes, matchResult) {
@@ -36,10 +37,8 @@ class APPOS {
             for (let tid of t1) {
                 let ndPOS = nodeList.getNodeMap(tid).getTokenPOS();
                 if (ndPOS.match(/NN/)) {
-                    if (nodeList.dbg) {
-                        console.log('  -     APPOS[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(tid)
-                            + ']:' + tid);
-                    }
+                    dbg('  -     APPOS[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(tid)
+                        + ']:' + tid);
                     retList.push(tid)
                 }
             }

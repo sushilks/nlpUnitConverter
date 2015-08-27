@@ -6,6 +6,8 @@ var assert = require('assert');
 var NMod = require('./nmod');
 var AdvMod = require('./advmod');
 var DEP = require('./dep');
+var dbg = require('debug')('node:gr:verb');
+
 /*
 NN----(subj)---->VB(is/defined)---xcomp/nmod--->NN
 NN1---(subj)--->NN2 with NN2--cop->VBZ(is)
@@ -120,9 +122,7 @@ class VerbBase {
         {//What
             let marker = 'in|of|as|into';
             processed += '|' + marker;
-            //console.log('--------------------------- ' + marker + ' == ' + rawObj);
             let re = rawObj.match(new RegExp('[^,]*>nmod:(' + marker + ')>([^,]*)'));
-            //console.log(re);
             if (re && re.length) {
                 ret[ntype + 'What'] = re[2];
             }

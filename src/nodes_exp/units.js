@@ -3,6 +3,7 @@
 var Utils = require('../nodes_utils');
 var BaseExp = require('./base_exp.js');
 //var assert = require('assert');
+var dbg = require('debug')('node:exp:units');
 
 /*
 */
@@ -17,8 +18,8 @@ class Units extends BaseExp {
         return ['VerbBase'];
     }
     exec(gr) {
-        //console.log('Adding to graph:' + this.getName());
-        //console.log('Graph name:' + this.getUnitsFor());
+        //dbg('Adding to graph:' + this.getName());
+        //dbg('Graph name:' + this.getUnitsFor());
         let nm = this.result.unitsFor;
         let g = gr[nm];
         if (!g) {
@@ -26,7 +27,7 @@ class Units extends BaseExp {
         }
         let units = this.result.units;
         units.forEach(function(x) {
-            //console.log(' UNIT =  ' + x)
+            //dbg(' UNIT =  ' + x)
             g.addNode( x, {unitFor: nm});
         });
     }
@@ -34,17 +35,11 @@ class Units extends BaseExp {
         const VerbMatch = ['is', 'expressed', 'are'];
 
         // check if there is a subject + object and they are connected by regex
-        if (false && gr.dbg) {
-            console.log('     verb:' + gr.verb +
-                ' subj:' + gr.verbSubj +
-                ' obj:' + gr.verbObj);
-        }
         let nodes = gr.nodes;
         let vb = gr.dict();
-        if (gr.dbg) {
-            console.log('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
-        }
+        //dbg('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
         if (!Utils.checkMatchAny(vb.verb, VerbMatch)) {
+            //dbg('Failed-to-find');
             return [false, {}];
         }
         let re1 = Utils.kMatch(vb, 'subj', /unit/i);
@@ -57,10 +52,11 @@ class Units extends BaseExp {
                 voa[idx] = Utils.normalizeUnit(voa[idx]);
             }
             let r = [true, {'unitsFor': vb.subjWho, 'units' : voa}];
-            //console.log("RETURNING r=" + JSON.stringify(r));
+            dbg('Found r=' + JSON.stringify(r));
             return r;
         }
 
+        //dbg('Failed-to-find');
         return [false, {}];
     }
 }

@@ -5,7 +5,7 @@
 import NLPPP from '../src/nlp_pp.js';
 var assert = require('assert');
 
-describe('NLPPP Test', function() {
+describe('NLPPP Test::', function() {
 
     let pp1, pp2;
 

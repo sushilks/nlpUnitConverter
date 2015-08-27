@@ -3,7 +3,7 @@ var TUtils = require('./test_utils.js');
 var NLPClient = require('./../src/nlp_client.js');
 var assert = require('assert');
 
-describe('Explanation Type:RelationMath Test', function() {
+describe('Explanation Type:RelationMath Test ::', function() {
     let nlp ;
 
     before(()=>{

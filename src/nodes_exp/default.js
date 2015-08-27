@@ -3,6 +3,7 @@
 var Utils = require('../nodes_utils');
 var BaseExp = require('./base_exp.js');
 var assert = require('assert');
+var dbg = require('debug')('node:exp:default');
 
 
 class DefaultUnit extends BaseExp {
@@ -24,9 +25,7 @@ class DefaultUnit extends BaseExp {
         // check if there is a subject + object and they are connected by regex
         let nodes = gr.nodes;
         let vb = gr.dict();
-        if (gr.dbg) {
-            console.log('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
-        }
+        //dbg('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
 
         if (!Utils.checkMatchAny(vb.verb, VerbMatch)) {
             return [false, {}];
@@ -51,7 +50,7 @@ class DefaultUnit extends BaseExp {
                 obj = nodes.getNodeMap(objTkn).getValues();
             }
             let r = [true, {'defaultWhat': re1[1], 'defaultFor': defaultFor, 'default': obj}];
-            //console.log("RETURNING r=" + JSON.stringify(r));
+            dbg('Found-1 r=' + JSON.stringify(r));
             return r;
         }
 
@@ -65,9 +64,10 @@ class DefaultUnit extends BaseExp {
             def1.match(/default/i) &&
             vb.verb.match(/(expressed|specified)/i)) {
             let r = [true, {'defaultWhat': 'unit', 'defaultFor': vb.subj, 'default': vb.verbModWhat}];
-                //console.log("RETURNING r=" + JSON.stringify(r));
-                return r;
+            dbg('Found-2 r=' + JSON.stringify(r));
+            return r;
         }
+        //dbg('Failed-to-find');
 
         return [false, {}];
     }

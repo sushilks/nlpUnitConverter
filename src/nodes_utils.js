@@ -30,7 +30,13 @@ export function getNodeValues(nodeList, tknId) {
 }
 
 export function normalizeUnit(dt) {
-    return dt.toLowerCase().replace(/(s|ses|shes|ches|xes|zes)$/,'');
+    let r = dt.toLowerCase();
+    r = r.replace(/shes$/,'sh')
+        .replace(/ches$/,'ch')
+        .replace(/xes$/,'x')
+        .replace(/zes$/,'z')
+        .replace(/s$/,'');
+    return r;
 }
 
 // Check and make sure all the child nodes for the current nodes

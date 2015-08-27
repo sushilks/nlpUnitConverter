@@ -2,6 +2,7 @@
 
 var Utils = require('../nodes_utils');
 var assert = require('assert');
+var dbg = require('debug')('node:gr:compound');
 
 class Compound {
     constructor(nodes, matchResult) {
@@ -38,10 +39,8 @@ class Compound {
             let ndToken = node.getToken();
             let ndPOS = nodeList.getNodeMap(t1[0]).getTokenPOS();
             if (ndPOS.match(/(NN|CD)/)) {
-                if (nodeList.dbg) {
-                    console.log('  - COMPOUND[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(t1[0])
-                        + ']:' + t1[0] );
-                }
+                dbg('  - COMPOUND[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(t1[0])
+                    + ']:' + t1[0] );
                 return [true, {'selfNode': node.getTokenId(), 'compoundNode': t1[0], 'isNumber':(ndPOS.match(/CD/)? true:false)}];
             }
         }

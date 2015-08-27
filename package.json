@@ -27,9 +27,10 @@
     "grunt-babel": "~5.0",
     "grunt-run": "",
     "stanford-corenlp": "0.3.3",
-    "argparse":"~1.0",
-    "prompt":"",
-    "jsnetworkx":"~0.3"
+    "argparse": "~1.0",
+    "prompt": "",
+    "debug": "",
+    "jsnetworkx": "~0.3"
   },
  "license": "MIT",
   "engines": {

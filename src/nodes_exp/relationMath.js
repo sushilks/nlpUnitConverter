@@ -2,6 +2,7 @@
 
 var Utils = require('../nodes_utils');
 var BaseExp = require('./base_exp.js');
+var dbg = require('debug')('node:exp:rel');
 
 
 class relationMath extends BaseExp {
@@ -20,10 +21,8 @@ class relationMath extends BaseExp {
         for (let k in gr) {
             let g = gr[k];
             if (g.hasNode(nFrom) && g.hasNode(nTo)) {
-                if (this.dbg) {
-                    console.log(this.getName() + ' :: Adding to graph From: ' +
-                        nFrom + ' TO: ' + nTo + ' Conv : ' + this.getConv());
-                }
+                dbg(this.getName() + ' :: Adding to graph From: ' +
+                    nFrom + ' TO: ' + nTo + ' Conv : ' + this.result.conv);
                 g.addEdge(nFrom, nTo, {conv: this.result.conv});
                 g.addEdge(nTo, nFrom, {conv: 1.0/this.result.conv});
                 return;
@@ -37,15 +36,15 @@ class relationMath extends BaseExp {
 
         let nodes = gr.nodes;
         let vb = gr.dict(); //nodes.getNodeMap(gr.verb).getValues();
-        if (gr.dbg) {
-            console.log('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
-        }
+        //dbg('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
 
         if (!Utils.checkMatchAny(vb.verb, VerbMatch)) {
+            //dbg('Failed-to-find');
             return [false, {}];
         }
 
         if (!('subj' in vb)) {
+            //dbg('Failed-to-find');
             return [false, {}];
         }
 
@@ -54,7 +53,10 @@ class relationMath extends BaseExp {
         if (re1) {
             n1Name = re1[1];
             n1Cnt = Utils.textToNumber(re1[3]);
-        } else return [false, {}];
+        } else {
+            //dbg('Failed-to-find');
+            return [false, {}];
+        }
 
         let dt2;
 
@@ -66,7 +68,10 @@ class relationMath extends BaseExp {
             //There are 60 Seconds in a Minute.
             //{"verb":"are","rawSubj":"Seconds>nmod:in>Minute,Seconds>nummod>60","subjWhat":"Minute","subj":"Seconds>nummod>60"}
             dt2 = vb.subjWhat;
-        } else return [false, {}];
+        } else {
+            //dbg('Failed-to-find');
+            return [false, {}];
+        }
 
         let re2 = dt2.match(/([^,>]*)>nummod>([^,>]*)/);
         if(re2) {
@@ -84,9 +89,12 @@ class relationMath extends BaseExp {
             }
         }
         if (n1Name === '' || n2Name === '') {
+            //dbg('Failed-to-find');
             return [false, {}];
         }
-        return [true, { 'nodeFrom' : n1Name, 'nodeTo' : n2Name, 'conv' : n2Cnt/n1Cnt}]
+        let r = [true, { 'nodeFrom' : n1Name, 'nodeTo' : n2Name, 'conv' : n2Cnt/n1Cnt}]
+        dbg('Found r=' + JSON.stringify(r));
+        return r;
     }
 }
 

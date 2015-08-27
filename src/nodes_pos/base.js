@@ -9,13 +9,13 @@ A Node needs the following capabilities
 need access to parent node with link type.
 
 */
+var dbg = require('debug')('node:pos:base');
 
 
 class BaseNode {
     constructor(nodes, tknId, level, noprocess) {
         let name = tknId + '_' + nodes.tkn.getToken(tknId) + '_' + nodes.tkn.getTokenPOS(tknId);
         this.name = (name === undefined) ? 'Unnamed-Node' : name;
-        this.dbg = nodes.dbg;
         this.nodes = nodes;
         this.tknId = tknId;
         this.level = level;
@@ -24,9 +24,7 @@ class BaseNode {
         this.grProcessingOngoing = false;
         this.grProcessingDone = false;
         this.grMatches = [];
-        if (this.dbg) {
-            console.log(this.tabs() + ' Creating Node with Name : ' + this.name);
-        }
+        dbg(this.tabs() + ' Creating Node with Name : ' + this.name);
         if (noprocess === true) {
             this.nd = null;
         } else {
@@ -114,7 +112,7 @@ class BaseNode {
         for (var i = 0; i < tab; ++i ){
             tg += '\t';
         }
-        console.log(tg + 'Node[' + this.name + ']:: List of children[' +
+        dbg(tg + 'Node[' + this.name + ']:: List of children[' +
             this.noOfChildren() + ']');
         for (var loc in this.children) {
             this.children[loc].node.print(tab + 1);
@@ -128,9 +126,7 @@ class BaseNode {
         this.parent.type = type;
     }
     addChild(tkn, type) {
-        if (this.dbg) {
-            console.log(this.tabs() + ' BASE:: addChild adding tkn:' + tkn + ' linktype:' + type);
-        }
+        dbg(this.tabs() + ' BASE:: addChild adding tkn:' + tkn + ' linktype:' + type);
         this.children[tkn] = {
             'type': type,
             'node': this.nodes.process(tkn, this.level + 1),

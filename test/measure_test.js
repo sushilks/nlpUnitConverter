@@ -4,7 +4,7 @@ var NLPClient = require('./../src/nlp_client.js');
 var assert = require('assert');
 
 
-describe('Grammar Type:Define Test', function() {
+describe('Grammar Type:Define Test::', function() {
     let nlp ;
 
     before(()=>{

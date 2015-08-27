@@ -2,6 +2,8 @@
 
 var Utils = require('../nodes_utils');
 var assert = require('assert');
+var debug = require('debug');
+var dbg = require('debug')('node:gr:advmod');
 
 class AdvMOD {
     constructor(nodes, matchResult) {
@@ -37,10 +39,8 @@ class AdvMOD {
                 let ndPOS = nodeList.getNodeMap(tid).getTokenPOS();
                 //if (ndPOS.match(/(JJ|WRB)/)) {
                 if (true) {
-                    if (nodeList.dbg) {
-                        console.log('  -     MOD[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(tid)
-                            + ']:' + tid);
-                    }
+                    dbg('  -     MOD[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(tid)
+                        + ']:' + tid);
                     retList.push(tid)
                 }
             }

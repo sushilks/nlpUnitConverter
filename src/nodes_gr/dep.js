@@ -2,6 +2,7 @@
 
 var Utils = require('../nodes_utils');
 var assert = require('assert');
+var dbg = require('debug')('node:gr:dep');
 
 class DEP {
     constructor(nodes, matchResult) {
@@ -36,10 +37,8 @@ class DEP {
             for (let tid of t1) {
                 let ndPOS = nodeList.getNodeMap(tid).getTokenPOS();
                 if (ndPOS.match(/(JJ|WRB|NN.*)/)) {
-                    if (nodeList.dbg) {
-                        console.log('  -     DEP[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(tid)
-                            + ']:' + tid);
-                    }
+                    dbg('  -     DEP[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(tid)
+                        + ']:' + tid);
                     retList.push(tid)
                 }
             }

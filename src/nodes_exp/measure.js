@@ -4,6 +4,7 @@
 var Utils = require('../nodes_utils');
 var BaseExp = require('./base_exp.js');
 var assert = require('assert');
+var dbg = require('debug')('node:exp:measure');
 /*
 This node should create a new graph and install it.
 Details of the graph :-
@@ -38,9 +39,7 @@ class DefineMeasure extends BaseExp {
         // check if there is a subject + object and they are connected by regex
         let nodes = gr.nodes;
         let vb = gr.dict(); //nodes.getNodeMap(gr.verb).getValues();
-        if (gr.dbg) {
-            console.log('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
-        }
+        //dbg('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
 
         if (!Utils.checkMatchAny(vb.verb, VerbMatch)) {
             return [false, {}];
@@ -63,13 +62,17 @@ class DefineMeasure extends BaseExp {
                    vb.verbMod.match(/defined/i)) {
             obj = vb.verbModWhat;
         } else {
+            //dbg('Failed-to-find');
             return [false, {}];
         }
 
         if (!Utils.checkMatchAny(obj, ObjMatch)) {
+            //dbg('Failed-to-find');
             return [false, {}];
         }
-        return [true, {subj: vb.subj, type: obj}];
+        let r = [true, {subj: vb.subj, type: obj}];
+        dbg('Found r=' + JSON.stringify(r));
+        return r;
     }
 }
 

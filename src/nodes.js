@@ -8,6 +8,7 @@ var gGrMapper = {};   /** To hold different grammer rules */
 var gExpMapper = {};   /** To hold different grammer rules */
 
 var normalizedPath = require('path').join(__dirname);
+var dbg = require('debug')('nodes:base');
 
 /** Load and init the nodes */
 FS.readdirSync(normalizedPath + '/nodes_pos').forEach(function(file) {
@@ -39,13 +40,12 @@ FS.readdirSync(normalizedPath + '/nodes_exp').forEach(function(file) {
     */
 
 class Nodes {
-    constructor(dep, dbg = false) {
+    constructor(dep) {
         this.tknNodeMap = {};
         this.dep = dep;
         this.rootToken = dep.getRootToken();
         this.tkn = dep.getTokens();
         this.nd = this.process(this.rootToken, 1);
-        this.dbg = dbg;
         this.grMatches = []; /** store all the grammar matches **/
         this.expMatches = [];
         this.diGraph = {};
@@ -76,9 +76,7 @@ class Nodes {
                 return new gNodeMapper[pat][0](this, tknId, level);
             }
         }
-        if (this.dbg) {
-            console.log('Unable to find a matching node for ' + pos + ' using default');
-        }
+        dbg('Unable to find a matching node for ' + pos + ' using default');
         return new gNodeMapper['DEFAULT'][0](this, tknId, level);
     }
 
@@ -96,9 +94,7 @@ class Nodes {
                     if (found[0]) {
                         let expHandle = new exp(this, found[1]);
                         this.expMatches.push(expHandle);
-                        if (this.dbg) {
-                            console.log('  - Found Exp[' + expHandle.getName() + '] : ' + found[0] + ' :: ' + found[1]);
-                        }
+                        dbg('  - Found Exp[' + expHandle.getName() + '] : ' + found[0] + ' :: ' + found[1]);
                     }
                 }
             }
@@ -113,11 +109,9 @@ class Nodes {
         for (var tidx = 1; tidx <= this.dep.getTokensCount(); tidx++) {
             let lnd = this.getNodeMap(tidx);
             if (lnd && !lnd.grProcessingDone && !lnd.getTokenPOS().match(/VB/)) {
-                if (this.dbg) {
-                    console.log('Processing Grammar for token ' + tidx + '   val = '
-                        + this.tkn.getToken(tidx ) + ' ND = ' + lnd
-                        + ' ND.tkn:' + lnd.getToken());
-                }
+                dbg('Processing Grammar for token ' + tidx + '   val = '
+                    + this.tkn.getToken(tidx ) + ' ND = ' + lnd
+                    + ' ND.tkn:' + lnd.getToken());
                 let res = this.processGr(tidx);
 //                if (this.dbg) {
 //                    console.log('  - Grammar Processing of lnd resulted in ' + lnd + ' res = ' + res);
@@ -128,11 +122,9 @@ class Nodes {
         for (var tidx = 1; tidx <= this.dep.getTokensCount(); tidx++) {
             let lnd = this.getNodeMap(tidx);
             if (lnd && lnd.getTokenPOS().match(/VB/)) {
-                if (this.dbg) {
-                    console.log('Processing Grammar for token ' + tidx + '   val = '
-                        + this.tkn.getToken(tidx ) + ' ND = ' + lnd
-                        + ' ND.tkn:' + lnd.getToken());
-                }
+                dbg('Processing Grammar for token ' + tidx + '   val = '
+                    + this.tkn.getToken(tidx ) + ' ND = ' + lnd
+                    + ' ND.tkn:' + lnd.getToken());
                 let res = this.processGr(tidx);
 //                if (this.dbg) {
 //                    console.log('  - Grammar Processing of lnd resulted in ' + lnd + ' res = ' + res);
@@ -158,14 +150,14 @@ class Nodes {
             for (let GRM of GRRules)
             {
                 let found = GRM.checkValid(this, nd);
-                if (this.dbg && found[0]) {
-                    console.log('  - gGrMapper Checking with tkn [' + tkn + ']');
-                    console.log('\tFound ' + JSON.stringify(found[1]));
+                if (found[0]) {
+                    dbg('  - gGrMapper Checking with tkn [' + tkn + ']');
+                    dbg('\tFound ' + JSON.stringify(found[1]));
                 }
                 if (found[0]) {
 
                     let grHandle = new GRM(this, found[1]);
-                    this.dbg && console.log('\tAdding Grammar Node:' + grHandle.getName());
+                    dbg('\tAdding Grammar Node:' + grHandle.getName());
                     nd.addGrammarMatch(grHandle);
                     this.grMatches.push(grHandle);
                     ruleHitCount++;
@@ -173,10 +165,10 @@ class Nodes {
             }
             nd.setGrammarProcessingDone();
             nd.grProcessingOngoing = false;
-            this.dbg && console.log('processGr:' + tknId + ' RETURN.');
+            dbg('processGr:' + tknId + ' RETURN.');
             return (ruleHitCount > 0);
         } else {
-            this.dbg && console.log('  - gGrMapper no hit found for tkn [' + tkn + ']');
+            dbg('  - gGrMapper no hit found for tkn [' + tkn + ']');
             nd.setGrammarProcessingDone();
             nd.grProcessingOngoing = false;
             return false;

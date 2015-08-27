@@ -1,6 +1,7 @@
 'use strict';
 
 var Utils = require('../nodes_utils');
+var dbg = require('debug')('node:exp:base');
 
 class ExpBase {
     constructor(nodes, matchResult) {

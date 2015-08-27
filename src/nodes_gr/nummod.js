@@ -2,6 +2,7 @@
 
 var Utils = require('../nodes_utils');
 var assert = require('assert');
+var dbg = require('debug')('node:gr:dep');
 
 class NumMod {
     constructor(nodes, matchResult) {
@@ -39,10 +40,8 @@ class NumMod {
             for (let idx in t1) {
                 let ndPOS = nodeList.getNodeMap(t1[idx]).getTokenPOS();
                 if (ndPOS.match(/CD/)) {
-                    if (nodeList.dbg) {
-                        console.log('  - NUMMOD[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(t1[idx])
-                            + ']:' + t1[idx]);
-                    }
+                    dbg('  - NUMMOD[' + ndToken + ']: to [' + node.nodes.getTokens().getToken(t1[idx])
+                        + ']:' + t1[idx]);
                     let c1 = node.getChild(t1[idx]);
                     link = c1.type;
                     res.push(t1[idx]);

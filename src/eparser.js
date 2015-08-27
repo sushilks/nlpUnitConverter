@@ -10,6 +10,7 @@ var Nodes = require('./nodes.js');
 var FS = require('fs');
 var Ut = require('util');
 var readline = require('readline');
+var debug = require('debug');
 
 //import NLPPP from './nlp_pp';
 //var ToDefine = require('./to_define');
@@ -54,65 +55,54 @@ function parseNodes(dep, tokens, tknid, linkType, level) {
     for (var idx = 0; idx < level; idx++) {
         str = '\t' + str;
     }
-    console.log(str);
+    //console.log(str);
     for (var id in childNodes) {
         parseNodes(dep, tokens, childNodes[id].tokenIdx, childNodes[id].type, level + 1);
     }
  }
 
-function parse(data, gr, dbg = false) {
+function parse(data, gr, dbge = false) {
     var pp = new NLPPP();
     var res = pp.read(data.body);
-    if (dbg) {
-        console.log(' Parser result : ' + JSON.stringify(res));
-        console.log(' Number of Sentences :' + pp.sentenceCount());
+    var dbg = debug('eparser:parse');
+    var dbgGr = debug('eparser:gr');
+    var dbgGrV = debug('eparser:gr:verb');
+    var dbgExp = debug('eparser:exp');
+    if (dbg.enabled) {
+        dbg(' Parser result : ' + JSON.stringify(res));
+        dbg(' Number of Sentences :' + pp.sentenceCount());
         for (var idx = 0; idx < pp.sentenceCount(); idx = idx + 1) {
-            console.log(' Sentence ' + idx + ' :' + pp.getSentence(idx));
-            console.log(' \tParse Tree :' + pp.getParseTree(idx));
+            dbg(' Sentence ' + idx + ' :' + pp.getSentence(idx));
+            dbg(' \tParse Tree :' + pp.getParseTree(idx));
             let tkn = pp.getTokens(idx);
             var tknString = '';
             for (var tid = 1; tid <= tkn.tokenCount(); tid++ ) {
                 tknString += tid + ':' + tkn.getToken(tid) + '(' + tkn.getTokenPOS(tid) + ') ';
             }
-            console.log(' \tTOKEN -  ' + tknString);
+            dbg(' \tTOKEN -  ' + tknString);
             let dep = pp.getSentenceDep(idx);
             let rootId = dep.getRootToken();
-            console.log(' \tRoot : ' + rootId);
+            dbg(' \tRoot : ' + rootId);
             parseNodes(dep, dep.getTokens(), rootId, 'root');
         }
     }
     let rt = pp.getSentenceDep(0).getRootToken();
     let log_dt = '';
-    if (dbg) {
-        console.log('--------------------------------------------------');
-        console.log('Processing :: ' + pp.getSentence(0) + ' ROOT:' +
+    if (dbg.enabled) {
+        dbg('--------------------------------------------------');
+        dbg('Processing :: ' + pp.getSentence(0) + ' ROOT:' +
             rt + '[' + pp.getTokens(0).getToken(rt) + ']');
     } else {
         log_dt = 'Processing :: ' + pp.getSentence(0);
     }
-    let nd = new Nodes(pp.getSentenceDep(0), dbg);
+    let nd = new Nodes(pp.getSentenceDep(0));
     nd.processAllGrammar();
-    if (dbg) {
-        console.log("Done with processing Grammar");
-    }
+    dbg("Done with processing Grammar");
     nd.processAllExp();
-    if (dbg) {
-        console.log("Done with processing Explain");
-    }
+    dbg("Done with processing Explain");
 //    nd.analyze();
     //console.log('res = ' + res);
-    if (dbg) {
-        console.log("List of Grammar Matches Found ")
-        for (idx in nd.grMatches) {
-            console.log('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
-                + '] Matched Text  ::' + nd.grMatches[idx].text());
-        }
-        console.log("List of Expresive Matches Found ")
-        for (idx in nd.expMatches) {
-            console.log('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
-                + '] Matched Text  ::' + nd.expMatches[idx].text());
-        }
-    } else {
+    {
         log_dt += ' \tParsedMeaning[';
         for (idx in nd.expMatches) {
             //console.log('   Exp[' + idx + '-' + nd.expMatches[idx].getName()
@@ -120,6 +110,23 @@ function parse(data, gr, dbg = false) {
             log_dt += nd.expMatches[idx].getName() + ' ';
         }
         console.log(log_dt + ']');
+    }
+
+    if (dbgGr.enabled || dbgExp.enabled) {
+        //dbgGr("List of Grammar Matches Found ")
+        for (idx in nd.grMatches) {
+            let dbgSelect = dbgGr;
+            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
+                dbgSelect=dbgGrV;
+            }
+            dbgSelect('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
+                + '] Matched Text  ::' + nd.grMatches[idx].text());
+        }
+        //dbgExp("List of Expresive Matches Found ")
+        for (idx in nd.expMatches) {
+            dbgExp('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
+                + '] Matched Text  ::' + nd.expMatches[idx].text());
+        }
     }
     for (idx in nd.expMatches) {
         nd.expMatches[idx].exec(gr);
@@ -194,10 +201,23 @@ if (args.input && args.input !== '') {
             rl.setPrompt('>');
             rl.prompt();
             rl.on('line', function(line){
-                processText(nlp, line, gr, args.debug)
-                .then(function(r){
-                        rl.prompt();
-                    });
+                let re1 = line.match(/enable.*debug[ ]+([^ ]+)/i);
+                let re2 = line.match(/disable.*debug[ ]+([^ ]+)/i);
+                if (re1) {
+                    console.log("Enabeling Debug for " + re1[1]);
+                    //debug.enable(re1[1]);
+                    debug.enable('*');
+                    rl.prompt();
+                } else if (re2) {
+                    console.log("Disabeling Debug for " + re2[1]);
+                    debug.disable('-' + re2[1]);
+                    rl.prompt();
+                } else {
+                    processText(nlp, line, gr, args.debug)
+                        .then(function (r) {
+                            rl.prompt();
+                        });
+                }
             }).on('close', function() {
                 console.log('Done with CLI');
             });

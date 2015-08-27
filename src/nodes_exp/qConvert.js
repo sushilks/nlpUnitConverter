@@ -3,6 +3,7 @@
 var Utils = require('../nodes_utils');
 var Jsnx = require('jsnetworkx');
 var BaseExp = require('./base_exp.js');
+var dbg = require('debug')('node:exp:qconv');
 
 //var assert = require('assert');
 
@@ -31,18 +32,14 @@ class QConvert extends BaseExp {
             if (g.hasNode(nFrom) && g.hasNode(nTo)) {
                 //console.log("FOUDN NODES 1");
                 let sp = Jsnx.shortestPath(g, {source: nFrom, target: nTo});
-                if (this.dbg) {
-                    console.log('SHORTEST PATH From:' + nFrom + ' TO:' + nTo +
-                        ' is [' + sp + ']');
-                }
+                dbg('SHORTEST PATH From:' + nFrom + ' TO:' + nTo +
+                    ' is [' + sp + ']');
                 let currentNode = nFrom;
                 sp.shift();
                 let val = Utils.textToNumber(this.result.fromValue);
                 for (let nextNode of sp) {
                     let ed = g.getEdgeData(currentNode, nextNode);
-                    if (this.dbg) {
-                        console.log('\t' + currentNode + '->' + nextNode + 'E[' + JSON.stringify(ed) + ']');
-                    }
+                    dbg('\t' + currentNode + '->' + nextNode + 'E[' + JSON.stringify(ed) + ']');
                     val = val * ed.conv;
                     currentNode = nextNode;
                 }
@@ -60,9 +57,7 @@ class QConvert extends BaseExp {
         // check if there is a subject + object and they are connected by regex
         let nodes = gr.nodes;
         let vb = gr.dict();
-        if (gr.dbg) {
-            console.log('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
-        }
+        //dbg('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
 
         if (!Utils.checkMatchAny(vb.verb, VerbMatch)) {
             return [false, {}];
@@ -75,16 +70,16 @@ class QConvert extends BaseExp {
         // SubjOnly:Hours>mod>many>mod>How ObjectOnly:Week>nummod>12
 
         {
-            let re1 = Utils.kMatch(vb, 'subj', /([^>,]*).*many.*how/i);
-            let re2 = Utils.kMatch(vb, 'obj', /([^>,]*)>nummod>([^>,]*)/i);
+            let re1 = Utils.kMatch(vb, 'subj', /([^>,]+).*many.*how/i);
+            let re2 = Utils.kMatch(vb, 'obj', /([^>,]+)>nummod>([^>,]+)/i);
             if (!re2) {
-                re2 = Utils.kMatch(vb, 'verbModWhat', /([^>,]*)>nummod>([^>,]*)/i);
+                re2 = Utils.kMatch(vb, 'verbModWhat', /([^>,]+)>nummod>([^>,]+)/i);
             }
 
 
             if (re1 && re2) {
                 let r = [true, {'convTo': re1[1], 'convFrom': re2[1], 'fromValue': re2[2]}];
-                //console.log("RETURNING r=" + JSON.stringify(r));
+                dbg('Found1 r=' + JSON.stringify(r));
                 return r;
             }
         }
@@ -94,12 +89,12 @@ class QConvert extends BaseExp {
             let re2 = Utils.kMatch(vb, 'subj', /([^>,]*)>nummod>([^>,]*)/i);
             if (re1 && re2) {
                 let r = [true, {'convTo': re1[1], 'convFrom': re2[1], 'fromValue': re2[2]}];
-                //console.log("RETURNING r=" + JSON.stringify(r));
+                dbg('Found2 r=' + JSON.stringify(r));
                 return r;
             }
             if (re2 && Utils.kMatch(vb, 'obj', /what/i) && vb.subjWhat !== '') {
                 let r = [true, {'convTo': vb.subjWhat, 'convFrom': re2[1], 'fromValue': re2[2]}];
-                //console.log("RETURNING r=" + JSON.stringify(r));
+                dbg('Found3 r=' + JSON.stringify(r));
                 return r;
             }
         }
@@ -109,7 +104,7 @@ class QConvert extends BaseExp {
             let re2 = Utils.kMatch(vb, 'subjWhat', /([^>,]*)>nummod>([^>,]*)/i);
             if (re1  && re2) {
                 let r = [true, {'convTo': vb.subj, 'convFrom': re2[1], 'fromValue': re2[2]}];
-                //console.log("RETURNING r=" + JSON.stringify(r));
+                dbg('Found4 r=' + JSON.stringify(r));
                 return r;
             }
         }
@@ -118,7 +113,7 @@ class QConvert extends BaseExp {
             let re2 = Utils.kMatch(vb, 'rawVerbAdvMod', /([^>,]*)>mod>many/i);
             if (re1 && re2) {
                 let r = [true, {'convTo': re2[1], 'convFrom': re1[1], 'fromValue': re1[2]}];
-                //console.log("RETURNING r=" + JSON.stringify(r));
+                dbg('Found5 r=' + JSON.stringify(r));
                 return r;
             }
         }
@@ -136,6 +131,7 @@ class QConvert extends BaseExp {
                 } else {
                     r = [true, {'convTo': re1[1], 'convFrom': re3[1], 'fromValue': Utils.textToNumber(re3[2])}];
                 }
+                dbg('Found6 r=' + JSON.stringify(r));
                 return r;
             }
         }
@@ -144,6 +140,7 @@ class QConvert extends BaseExp {
             let re2 = Utils.kMatch(vb, 'subj', /([^>,]*)>nummod>([^>,]*)/i);
             if (re1 && re2 && 'subjWhat' in vb) {
                 let r = [true, {'convTo': vb.subjWhat, 'convFrom': re2[1], 'fromValue': Utils.textToNumber(re2[2])}];
+                dbg('Found7 r=' + JSON.stringify(r));
                 return r;
             }
         }
@@ -158,10 +155,11 @@ class QConvert extends BaseExp {
             if (re1) {
                 let r = [true, {'convTo': ('verbModWhat' in vb)?vb.verbModWhat:vb.verbModWho,
                     'convFrom': re1[1], 'fromValue': re1[2]}];
+                dbg('Found8 r=' + JSON.stringify(r));
                 return r;
             }
         }
-
+       // dbg('Failed-to-find');
         return [false, {}];
     }
 }

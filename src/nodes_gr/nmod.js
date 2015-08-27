@@ -2,6 +2,7 @@
 
 var Utils = require('../nodes_utils');
 var assert = require('assert');
+var dbg = require('debug')('node:gr:dep');
 
 class NMod {
     constructor(nodes, matchResult) {
@@ -41,10 +42,8 @@ class NMod {
             //if (ndPOS.match(/(NN|JJ|CD)/)) {
             let r = [];
             for (let tkn_ of t1) {
-                if (nodeList.dbg) {
-                    console.log('  - nmod [' + ndToken + ']: to [' + node.nodes.getTokens().getToken(tkn_)
+                dbg('  - nmod [' + ndToken + ']: to [' + node.nodes.getTokens().getToken(tkn_)
                         + ']:' + tkn_);
-                }
                 let c1 = node.getChild(tkn_);
                 r.push({nmodToken: tkn_, nmodLink: c1.type});
             }
