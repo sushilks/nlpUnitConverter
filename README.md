@@ -57,6 +57,34 @@ node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 parsec to LightY
 node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 Parsec to LightYears.'
 node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 Parsec to Foot.'
 ```
+## Using the CLI
+```
+node build/src/eparser.js -i ./data/sample-2.txt  -c
+Processing: ....Processing: ....Processing: ....
+>convert 2.5 Meters into Foot.
+Processing :: convert 2.5 Meters into Foot . 	ParsedMeaning[QConv ]
+		QConv::Converted 2.5 meter to foot Value = 0.8202099737532806
+```
+In the example above the command runs and stops at a prompt '>' there after I entered a query "convert 2.5 Meters into Foot."
+
+The CLI allows for interacting the converter and for adding new unit's to the converter. 
+
+press 'Ctrl-D' to exit the CLI
+
+It's possible to enable debug while in CLI by running the following commands (This is work in progress and not working right now. 
+Primarily becase the debug objects are disconnected and the eparser module is unable to reach the other debug modules to set the config).
+'>enable debug .*'
+or
+'>enable debug 
+
+## Debugging 
+The code uses debug module, so debuggin is enabled by setting the "DEBUG" variable 
+>`DEBUG=eparser:gr*,eparser:exp,node:exp:qconv node build/src/eparser.js -i ./data/sample-2.txt`
+
+If you want to check what tags are available to turn on for debug run the following command
+>`egrep 'require\(.*\)\(.*\)|debug\(.*\)' -R src`
+
+
 
 ## Notes
 ---------
