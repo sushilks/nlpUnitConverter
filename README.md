@@ -91,6 +91,3 @@ If you want to check what tags are available to turn on for debug run the follow
 ---------
 add suport for --
 
-// How much is 10 Foot in Inch?
-
-// tell me how many Inch are there in 10 Foot

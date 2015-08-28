@@ -131,6 +131,14 @@ function parse(data, gr, dbge = false) {
     for (idx in nd.expMatches) {
         nd.expMatches[idx].exec(gr);
     }
+    if (nd.expMatches.length === 0 ) {
+        console.log('   This Statement did not match any of the types that I am able to recognize.');
+        for (idx in nd.grMatches) {
+            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
+                console.log('   Verb in this statement :: ' + nd.grMatches[idx].text());
+            }
+        }
+    }
     return res;
 }
 

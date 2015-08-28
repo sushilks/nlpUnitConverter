@@ -143,8 +143,12 @@ class QConvert extends BaseExp {
                 dbg('Found7 r=' + JSON.stringify(r));
                 return r;
             }
+            if (re1 && 'subjWhat' in vb && 'subj' in vb) {
+                let r = [true, {'convTo': vb.subjWhat, 'convFrom': vb.subj, 'fromValue': 1}];
+                dbg('Found8 r=' + JSON.stringify(r));
+                return r;
+            }
         }
-
 
         if (vb.verb.match(/convert/i) && ('verbModWho' in vb || 'verbModWhat' in vb)) {
             //convert 29 thousand Chain in to  Foot.
