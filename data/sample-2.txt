@@ -4,7 +4,7 @@ Units for Length are Fathom, NauticalMile, Furlong, HorseLength.
 Units for Length are Chain, Rod, AstronomicalUnit, LightYear, Parsec, HubbleLength.
 Units for Length are Foot, Inch.
 There are 1000 Meters in a KiloMeter.
-There are 10 CentiMeters in a Meter.
+There are 100 CentiMeters in a Meter.
 One Foot is 12 Inch.
 One Inch is 2.54 CentiMeters.
 12 Line is one Inch.

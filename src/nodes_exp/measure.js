@@ -21,10 +21,16 @@ g.addEdge(n1, n2, {data....});
 class DefineMeasure extends BaseExp {
     constructor(nodes, matchResult) {
         super(nodes, matchResult);
-        this.name = 'DefineMeasure';
+        this.name = DefineMeasure.getName();
+    }
+    static getName() {
+        return 'Define';
     }
     static getMatchToken() {
         return ['VerbBase'];
+    }
+    static getArgs() {
+        return ['subj', 'type'];
     }
     exec(gr) {
         //console.log('Adding to graph:' + this.getName());

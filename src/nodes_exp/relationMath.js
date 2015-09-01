@@ -8,11 +8,16 @@ var dbg = require('debug')('node:exp:rel');
 class relationMath extends BaseExp {
     constructor(nodes, matchResult) {
         super(nodes, matchResult);
-        this.name = 'Relation';
+        this.name = relationMath.getName();
     }
-
+    static getName() {
+        return 'Relation';
+    }
     static getMatchToken() {
         return ['VerbBase'];
+    }
+    static getArgs() {
+        return ['nodeFrom', 'nodeTo', 'conv'];
     }
     exec(gr) {
 //        console.log('Adding to graph:' + this.getName());

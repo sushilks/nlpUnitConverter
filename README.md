@@ -78,6 +78,29 @@ Primarily becase the debug objects are disconnected and the eparser module is un
 or
 `>enable debug eparser:.*` 
 
+
+## Learning Mode
+```
+node ./build/src/eparser.js -i ./data/sample-2.txt -c -l
+>translate 5 million kilometers into fathom.
+Processing :: translate 5 million kilometers into fathom . 	ParsedMeaning[]
+   This Statement did not match any of the types that I am able to recognize.
+   Verb in this statement :: VerbBase:: {"verb":"translate","rawVerbMod":"translate>nmod:into>fathom","verbModWhat":"fathom","verbMod":"translate","rawObj":"kilometers>nummod>5 million","obj":"kilometers>nummod>5 million"}
+>> Do you want to learn this pattern (Yes/No)>yes
+>> Select Node type (Default,Define,QConv,Relation,Units)? QConv
+>> Processing [verb] Regexp >/translate/
+>> Processing [verbModWhat] Regexp >/(.*)/
+>> Processing [verbMod] Regexp >/translate/
+>> Processing [obj] Regexp >/([^>]+)>nummod>([^>]+)/
+>> Processing [convTo] Select > verbModWhat[1]
+>> Processing [convFrom] Select > obj[1]
+>> Processing [fromValue] Select > obj[2]
+Learned :: {"stmt":"translate 5 million kilometers into fathom .","match":{"verb":"/translate/","verbModWhat":"/(.*)/","verbMod":"/translate/","obj":"/([^>]+)>nummod>([^>]+)/"},"extract":{"convTo":"verbModWhat[1]","convFrom":"obj[1]","fromValue":"obj[2]"},"type":"QConv"}
+>translate 5 million kilometers into fathom.
+Processing :: translate 5 million kilometers into fathom . 	ParsedMeaning[QConv ]
+		QConv::Converted 5 million kilometer to fathom Value = 2734033245.844269
+```
+
 ## Debugging 
 The code uses debug module, so debuggin is enabled by setting the "DEBUG" variable 
 >`DEBUG=eparser:gr*,eparser:exp,node:exp:qconv node build/src/eparser.js -i ./data/sample-2.txt`
@@ -89,5 +112,17 @@ If you want to check what tags are available to turn on for debug run the follow
 
 ## Notes
 ---------
-add suport for --
+add support for --
+ Testing the DB, 
+ Populating the DB from scripts.
+ 
 
+REGEX :-
+.: a single character.
+\s: a whitespace character (space, tab, newline).
+\S: non-whitespace character.
+\d: a digit (0-9).
+\D: a non-digit.
+\w: a word character (a-z, A-Z, 0-9, _).
+\W: a non-word character.
+[\b]: a literal backspace (spec

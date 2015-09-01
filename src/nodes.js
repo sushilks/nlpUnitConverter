@@ -9,6 +9,7 @@ var gExpMapper = {};   /** To hold different grammer rules */
 
 var normalizedPath = require('path').join(__dirname);
 var dbg = require('debug')('nodes:base');
+var dbgdb = require('debug')('nodes:base:db');
 
 /** Load and init the nodes */
 FS.readdirSync(normalizedPath + '/nodes_pos').forEach(function(file) {
@@ -57,7 +58,9 @@ class Nodes {
 
         return this.diGraph[name];
     }
-
+    static getGlobalExpMapper() {
+        return gExpMapper;
+    }
     getTokens() {
         return this.tkn;
     }
@@ -80,6 +83,52 @@ class Nodes {
         return new gNodeMapper['DEFAULT'][0](this, tknId, level);
     }
 
+
+    processAllExpDB(db) {
+        return new Promise(
+            (function(_this, resolve, reject) {
+                // get all the verb's
+                // and get all the rules from the db
+                // do mix-match
+                let verbGr = [];
+                for (let idx in _this.grMatches) {
+                    let gr = _this.grMatches[idx];
+                    let grName = gr.getName();
+                    if (grName.match(/VerbBase/)) {
+                        verbGr.push(gr);
+                    }
+                }
+                //dbgdb('TEST - DB - Verb Gr len = ' + verbGr.length);
+                if (verbGr.length !== 1) {
+                    console.trace('Unable to handle processing with verb.length = ' + verbGr.length);
+                    resolve(false);
+                    //return false;
+                }
+                let verb = verbGr[0];
+                //dbgdb(' - VERB - ::' + JSON.stringify(verb.dict()));
+
+
+                db.find({})
+                    .then((function (_this, dt) {
+                        //dbgdb(' TEST - DB - dt = ' + JSON.stringify(dt));
+                        for (let dbItem of dt) {
+                            let match = Utils.verbDBMatch(dbgdb, verb, dbItem);
+                            if (match[0] !== '') {
+                                dbgdb('Found a match dbItem [' + JSON.stringify(match) + ']')
+                                let fn = gExpMapper._map[match[0]];
+                                let expHandle = new fn(_this, match[1]);
+                                _this.expMatches.push(expHandle);
+                            }
+                        }
+                        resolve(true);
+                    }).bind(null, _this))
+                    .catch(function (e) {
+                        console.log("Error :: " + e);
+                        console.log(e.stack);
+                        resolve(false);
+                    });
+            }).bind(null, this));
+    }
 
     processAllExp() {
         for (let idx in this.grMatches) {

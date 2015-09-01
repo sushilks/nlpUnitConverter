@@ -11,11 +11,17 @@ var dbg = require('debug')('node:exp:units');
 class Units extends BaseExp {
     constructor(nodes, matchResult) {
         super(nodes, matchResult);
-        this.name = 'Units';
+        this.name = Units.getName();
+    }
+    static getName() {
+        return 'Units';
     }
 
     static getMatchToken() {
         return ['VerbBase'];
+    }
+    static getArgs() {
+        return ['unitsFor', 'units'];
     }
     exec(gr) {
         //dbg('Adding to graph:' + this.getName());
@@ -26,10 +32,15 @@ class Units extends BaseExp {
             console.trace('ERROR: Dont know about [' + nm + ']');
         }
         let units = this.result.units;
-        units.forEach(function(x) {
-            //dbg(' UNIT =  ' + x)
-            g.addNode( x, {unitFor: nm});
-        });
+        //console.log('UNIT = ' + units);
+        if (Array.isArray(units)) {
+            units.forEach(function (x) {
+                //dbg(' UNIT =  ' + x)
+                g.addNode(Utils.normalizeUnit(x), {unitFor: nm});
+            });
+        } else {
+            g.addNode(Utils.normalizeUnit(units), {unitFor: nm});
+        }
     }
     static checkValid(gr) {
         const VerbMatch = ['is', 'expressed', 'are'];

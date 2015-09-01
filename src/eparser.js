@@ -7,10 +7,14 @@ var ArgumentParser = require('argparse').ArgumentParser;
 var NLPClient = require('./nlp_client.js');
 var NLPPP = require('./nlp_pp');
 var Nodes = require('./nodes.js');
+var ExpDB = require('./expdb');
+var ExpLearn = require('./exp_learn');
 var FS = require('fs');
 var Ut = require('util');
 var readline = require('readline');
+var Utils = require('./nodes_utils');
 var debug = require('debug');
+let expLearn;
 
 //import NLPPP from './nlp_pp';
 //var ToDefine = require('./to_define');
@@ -31,6 +35,9 @@ parser.addArgument(
 parser.addArgument(
     [ '-c', '--cli'],
     { help: 'start a CLI', action:'storeTrue'});
+parser.addArgument(
+    [ '-l', '--learn'],
+    { help: 'Learning mode', action:'storeTrue'});
 parser.addArgument(
     [ '-p', '--port'],
     { help: 'port on which server is running'});
@@ -100,46 +107,85 @@ function parse(data, gr, dbge = false) {
     dbg("Done with processing Grammar");
     nd.processAllExp();
     dbg("Done with processing Explain");
-//    nd.analyze();
-    //console.log('res = ' + res);
-    {
-        log_dt += ' \tParsedMeaning[';
-        for (idx in nd.expMatches) {
-            //console.log('   Exp[' + idx + '-' + nd.expMatches[idx].getName()
-            //    + ']::' + nd.expMatches[idx].text());
-            log_dt += nd.expMatches[idx].getName() + ' ';
-        }
-        console.log(log_dt + ']');
-    }
 
-    if (dbgGr.enabled || dbgExp.enabled) {
-        //dbgGr("List of Grammar Matches Found ")
-        for (idx in nd.grMatches) {
-            let dbgSelect = dbgGr;
-            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
-                dbgSelect=dbgGrV;
-            }
-            dbgSelect('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
-                + '] Matched Text  ::' + nd.grMatches[idx].text());
-        }
-        //dbgExp("List of Expresive Matches Found ")
-        for (idx in nd.expMatches) {
-            dbgExp('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
-                + '] Matched Text  ::' + nd.expMatches[idx].text());
-        }
-    }
-    for (idx in nd.expMatches) {
-        nd.expMatches[idx].exec(gr);
-    }
-    if (nd.expMatches.length === 0 ) {
-        console.log('   This Statement did not match any of the types that I am able to recognize.');
-        for (idx in nd.grMatches) {
-            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
-                console.log('   Verb in this statement :: ' + nd.grMatches[idx].text());
-            }
-        }
-    }
-    return res;
+
+    return new Promise(
+        function (resolve, reject) {
+            nd.processAllExpDB(expDB)
+                .then(function(dt) {
+                    dbg("Done with processing DBExplain");
+                    //    nd.analyze();
+                    //console.log('res = ' + res);
+                    {
+                        log_dt += ' \tParsedMeaning[';
+                        for (idx in nd.expMatches) {
+                            //console.log('   Exp[' + idx + '-' + nd.expMatches[idx].getName()
+                            //    + ']::' + nd.expMatches[idx].text());
+                            log_dt += nd.expMatches[idx].getName() + ' ';
+                        }
+                        console.log(log_dt + ']');
+                    }
+
+                    if (dbgGr.enabled || dbgExp.enabled) {
+                        //dbgGr("List of Grammar Matches Found ")
+                        for (idx in nd.grMatches) {
+                            let dbgSelect = dbgGr;
+                            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
+                                dbgSelect = dbgGrV;
+                            }
+                            dbgSelect('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
+                                + '] Matched Text  ::' + nd.grMatches[idx].text());
+                        }
+                        //dbgExp("List of Expresive Matches Found ")
+                        for (idx in nd.expMatches) {
+                            dbgExp('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
+                                + '] Matched Text  ::' + nd.expMatches[idx].text());
+                        }
+                    }
+                    for (idx in nd.expMatches) {
+                        nd.expMatches[idx].exec(gr);
+                    }
+                })
+                .then(function(dt) {
+                    if (nd.expMatches.length === 0) {
+                        console.log('   This Statement did not match any of the types that I am able to recognize.');
+                        let v = [];
+                        for (idx in nd.grMatches) {
+                            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
+                                console.log('   Verb in this statement :: ' + nd.grMatches[idx].text());
+                                v.push(nd.grMatches[idx]);
+                            }
+                        }
+                        /*
+                         Call the learning Routing to collect the information and write it to the database.
+                         */
+                        if (args.learn)
+                            return expLearn.learn(pp.getSentence(0), v);
+                        else
+                            return false;
+                        /*expLearn.learn(pp.getSentence(0), v)
+                            .then(function(res) {
+                                resolve(res);
+                            }, function(err){
+                                reject(err);
+                            })
+                            .catch(function(e){
+                                console.log("Error :: " + e);
+                                console.log(e.stack);
+                            });*/
+                    } else {
+                        resolve(res);
+                    }
+                })
+                .then(function(dt){
+                    resolve(dt);
+                })
+                .catch(function(e) {
+                    console.log("Error :: " + e);
+                    console.log(e.stack);
+
+                });
+        });
 }
 
 /**
@@ -150,14 +196,18 @@ function processText(client, txt, gr={}, dbg=false) {
     return new Promise(
         function(resolve, reject) {
             client.req(txt).then(function(res) {
-                parse(res, gr, dbg);
+                return parse(res, gr, dbg);
             }, function(err) {
                 reject(err);
             }).then(function(res) {
                 resolve(res);
             }, function(err) {
                 console.log('ERROR when processing request :: ' + err.stack);
+            }).catch(function(r) {
+                console.log("Error :: " + e);
+                console.log(e.stack);
             });
+
         });
 }
 function processList(client, txtList, gr, dbg, fn) {
@@ -175,7 +225,21 @@ function processList(client, txtList, gr, dbg, fn) {
             } else {
                 fn();
             }
-    });
+        }).catch(function(r) {
+            console.log("Error :: " + e);
+            console.log(e.stack);
+        });
+}
+function startCLI(fn) {
+    return Utils.getStdin('>')
+        .then(function(res) {
+            return fn(res);
+        }).then(function(res) {
+            return startCLI(fn);
+        }).catch(function(e) {
+            console.log("Error :: " + e);
+            console.log(e.stack);
+        });
 }
 /*
 the ProcessGr part needs some more thought
@@ -184,6 +248,14 @@ Not able to parse even simple constructs right now. need to analyze them a bit.
 
 let nlp = new NLPClient();
 let gr = {};
+let expDB = new ExpDB('lexp.db');
+/*
+var rl = readline.createInterface({
+    input:process.stdin,
+    output: process.stdout
+});
+*/
+expLearn = new ExpLearn(expDB, Nodes.getGlobalExpMapper());
 
 if (args.input && args.input !== '') {
     var contents = FS.readFileSync(args.input).toString();
@@ -202,33 +274,71 @@ if (args.input && args.input !== '') {
             }
         }
         if (args.cli) {
-            var rl = readline.createInterface({
-                input:process.stdin,
-                output: process.stdout
+            startCLI(function(line) {
+                return new Promise(function(resolve, reject) {
+                    let re1 = line.match(/enable.*debug[ ]+([^ ]+)/i);
+                    let re2 = line.match(/disable.*debug[ ]+([^ ]+)/i);
+                    if (re1) {
+                        console.log("Enabeling Debug for " + re1[1]);
+                        //debug.enable(re1[1]);
+                        debug.enable('*');
+                        //rl.__block_l1 = false;
+                        //rl.prompt();
+                        resolve(null);
+                    } else if (re2) {
+                        console.log("Disabeling Debug for " + re2[1]);
+                        debug.disable('-' + re2[1]);
+                        //rl.__block_l1 = false;
+                        //rl.prompt();
+                        resolve(null);
+                    } else {
+                        processText(nlp, line, gr, args.debug)
+                            .then(function (r) {
+                                //rl.__block_l1 = false;
+                                // rl.prompt();
+                                resolve(null);
+                            });
+                    }
+                });
+            }).then(function(done) {
+                console.log("DONE CLI.");
+            }).catch(function(e) {
+                console.log("Error :: " + e);
+                console.log(e.stack);
             });
+            /*
             rl.setPrompt('>');
             rl.prompt();
-            rl.on('line', function(line){
-                let re1 = line.match(/enable.*debug[ ]+([^ ]+)/i);
-                let re2 = line.match(/disable.*debug[ ]+([^ ]+)/i);
-                if (re1) {
-                    console.log("Enabeling Debug for " + re1[1]);
-                    //debug.enable(re1[1]);
-                    debug.enable('*');
-                    rl.prompt();
-                } else if (re2) {
-                    console.log("Disabeling Debug for " + re2[1]);
-                    debug.disable('-' + re2[1]);
-                    rl.prompt();
-                } else {
-                    processText(nlp, line, gr, args.debug)
-                        .then(function (r) {
-                            rl.prompt();
-                        });
+            rl.__block_l1 = false;
+            rl.on('line', function(line) {
+                if (rl.__block_l1) {
+                    return;
                 }
+                rl.__block_l1 = true;
+             let re1 = line.match(/enable.*debug[ ]+([^ ]+)/i);
+             let re2 = line.match(/disable.*debug[ ]+([^ ]+)/i);
+             if (re1) {
+             console.log("Enabeling Debug for " + re1[1]);
+             //debug.enable(re1[1]);
+             debug.enable('*');
+             rl.__block_l1 = false;
+             rl.prompt();
+             } else if (re2) {
+             console.log("Disabeling Debug for " + re2[1]);
+             debug.disable('-' + re2[1]);
+             rl.__block_l1 = false;
+             rl.prompt();
+             } else {
+             processText(nlp, line, gr, args.debug)
+             .then(function (r) {
+             rl.__block_l1 = false;
+             rl.prompt();
+             });
+             }
             }).on('close', function() {
                 console.log('Done with CLI');
             });
+            */
         }
 
     });

@@ -13,13 +13,17 @@ var dbg = require('debug')('node:exp:qconv');
 class QConvert extends BaseExp {
     constructor(nodes, matchResult) {
         super(nodes, matchResult);
-        this.name = 'QConv';
+        this.name = QConvert.getName();
     }
-
+    static getName() {
+        return 'QConv';
+    }
     static getMatchToken() {
         return ['VerbBase'];
     }
-
+    static getArgs() {
+        return ['convTo', 'convFrom', 'fromValue'];
+    }
     exec(gr) {
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());

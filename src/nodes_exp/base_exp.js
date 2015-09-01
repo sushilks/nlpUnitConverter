@@ -6,7 +6,7 @@ var dbg = require('debug')('node:exp:base');
 class ExpBase {
     constructor(nodes, matchResult) {
         this.nodes = nodes;
-        this.dbg = nodes.dbg;
+        //this.dbg = nodes.dbg;
         this.name = 'expBase';
         this.result = matchResult;
     }
@@ -20,6 +20,9 @@ class ExpBase {
     }
     getResult() {
         return this.result;
+    }
+    getArgs() {
+        console.trace('Implement getArgs().');
     }
     text() {
         return this.getName() + ' Data [' + JSON.stringify(this.result) + ']';

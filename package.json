@@ -30,6 +30,7 @@
     "argparse": "~1.0",
     "prompt": "",
     "debug": "",
+    "nedb": "",
     "jsnetworkx": "~0.3"
   },
  "license": "MIT",

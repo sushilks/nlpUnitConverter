@@ -9,6 +9,12 @@ function nodeAdd_(nmap, d, fn) {
 }
 export function nodeInit(nmap, fn) {
     let dt = fn.getMatchToken();
+    if (!('_map' in nmap)) {
+        nmap['_map'] = {};
+    }
+    if ('getName' in fn) {
+        nmap._map[fn.getName()] = fn;
+    }
     if (dt instanceof Array) {
         for (let d of dt) {
             //nmap[d] = fn;
@@ -306,3 +312,79 @@ export function createGraph(gr, name, attr) {
     return gr[name];
 }
 
+export function getStdin(prompt){
+    process.stdout.write(prompt);
+    return new Promise(function(resolve, reject) {
+        var input = '';
+
+        process.stdin.resume();
+        process.stdin.setEncoding('utf8');
+        var f1 = function(chunk) {
+            input += chunk;
+            if (chunk.indexOf('\n') != 1) { //(theyPressedEnter(chunk)) {
+                input = input.replace(/\n/g, '');
+                process.stdin.pause();
+                resolve(input);
+                process.stdin.removeListener('data', f1);
+            }
+        };
+
+        process.stdin.on('data', f1);
+    });
+}
+
+
+export function verbDBMatch(dbgdb, verb, dbItem) {
+    // check if all the keys in dbItem are present in verb.
+
+    let dbItemKeys = Object.keys(dbItem.match);
+    let verbKeys = Object.keys(verb.vb);
+    let reMatches = {};
+    //dbgdb('verb is ::: ' + JSON.stringify(verb.vb));
+    try {
+        for (let key of dbItemKeys) {
+            if (key.match(/_id/)) {
+                continue;
+            }
+            if (verbKeys.indexOf(key) === -1) {
+                //dbgdb('Key [' + key + '] is missing in verb ')
+                //dbgdb(dbItemKeys + '::::' + verbKeys);
+                return ['', {}];
+            }
+            let r = dbItem.match[key].match(/^\/([^\/]*)\/(\S*)$/);
+            reMatches[key] = verb.vb[key].match(new RegExp(r[1], r[2]));
+            //console.log(key + ' <1>::' + verb.vb[key] + ' <2>::' + dbItem.match[key] + '  <3>::' + reMatches[key]);
+            if (!reMatches[key]) {
+                //dbgdb(' Match failed for key[' + key + '] verb[' + verb.vb[key] + '] db[' + dbItem.match[key] + ']  ' + reMatches[key]);
+                return ['', {}];
+            } else {
+                //console.log('MATCH on [' + key + '] = ' + JSON.stringify(reMatches[key]));
+            }
+        }
+        // all nodes are matching
+        //dbgdb('MATCHED on db entry for db : ' + JSON.stringify(dbItem));
+        let res = {};
+        for (let itm of Object.keys(dbItem.extract)) {
+            //dbgdb('   ext : ' + itm + ' : ' + dbItem.extract[itm] + ' : ');
+            let r = dbItem.extract[itm].match(/^(\S+)\[([0-9]+)\]$/);
+            if (r) {
+                //dbgdb(' ARRAY LOG :' + r[1] + ' idx:' + r[2]);
+                //dbgdb(' extract : ' + reMatches[r[1]][r[2]]);
+                res[itm] = reMatches[r[1]][r[2]];
+            } else {
+                //dbgdb(' VALUE : ' + dbItem.extract[itm]);
+                res[itm] = dbItem.extract[itm];
+            }
+        }
+        //dbgdb(' RESULT[' + dbItem.type + '] = ' + JSON.stringify(res));
+        return [dbItem.type, res, dbItem._id];
+    } catch (e) {
+        // Error
+        if (e.message)
+            console.log(' ERR Message:' + e.message);
+        if (e.stack)
+            console.log('  Err STACK: ' + e.stack);
+        console.log(e);
+        return ['', {}];
+    }
+}
