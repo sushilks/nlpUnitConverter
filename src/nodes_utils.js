@@ -312,24 +312,28 @@ export function createGraph(gr, name, attr) {
     return gr[name];
 }
 
-export function getStdin(prompt){
+export function getStdin(prompt, cannedData){
     process.stdout.write(prompt);
     return new Promise(function(resolve, reject) {
         var input = '';
-
-        process.stdin.resume();
-        process.stdin.setEncoding('utf8');
-        var f1 = function(chunk) {
-            input += chunk;
-            if (chunk.indexOf('\n') != 1) { //(theyPressedEnter(chunk)) {
-                input = input.replace(/\n/g, '');
-                process.stdin.pause();
-                resolve(input);
-                process.stdin.removeListener('data', f1);
-            }
-        };
-
-        process.stdin.on('data', f1);
+        if (cannedData && cannedData.length > 0) {
+            let dt = cannedData.shift();
+            process.stdout.write(dt + '\n');
+            resolve(dt);
+        } else {
+            process.stdin.resume();
+            process.stdin.setEncoding('utf8');
+            var f1 = function(chunk) {
+                input += chunk;
+                if (chunk.indexOf('\n') != 1) { //(theyPressedEnter(chunk)) {
+                    input = input.replace(/\n/g, '');
+                    process.stdin.pause();
+                    resolve(input);
+                    process.stdin.removeListener('data', f1);
+                }
+            };
+            process.stdin.on('data', f1);
+        }
     });
 }
 
@@ -340,7 +344,8 @@ export function verbDBMatch(dbgdb, verb, dbItem) {
     let dbItemKeys = Object.keys(dbItem.match);
     let verbKeys = Object.keys(verb.vb);
     let reMatches = {};
-    //dbgdb('verb is ::: ' + JSON.stringify(verb.vb));
+    dbgdb('verb is ::: ' + JSON.stringify(verb.vb));
+    dbgdb('db is ::: ' + JSON.stringify(dbItem));
     try {
         for (let key of dbItemKeys) {
             if (key.match(/_id/)) {

@@ -100,21 +100,21 @@ class Nodes {
                 }
                 //dbgdb('TEST - DB - Verb Gr len = ' + verbGr.length);
                 if (verbGr.length !== 1) {
-                    console.trace('Unable to handle processing with verb.length = ' + verbGr.length);
+                    console.log('EXPDB::ERROR::Unable to handle processing with verb.length = ' + verbGr.length);
                     resolve(false);
                     //return false;
                 }
                 let verb = verbGr[0];
-                //dbgdb(' - VERB - ::' + JSON.stringify(verb.dict()));
+                dbgdb(' - VERB - ::' + JSON.stringify(verb.dict()));
 
 
                 db.find({})
                     .then((function (_this, dt) {
-                        //dbgdb(' TEST - DB - dt = ' + JSON.stringify(dt));
+                        //console.log(' TEST - DB - dt = ' + JSON.stringify(dt));
                         for (let dbItem of dt) {
                             let match = Utils.verbDBMatch(dbgdb, verb, dbItem);
                             if (match[0] !== '') {
-                                dbgdb('Found a match dbItem [' + JSON.stringify(match) + ']')
+                                dbgdb('Found a match dbItem [' + JSON.stringify(match) + '] ')
                                 let fn = gExpMapper._map[match[0]];
                                 let expHandle = new fn(_this, match[1]);
                                 _this.expMatches.push(expHandle);

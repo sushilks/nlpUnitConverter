@@ -49,14 +49,17 @@ Here are some examples that can be used as query
 
 ```
 node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 12 KiloMeters to LightYears.'
-node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 12 KiloMeters to LightYears.'
+node build/src/eparser.js -i ./data/sample-2.txt  -t 'how many yards are there in a mile?'
 node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 12 million KiloMeters to LightYears.'
-node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 12 billion KiloMeters to LightYears.'
+node build/src/eparser.js -i ./data/sample-2.txt  -t 'How much is 12 million kilometers in lightyears?'
 node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 20102 billion KiloMeters to LightYears.'
 node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 parsec to LightYears.'
-node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 Parsec to LightYears.'
-node build/src/eparser.js -i ./data/sample-2.txt  -t 'Convert 2 Parsec to Foot.'
+node build/src/eparser.js -i ./data/sample-2.txt  -t 'What is a mile in meters?'
+node build/src/eparser.js -i ./data/sample-2.txt  -t 'what is 10 thousand miles in kilometers?'
 ```
+If you try something that the tool is unable to parse you can re-run with '-l' option that will ask it to learn the syntax. 
+After the tool learns the syntax it is able to handle sentences that follow similar structure. 
+
 ## Using the CLI
 ```
 node build/src/eparser.js -i ./data/sample-2.txt  -c
@@ -80,26 +83,39 @@ or
 
 
 ## Learning Mode
+The learning mode kick's in when there is an '-l' as argument and when an input is provided that does not match any of the predefined rule.
+Hear is an example of interactive learning
+
 ```
-node ./build/src/eparser.js -i ./data/sample-2.txt -c -l
->translate 5 million kilometers into fathom.
-Processing :: translate 5 million kilometers into fathom . 	ParsedMeaning[]
+node ./build/src/eparser.js -l -t 'How many Kilos are there in 30 Tons?'
+Processing :: How many Kilos are there in 30 Tons ? 	ParsedMeaning[]
    This Statement did not match any of the types that I am able to recognize.
-   Verb in this statement :: VerbBase:: {"verb":"translate","rawVerbMod":"translate>nmod:into>fathom","verbModWhat":"fathom","verbMod":"translate","rawObj":"kilometers>nummod>5 million","obj":"kilometers>nummod>5 million"}
+   Verb in this statement :: VerbBase:: {"verb":"are","rawVerbMod":"are>nmod:in>Tons>nummod>30","verbModWhat":"Tons>nummod>30","verbMod":"are>mod>How>dep>Kilos>mod>many","rawVerbAdvMod":"are>mod>How>dep>Kilos>mod>many"}
 >> Do you want to learn this pattern (Yes/No)>yes
 >> Select Node type (Default,Define,QConv,Relation,Units)? QConv
->> Processing [verb] Regexp >/translate/
->> Processing [verbModWhat] Regexp >/(.*)/
->> Processing [verbMod] Regexp >/translate/
->> Processing [obj] Regexp >/([^>]+)>nummod>([^>]+)/
->> Processing [convTo] Select > verbModWhat[1]
->> Processing [convFrom] Select > obj[1]
->> Processing [fromValue] Select > obj[2]
-Learned :: {"stmt":"translate 5 million kilometers into fathom .","match":{"verb":"/translate/","verbModWhat":"/(.*)/","verbMod":"/translate/","obj":"/([^>]+)>nummod>([^>]+)/"},"extract":{"convTo":"verbModWhat[1]","convFrom":"obj[1]","fromValue":"obj[2]"},"type":"QConv"}
->translate 5 million kilometers into fathom.
-Processing :: translate 5 million kilometers into fathom . 	ParsedMeaning[QConv ]
-		QConv::Converted 5 million kilometer to fathom Value = 2734033245.844269
+>> Processing [convTo] Select > Kilos
+>> Processing [convFrom] Select > Tons
+>> Processing [fromValue] Select > 30
+LEARNED :::{"stmt":"How many Kilos are there in 30 Tons ?","match":{"verb":"/are/i","verbModWhat":"/([^>]+)>nummod>([^>]+)/i","verbMod":"/are>mod>How>dep>([^>]+)>mod>many/i"},"extract":{"convTo":"verbMod[1]","convFrom":"verbModWhat[1]","fromValue":"verbModWhat[2]"},"type":"QConv"}
 ```
+alternatively you can use a single command line without any question/answers to learn a single line. (This is the mechanism 
+used to create the first database as in ./data/training.sh)
+```
+>node ./build/src/eparser.js -l -t 'How many Kilos are there in 30 Tons?' -L 'yes,QConv,Kilos,Tons,30'
+Processing :: How many Kilos are there in 30 Tons ? 	ParsedMeaning[]
+   This Statement did not match any of the types that I am able to recognize.
+   Verb in this statement :: VerbBase:: {"verb":"are","rawVerbMod":"are>nmod:in>Tons>nummod>30","verbModWhat":"Tons>nummod>30","verbMod":"are>mod>How>dep>Kilos>mod>many","rawVerbAdvMod":"are>mod>How>dep>Kilos>mod>many"}
+>> Do you want to learn this pattern (Yes/No)>yes
+>> Select Node type (Default,Define,QConv,Relation,Units)? QConv
+Node:[QConv] Args Needed :["convTo","convFrom","fromValue"]
+>> Processing [convTo] Select > Kilos
+>> Processing [convFrom] Select > Tons
+>> Processing [fromValue] Select > 30
+LEARNED :::{"stmt":"How many Kilos are there in 30 Tons ?","match":{"verb":"/are/i","verbModWhat":"/([^>]+)>nummod>([^>]+)/i","verbMod":"/are>mod>How>dep>([^>]+)>mod>many/i"},"extract":{"convTo":"verbMod[1]","convFrom":"verbModWhat[1]","fromValue":"verbModWhat[2]"},"type":"QConv"}
+Done
+```
+All learned rules are stored in a database ./lexp.db. It's a json formated text file so you can view/edit it. 
+
 
 ## Debugging 
 The code uses debug module, so debuggin is enabled by setting the "DEBUG" variable 
@@ -113,8 +129,6 @@ If you want to check what tags are available to turn on for debug run the follow
 ## Notes
 ---------
 add support for --
- Testing the DB, 
- Populating the DB from scripts.
  
 
 REGEX :-
@@ -126,3 +140,5 @@ REGEX :-
 \w: a word character (a-z, A-Z, 0-9, _).
 \W: a non-word character.
 [\b]: a literal backspace (spec
+
+

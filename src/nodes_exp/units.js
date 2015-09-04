@@ -44,11 +44,11 @@ class Units extends BaseExp {
     }
     static checkValid(gr) {
         const VerbMatch = ['is', 'expressed', 'are'];
-
+        //return [false, {}];
         // check if there is a subject + object and they are connected by regex
         let nodes = gr.nodes;
         let vb = gr.dict();
-        //dbg('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
+        //console.log('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
         if (!Utils.checkMatchAny(vb.verb, VerbMatch)) {
             //dbg('Failed-to-find');
             return [false, {}];
@@ -56,6 +56,9 @@ class Units extends BaseExp {
         let re1 = Utils.kMatch(vb, 'subj', /unit/i);
         if (re1 && 'subjWho' in vb && 'obj' in vb) {
             //let rep1 = vb.obj.match(',([^,>]*)>compound>');
+            if (Utils.kMatch(vb, 'subj', />compound>default/i)) {
+                return [false, {}];
+            }
             let vo = vb.obj.replace('>compound>', ' ');
             vo = vo.toLowerCase();
             let voa = vo.split(' ');

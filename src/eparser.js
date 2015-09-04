@@ -39,11 +39,16 @@ parser.addArgument(
     [ '-l', '--learn'],
     { help: 'Learning mode', action:'storeTrue'});
 parser.addArgument(
+    [ '-L', '--learn_data'],
+    { help: 'Data that is used for learning a single command'});
+parser.addArgument(
     [ '-p', '--port'],
     { help: 'port on which server is running'});
 
+
 var args = parser.parseArgs();
 var port = args.port || 8990;
+var learnData = (args.learn_data)?args.learn_data.split(','):[];
 //console.log('PORT = ' + port);
 //console.log("DEBUG = " + args.debug);
 // process a node
@@ -160,7 +165,7 @@ function parse(data, gr, dbge = false) {
                          Call the learning Routing to collect the information and write it to the database.
                          */
                         if (args.learn)
-                            return expLearn.learn(pp.getSentence(0), v);
+                            return expLearn.learn(pp.getSentence(0), v, learnData);
                         else
                             return false;
                         /*expLearn.learn(pp.getSentence(0), v)
@@ -345,6 +350,6 @@ if (args.input && args.input !== '') {
 } else if (args.txt && args.txt !== '') {
         processText(nlp, args.txt, gr, args.debug)
             .then(function (r) {
-                console.log("Done r=" + r);
+                console.log("eParser Done");
             });
 }

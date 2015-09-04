@@ -39,6 +39,7 @@ class DefineMeasure extends BaseExp {
     }
 
     static checkValid(gr) {
+
         const VerbMatch = ['is', 'define', 'defined'];
         const ObjMatch = [/measure/i];
 
@@ -51,6 +52,7 @@ class DefineMeasure extends BaseExp {
             return [false, {}];
         }
         let obj = '';
+
         if ('obj' in vb) {
             obj = vb.obj;
             if ('objWhat' in vb) {
@@ -64,14 +66,14 @@ class DefineMeasure extends BaseExp {
             obj = nodes.getNodeMap(vb.comp).getValues();
             let re1 = obj.match(/([^>]*)>nmod:([^>]*)>([^>]*)/i);
             if (re1) obj = re1[3];
-        } else if ('verbModWhat' in vb && 'verbMod' in vb &&
+        } /*else if ('verbModWhat' in vb && 'verbMod' in vb &&
                    vb.verbMod.match(/defined/i)) {
             obj = vb.verbModWhat;
-        } else {
+        }*/
+        else {
             //dbg('Failed-to-find');
             return [false, {}];
         }
-
         if (!Utils.checkMatchAny(obj, ObjMatch)) {
             //dbg('Failed-to-find');
             return [false, {}];

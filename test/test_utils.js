@@ -7,7 +7,8 @@ install();
 
 var NLPPP = require('./../src/nlp_pp');
 var Nodes = require('./../src/nodes.js');
-
+var ExpDB = require('../src/expdb');
+let expDB = new ExpDB('./lexp.db');
 
 export function parse(data, grMatch, dict = false, exp = false,  dbg = false) {
     var pp = new NLPPP();
@@ -16,9 +17,6 @@ export function parse(data, grMatch, dict = false, exp = false,  dbg = false) {
     //console.log('Processing :: ' + pp.getSentence(0) + ' ROOT:' + rt + '[' + pp.getTokens(0).getToken(rt) + ']');
     let nd = new Nodes(pp.getSentenceDep(0), dbg);
     nd.processAllGrammar();
-    if (exp) {
-        nd.processAllExp();
-    }
     res = [];
     if (!exp) {
         for (let idx in nd.grMatches) {
@@ -34,16 +32,24 @@ export function parse(data, grMatch, dict = false, exp = false,  dbg = false) {
                 }
             }
         }
+        return res;
     } else {
-        for (let idx in nd.expMatches) {
-            if (false) {
-                console.log('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
-                    + '] Matched Text  ::' + nd.expMatches[idx].text());
-            }
-            res.push(nd.expMatches[idx].text());
-        }
+        nd.processAllExp();
+        return new Promise(
+            function(resolve, reject) {
+                nd.processAllExpDB(expDB)
+                    .then(function (dt) {
+                        for (let idx in nd.expMatches) {
+                            if (false) {
+                                console.log('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
+                                    + '] Matched Text  ::' + nd.expMatches[idx].text());
+                            }
+                            res.push(nd.expMatches[idx].text());
+                        }
+                        resolve(res);
+                    });
+            });
     }
-    return res;
 }
 
 

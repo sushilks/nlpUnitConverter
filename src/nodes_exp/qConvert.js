@@ -56,120 +56,20 @@ class QConvert extends BaseExp {
         }
         console.log(this.getName() + ' :: ERROR Unable to find nodes [' + nFrom + '] [' + nTo + ']');
     }
-    static checkValid(gr) {
-        const VerbMatch = ['is', 'are', 'make', 'convert', 'Convert'];
-        // check if there is a subject + object and they are connected by regex
-        let nodes = gr.nodes;
-        let vb = gr.dict();
-        //dbg('     verb:' + vb.verb + ' RES: ' + JSON.stringify(vb) + ']');
-
-        if (!Utils.checkMatchAny(vb.verb, VerbMatch)) {
-            return [false, {}];
-        }
-        //Grammar IDX = 3 :: Grammar Type [VerbBase] Matched Text  ::VerbBase verb=[make]
-        // Subj=[Minutes>mod>many>mod>How] Object=[Day>nummod>1]
-        // SubjOnly:Minutes>mod>many>mod>How ObjectOnly:Day>nummod>1
-        //Grammar IDX = 3 :: Grammar Type [VerbBase] Matched Text  ::VerbBase verb=[are]
-        // Subj=[Hours>mod>many>mod>How] Object=[Week>nummod>12]
-        // SubjOnly:Hours>mod>many>mod>How ObjectOnly:Week>nummod>12
-
-        {
-            let re1 = Utils.kMatch(vb, 'subj', /([^>,]+).*many.*how/i);
-            let re2 = Utils.kMatch(vb, 'obj', /([^>,]+)>nummod>([^>,]+)/i);
-            if (!re2) {
-                re2 = Utils.kMatch(vb, 'verbModWhat', /([^>,]+)>nummod>([^>,]+)/i);
-            }
-
-
-            if (re1 && re2) {
-                let r = [true, {'convTo': re1[1], 'convFrom': re2[1], 'fromValue': re2[2]}];
-                dbg('Found1 r=' + JSON.stringify(r));
-                return r;
-            }
-        }
-        {
-            //ubjOnly:WeDeks ObjectOnly:there>dep>many>mod>How ObjectWhat:Hours>nummod>three million
-            let re1 = Utils.kMatch(vb, 'obj', /([^,>]*)>mod>how,([^,>]*)>mod>many/i);
-            let re2 = Utils.kMatch(vb, 'subj', /([^>,]*)>nummod>([^>,]*)/i);
-            if (re1 && re2) {
-                let r = [true, {'convTo': re1[1], 'convFrom': re2[1], 'fromValue': re2[2]}];
-                dbg('Found2 r=' + JSON.stringify(r));
-                return r;
-            }
-            if (re2 && Utils.kMatch(vb, 'obj', /what/i) && vb.subjWhat !== '') {
-                let r = [true, {'convTo': vb.subjWhat, 'convFrom': re2[1], 'fromValue': re2[2]}];
-                dbg('Found3 r=' + JSON.stringify(r));
-                return r;
-            }
-        }
-        {
-            //ubjOnly:Weeks ObjectOnly:there>dep>many>mod>How ObjectWhat:Hours>nummod>three million
-            let re1 = Utils.kMatch(vb, 'obj', /.*many.*how/i);
-            let re2 = Utils.kMatch(vb, 'subjWhat', /([^>,]*)>nummod>([^>,]*)/i);
-            if (re1  && re2) {
-                let r = [true, {'convTo': vb.subj, 'convFrom': re2[1], 'fromValue': re2[2]}];
-                dbg('Found4 r=' + JSON.stringify(r));
-                return r;
-            }
-        }
-        {
-            let re1 = Utils.kMatch(vb, 'verbModWhat', /([^>,]*)>nummod>([^>,]*)/i);
-            let re2 = Utils.kMatch(vb, 'rawVerbAdvMod', /([^>,]*)>mod>many/i);
-            if (re1 && re2) {
-                let r = [true, {'convTo': re2[1], 'convFrom': re1[1], 'fromValue': re1[2]}];
-                dbg('Found5 r=' + JSON.stringify(r));
-                return r;
-            }
-        }
-        {
-            //How many Inch are there in 30 Foot?
-            //{"verb":"are","rawVerbMod":"are>nmod:in>30 Foot","verbModWhat":"30 Foot","verbMod":"are","rawSubj":"many>mod>How,many Inch","subj":"many>mod>How,many Inch"}
-            let re1 = Utils.kMatch(vb, 'subj', /many ([^,>]*)/i);
-            let re2 = Utils.kMatch(vb, 'verbModWhat', /(.*) ([^ ]*)$/)
-            let re3 = Utils.kMatch(vb, 'verbModWhat', /([^>,]*)>nummod>([^>,]*)/i);
-
-            if (Utils.kMatch(vb, 'subj', /many>mod>how/i) && re1 && (re2 || re3)) {
-                let r;
-                if (re2) {
-                    r = [true, {'convTo': re1[1], 'convFrom': re2[2], 'fromValue': Utils.textToNumber(re2[1])}];
-                } else {
-                    r = [true, {'convTo': re1[1], 'convFrom': re3[1], 'fromValue': Utils.textToNumber(re3[2])}];
-                }
-                dbg('Found6 r=' + JSON.stringify(r));
-                return r;
-            }
-        }
-        {
-            let re1 = Utils.kMatch(vb, 'verbDep', /(much|many).*how/i);
-            let re2 = Utils.kMatch(vb, 'subj', /([^>,]*)>nummod>([^>,]*)/i);
-            if (re1 && re2 && 'subjWhat' in vb) {
-                let r = [true, {'convTo': vb.subjWhat, 'convFrom': re2[1], 'fromValue': Utils.textToNumber(re2[2])}];
-                dbg('Found7 r=' + JSON.stringify(r));
-                return r;
-            }
-            if (re1 && 'subjWhat' in vb && 'subj' in vb) {
-                let r = [true, {'convTo': vb.subjWhat, 'convFrom': vb.subj, 'fromValue': 1}];
-                dbg('Found8 r=' + JSON.stringify(r));
-                return r;
-            }
-        }
-
-        if (vb.verb.match(/convert/i) && ('verbModWho' in vb || 'verbModWhat' in vb)) {
-            //convert 29 thousand Chain in to  Foot.
-            let re1 = Utils.kMatch(vb, 'obj', /([^>,]*)>nummod>([^>,]*)/i);
-            if (!re1 && 'verbModWho' in vb && 'verbModWhat' in vb) {
-                re1 = Utils.kMatch(vb, 'verbModWho', /([^>,]*)>nummod>([^>,]*)/i);
-            }
-            if (re1) {
-                let r = [true, {'convTo': ('verbModWhat' in vb)?vb.verbModWhat:vb.verbModWho,
-                    'convFrom': re1[1], 'fromValue': re1[2]}];
-                dbg('Found8 r=' + JSON.stringify(r));
-                return r;
-            }
-        }
-       // dbg('Failed-to-find');
-        return [false, {}];
-    }
 }
 
+/*
+  QConvert : convert-from, convert-to, from-value
+  normalize the units in convert-from and convert-to
+  check if convert-from and convert-to nodes exist in the graph database.
+  if they dont exist report and return.
+  on the network(Jsnx) compute the shortest path between the nodes 'convert-from' and 'convert-to'
+
+  QConvert : convTo, convFrom, fromValue
+  normalize the nodes convTo and convFrom
+  find a graph that has both the nodes, if not found return with error.
+  find the shortest path between the two nodes and accumulate all the multipliers between them.
+
+
+ */
 export default QConvert;
