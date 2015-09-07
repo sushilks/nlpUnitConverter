@@ -134,22 +134,30 @@ The second part is to extract the command and the arguments from the parsed data
 The first part is being handled by coreNLP, there is some additional work to extract the verb and additional primitives out of it. 
 The second part is implemented in form of a database of regular expressions. The data base is populated by learning when a new format 
 is encountered.
+
+
 It's my observation that there is more learning required if the first part is weak. As there is more intelligence in the first part the learning pressure reduces. 
 
-TODO's: To improve the grammar parsing. Universal dependencies are not completely supported (Only select few are handled). 
-The parsed data structure is flat (Of course it helps in doing regular expression scans on it) but it needs to be converted into 
+
+TODO's: 
+* To improve the grammar parsing. 
+* Universal dependencies are not completely supported (Only select few are handled). 
+* The parsed data structure is flat (Of course it helps in doing regular expression scans on it) but it needs to be converted into 
 dictionaries to make it hierarchical.
-The pattern matching is not very smart, can be improved to be generic(Have to put more thoughts on it).
+* The pattern matching is not very smart, can be improved to be generic(Have to put more thoughts on it).
+
 
 #### Problem Statement that is addressed in the first phase :
 A mechanism that can take context-free natural language commands and translate it into a function call with arguments. 
 this is what's being done by the code.
 
+
  
 
-REGEX :-
+#### Work in progress
 
-tell me how many meters in a kilometer
-tell me how many meters in 3 kilometers
-This support is broken .... in verb node.
-tell me how many meters in 3 thousand kilometers
+Some Bugs found
+* tell me how many meters in a kilometer
+* tell me how many meters in 3 kilometers
+ * This support is broken .... in verb node.
+ * tell me how many meters in 3 thousand kilometers
