@@ -86,11 +86,11 @@ class ExpLearn {
                 }
             }
             if (found === 0) {
-                res.match[verbItem] = '/' + verbDt.toLowerCase() + '/i';
+                res.match[verbItem] = '/^' + verbDt.toLowerCase() + '$/i';
             } else if (found === 2) {
-                res.match[verbItem] = '/' + res.match[verbItem] + '/i';
+                res.match[verbItem] = '/^' + res.match[verbItem] + '$/i';
             }
-            let tmpKeys = Object.keys(insLocDt).sort();
+            let tmpKeys = Object.keys(insLocDt).sort(function(a,b){return a-b;});
             let cnt = 1;
             for (let item of tmpKeys) {
                 let d = insLocDt[item];

@@ -19,6 +19,8 @@ node ./build/src/eparser.js -l -t 'how many parsec are there in a foot?' -L 'yes
 node ./build/src/eparser.js -l -t 'how many yards are there in a mile?' -L 'yes,QConv,yards,mile,1'
 node ./build/src/eparser.js -l -t 'what is a parsec in lightyears?' -L 'yes,QConv,lightyears,parsec,1'
 node ./build/src/eparser.js -l -t 'what is 10 parsec in lightyears?' -L 'yes,QConv,lightyears,parsec,10'
+node ./build/src/eparser.js -l -t 'tell me how many meters in a kilometer?' -L 'yes,QConv,kilometer,meter,1'
+node ./build/src/eparser.js -l -t 'tell me how many meters in 3 kilometer?' -L 'yes,QConv,kilometer,meter,3'
 # node type : Relation (Relations ship between units)
 # [Relation] Args Needed :["nodeFrom","nodeTo","convN", "convD"]
 #node ./build/src/eparser.js -l -t '' -L 'yes,Relation,'
