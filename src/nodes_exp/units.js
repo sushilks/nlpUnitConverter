@@ -21,7 +21,11 @@ class Units extends BaseExp {
         return ['VerbBase'];
     }
     static getArgs() {
-        return ['unitsFor', 'units'];
+        //return ['unitsFor', 'List:units'];
+        return {
+            'unitsFor': {},
+            'units': {type: 'List'}
+        };
     }
     exec(gr) {
         //dbg('Adding to graph:' + this.getName());
@@ -31,7 +35,7 @@ class Units extends BaseExp {
         if (!g) {
             console.trace('ERROR: Dont know about [' + nm + ']');
         }
-        let units = this.result.units;
+        let units = this.result['units'];
         //console.log('UNIT = ' + units);
         if (Array.isArray(units)) {
             units.forEach(function (x) {
@@ -42,6 +46,7 @@ class Units extends BaseExp {
             g.addNode(Utils.normalizeUnit(units), {unitFor: nm});
         }
     }
+    /*
     static checkValid(gr) {
         const VerbMatch = ['is', 'expressed', 'are'];
         //return [false, {}];
@@ -72,7 +77,7 @@ class Units extends BaseExp {
 
         //dbg('Failed-to-find');
         return [false, {}];
-    }
+    }*/
 }
 
 export default Units;

@@ -3,33 +3,33 @@
 var Utils = require('../nodes_utils');
 var assert = require('assert');
 var dbg = require('debug')('node:gr:dep');
+var GrBase = require('./base_gr');
 
-class DEP {
-    constructor(nodes, matchResult) {
-        this.nodes = nodes;
-        this.depList = matchResult.dep;
-        this.selfNodeId = matchResult.selfNode
-        this.dbg = nodes.dbg;
+class DEP extends GrBase {
+    constructor(nodes, fromNode, linkType, toNode, matchResult) {
+        super(nodes, fromNode, linkType, toNode, matchResult);
+        this.name = 'dep';
     }
-    getName() {
-        return 'dep';
-    }
+    /*
     getValues() {
-        let nd = this.nodes.getNodeMap(this.selfNodeId).getToken();
+        let nd = this.nodes.getNodeMap(this.match.selfNodeId).getToken();
         let val = [];
-        for (let tid of this.depList) {
+        for (let tid of this.match.depList) {
             val.push(nd + '>dep>' + this.nodes.getNodeMap(tid).getValues());
         }
         return val.join(',');
     }
+*/
     text() {
         return this.getName() + ' [' + this.getValues() + ']';
     }
     static getMatchToken() {
+        return [{name:'dep-1', edge:'dep'}];
         return ['.*:WRB', '.*:JJ.*', '.*:NN.*', '.*:EX'];
     }
 
     static checkValid(nodeList, node) {
+        return [true, {}];
         let t1 = Utils.checkChildLinks(node, 'dep');
         if (t1 && t1.length) {
             let retList = [];
@@ -42,7 +42,7 @@ class DEP {
                     retList.push(tid)
                 }
             }
-            return [retList.length > 0, {'selfNode': node.getTokenId(), 'dep': retList}];
+            return [retList.length > 0, {'selfNodeId': node.getTokenId(), 'depList': retList}];
         }
         return [false, {}];
     }

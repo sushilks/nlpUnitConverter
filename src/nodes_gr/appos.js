@@ -3,32 +3,31 @@
 var Utils = require('../nodes_utils');
 var assert = require('assert');
 var dbg = require('debug')('node:gr:appos');
+var GrBase = require('./base_gr');
 
-class APPOS {
-    constructor(nodes, matchResult) {
-        this.nodes = nodes;
-        this.apposList = matchResult.appos;
-        this.selfNodeId = matchResult.selfNode
-        this.dbg = nodes.dbg;
+class APPOS extends GrBase {
+    constructor(nodes, fromNode, linkType, toNode, matchResult) {
+        super(nodes, fromNode, linkType, toNode, matchResult);
+        this.name = 'appos';
     }
-    getName() {
-        return 'appos';
-    }
+    /*
     getValues(r = '') {
-        let val = (r !== '') ? r : this.nodes.getNodeMap(this.selfNodeId).getToken();
-        for (let tid of this.apposList) {
+        let val = (r !== '') ? r : this.nodes.getNodeMap(this.match.selfNodeId).getToken();
+        for (let tid of this.match.appos) {
             val = val + ' ' + this.nodes.getNodeMap(tid).getValues();
         }
         return val;
-    }
+    }*/
     text() {
         return 'apppos [' + this.getValues() + ']';
     }
     static getMatchToken() {
-        return ['.*:NN.*', '.*:CD.*', '.*:JJ.*'];
+        //return ['.*:NN.*', '.*:CD.*', '.*:JJ.*'];
+        return [{name:'appos-1', edge:'appos'}, {name:'appos-2', edge:'conj:and'}];
     }
 
     static checkValid(nodeList, node) {
+        return [true, {}];
         //Utils.checkAndProcessChildNodeGrammar(nodeList, node);
         let t1 = Utils.checkChildLinks(node, 'appos|conj:and');
         if (t1 && t1.length) {
@@ -42,7 +41,7 @@ class APPOS {
                     retList.push(tid)
                 }
             }
-            return [retList.length > 0, {'selfNode': node.getTokenId(), 'appos': retList}];
+            return [retList.length > 0, {'selfNodeId': node.getTokenId(), 'appos': retList}];
         }
         return [false, {}];
     }

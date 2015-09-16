@@ -24,6 +24,9 @@ describe('Grammar VerbBase Test ::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
+                console.log('ret[0] = ' + JSON.stringify(ret[0]));
+                console.log('RES    = ' + JSON.stringify(res));
+
                 assert.deepEqual(ret[0], res);
             });
     }).bind(null, txt, res));

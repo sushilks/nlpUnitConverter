@@ -81,26 +81,46 @@ class BaseNode {
         return this.nodes.tkn.getTokenPOS(this.tknId);
     }
     // this function may be overwritten by inheritance.
-    getValues() {
-        let g = this.getGrammarMatches();
-        if (g.length === 0) {
-            return this.getToken();
-        }
-        // not sure how to handle more than one grammar match
-        let ret = [];
-        let r = '';
-        for (let idx in g) {
-            if (g[idx].getName().match(/(appos|compound)/i)) {
-                r = g[idx].getValues(r);
-            } else {
-                ret.push(g[idx].getValues());
+    getValues(tagged=false) {
+        let data = [];
+        let gr = this.getGrammarMatches();
+        //console.log(' getValues called for :' + this.getToken() + ' [' + gr.length + ']');
+        if (gr.length) {
+            for (let gritm of gr) {
+                data.push(gritm.getValues(tagged));
             }
+            return data.join(' ');
+        } else {
+            let children = this.getChildren();
+            for (let loc in children) {
+                let c = children[loc];
+                data.push(c.node.getValues(tagged));
+            }
+            data.push(this.getToken());
+            return '<' + data.join(' ') + '>';
         }
-        if (r !== '') {
-            ret.push(r);
-        }
-        return ret.join(',');
     }
+            /*
+                    let g = this.getGrammarMatches();
+                    if (g.length === 0) {
+                        return this.getToken();
+                    }
+                    // not sure how to handle more than one grammar match
+                    let ret = [];
+                    let r = '';
+                    for (let idx in g) {
+                        if (g[idx].getName().match(/(appos|compound)/i)) {
+                            r = g[idx].getValues(r);
+                        } else {
+                            ret.push(g[idx].getValues());
+                        }
+                    }
+                    if (r !== '') {
+                        ret.push(r);
+                    }
+                    return ret.join(',');
+                    */
+
 
     noOfChildren() {
         return Object.keys(this.children).length;

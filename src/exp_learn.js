@@ -2,7 +2,9 @@
 
 var readline = require('readline');
 var Utils = require('./nodes_utils');
+var LearnUtils = require('./exp_learn_utils');
 var assert = require('assert');
+var dbg = require('debug')('exp:learn');
 
 class ExpLearn {
     constructor(db,  gExpMapper) {
@@ -37,67 +39,104 @@ class ExpLearn {
                 });
         }).bind(null, this));
     }
+    /*
+     Searching for val[Kilos] in tree=[object Object]
+     FOUND DT= root.verb.data.0.advmod.data.0.dep.token
+     -> verb.advmod.dep
+
+     Searching for val[Tons] in tree=[object Object]
+     FOUND DT= root.verb.data.1.what.token
+     ->verb.what
+
+     Searching for val[30] in tree=[object Object]
+     FOUND DT= root.verb.data.1.what.data.0.numnode.token
+     ->werb.what.numnode
+
+
+     Searching for val[30 thousand] in tree=[object Object]
+     FOUND DT= root.verb.data.1.what.data.0.numnode.dataValue
+     -> verb.what.numnode
+     */
+
+
+
     autoExtractMatch(verb, res) {
-        console.log("---- > " + JSON.stringify(verb));
-        console.log("---- > " + JSON.stringify(res));
+        //console.log("---- > " + JSON.stringify(verb));
+        //console.log("---- > " + JSON.stringify(res));
         let ekeys = Object.keys(res.extract);
 
-        Object.keys(verb).map(function(verbItem) {
-            if(!verbItem.match(/^raw/)) {
-                res.match[verbItem] = verb[verbItem];
-            }
-        });
 
-
-        Object.keys(res.match).map(function(verbItem) {
+        Object.keys(verb).map((function(this_,verbItem) {
             // a verb is found
-            let verbDt = res.match[verbItem];
-            let originalVerbDt = verbDt;
+            //let verbDt = res.match[verbItem];
             //console.log(' item = ' + verbItem + ' = ' + verb[verbItem]);
             let insLocDt = {};
             let found = 0;
+            // populate everything other than numbers
             for (let idx = 0; idx < ekeys.length; idx ++) {
                 if (ekeys[idx] != '') {
                     let resItem = ekeys[idx];
                     let resVal = res.extract[resItem];
-                    //console.log('     resItem = ' + resItem + ' v = ' + resVal);
+                    let extArgs = res.args[resItem];
+                    //console.log('     resItem = ' + resItem + ' v = ' + resVal + ' args =' + JSON.stringify(extArgs));
                     // check for exact match first
-                    if (verbDt.toLowerCase() === resVal.toLowerCase()) {
-                        //console.log('\t\t Exact match for the verb');
-                        res.match[verbItem] = '/^([^> ]*)$/';
-                        res.extract[resItem] = verbItem + '[1]';
-                        //ekeys.splice(idx, 1); // remove this key
-                        ekeys[idx] = '';
-                        found = 1;
-                        break;
-                    } else if (verbDt.toLowerCase().indexOf(resVal.toLowerCase()) !== -1) {
-                        // resVal is substring
-                        //console.log('\t\t partial match');
-                        let oloc = originalVerbDt.toLowerCase().indexOf(resVal.toLowerCase());
-                        let midx = verbDt.toLowerCase().indexOf(resVal.toLowerCase());
-                        verbDt = verbDt.slice(0, midx) + verbDt.slice(midx + resVal.length);
-                        verbDt = verbDt.substr(0, midx) + '([^>]+)' + verbDt.substr(midx);
-                        res.match[verbItem] = verbDt;
-                        insLocDt[oloc] = {'extractItem' : resItem, 'verbItem' : verbItem}
-                        res.extract[resItem] = verbItem + '[' + '??' + ']';
-                        ekeys[idx] = '';
-                        found = 2;
+                    if (!(extArgs.type === 'Number' && 'extractionNode' in extArgs)) {
+//                        if (!(resVal.match(/Number:/))) {
+                        let foundPtr = LearnUtils.findInTree(verb, resVal);
+                        if (foundPtr) {
+                            res.extract[resItem] = foundPtr;
+                        }
                     }
                 }
             }
-            if (found === 0) {
-                res.match[verbItem] = '/^' + verbDt.toLowerCase() + '$/i';
-            } else if (found === 2) {
-                res.match[verbItem] = '/^' + res.match[verbItem] + '$/i';
+
+            // populate the numbers
+            for (let idx = 0; idx < ekeys.length; idx ++) {
+                if (ekeys[idx] != '') {
+                    let resItem = ekeys[idx];
+                    let resVal = res.extract[resItem];
+                    let extArgs = res.args[resItem];
+
+                    // check for exact match first
+                    if (extArgs.type === 'Number' && 'extractionNode' in extArgs) {
+                        let keyLoc = extArgs.extractionNode;
+                        let key = res.extract[keyLoc].split('.');
+                        key.pop();
+                        key = key.join('.') + '.numnode.dataValue';
+                        //console.log(' --- ' + resItem + ' => ' + keyLoc + ' => ' +  res.extract[keyLoc] + ' => ' + key);
+                        res.extract[resItem] = key;
+
+                    }
+                }
             }
-            let tmpKeys = Object.keys(insLocDt).sort(function(a,b){return a-b;});
-            let cnt = 1;
-            for (let item of tmpKeys) {
-                let d = insLocDt[item];
-                res.extract[d.extractItem] = d.verbItem + '[' + cnt + ']';
-                cnt = cnt + 1;
-            }
-        });
+
+/*
+            // populate the numbers
+            for (let idx = 0; idx < ekeys.length; idx ++) {
+                if (ekeys[idx] != '') {
+                    let resItem = ekeys[idx];
+                    let resVal = res.extract[resItem];
+                    // check for exact match first
+                    if (resItem.match(/Number:/)) {
+                        let keyLoc = resItem.split(':')[1];
+                        let key = res.extract[keyLoc].split('.');
+                        key.pop();
+                        key = key.join('.');
+                        console.log(' --- ' + resItem + ' => ' + keyLoc + ' => ' +  res.extract[keyLoc] + ' => ' + key);
+                        let foundPtr = LearnUtils.findInTreeNumberNode(verb, key);
+                        if (foundPtr) {
+                            res.extract[resItem] = foundPtr;
+                        } else {
+                            delete res.extract[resItem];
+                        }
+                    }
+                }
+            }*/
+        }).bind(null, this));
+
+        //console.log(' RET = ' + JSON.stringify(res));
+        LearnUtils.copyMatchTree(verb,res);
+        dbg(' RET = ' + JSON.stringify(res));
         //return _this.readPattern('Regexp >', vlist, vres.match);
     }
 
@@ -133,16 +172,39 @@ class ExpLearn {
                     })
                 .then(function(line) {
                         if (done) return false;
-                        let nd = _this.gExpFn[line];
+                        let nd;
+                        for (let key in _this.gExpFn) {
+                            if ( key.toLowerCase() === line.toLowerCase()) {
+                                nd = _this.gExpFn[key];
+                                line = key;
+                                break;
+                            }
+                        }
                         if (!nd) {
                             console.log('Unable to find definition for node [' + line + ']');
                             reject('invalid Node ' + line);
                             done = true;
                         } else {
                             vres.type = line;
-                            alist = nd.getArgs();
-                            console.log('Node:[' + line + '] Args Needed :' + JSON.stringify(alist));
-                            return _this.readPattern('Select > ', alist, learnData, vres.extract);
+                            let alistDict = nd.getArgs();
+                            let alist = Object.keys(alistDict);
+                            vres.args = alistDict;
+                            let alistNoTags = [];
+                            {
+                                for (let k of alist) {
+                                    //let kl = k.split(':');
+                                    if ('extractionNode' in alistDict[k] && 'type' in alistDict[k]) {
+                                        vres.extract[k] = alistDict[k].type + ':' + alistDict[k].extractionNode;
+                                   // }
+                                    //if (kl.length === 2 && kl[0] === 'Number' && alist.indexOf(kl[1])!== -1) {
+                                    //    vres.extract[k] = 'insert-extracted-NUM';
+                                    } else {
+                                        alistNoTags.push(k)
+                                    }
+                                }
+                            }
+                            //console.log('Node:[' + line + '] Args Needed :' + JSON.stringify(alist));
+                            return _this.readPattern('Select > ', alistNoTags, learnData, vres.extract);
                             /*
                              Object.keys(verbMatches[0].dict()).map(function(item) {
                              if(!item.match(/^raw/)) {

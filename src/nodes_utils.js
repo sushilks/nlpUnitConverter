@@ -27,6 +27,17 @@ export function nodeInit(nmap, fn) {
     return fn;
 }
 
+export function nodeInitGr(nmap, fn) {
+    let dt = fn.getMatchToken();
+    for (let d of dt) {
+        if (!(d.name in nmap)) {
+            nmap[d.name] = [];
+        }
+        nmap[d.name].push({fn:fn, match:d});
+    }
+    return fn;
+}
+
 // Make sure the  node is precessed for grammar
 // and then get the value of the node.
 export function getNodeValues(nodeList, tknId) {
@@ -79,15 +90,55 @@ export function checkAndProcessParentNodeGrammar(nodeList, node) {
 }
 
 // check if a grammar node is hit
-export function findGrammarRules(grMapper, tkn, pos) {
-    let r = tkn + ':' + pos;
+//export function findGrammarRules(grMapper, tkn, pos) {
+export function findGrammarRules(grMapper, fromNode, linkType, toNode) {
+//    let r = tkn + ':' + pos;
+    let fromNodePOS = '';
+    if (fromNode) {
+        fromNodePOS = fromNode.getPOS();
+    }
+
+    let toNodePOS = toNode.getPOS();
+
     let retRules = [];
     for (let k in grMapper) {
-        if (r.match(new RegExp('^' + k + '$'))) {
-            for (let rule of grMapper[k]) {
-                retRules.push(rule);
+        for (let gr of grMapper[k]) {
+            let found = true;
+            let cnt = 0;
+            let attachType = 'normal';
+            if (Object.prototype.toString.call(gr.match) !== '[object Object]') {
+                continue;
+            }
+            //console.log(' \t\t gr.match =' + JSON.stringify(gr.match));
+            if ('edge' in gr.match) {
+                if (!(linkType.match(new RegExp('^' + gr.match.edge + '$')))) {
+                    found = false;
+                    continue;
+                }
+                cnt ++;
+            }
+            if ('toPOS' in gr.match) {
+                if (!(toNodePOS.match(new RegExp('^' + gr.match.toPOS + '$')))) {
+                    found = false;
+                    continue
+                }
+                cnt ++;
+            }
+            if ('fromPOS' in gr.match) {
+                if (!(fromNodePOS.match(new RegExp('^' + gr.match.fromPOS + '$')))) {
+                    found = false;
+                    continue
+                }
+                cnt ++;
+            }
+            if ('applyToParent' in gr.match) {
+                attachType = 'parent';
+            }
+            if (cnt !== 0) {
+                retRules.push({fn:gr.fn, type:attachType});
             }
         }
+
     }
     return retRules;
 }
@@ -337,59 +388,3 @@ export function getStdin(prompt, cannedData){
     });
 }
 
-
-export function verbDBMatch(dbgdb, verb, dbItem) {
-    // check if all the keys in dbItem are present in verb.
-
-    let dbItemKeys = Object.keys(dbItem.match);
-    let verbKeys = Object.keys(verb.vb);
-    let reMatches = {};
-    dbgdb('verb is ::: ' + JSON.stringify(verb.vb));
-    dbgdb('db is ::: ' + JSON.stringify(dbItem));
-    try {
-        for (let key of dbItemKeys) {
-            if (key.match(/_id/)) {
-                continue;
-            }
-            if (verbKeys.indexOf(key) === -1) {
-                //dbgdb('Key [' + key + '] is missing in verb ')
-                //dbgdb(dbItemKeys + '::::' + verbKeys);
-                return ['', {}];
-            }
-            let r = dbItem.match[key].match(/^\/([^\/]*)\/(\S*)$/);
-            reMatches[key] = verb.vb[key].match(new RegExp(r[1], r[2]));
-            //console.log(key + ' <1>::' + verb.vb[key] + ' <2>::' + dbItem.match[key] + '  <3>::' + reMatches[key]);
-            if (!reMatches[key]) {
-                //dbgdb(' Match failed for key[' + key + '] verb[' + verb.vb[key] + '] db[' + dbItem.match[key] + ']  ' + reMatches[key]);
-                return ['', {}];
-            } else {
-                //console.log('MATCH on [' + key + '] = ' + JSON.stringify(reMatches[key]));
-            }
-        }
-        // all nodes are matching
-        //dbgdb('MATCHED on db entry for db : ' + JSON.stringify(dbItem));
-        let res = {};
-        for (let itm of Object.keys(dbItem.extract)) {
-            //dbgdb('   ext : ' + itm + ' : ' + dbItem.extract[itm] + ' : ');
-            let r = dbItem.extract[itm].match(/^(\S+)\[([0-9]+)\]$/);
-            if (r) {
-                //dbgdb(' ARRAY LOG :' + r[1] + ' idx:' + r[2]);
-                //dbgdb(' extract : ' + reMatches[r[1]][r[2]]);
-                res[itm] = reMatches[r[1]][r[2]];
-            } else {
-                //dbgdb(' VALUE : ' + dbItem.extract[itm]);
-                res[itm] = dbItem.extract[itm];
-            }
-        }
-        //dbgdb(' RESULT[' + dbItem.type + '] = ' + JSON.stringify(res));
-        return [dbItem.type, res, dbItem._id];
-    } catch (e) {
-        // Error
-        if (e.message)
-            console.log(' ERR Message:' + e.message);
-        if (e.stack)
-            console.log('  Err STACK: ' + e.stack);
-        console.log(e);
-        return ['', {}];
-    }
-}

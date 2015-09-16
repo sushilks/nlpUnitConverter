@@ -30,14 +30,14 @@ class DefineMeasure extends BaseExp {
         return ['VerbBase'];
     }
     static getArgs() {
-        return ['subj', 'type'];
+        return {'subj': {}, 'type': {}};
     }
     exec(gr) {
         //console.log('Adding to graph:' + this.getName());
         let g = Utils.createGraph(gr, this.result.subj, { type : this.result.type});
         //console.log(' New Graph Name = ' + JSON.stringify(g.toString()));
     }
-
+/*
     static checkValid(gr) {
 
         const VerbMatch = ['is', 'define', 'defined'];
@@ -66,10 +66,10 @@ class DefineMeasure extends BaseExp {
             obj = nodes.getNodeMap(vb.comp).getValues();
             let re1 = obj.match(/([^>]*)>nmod:([^>]*)>([^>]*)/i);
             if (re1) obj = re1[3];
-        } /*else if ('verbModWhat' in vb && 'verbMod' in vb &&
-                   vb.verbMod.match(/defined/i)) {
-            obj = vb.verbModWhat;
-        }*/
+        } //else if ('verbModWhat' in vb && 'verbMod' in vb &&
+          //         vb.verbMod.match(/defined/i)) {
+          //  obj = vb.verbModWhat;
+        //}
         else {
             //dbg('Failed-to-find');
             return [false, {}];
@@ -81,7 +81,7 @@ class DefineMeasure extends BaseExp {
         let r = [true, {subj: vb.subj, type: obj}];
         dbg('Found r=' + JSON.stringify(r));
         return r;
-    }
+    }*/
 }
 
 export default DefineMeasure;

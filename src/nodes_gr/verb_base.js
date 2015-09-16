@@ -3,10 +3,12 @@
 //import * as utils from './node_utils';
 var Utils = require('../nodes_utils');
 var assert = require('assert');
+var GrBase = require('./base_gr');
 var NMod = require('./nmod');
 var AdvMod = require('./advmod');
 var DEP = require('./dep');
 var dbg = require('debug')('node:gr:verb');
+
 
 /*
 NN----(subj)---->VB(is/defined)---xcomp/nmod--->NN
@@ -66,42 +68,37 @@ ADD
 
  */
 
-class VerbBase {
-    constructor(nodes, matchResult) {
-        this.name = 'VerbBase'
-        this.vb = matchResult.vb;
-        /*
-        verbSubj = matchResult.verbSubj;
-        this.verbObj = matchResult.verbObj;
-        this.verb = matchResult.verb;
-        */
-        this.nodes = nodes;
-        this.dbg = nodes.dbg;
+class VerbBase extends GrBase {
+    constructor(nodes, fromNode, linkType, toNode, matchResult) {
+        super(nodes, fromNode, linkType, toNode, matchResult);
+        this.name = 'VerbBase';
     }
     static getMatchToken() {
         //return ['define:VB.*', 'is:VB.*', 'defined:VB.*'];
-        return ['.*:VB.*'];
+        //return ['.*:VB.*'];
+        //return [{name:'verb-1', toPOS:'VB.*', edge:'((?!cop).)*'} ];
+        return [{name:'verb-1', toPOS:'VB.*', edge:'((?!cop).)*'},
+            {name:'verb-2', toPOS:'VB.*', edge:'cop', applyToParent:true}];
+        //return [{name:'verb-1', toPOS:'VB.*'];
     }
-    getValues() {
-        return this.vb.verb;//this.nodes.getTokens().getToken(this.verb);
-    }
-    getName() {
-        return this.name;
-    }
+    /*
+    getValues() {;
+        return this.match.verb;//this.nodes.getTokens().getToken(this.verb);
+    }*/
     dict() {
-        return this.vb;
+        let r =  this.processNode();
+        return r;
+        return this.match.vb;
     }
     text() {
-        let r = this.name + ':: ' + JSON.stringify(this.vb);
-        return r;
-
+        return this.name + ':: ' + JSON.stringify(this.match);
     }
     getVerb() {
-        return this.vb.verb;//this.nodes.getNodeMap(this.verb).getValues();
+        return this.match.verb;//this.nodes.getNodeMap(this.verb).getValues();
     }
 
-
-    static processNode(ntype, rawObj, ret) {
+/*
+    static _processNode(ntype, rawObj, ret) {
         let processed = '';
         {// When
             let marker = 'agent';
@@ -148,11 +145,157 @@ class VerbBase {
             }
         }
     }
+*/
+    /*
+    _childLinkMatch(node, re) {
+        let match = [];
+        for (let ch in node.getChildren()) {
+            let c = node.getChild(loc);
+            let r = c.type.match(re);
+            if(r) {
+                match.push(r);
+            }
+        }
+        return match;
+    }
+    _addToArray(arr, key, dt) {
+        if (!arr[key]) {
+            arr[key] = [];
+        }
+        arr[key].push(dt);
+    }
+    _processNode2(ntype, node, rawObj, ret, processed = []) {
+        {// When
+            let key = ntype + 'When';
+            let marker = 'nmod:agent';
+            let m = Utils.checkChildLinks(node, marker);
+            for (let itm of m) {
+                let c = node.getChild(itm);
+                this.addToArray(ret, key, {tokenId:c.node.getTokenId(), type:c.type});
+                processed.push(itm);
+            }
+        }
+        {// Who
+            let key = ntype + 'Who';
+            let marker = 'nmod:(for|by|to|tmod)';
+            let m = Utils.checkChildLinks(node, marker);
+            for (let itm of m) {
+                let c = node.getChild(itm);
+                this.addToArray(ret, key, {tokenId:c.node.getTokenId(), type:c.type});
+                processed.push(itm);
+            }
+        }
+        {//What
+            let key = ntype + 'What';
+            let marker = 'nmod:(in|of|as|into)';
+            let m = Utils.checkChildLinks(node, marker);
+            for (let itm of m) {
+                let c = node.getChild(itm);
+                this.addToArray(ret, key, {tokenId:c.node.getTokenId(), type:c.type});
+                processed.push(itm);
+            }
+        }
+        {//Unresolved
+            let key = ntype + 'Unresolved';
+            let marker = '.*';
+            let m = Utils.checkChildLinks(node, marker);
+            for (let itm of m) {
+                if (processed.indexOf(itm) === -1) {
+                    let c = node.getChild(itm);
+                    this.addToArray(ret, key, {tokenId:c.node.getTokenId(), type:c.type});
+                    //processed.push(itm);
+                }
+            }
+        }
+    }*/
+//    processNodeValue() {
+    getValues(tagged=false) {
+        let res = [];
+        if (this.linkType === 'cop'){
+            let children = this.fromNode.getChildren();
+            for(let child in children) {
+                let c = this.fromNode.getChild(child);
+                if (this.toNode.getTokenId() !== c.node.getTokenId()) {
+                    res.push(c.node.getValues(tagged));
+                }
+            }
+            res.push(this.fromNode.getToken());
+            //console.log('  \t\t getValues::Verb called for id ' + this.toNode.getTokenId() + ' reeturning :' + res.join(' '));
+            res = res.join(' ');
+            if (tagged) {
+                res =  'obj::<' + res + '>';
+                res = this.getName() + '::' + this.toNode.getValues(tagged) + ' ' + res;
+            } else {
+                res = this.toNode.getValues(tagged) + ' ' + res;
+            }
+            return res;
+        } else {
+            return super.getValues(tagged);
+        }
+    }
 
-    static checkValid(nodeList, node) {
+    processNode() {
+        let node = this.toNode;
+        let nodeList = this.nodes;
+        if (this.linkType === 'cop') {
+            node = this.fromNode;
+        }
+        // check all the child nodes
+        let children = node.getChildren();
+        //let dbg = nodeList.dbg;
+        for (let child in children) {
+            let ch = children[child];
+        }
+        let ret = {};
+        // process the verb node
+
+        if (this.linkType === 'cop') {
+            ret.verb = {tokenId:this.toNode.getTokenId(), obj : {tokenId: this.fromNode.getTokenId()}};
+        } else {
+            ret.verb = {tokenId:this.toNode.getTokenId()};
+        }
+
+        ret = super.processNode(ret);
+        if (this.linkType === 'cop') {
+            if (Object.keys(ret.verb).indexOf('obj') != -1) {
+                for (let idx in  ret.verb.obj.data) {
+                    //console.log(' DD = ' + Object.keys(ret.verb.obj.data[idx]));
+                    if (Object.keys(ret.verb.obj.data[idx]).indexOf('subj') != -1) {
+                        ret.verb.subj = ret.verb.obj.data[idx].subj;
+                        ret.verb.obj.data.splice(idx, 1);
+                        //ret.verb.subj = ret.verb.obj.subj;
+                        //delete ret.verb.obj.subj;
+                    }
+                }
+                ret.verb.obj.dataValue = [];
+                ret.verb.obj.dataValueTagged = [];
+                for (let idx in  ret.verb.obj.data) {
+                    for (let idx2 in ret.verb.obj.data[idx]) {
+                        //console.log(' ---DT=' + idx + ' idx2= ' + idx2)
+                        ret.verb.obj.dataValue.push(ret.verb.obj.data[idx][idx2].dataValue);
+                        ret.verb.obj.dataValueTagged.push(ret.verb.obj.data[idx][idx2].dataValueTagged);
+                    }
+                }
+                ret.verb.obj.dataValue.push(ret.verb.obj.token);
+                ret.verb.obj.dataValueTagged.push(ret.verb.obj.token);
+                ret.verb.obj.dataValue = ret.verb.obj.dataValue.join(' ');
+                ret.verb.obj.dataValueTagged = 'obj::<' + ret.verb.obj.dataValueTagged.join(' ') + '>';
+                //}
+            }
+        }
+
+
+        if (false) console.log(' --->> ' + JSON.stringify(ret));
+        return ret;
+    }
+    static checkValid(nodeList, fromNode, linkType, toNode) {
         let dbg = nodeList.dbg;
+        return [true, {}];
+
+        /*
+
         // Make sure all child nodes are processed
-        Utils.checkAndProcessChildNodeGrammar(nodeList, node);
+        //Utils.checkAndProcessChildNodeGrammar(nodeList, node);
 
         let ret = {};
 
@@ -174,17 +317,17 @@ class VerbBase {
             let vn = node;
             mr = NMod.checkValid(nodeList, vn);
             if (mr[0]) {
-                ret.rawVerbMod = new NMod(vn.nodes, mr[1]).getValues();
+                ret.rawVerbMod = new NMod(vn.nodes, vn, mr[1]).getValues();
                 VerbBase.processNode('verbMod', ret.rawVerbMod, ret);
             }
             mr = AdvMod.checkValid(nodeList, vn);
             if (mr[0]) {
-                ret.rawVerbAdvMod = new AdvMod(vn.nodes, mr[1]).getValues();
+                ret.rawVerbAdvMod = new AdvMod(vn.nodes, vn, mr[1]).getValues();
                 VerbBase.processNode('verbMod', ret.rawVerbAdvMod, ret);
             }
             mr = DEP.checkValid(nodeList, vn);
             if (mr[0]) {
-                ret.verbDep = new DEP(vn.nodes, mr[1]).getValues();
+                ret.verbDep = new DEP(vn.nodes, vn, mr[1]).getValues();
             }
         }
 
@@ -221,6 +364,7 @@ class VerbBase {
         } else {
             return [false, {}];
         }
+        */
     }
 }
 

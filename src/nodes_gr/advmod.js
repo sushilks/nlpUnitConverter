@@ -3,34 +3,33 @@
 var Utils = require('../nodes_utils');
 var assert = require('assert');
 var debug = require('debug');
+var GrBase = require('./base_gr');
 var dbg = require('debug')('node:gr:advmod');
 
-class AdvMOD {
-    constructor(nodes, matchResult) {
-        this.nodes = nodes;
-        this.modList = matchResult.mod;
-        this.selfNodeId = matchResult.selfNode
-        this.dbg = nodes.dbg;
+class AdvMOD extends GrBase {
+    constructor(nodes, fromNode, linkType, toNode, matchResult) {
+        super(nodes, fromNode, linkType, toNode, matchResult);
+        this.name = 'advmod';
     }
-    getName() {
-        return 'mod';
-    }
+    /*
     getValues() {
-        let nd = this.nodes.getNodeMap(this.selfNodeId).getToken();
+        let nd = this.nodes.getNodeMap(this.match.selfNodeId).getToken();
         let val = [];
-        for (let tid of this.modList) {
+        for (let tid of this.match.mod) {
             val.push(nd + '>mod>' + this.nodes.getNodeMap(tid).getValues());
         }
         return val.join(',');
     }
     text() {
         return this.getName() + ' [' + this.getValues() + ']';
-    }
+    }*/
     static getMatchToken() {
+        return [{name:'advmod-1', edge:'advmod'}];
         return ['.*:WRB', '.*:JJ.*', '.*:NN.*'];
     }
 
     static checkValid(nodeList, node) {
+        return [true, {}];
         let t1 = Utils.checkChildLinks(node, 'amod|advmod');
         if (t1 && t1.length) {
             let retList = [];
@@ -44,7 +43,7 @@ class AdvMOD {
                     retList.push(tid)
                 }
             }
-            return [retList.length > 0, {'selfNode': node.getTokenId(), 'mod': retList}];
+            return [retList.length > 0, {'selfNodeId': node.getTokenId(), 'mod': retList}];
         }
         return [false, {}];
     }

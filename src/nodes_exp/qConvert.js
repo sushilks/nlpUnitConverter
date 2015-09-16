@@ -12,6 +12,7 @@ var dbg = require('debug')('node:exp:qconv');
 
 class QConvert extends BaseExp {
     constructor(nodes, matchResult) {
+        matchResult.fromValue = ((matchResult['fromValue']))? matchResult['fromValue'] : 1;
         super(nodes, matchResult);
         this.name = QConvert.getName();
     }
@@ -22,7 +23,14 @@ class QConvert extends BaseExp {
         return ['VerbBase'];
     }
     static getArgs() {
-        return ['convTo', 'convFrom', 'fromValue'];
+        //return ['convTo', 'convFrom', 'fromValue'];
+        //return ['convTo', 'convFrom', 'Number:convFrom'];
+        return {
+            'convTo': {},
+            'convFrom': {},
+            'fromValue': { type: 'Number', extractionNode: 'convFrom', default: 1}
+        };
+
     }
     exec(gr) {
         //console.log('Adding to graph:' + this.getName());
@@ -71,5 +79,13 @@ class QConvert extends BaseExp {
   find the shortest path between the two nodes and accumulate all the multipliers between them.
 
 
+//
+ {"stmt":"translate 10 thousand Parsec to Yards .",
+ "match":{"verb":"/^translate$/i","verbModWho":"/^([^> ]*)$/","verbMod":"/^translate$/i","obj":"/^([^>]+)>nummod>([^>]+)$/i"},
+ "extract":{"convTo":"verbModWho[1]","convFrom":"obj[1]","fromValue":"obj[2]"},"type":"QConv","_id":"B1nIAod2hoR0AuG4"}
+  verb - translate
+     - who -> extract
+     - obj
+         - numnod modifier ()
  */
 export default QConvert;

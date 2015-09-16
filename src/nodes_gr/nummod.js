@@ -2,35 +2,55 @@
 
 var Utils = require('../nodes_utils');
 var assert = require('assert');
-var dbg = require('debug')('node:gr:dep');
+var dbg = require('debug')('node:gr:nummod');
+var GrBase = require('./base_gr');
 
-class NumMod {
-    constructor(nodes, matchResult) {
-        this.nodes = nodes;
-        this.nummodToken = matchResult.nummodNode;
-        this.selfNodeId = matchResult.selfNode
-        this.nummodLink = matchResult.nummodLink;
-        this.dbg = nodes.dbg;
-    }
-    getName() {
-        return 'nummod';
-    }
-    getValues() {
-        let r = [];
-        for (let itm of this.nummodToken) {
-            r.push(this.nodes.getNodeMap(itm).getValues());
-        }
-        return this.nodes.getTokens().getToken(this.selfNodeId) + '>' + this.nummodLink + '>' +
-            r.join(' ');
+class NumMod extends GrBase {
+    constructor(nodes, fromNode, linkType, toNode, matchResult) {
+        super(nodes, fromNode, linkType, toNode, matchResult);
+        this.name = 'nummod';
     }
     text() {
         return '[' + this.getValues() + ']';
     }
     static getMatchToken() {
-        return ['.*:NN.*'];
+        //return ['.*:NN.*'];
+        return [{name:'nummod-1', edge:'nummod', toPOS: 'CD'}];
     }
 
-    static checkValid(nodeList, node) {
+    processNode() {
+        let ret = {};
+        ret.numnode = {tokenId: this.toNode.getTokenId()};
+
+        // identify all the compund nodes and pass it on
+        // every thing else is unresolved.
+        return super.processNode(ret);
+
+        let children = this.toNode.getChildren();
+        for(let child in children) {
+            let c = this.toNode.getChild(child);
+            console.log(' CHILD = ' + c .type);
+        }
+        var findNode;
+        findNode = Utils.checkChildLinks(this.toNode, 'nummod');
+        console.log(' findComp ' + find.length);
+        if (findNode.length) {
+            for (let comp of findNode) {
+                let c  = this.toNode.getChild(comp);
+                console.log(' --->>> type=' + c.type + ' token=' + c.nd );
+            }
+        }
+        return ret;
+    }
+
+
+//    static checkValid(nodeList, node) {
+    static checkValid(nodeList, fromNode, linkType, toNode) {
+        if (toNode.getPOS().match(/CD/)) {
+            return [true, {}];
+        }
+        return [false, {}];
+
         let t1 = Utils.checkChildLinks(node, 'nummod');
         if (t1 && t1.length) {
             //assert.equal(t1.length,1,'Un-Implemented.' + t1.length);
@@ -47,7 +67,7 @@ class NumMod {
                     res.push(t1[idx]);
                 }
             }
-            return [true, {'selfNode': node.getTokenId(), 'nummodNode': res, 'nummodLink': link }];
+            return [true, {'selfNodeId': node.getTokenId(), 'nummodToken': res, 'nummodLink': link }];
         }
         return [false, {}];
     }

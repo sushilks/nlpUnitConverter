@@ -7,6 +7,8 @@ var dbg = require('debug')('node:exp:rel');
 
 class relationMath extends BaseExp {
     constructor(nodes, matchResult) {
+        matchResult.convD = (matchResult['convD'])?matchResult['convD'] : 1;
+        matchResult.convN = (matchResult['convN'])?matchResult['convN'] : 1;
         super(nodes, matchResult);
         this.name = relationMath.getName();
     }
@@ -17,7 +19,14 @@ class relationMath extends BaseExp {
         return ['VerbBase'];
     }
     static getArgs() {
-        return ['nodeFrom', 'nodeTo', 'convD', 'convN'];
+        //return ['nodeFrom', 'nodeTo', 'convD', 'convN'];
+        //return ['nodeFrom', 'nodeTo', 'Number:nodeFrom', 'Number:nodeTo'];
+        return {
+            'nodeFrom': {},
+            'nodeTo': {},
+            'convD': {type: 'Number', extractionNode: 'nodeFrom', default: 1},
+            'convN': {type: 'Number', extractionNode: 'nodeTo', default: 1}
+        };
     }
     exec(gr) {
 //        console.log('Adding to graph:' + this.getName());

@@ -14,7 +14,7 @@ export function parse(data, grMatch, dict = false, exp = false,  dbg = false) {
     var pp = new NLPPP();
     var res = pp.read(data.body);
     //let rt = pp.getSentenceDep(0).getRootToken();
-    //console.log('Processing :: ' + pp.getSentence(0) + ' ROOT:' + rt + '[' + pp.getTokens(0).getToken(rt) + ']');
+    //console.log('Processing :: ' + pp.getSentence(0));
     let nd = new Nodes(pp.getSentenceDep(0), dbg);
     nd.processAllGrammar();
     res = [];
@@ -47,7 +47,11 @@ export function parse(data, grMatch, dict = false, exp = false,  dbg = false) {
                             res.push(nd.expMatches[idx].text());
                         }
                         resolve(res);
-                    });
+                    }).catch(function(e) {
+                        console.log("Error :: " + e);
+                        console.log(e.stack);
+
+                    });;
             });
     }
 }
@@ -64,7 +68,11 @@ export function process(client, txt, grMatch, dict = false, exp = false, dbg = f
                 resolve(res);
             }, function(err) {
                 console.log('ERROR when processing request :: ' + err.stack);
-            });
+            }).catch(function(e) {
+                console.log("Error :: " + e);
+                console.log(e.stack);
+
+            });;
         });
 }
 export function processExp(client, txt, dbg = false) {

@@ -1,6 +1,7 @@
 'use strict';
 
 var Utils = require('./nodes_utils');
+var LearnUtils = require('./exp_learn_utils');
 var FS = require('fs');
 
 var gNodeMapper = {}; /** To hold different node types */
@@ -10,6 +11,7 @@ var gExpMapper = {};   /** To hold different grammer rules */
 var normalizedPath = require('path').join(__dirname);
 var dbg = require('debug')('nodes:base');
 var dbgdb = require('debug')('nodes:base:db');
+var dbgexp = require('debug')('nodes:base:exp');
 
 /** Load and init the nodes */
 FS.readdirSync(normalizedPath + '/nodes_pos').forEach(function(file) {
@@ -21,7 +23,7 @@ FS.readdirSync(normalizedPath + '/nodes_pos').forEach(function(file) {
 /** Load and init the grammer rules */
 FS.readdirSync(normalizedPath + '/nodes_gr').forEach(function(file) {
     if (file.match(/\.js$/)) {
-        Utils.nodeInit(gGrMapper, require('./nodes_gr/' + file));
+        Utils.nodeInitGr(gGrMapper, require('./nodes_gr/' + file));
     }
 });
 
@@ -87,6 +89,8 @@ class Nodes {
     processAllExpDB(db) {
         return new Promise(
             (function(_this, resolve, reject) {
+
+                /*
                 // get all the verb's
                 // and get all the rules from the db
                 // do mix-match
@@ -105,16 +109,24 @@ class Nodes {
                     //return false;
                 }
                 let verb = verbGr[0];
-                dbgdb(' - VERB - ::' + JSON.stringify(verb.dict()));
+                */
+
+                let verb = '';
+                if (_this.grMatches.length) {
+                    verb = _this.grMatches[0].processNode();
+                } else {
+                    return ;
+                }
+                //dbgdb(' - VERB - ::' + JSON.stringify(verb));
 
 
                 db.find({})
                     .then((function (_this, dt) {
                         //console.log(' TEST - DB - dt = ' + JSON.stringify(dt));
                         for (let dbItem of dt) {
-                            let match = Utils.verbDBMatch(dbgdb, verb, dbItem);
+                            let match = LearnUtils.verbDBMatch(dbgdb, verb, dbItem);
                             if (match[0] !== '') {
-                                dbgdb('Found a match dbItem [' + JSON.stringify(match) + '] ')
+                                dbgexp('Found a match dbItem [' + JSON.stringify(match) + '] ')
                                 let fn = gExpMapper._map[match[0]];
                                 let expHandle = new fn(_this, match[1]);
                                 _this.expMatches.push(expHandle);
@@ -150,11 +162,80 @@ class Nodes {
         }
     }
 
+    populateGrammarTree(treeTop, grTree, tokenId, type, followChildren = true) {
+        let node = this.getNodeMap(tokenId);
+        //grTree.node = node;
+        grTree.tokenId = tokenId;
+        grTree.pos = node.getPOS();
+        grTree.type = type;
+        grTree.getNode = (function(node) {
+            return node;
+        }).bind(null, node);
+        if (!followChildren) {
+            return;
+        }
+        let children = this.dep.getChildNodes(tokenId);
+        treeTop.processedTokens.push(tokenId);
+        for (let tkn of children) {
+            if (!('children' in grTree)) {
+                grTree.children = {};
+            }
+            if (treeTop.processedTokens.indexOf(tkn.tokenIdx) == -1) {
+                this.populateGrammarTree(treeTop, grTree.children, tkn.tokenIdx, tkn.type);
+            } else {
+                this.populateGrammarTree(treeTop, grTree.children, tkn.tokenIdx, tkn.type, false);
+            }
+        }
+
+    }
+/*
+    postProcessGrammar() {
+        let rootNode = this.dep.getRootToken();
+        let grTree = {root : { }, processedTokens:[] };
+        this.populateGrammarTree(grTree, grTree.root, rootNode, 'root');
+        console.log(' ---- > ' + JSON.stringify(grTree));
+
+        grTree.root.getNode().grMatches[0].processNode();
+
+    }
+*/
     /** Process all the tokens in order
      *  Try to match all the grammar rules
      *
      */
     processAllGrammar() {
+
+
+        let rootNode = this.dep.getRootToken();
+        let grTree = {root : { }, processedTokens:[] };
+        this.populateGrammarTree(grTree, grTree.root, rootNode, 'root');
+        //console.log(' ---- > ' + JSON.stringify(grTree));
+
+
+        let matchedRules = Utils.findGrammarRules(gGrMapper, null, 'root', grTree.root.getNode());
+        if (matchedRules.length) {
+            for (let mrule of matchedRules) {
+                let v = mrule.fn.checkValid(this, null, 'root', grTree.root.getNode());
+                if (v[0]) {
+                    let grHandle = new mrule.fn(this, null, 'root', grTree.root.getNode(), v[1]);
+                    //console.log('FOUND :: ' + grHandle.getName());
+                    grTree.root.getNode().addGrammarMatch(grHandle);
+                }
+            }
+        }
+        this.processNodeGrammar(grTree.root.getNode())
+
+
+
+
+        this.grMatches = grTree.root.getNode().getGrammarMatches();
+
+        //console.log(' After Process Gr:' + gm.length);
+        if (this.grMatches.length) {
+            let r = this.grMatches[0].processNode();
+            //console.log(' r= ' + JSON.stringify(r));
+        }
+        /*
         for (var tidx = 1; tidx <= this.dep.getTokensCount(); tidx++) {
             let lnd = this.getNodeMap(tidx);
             if (lnd && !lnd.grProcessingDone && !lnd.getTokenPOS().match(/VB/)) {
@@ -180,12 +261,47 @@ class Nodes {
 //                }
             }
         }
+        */
+
+
+
+    }
+    processNodeGrammar(nd) {
+        // find all the children and recurse
+        var children = nd.getChildren();
+        var loc;
+        let fromNodePOS = nd.getPOS();
+        for (loc in children) {
+            let c = children[loc];
+            let type = c.type;
+            let toNode = c.node;
+            let toNodePOS = toNode.getPOS();
+            //console.log(' -- type = ' + type + ' fromNodePOS ' + fromNodePOS + ' toNodePOS ' + toNodePOS);
+            let matchedRules = Utils.findGrammarRules(gGrMapper, nd, c.type, c.node);
+            //console.log('\t\t matchRules.length=' + matchedRules.length);
+            if (matchedRules.length) {
+                for (let mrule of matchedRules) {
+                    let v = mrule.fn.checkValid(this, nd, c.type, c.node);
+                    if (v[0]) {
+                        let grHandle = new mrule.fn(this, nd, c.type, c.node, v[1]);
+                        //console.log('FOUND :: ' + grHandle.getName() + ' adding to node:' + c.node.name + ' attach type ' + mrule.type);
+                        if (mrule.type === 'parent') {
+                            nd.addGrammarMatch(grHandle);
+                        } else {
+                            c.node.addGrammarMatch(grHandle);
+                        }
+                    }
+                }
+            }
+            this.processNodeGrammar(c.node);
+        }
     }
 
     /** Process only one token "tknId" for grammar match
      * @param tknId - Specify the token to process
      * @returns {*} - return [true if match was found, grammar that matched]
      */
+    /*
     processGr(tknId) {
         let tkn = this.tkn.getToken(tknId);
         let pos = this.tkn.getTokenPOS(tknId);
@@ -198,14 +314,13 @@ class Nodes {
         if (GRRules.length) {
             for (let GRM of GRRules)
             {
-                let found = GRM.checkValid(this, nd);
+                let found = GRM.fn.checkValid(this, nd);
                 if (found[0]) {
                     dbg('  - gGrMapper Checking with tkn [' + tkn + ']');
                     dbg('\tFound ' + JSON.stringify(found[1]));
                 }
                 if (found[0]) {
-
-                    let grHandle = new GRM(this, found[1]);
+                    let grHandle = new GRM.fn(this, nd, found[1]);
                     dbg('\tAdding Grammar Node:' + grHandle.getName());
                     nd.addGrammarMatch(grHandle);
                     this.grMatches.push(grHandle);
@@ -223,6 +338,7 @@ class Nodes {
             return false;
         }
     }
+    */
 }
 
 

@@ -12,7 +12,7 @@ class ExpBase {
     }
 
     static getMatchToken() {
-        return ['DEFAULT'];
+        return {'DEFAULT': {} };
     }
 
     getName() {

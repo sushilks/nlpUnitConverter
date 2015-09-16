@@ -18,7 +18,7 @@ class DefaultUnit extends BaseExp {
         return ['VerbBase'];
     }
     static getArgs() {
-        return ['defaultWhat', 'defaultFor', 'default'];
+        return {'defaultWhat': {}, 'defaultFor': {}, 'default':{}};
     }
 
     exec(gr) {
