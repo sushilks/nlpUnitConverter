@@ -42,9 +42,14 @@ function findInTree_(tree, val, key) {
         return ;
     } else if (treeType === '[object Object]') {
         let k1 = Object.keys(tree);
+        let numnode = (key.split('.').slice(-1)[0] === 'numnode');
 
-        let ret = findInTree_(tree.dataValue, val, key + '.dataValue');
-        if (ret) { return ret; }
+        // if numnode give priroity to
+        if (numnode) {
+            let ret = findInTree_(tree.dataValue, val, key + '.dataValue');
+            if (ret) { return ret; }
+        }
+
         // dictionary
         for (let k of k1) {
             if (k !== 'tokenId' && (!k.match(/dataValue/))) {
@@ -53,6 +58,10 @@ function findInTree_(tree, val, key) {
                     return ret;
                 }
             }
+        }
+        if (!numnode) {
+            let ret = findInTree_(tree.dataValue, val, key + '.dataValue');
+            if (ret) { return ret; }
         }
         return ;
     } else if (findInTreeMatch(tree, val)){
@@ -151,7 +160,9 @@ export function copyMatchTree(verb, dest) {
         if (!match) {
             dbg('no-matched vm=' + vm + ' value:' + extractTreeValue(verb, vm + '.token'));
             // database does not allow '.' as KEY, replacing all '.' with '__'
-            dest.match[vm.replace(/\./g, '__')] = extractTreeValue(verb, vm + '.token');
+            let v = extractTreeValue(verb, vm + '.token');
+            assert.notEqual(v, undefined, ' match data should ve extracted correctly, got undefined instaed for key[' + vm + ')');
+            dest.match[vm.replace(/\./g, '__')] = v;
         }
     }
 }
@@ -160,7 +171,8 @@ function extractTreeValue_(tree, key) {
         return tree;
     }
     let treeType = Object.prototype.toString.call(tree);
-    //console.log(' extractTreeValue_ Called for:' + key.join('.') + ' tree=' + tree + ' type='+treeType);
+    //console.log(' extractTreeValue_ Called for:' + key.join('.') + ' tree=' + tree +
+    // ' type='+treeType + ' keys=' +JSON.stringify(Object.keys(tree)));
     if (treeType === '[object Array]') {
         // array
         for (let idx in tree) {
@@ -172,14 +184,16 @@ function extractTreeValue_(tree, key) {
         return ;
     } else if (treeType === '[object Object]') {
         let k1 = Object.keys(tree);
+        //console.log(' k1 = ' + k1 + ' KEY = ' + key);
         if (k1.indexOf(key[0]) === -1) {
             if (k1.indexOf('data') === -1) {
                 return;
             }
+            //console.log(' GOING into key = ' + key[0]+ '.data ');
             return extractTreeValue_(tree.data, key);
         }
-        let k2 = key.shift();
-        return extractTreeValue_(tree[k2], key);
+        //console.log(' GOING into key = ' + k2);
+        return extractTreeValue_(tree[key[0]], key.slice(1));
     }
 }
 // tree = tree created by nlp
@@ -289,54 +303,24 @@ export function verbDBMatch(dbgdb, verb, dbItem) {
         res[itm] = dt;
         dbgdb(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + res[itm]);
     }
-
+    // have found a match
+    // check for argument being presented in extracted data
+    for (let key in dbItem.args) {
+        let schema = dbItem.args[key];
+        if (res[key] === undefined && dbItem.fixedExtract !== undefined && dbItem.fixedExtract[key] !== undefined){
+            res[key] = dbItem.fixedExtract[key];
+        }
+        if (schema.default === undefined && res[key] === undefined) {
+            console.log(' Failed on schema validation key[' + key + '] missing in match [' + JSON.stringify(res) + '].');
+            return ['', {}];
+        } else if (schema.default !== undefined && res[key] === undefined) {
+            res[key] = schema.default;
+            if (res['defaultUsed'] === undefined) {
+                res['defaultUsed'] = [];
+            }
+            res.defaultUsed.push(key);
+        }
+    }
     return [dbItem.type, res, dbItem._id];
 
-    try {
-
-        for (let key of dbItemKeys) {
-            if (key.match(/_id/)) {
-                continue;
-            }
-            if (verbKeys.indexOf(key) === -1) {
-                //dbgdb('Key [' + key + '] is missing in verb ')
-                //dbgdb(dbItemKeys + '::::' + verbKeys);
-                return ['', {}];
-            }
-            let r = dbItem.match[key].match(/^\/([^\/]*)\/(\S*)$/);
-            reMatches[key] = verb.match.vb[key].match(new RegExp(r[1], r[2]));
-            //console.log(key + ' <1>::' + verb.match.vb[key] + ' <2>::' + dbItem.match[key] + '  <3>::' + reMatches[key]);
-            if (!reMatches[key]) {
-                //dbgdb(' Match failed for key[' + key + '] verb[' + verb.match.vb[key] + '] db[' + dbItem.match[key] + ']  ' + reMatches[key]);
-                return ['', {}];
-            } else {
-                //console.log('MATCH on [' + key + '] = ' + JSON.stringify(reMatches[key]));
-            }
-        }
-        // all nodes are matching
-        //dbgdb('MATCHED on db entry for db : ' + JSON.stringify(dbItem));
-        let res = {};
-        for (let itm of Object.keys(dbItem.extract)) {
-            //dbgdb('   ext : ' + itm + ' : ' + dbItem.extract[itm] + ' : ');
-            let r = dbItem.extract[itm].match(/^(\S+)\[([0-9]+)\]$/);
-            if (r) {
-                //dbgdb(' ARRAY LOG :' + r[1] + ' idx:' + r[2]);
-                //dbgdb(' extract : ' + reMatches[r[1]][r[2]]);
-                res[itm] = reMatches[r[1]][r[2]];
-            } else {
-                //dbgdb(' VALUE : ' + dbItem.extract[itm]);
-                res[itm] = dbItem.extract[itm];
-            }
-        }
-        //dbgdb(' RESULT[' + dbItem.type + '] = ' + JSON.stringify(res));
-        return [dbItem.type, res, dbItem._id];
-    } catch (e) {
-        // Error
-        if (e.message)
-            console.log(' ERR Message:' + e.message);
-        if (e.stack)
-            console.log('  Err STACK: ' + e.stack);
-        console.log(e);
-        return ['', {}];
-    }
 }

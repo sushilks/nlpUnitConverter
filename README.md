@@ -140,95 +140,23 @@ It's my observation that there is more learning required if the first part is we
 
 
 TODO's: 
-* To improve the grammar parsing. 
-  * Lot of the lines in training file can be removed with some improvement in grammar parsing.
+ADDRESSED::
+>>* To improve the grammar parsing. 
+>>  * Lot of the lines in training file can be removed with some improvement in grammar parsing.
 * Universal dependencies are not completely supported (Only select few are handled). 
-* The parsed data structure is flat (Of course it helps in doing regular expression scans on it) but it needs to be converted into 
+>>* The parsed data structure is flat (Of course it helps in doing regular expression scans on it) but it needs to be converted into 
 dictionaries to make it hierarchical.
-* The pattern matching is not very smart, can be improved to be generic(Have to put more thoughts on it).
+>> * The pattern matching is not very smart, can be improved to be generic(Have to put more thoughts on it).
+
+New :
+* To allow multiple rules to match. 
+* To have a better checkValid implementation that is able to understand if the statement is a fit.
+  For example in case of measure grammar : it's only valid if Measure is mentioned.
+  
+  
 
 
-#### Problem Statement that is addressed in the first phase :
-A mechanism that can take context-free natural language commands and translate it into a function call with arguments. 
-this is what's being done by the code.
-
-
- 
-
-#### Work in progress
-
-Some Bugs found
-* tell me how many meters in a kilometer
-* tell me how many meters in 3 kilometers
- * This support is broken .... in verb node.
- * tell me how many meters in 3 thousand kilometers
-
-
-#### Phase 2,3...:
-A NL mechanism that can be used to stitch an event to a function call with arguments
-  - Can't rely on interactive learning here. One way is to know the list of all event's a-priory and 
-    make sure the consumption is ok.
-  - i.e. if a new subscriber joins a event stream it's possible to go through all the evens that can be generated
-    and the data that it can product to make sure the subscriber is able to process the entirety of it. 
-    The join can fail if there is a missmatch.
-    
-A NL mechanism that can do multiple function calls and process the resulting data to be used as arguments. 
-  - Should the output of a program be in NL ? 
-  - Should the program be required to list all possible output's that can come out of it? 
-    - This is interesting as interoperability check's can be done when the code is being stitched. 
-    
-
-## Definition of Conversion 
->TRY 1
-Required inputs are to-unit, from-unit and from-value. 
-Check if both to-unit and from-unit exist in the graph-db.
-If not report as such. 
-Check if there is a path from from-unit to to-unit in the graph-db.
-Collect the product of all the edges that are in the shortest path from from-unit to to-unit as conversion-factor.
-Multiply from-value with the conversion-factor and produce the result as output. 
-
->TRY 2
-# Define Conversion
-Required inputs are to-unit, from-unit and from-value. 
-Check if both to-unit and from-unit exist in the graph-db. If not report back. 
-Check if there is a path from from-unit to to-unit in the graph-db. If no part found report back.
-Compute the product between from-unit to to-unit as conversion-factor. 
-Multiply from-value with the conversion-factor and produce the result as output. 
-
-# Define 'compute the product between xxx to yyy'
-compute the shortest path between xxx and yyy as shortest-path.
-get the edges between all the nodes in shortest-path as edge-list.
-multiply all the weights in edge-list as result.
-return result.
-
-
------- NOTES
-#Collect the product of all the edges that are in the shortest path from from-unit to to-unit as conversion-factor.
-
-Definition of conv-xxx
-
-
-### require input node. 
-> Required inputs are to-unit, from-unit and from-value. 
-### check if ??
-#### exist in ??
-> Check if both to-unit and from-unit exist in the graph-db.
-### check if ??
->Check if there is a path from from-unit to to-unit in the graph-db.
-### Collect product of edges ...
->Collect the product of all the edges that are in the shortest path from from-unit to to-unit as conversion-factor.
-### action 'multiply' xx with yy .... 
- ### produce the xx on yy .... 
->Multiply from-value with the conversion-factor and produce the result on output. 
-
-
-## Definition of Relation
-Required inputs are from-unit, to-unit and conversion-factor
-If either of the to-unit or  from-unit do not exist in the graph-db then report it as error. 
-Create an edge between the from-unit node and the to-unit node. 
-add the converstion-factor as data on the edge.
 
  
- > 'hundred' should be treated as 'one hundred'
- ....
+ 
  

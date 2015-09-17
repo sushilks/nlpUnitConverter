@@ -85,6 +85,12 @@ class ExpLearn {
                         let foundPtr = LearnUtils.findInTree(verb, resVal);
                         if (foundPtr) {
                             res.extract[resItem] = foundPtr;
+                        } else {
+                            if (res.fixedExtract === undefined) {
+                                res.fixedExtract = {}
+                            }
+                            res.fixedExtract[resItem] = res.extract[resItem];
+                            delete res.extract[resItem];
                         }
                     }
                 }

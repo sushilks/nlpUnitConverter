@@ -35,6 +35,9 @@ class ExpBase {
     static checkValid(gr) {
         return [false, {}];
     }
+    static checkValidArguments(nodes, match) {
+        return true;
+    }
 }
 
 export default ExpBase;

@@ -11,6 +11,7 @@ var gExpMapper = {};   /** To hold different grammer rules */
 var normalizedPath = require('path').join(__dirname);
 var dbg = require('debug')('nodes:base');
 var dbgdb = require('debug')('nodes:base:db');
+var dbgdbm = require('debug')('nodes:base:db:match');
 var dbgexp = require('debug')('nodes:base:exp');
 
 /** Load and init the nodes */
@@ -117,19 +118,26 @@ class Nodes {
                 } else {
                     return ;
                 }
-                //dbgdb(' - VERB - ::' + JSON.stringify(verb));
+                dbgdb(' - VERB - ::' + JSON.stringify(verb));
 
 
                 db.find({})
                     .then((function (_this, dt) {
                         //console.log(' TEST - DB - dt = ' + JSON.stringify(dt));
                         for (let dbItem of dt) {
-                            let match = LearnUtils.verbDBMatch(dbgdb, verb, dbItem);
+                            let match = LearnUtils.verbDBMatch(dbgdbm, verb, dbItem);
                             if (match[0] !== '') {
-                                dbgexp('Found a match dbItem [' + JSON.stringify(match) + '] ')
+                                dbgexp('Found a match dbItem [' + JSON.stringify(match) + '] ');
+                                dbgdb('Matching DB Entry:' + JSON.stringify(dbItem));
                                 let fn = gExpMapper._map[match[0]];
-                                let expHandle = new fn(_this, match[1]);
-                                _this.expMatches.push(expHandle);
+                                // call validity check on the expression nodead
+                                if (fn.checkValidArguments(this, match[1])) {
+                                    dbgexp(' Match Succeded with arguments [' + JSON.stringify(match));
+                                    let expHandle = new fn(_this, match[1]);
+                                    _this.expMatches.push(expHandle);
+                                } else {
+                                    dbgexp(' Match Failed with arguments [' + JSON.stringify(match));
+                                }
                             }
                         }
                         resolve(true);
@@ -188,17 +196,7 @@ class Nodes {
         }
 
     }
-/*
-    postProcessGrammar() {
-        let rootNode = this.dep.getRootToken();
-        let grTree = {root : { }, processedTokens:[] };
-        this.populateGrammarTree(grTree, grTree.root, rootNode, 'root');
-        console.log(' ---- > ' + JSON.stringify(grTree));
 
-        grTree.root.getNode().grMatches[0].processNode();
-
-    }
-*/
     /** Process all the tokens in order
      *  Try to match all the grammar rules
      *
@@ -235,37 +233,8 @@ class Nodes {
             let r = this.grMatches[0].processNode();
             //console.log(' r= ' + JSON.stringify(r));
         }
-        /*
-        for (var tidx = 1; tidx <= this.dep.getTokensCount(); tidx++) {
-            let lnd = this.getNodeMap(tidx);
-            if (lnd && !lnd.grProcessingDone && !lnd.getTokenPOS().match(/VB/)) {
-                dbg('Processing Grammar for token ' + tidx + '   val = '
-                    + this.tkn.getToken(tidx ) + ' ND = ' + lnd
-                    + ' ND.tkn:' + lnd.getToken());
-                let res = this.processGr(tidx);
-//                if (this.dbg) {
-//                    console.log('  - Grammar Processing of lnd resulted in ' + lnd + ' res = ' + res);
-//                }
-            }
-        }
-
-        for (var tidx = 1; tidx <= this.dep.getTokensCount(); tidx++) {
-            let lnd = this.getNodeMap(tidx);
-            if (lnd && lnd.getTokenPOS().match(/VB/)) {
-                dbg('Processing Grammar for token ' + tidx + '   val = '
-                    + this.tkn.getToken(tidx ) + ' ND = ' + lnd
-                    + ' ND.tkn:' + lnd.getToken());
-                let res = this.processGr(tidx);
-//                if (this.dbg) {
-//                    console.log('  - Grammar Processing of lnd resulted in ' + lnd + ' res = ' + res);
-//                }
-            }
-        }
-        */
-
-
-
     }
+
     processNodeGrammar(nd) {
         // find all the children and recurse
         var children = nd.getChildren();

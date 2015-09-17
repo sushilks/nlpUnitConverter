@@ -64,6 +64,9 @@ class QConvert extends BaseExp {
         }
         console.log(this.getName() + ' :: ERROR Unable to find nodes [' + nFrom + '] [' + nTo + ']');
     }
+    static checkValidArguments(nodes, match) {
+        return true;
+    }
 }
 
 /*

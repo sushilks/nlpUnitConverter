@@ -158,7 +158,7 @@ function parse(data, gr, dbge = false) {
                         let v = [];
                         for (idx in nd.grMatches) {
                             if (nd.grMatches[idx].getName().match(/VerbBase/)) {
-                                console.log('   Verb in this statement :: ' + JSON.stringify(nd.grMatches[idx].processNode()));
+                                //console.log('   Verb in this statement :: ' + JSON.stringify(nd.grMatches[idx].processNode()));
                                 v.push(nd.grMatches[idx]);
                             }
                         }

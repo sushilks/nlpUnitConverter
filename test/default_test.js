@@ -14,13 +14,13 @@ describe('Grammar Type:Default Test::', function() {
     it('By default time is in seconds.', ()=>{
         return TUtils.processExp(nlp, 'By default time is in seconds.')
             .then(function(res) {
-                assert.equal(res, 'Default Data [{"defaultWhat":"unit","defaultFor":"time","default":"seconds"}]');
+                assert.equal(res, 'Default Data [{"defaultFor":"time","default":"seconds","defaultWhat":"unit"}]');
             });
     });
     it('By default time is expressed in minutes.', ()=>{
         return TUtils.processExp(nlp, 'By default time is expressed in minutes.')
             .then(function(res) {
-                assert.equal(res, 'Default Data [{"defaultWhat":"unit","defaultFor":"time","default":"minutes"}]');
+                assert.equal(res, 'Default Data [{"defaultFor":"time","default":"minutes","defaultWhat":"unit"}]');
             });
     });
     it('The default unit for foo is Zque.', ()=>{
@@ -64,7 +64,7 @@ describe('Grammar Type:Default Test::', function() {
     it('By default Time is specified in Minutes.', ()=>{
         return TUtils.processExp(nlp, 'By default Time is specified in Minutes.')
             .then(function(res) {
-                assert.equal(res, 'Default Data [{"defaultWhat":"unit","defaultFor":"Time","default":"Minutes"}]');
+                assert.equal(res, 'Default Data [{"defaultFor":"Time","default":"Minutes","defaultWhat":"unit"}]');
             });
     });
 

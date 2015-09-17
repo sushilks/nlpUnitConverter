@@ -17,13 +17,13 @@ describe('Grammar Type:Define Test::', function() {
                 assert.equal(res, 'Define Data [{"subj":"Time","type":"Measure"}]');
             });
     });
-
+/*
     it('Time is a Measure.', ()=>{
         return TUtils.processExp(nlp, 'Time is a Measure.')
             .then(function(res) {
                 assert.equal(res, 'Define Data [{"subj":"Time","type":"Measure"}]');
             });
-    });
+    });*/
     it('Time is defined as a Measure.', ()=>{
         return TUtils.processExp(nlp, 'Time is defined as a Measure.')
             .then(function(res) {
@@ -51,7 +51,7 @@ describe('Grammar Type:Define Test::', function() {
     it('Time is defined to be a type of Unit.', ()=>{
         return TUtils.processExp(nlp, 'Time is defined to be a type of Unit.')
             .then(function(res) {
-                assert.equal(res, '');
+                assert.equal(res, 'Define Data [{"subj":"Time","type":"Unit"}]');
             });
     });
     it('Measuring Time is fun.', ()=>{

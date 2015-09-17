@@ -232,23 +232,7 @@ export function kMatch(dict, key, re) {
     }
     return undefined;
 }
-/*
 
-export function checkRegExpMatchArray(re, arr) {
-    if (Array.isArray(arr)) {
-        for (let dt of arr) {
-            if (dt.match(re)) {
-                return true;
-            }
-        }
-    } else {
-        if (arr.match(re)) {
-            return true;
-        }
-    }
-    return false;
-}
-*/
 // check if the node value matched any of the items listend in the array (arr)
 export function checkNodeValuesMatchAny(nd, arr, regex=false) {
     if (regex) {

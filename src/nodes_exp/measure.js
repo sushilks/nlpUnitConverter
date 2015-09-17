@@ -37,7 +37,11 @@ class DefineMeasure extends BaseExp {
         let g = Utils.createGraph(gr, this.result.subj, { type : this.result.type});
         //console.log(' New Graph Name = ' + JSON.stringify(g.toString()));
     }
-/*
+
+    static checkValidArguments(nodes, match) {
+        return true;
+    }
+    /*
     static checkValid(gr) {
 
         const VerbMatch = ['is', 'define', 'defined'];

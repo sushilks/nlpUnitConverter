@@ -14,7 +14,7 @@ describe('Explanation Type:RelationMath Test ::', function() {
     var txt, res;
 
     txt = 'There are 60 Seconds in a Minute.';
-    res = 'Relation Data [{"convD":"60","convN":1,"nodeFrom":"Seconds","nodeTo":"Minute"}]';
+    res = 'Relation Data [{"convD":"60","convN":1,"nodeFrom":"Seconds","nodeTo":"Minute","defaultUsed":["convN"]}]';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -30,8 +30,8 @@ describe('Explanation Type:RelationMath Test ::', function() {
             });
     }).bind(null, txt, res));
 
-    txt = 'Twenty Moo equals 40 Boo.';
-    res = 'Relation Data [{"convD":"Twenty","convN":"40","nodeFrom":"Moo","nodeTo":"Boo"}]';
+    txt = 'Twenty moo equals 40 boo.';
+    res = 'Relation Data [{"convD":"Twenty","convN":"40","nodeFrom":"moo","nodeTo":"boo"}]';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -39,8 +39,8 @@ describe('Explanation Type:RelationMath Test ::', function() {
             });
     }).bind(null, txt, res));
 
-    txt = 'Twenty Moo is equal to 4 hundred Boo.';
-    res = 'Relation Data [{"convD":"Twenty","convN":"4 hundred","nodeFrom":"Moo","nodeTo":"Boo"}]';
+    txt = 'Twenty moo is equal to 4 hundred boo.';
+    res = 'Relation Data [{"convD":"Twenty","convN":"4 hundred","nodeFrom":"moo","nodeTo":"boo"}]';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -67,7 +67,7 @@ describe('Explanation Type:RelationMath Test ::', function() {
     }).bind(null, txt, res));
 
     txt = 'Four quarters makes a Dollar.';
-    res = 'Relation Data [{"convD":"Four","convN":1,"nodeFrom":"quarters","nodeTo":"Dollar"}]';
+    res = 'Relation Data [{"convD":"Four","convN":1,"nodeFrom":"quarters","nodeTo":"Dollar","defaultUsed":["convN"]}]';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {

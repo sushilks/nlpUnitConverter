@@ -41,7 +41,9 @@ node ./build/src/eparser.js -l -t '4 quarters is equal to one Dollar.' -L 'yes,R
 #Node:[Define] Args Needed :["subj","type"]
 node ./build/src/eparser.js -l -t 'Samay is defined as a Measure.' -L 'yes,Define,Samay,Measure'
 node ./build/src/eparser.js -l -t 'Samay is defined to be a Measure.' -L 'yes,Define,Samay,Measure'
+node ./build/src/eparser.js -l -t 'Samay is defined to be a type of Measure.' -L 'yes,Define,Samay,Measure'
 node ./build/src/eparser.js -l -t 'Samay is a type of Measure.' -L 'yes,Define,Samay,Measure'
+node ./build/src/eparser.js -l -t 'Samay is of type Measure.' -L 'yes,Define,Samay,Measure'
 # node type : Default
 # Node:[Default] Args Needed :["defaultWhat","defaultFor","default"]
 node ./build/src/eparser.js -l -t 'By default time is expressed in minutes.' -L 'yes,Default,unit,time,minutes'
@@ -49,4 +51,5 @@ node ./build/src/eparser.js -l -t 'By default time is specified in minutes.' -L 
 node ./build/src/eparser.js -l -t 'By default time is in minutes.' -L 'yes,Default,unit,time,minutes'
 node ./build/src/eparser.js -l -t 'The default state of water is liquid.' -L 'yes,Default,state,water,liquid'
 node ./build/src/eparser.js -l -t 'Units for Length are Meters, CentiMeters and League.' -L 'yes,Units,Length,CentiMeters League Meters'
+node ./build/src/eparser.js -l -t 'unit for zLength is Meters, Lines, Inches and Yards.' -L 'yes,Units,zLength,Lines Inches Yards Meters'
 node ./build/src/eparser.js -l -i ./data/sample-2.txt -t 'The default unit for Length is meters.' -L 'yes,Default,unit,Length,meters'

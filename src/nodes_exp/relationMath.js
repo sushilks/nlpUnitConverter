@@ -45,6 +45,16 @@ class relationMath extends BaseExp {
         }
         console.log('ERROR Unable to add relation between [' + nFrom + '] and [' + nTo + '], one of these nodes are defined');
     }
+    static checkValidArguments(nodes, match) {
+        if (match.defaultUsed !== undefined && match.defaultUsed.indexOf('convD') !== -1 &&
+            match.defaultUsed.indexOf('convN') !== -1) {
+            return false;
+        }
+        if ((!(match.convD)) && (!(match.convN))) return false;
+        // should check for node being present.
+        return true;
+    }
+
 }
 
 export default relationMath;
