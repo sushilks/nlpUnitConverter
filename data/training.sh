@@ -6,6 +6,10 @@ set -x
 # node type : Unit
 # Node:[Units] Args Needed :["unitsFor","units"]
 node ./build/src/eparser.js -l -t 'Foo is a Unit for Bar.' -L 'yes,Units,Bar,Foo'
+node ./build/src/eparser.js -l -t 'Units for Length are Meters, CentiMeters and League.' -L 'yes,Units,Length,CentiMeters League Meters'
+node ./build/src/eparser.js -l -t 'unit for zLength is Meters, Lines, Inches and Yards.' -L 'yes,Units,zLength,Lines Inches Yards Meters'
+node ./build/src/eparser.js -l -t 'Unit for measuring zTime is Minutes, Hours.' -L 'yes,Units,zTime,Hours Minutes'
+
 # node type : QConv (Question on covnersion)
 # Node:[QConv] Args Needed :["convTo","convFrom","fromValue"]
 #node ./build/src/eparser.js -l -t 'The default status of men is to be lazy.' -L 'yes,Default,status,men,lazy'
@@ -50,6 +54,4 @@ node ./build/src/eparser.js -l -t 'By default time is expressed in minutes.' -L 
 node ./build/src/eparser.js -l -t 'By default time is specified in minutes.' -L 'yes,Default,unit,time,minutes'
 node ./build/src/eparser.js -l -t 'By default time is in minutes.' -L 'yes,Default,unit,time,minutes'
 node ./build/src/eparser.js -l -t 'The default state of water is liquid.' -L 'yes,Default,state,water,liquid'
-node ./build/src/eparser.js -l -t 'Units for Length are Meters, CentiMeters and League.' -L 'yes,Units,Length,CentiMeters League Meters'
-node ./build/src/eparser.js -l -t 'unit for zLength is Meters, Lines, Inches and Yards.' -L 'yes,Units,zLength,Lines Inches Yards Meters'
 node ./build/src/eparser.js -l -i ./data/sample-2.txt -t 'The default unit for Length is meters.' -L 'yes,Default,unit,Length,meters'

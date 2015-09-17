@@ -40,15 +40,13 @@ describe('Grammar Type:Unit Test::', function() {
             });
     }).bind(null, txt, res));
 
-    /*
     txt = 'unit for measuring zTime is Minutes, Hours.';
-    res = 'Units for [zTime] are [Minutes, Hours]';
+    res = 'Units Data [{"unitsFor":"zTime","units":["Hours","Minutes"]}]';
     it(txt, (function(txt, res) {
-        return process(nlp, txt)
+        return TUtils.processExp(nlp, txt)
             .then(function(ret) {
                 assert.equal(ret, res);
             });
     }).bind(null, txt, res));
-*/
 
 });
