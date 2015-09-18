@@ -140,13 +140,6 @@ It's my observation that there is more learning required if the first part is we
 
 
 TODO's: 
-ADDRESSED::
->>* To improve the grammar parsing. 
->>  * Lot of the lines in training file can be removed with some improvement in grammar parsing.
-* Universal dependencies are not completely supported (Only select few are handled). 
->>* The parsed data structure is flat (Of course it helps in doing regular expression scans on it) but it needs to be converted into 
-dictionaries to make it hierarchical.
->> * The pattern matching is not very smart, can be improved to be generic(Have to put more thoughts on it).
 
 New :
 * To allow multiple rules to match. 
