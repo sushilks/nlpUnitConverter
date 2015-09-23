@@ -40,7 +40,7 @@ class NMod extends GrBase {
     }
     //static checkValid(nodeList, node) {
     static checkValid(nodeList, fromNode, linkType, toNode) {
-
+        return [ true, {type: linkType}];
         if (linkType.match(/nmod:agent/)){
             return [true, {type:'when'}];
         }

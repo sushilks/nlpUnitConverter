@@ -89,7 +89,6 @@ class GrBase {
             let c = this.toNode.getChild(child);
             // check if there is any grammar on the node
             res.push(c.node.getValues(tagged));
-
         }
         res.push(this.toNode.getToken());
         //console.log('  \t\t getValues::GrBase called for id ' + this.toNode.getTokenId() + ' reeturning :' + res.join(' '));

@@ -12,7 +12,12 @@ var dbg = require('debug')('node:exp:qconv');
 
 class QConvert extends BaseExp {
     constructor(nodes, matchResult) {
-        matchResult.fromValue = ((matchResult['fromValue']))? matchResult['fromValue'] : 1;
+        /*matchResult.r = {};
+        matchResult.r.convFrom = matchResult.convFrom.fromArg;
+        matchResult.r.convTo = matchResult.convTo.toArg;
+        matchResult.r.fromValue = matchResult.convFrom.fromArgValue;*/
+
+        //matchResult.fromValue = ((matchResult['fromValue']))? matchResult['fromValue'] : 1;
         super(nodes, matchResult);
         this.name = QConvert.getName();
     }
@@ -35,7 +40,6 @@ class QConvert extends BaseExp {
     exec(gr) {
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());
-
         let nFrom = Utils.normalizeUnit(this.result.convFrom);
         let nTo = Utils.normalizeUnit(this.result.convTo);
         for (let k in gr) {
@@ -64,7 +68,7 @@ class QConvert extends BaseExp {
         }
         console.log(this.getName() + ' :: ERROR Unable to find nodes [' + nFrom + '] [' + nTo + ']');
     }
-    static checkValidArguments(nodes, match) {
+    static checkValidArguments(nodes, match, graphDB) {
         return true;
     }
 }

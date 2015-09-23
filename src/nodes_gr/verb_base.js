@@ -237,7 +237,9 @@ class VerbBase extends GrBase {
     processNode() {
         let node = this.toNode;
         let nodeList = this.nodes;
-        if (this.linkType === 'cop') {
+        let copNode = 'cop';
+
+        if (this.linkType === copNode) {
             node = this.fromNode;
         }
         // check all the child nodes
@@ -249,14 +251,16 @@ class VerbBase extends GrBase {
         let ret = {};
         // process the verb node
 
-        if (this.linkType === 'cop') {
-            ret.verb = {tokenId:this.toNode.getTokenId(), obj : {tokenId: this.fromNode.getTokenId()}};
+        if (this.linkType === copNode) {
+            //ret.verb = {tokenId:this.toNode.getTokenId(), obj : {tokenId: this.fromNode.getTokenId()}};
+            ret.verb = {tokenId: this.fromNode.getTokenId(), cop : {tokenId:this.toNode.getTokenId()}};
         } else {
             ret.verb = {tokenId:this.toNode.getTokenId()};
         }
 
         ret = super.processNode(ret);
-        if (this.linkType === 'cop') {
+        /*
+        if (false && this.linkType === copNode) {
             if (Object.keys(ret.verb).indexOf('obj') != -1) {
                 for (let idx in  ret.verb.obj.data) {
                     //console.log(' DD = ' + Object.keys(ret.verb.obj.data[idx]));
@@ -282,9 +286,7 @@ class VerbBase extends GrBase {
                 ret.verb.obj.dataValueTagged = 'obj::<' + ret.verb.obj.dataValueTagged.join(' ') + '>';
                 //}
             }
-        }
-
-
+        }*/
         if (false) console.log(' --->> ' + JSON.stringify(ret));
         return ret;
     }

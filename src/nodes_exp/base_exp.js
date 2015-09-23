@@ -5,7 +5,7 @@ var dbg = require('debug')('node:exp:base');
 
 class ExpBase {
     constructor(nodes, matchResult) {
-        this.nodes = nodes;
+        this.nodes = (function(nd) { return nd; }).bind(null, nodes);
         //this.dbg = nodes.dbg;
         this.name = 'expBase';
         this.result = matchResult;
@@ -13,6 +13,9 @@ class ExpBase {
 
     static getMatchToken() {
         return {'DEFAULT': {} };
+    }
+    static getProp() {
+        return {};
     }
 
     getName() {

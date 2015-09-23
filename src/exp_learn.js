@@ -24,19 +24,23 @@ class ExpLearn {
 
     readPattern(msg, vlist, learnData, res){
         return new Promise((function(_this, resolve, reject) {
-            Utils.getStdin('>> Processing [' + vlist[0] + '] ' + msg, learnData )
-            .then(function(line) {
-                    res[vlist[0]] = line;
-                    vlist.shift();
-                    if (vlist.length == 0) {
-                        resolve(res);
-                    } else {
-                        _this.readPattern(msg, vlist, learnData, res)
-                        .then(function(rt) {
-                                resolve(res);
-                            });
-                    }
-                });
+            if (vlist.length === 0) {
+                resolve([]);
+            } else {
+                Utils.getStdin('>> Processing [' + vlist[0] + '] ' + msg, learnData)
+                    .then(function (line) {
+                        res[vlist[0]] = line;
+                        vlist.shift();
+                        if (vlist.length == 0) {
+                            resolve(res);
+                        } else {
+                            _this.readPattern(msg, vlist, learnData, res)
+                                .then(function (rt) {
+                                    resolve(res);
+                                });
+                        }
+                    });
+            }
         }).bind(null, this));
     }
     /*
@@ -60,7 +64,7 @@ class ExpLearn {
 
 
 
-    autoExtractMatch(verb, res) {
+    autoExtractMatch(verb, res, expMatches) {
         //console.log("---- > " + JSON.stringify(verb));
         //console.log("---- > " + JSON.stringify(res));
         let ekeys = Object.keys(res.extract);
@@ -80,9 +84,13 @@ class ExpLearn {
                     let extArgs = res.args[resItem];
                     //console.log('     resItem = ' + resItem + ' v = ' + resVal + ' args =' + JSON.stringify(extArgs));
                     // check for exact match first
-                    if (!(extArgs.type === 'Number' && 'extractionNode' in extArgs)) {
-//                        if (!(resVal.match(/Number:/))) {
-                        let foundPtr = LearnUtils.findInTree(verb, resVal);
+                    if (!(extArgs.type && 'extractionNode' in extArgs)) {
+                        let foundPtr;
+                        if (extArgs.type && extArgs.type.toLowerCase() === 'list') {
+                            foundPtr = LearnUtils.findListInTree(verb, resVal.split(' '));
+                        } else {
+                            foundPtr = LearnUtils.findInTree(verb, resVal);
+                        }
                         if (foundPtr) {
                             res.extract[resItem] = foundPtr;
                         } else {
@@ -111,42 +119,42 @@ class ExpLearn {
                         key = key.join('.') + '.numnode.dataValue';
                         //console.log(' --- ' + resItem + ' => ' + keyLoc + ' => ' +  res.extract[keyLoc] + ' => ' + key);
                         res.extract[resItem] = key;
-
+                    } else if (extArgs.type  && 'extractionNode' in extArgs) {
+                        let nodetype = extArgs.extractionNode;
+                        res.extract[resItem] = 'EXPNODE:' + nodetype;
+                        //assert(0,1);
                     }
                 }
             }
 
-/*
-            // populate the numbers
-            for (let idx = 0; idx < ekeys.length; idx ++) {
-                if (ekeys[idx] != '') {
-                    let resItem = ekeys[idx];
-                    let resVal = res.extract[resItem];
-                    // check for exact match first
-                    if (resItem.match(/Number:/)) {
-                        let keyLoc = resItem.split(':')[1];
-                        let key = res.extract[keyLoc].split('.');
-                        key.pop();
-                        key = key.join('.');
-                        console.log(' --- ' + resItem + ' => ' + keyLoc + ' => ' +  res.extract[keyLoc] + ' => ' + key);
-                        let foundPtr = LearnUtils.findInTreeNumberNode(verb, key);
-                        if (foundPtr) {
-                            res.extract[resItem] = foundPtr;
-                        } else {
-                            delete res.extract[resItem];
-                        }
-                    }
-                }
-            }*/
         }).bind(null, this));
 
-        //console.log(' RET = ' + JSON.stringify(res));
+        let expDep = {};
+        for (let k1 in res.extract) {
+            if (res.extract[k1].match(/^EXPNODE/)) {
+                let eNode= res.extract[k1].split(':')[1];
+                let expMatchFound = false ;
+                for (let itm of expMatches) {
+                    //console.log(' ---- >>> ' + itm + ' name = ' + itm.name);
+                    if (itm.name === eNode) {
+                        expMatchFound = true;
+                        expDep[eNode] = itm;
+                        break;
+                    }
+                }
+                if (!expMatchFound) {
+                    assert(0,1);
+                }
+            }
+        }
+        res.expExtract = expDep;
+        //console.log(' --- > RET = ' + JSON.stringify(res));
         LearnUtils.copyMatchTree(verb,res);
-        dbg(' RET = ' + JSON.stringify(res));
+        console.log(' RET = ' + JSON.stringify(res));
         //return _this.readPattern('Regexp >', vlist, vres.match);
     }
 
-    learn(stmt, verbMatches, learnData = null) {
+    learn(stmt, verbMatches, learnData = null, expMatches=null) {
         // ask what type of node it is ?
         // enumurate each item of the verb and ask for pattern match
         //console.log('LEARNING '+verbMatches);
@@ -193,6 +201,7 @@ class ExpLearn {
                         } else {
                             vres.type = line;
                             let alistDict = nd.getArgs();
+                            let prop = nd.getProp();
                             let alist = Object.keys(alistDict);
                             vres.args = alistDict;
                             let alistNoTags = [];
@@ -207,6 +216,9 @@ class ExpLearn {
                                     } else {
                                         alistNoTags.push(k)
                                     }
+                                }
+                                if (prop !== undefined && prop != {}) {
+                                    vres.prop = prop;
                                 }
                             }
                             //console.log('Node:[' + line + '] Args Needed :' + JSON.stringify(alist));
@@ -231,7 +243,7 @@ class ExpLearn {
                 .then(function(res) {
                         // at this point we have the
                         // verb and the argument
-                        _this.autoExtractMatch(verbMatches[0].dict(), vres)
+                        _this.autoExtractMatch(verbMatches[0].dict(), vres, expMatches)
                         if (done) return false;
                         console.log('LEARNED :::' + JSON.stringify(vres));
                         return _this.db.insert(vres);

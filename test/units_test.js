@@ -3,6 +3,19 @@ var TUtils = require('./test_utils.js');
 var NLPClient = require('./../src/nlp_client.js');
 var assert = require('assert');
 
+function getRes(ret) {
+    for (let itm of ret) {
+        let d = itm.substr(itm.indexOf('['));
+        let n = itm.substr(0,itm.indexOf('['));
+        let dj = JSON.parse(d)[0];
+        if (n.match(/Units/)) {
+            delete dj._keys;
+            return dj;
+        }
+    }
+    return;
+}
+
 describe('Grammar Type:Unit Test::', function() {
     let nlp ;
 
@@ -14,38 +27,38 @@ describe('Grammar Type:Unit Test::', function() {
     var txt, res;
 
     txt = 'Units for zTime are Hours, Minutes, Seconds, Days, Weeks.';
-    res = 'Units Data [{"unitsFor":"zTime","units":["Minutes","Seconds","Days","Weeks","Hours"]}]';
+    res = {"unitsFor":"zTime","units":["Hours","Minutes","Seconds","Days","Weeks"]};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
-                assert.equal(ret, res);
+                assert.deepEqual(getRes(ret), res);
             });
     }).bind(null, txt, res));
 
     txt = 'unit for zLength is Meters, Lines, Inches and Yards.';
-    res = 'Units Data [{"unitsFor":"zLength","units":["Lines","Inches","Yards","Meters"]}]';
+    res = {"unitsFor":"zLength","units":["Meters", "Lines","Inches","Yards"]};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
-                assert.equal(ret, res);
+                assert.deepEqual(getRes(ret), res);
             });
     }).bind(null, txt, res));
 
     txt = 'unit for zTime is Hour.';
-    res = 'Units Data [{"unitsFor":"zTime","units":["Hour"]}]';
+    res = {"unitsFor":"zTime","units":["Hour"]};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
-                assert.equal(ret, res);
+                assert.deepEqual(getRes(ret), res);
             });
     }).bind(null, txt, res));
 
     txt = 'unit for measuring zTime is Minutes, Hours.';
-    res = 'Units Data [{"unitsFor":"zTime","units":["Hours","Minutes"]}]';
+    res = {"unitsFor":"zTime","units":["Minutes","Hours"]};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
-                assert.equal(ret, res);
+                assert.deepEqual(getRes(ret), res);
             });
     }).bind(null, txt, res));
 

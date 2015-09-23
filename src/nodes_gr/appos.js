@@ -26,6 +26,9 @@ class APPOS extends GrBase {
         return [{name:'appos-1', edge:'appos'}, {name:'appos-2', edge:'conj:and'}];
     }
 
+
+    // Take the datavaluelist  and push it to the parent as a list addition
+
     static checkValid(nodeList, node) {
         return [true, {}];
         //Utils.checkAndProcessChildNodeGrammar(nodeList, node);

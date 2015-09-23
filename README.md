@@ -146,10 +146,28 @@ New :
 * To have a better checkValid implementation that is able to understand if the statement is a fit.
   For example in case of measure grammar : it's only valid if Measure is mentioned.
   
-  
+ * Remove when, who, what etc... from nmod.js
+ * Break each leg of the verb into seperate recognition type. 
+    so combination of patterns are handled better.
+    
+    
+    VBP(convert) (dobj, nmod:into)
+    VB (convert) (dobj, nmod:to)
+    VB(translate)(dobj, nmod:to)
+    VBZ(is)      (nsubj->nmod:in)(dep)
+    VBP(are)     (nmod:in, advmod)
+    VBP(are)     (nmod:in, nsubj)
+    VBP(are)     (nmod:in, nsubj)
+    VB(tell)     (nmod:in<-dep)(dobj)
+    ----- COP -----
+    VB(are)      (cop->nsubj)
+    VBZ(is)      (nsubj->nmod:in)
 
 
 
- 
+ - Add nodes for Arguments 
+ - Add ability to build exp-nodes on exp-nodes.
+ - add ability to force learn even if a grammer is matching
+ - add grammar on top of grammar.
  
  

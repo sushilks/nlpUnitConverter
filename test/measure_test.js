@@ -3,6 +3,18 @@ var TUtils = require('./test_utils.js');
 var NLPClient = require('./../src/nlp_client.js');
 var assert = require('assert');
 
+function getDefineRes(ret) {
+    for (let itm of ret) {
+        let d = itm.substr(itm.indexOf('['));
+        let n = itm.substr(0,itm.indexOf('['));
+        let dj = JSON.parse(d)[0];
+        if (n.match(/Define/)) {
+            delete dj._keys;
+            return dj;
+        }
+    }
+    return;
+}
 
 describe('Grammar Type:Define Test::', function() {
     let nlp ;
@@ -10,61 +22,87 @@ describe('Grammar Type:Define Test::', function() {
     before(()=>{
         nlp = new NLPClient();
     });
+    var res, txt;
+    res = {"subj":"Time","type":"Measure"};
+    txt = 'Time is  defined to be a Measure.';
+    it(txt, (function(txt, res) {
+        return TUtils.processExp(nlp, txt)
+            .then(function(ret) {
+                assert.deepEqual(getDefineRes(ret), res);
+            });
+    }).bind(null, txt, res));
 
-    it('Time is  defined to be a Measure.', ()=>{
-        return TUtils.processExp(nlp, 'Time is  defined to be a Measure.')
-            .then(function(res) {
-                assert.equal(res, 'Define Data [{"subj":"Time","type":"Measure"}]');
+    /*
+        it('Time is a Measure.', ()=>{
+            return TUtils.processExp(nlp, 'Time is a Measure.')
+                .then(function(res) {
+                    assert.equal(res, 'Define Data [{"subj":"Time","type":"Measure"}]');
+                });
+        });*/
+    res = {"subj":"Time","type":"Measure"};
+    txt = 'Time is defined as a Measure.';
+    it(txt, (function(txt, res) {
+        return TUtils.processExp(nlp, txt)
+            .then(function(ret) {
+                console.log(JSON.stringify(getDefineRes(ret)));
+                console.log(JSON.stringify(res));
+                assert.deepEqual(getDefineRes(ret), res);
             });
-    });
-/*
-    it('Time is a Measure.', ()=>{
-        return TUtils.processExp(nlp, 'Time is a Measure.')
-            .then(function(res) {
-                assert.equal(res, 'Define Data [{"subj":"Time","type":"Measure"}]');
+    }).bind(null, txt, res));
+
+
+    res = {"subj":"Time","type":"Measure"};
+    txt = 'Time is a type of Measure.';
+    it(txt, (function(txt, res) {
+        return TUtils.processExp(nlp, txt)
+            .then(function(ret) {
+                assert.deepEqual(getDefineRes(ret), res);
             });
-    });*/
-    it('Time is defined as a Measure.', ()=>{
-        return TUtils.processExp(nlp, 'Time is defined as a Measure.')
-            .then(function(res) {
-                assert.equal(res, 'Define Data [{"subj":"Time","type":"Measure"}]');
+    }).bind(null, txt, res));
+
+    res = {"subj":"Time","type":"Measure"};
+    txt = 'Time is of type Measure.';
+    it(txt, (function(txt, res) {
+        return TUtils.processExp(nlp, txt)
+            .then(function(ret) {
+                assert.deepEqual(getDefineRes(ret), res);
             });
-    });
-    it('Time is a type of Measure.', ()=>{
-        return TUtils.processExp(nlp, 'Time is a type of Measure.')
-            .then(function(res) {
-                assert.equal(res, 'Define Data [{"subj":"Time","type":"Measure"}]');
+    }).bind(null, txt, res));
+
+    res = {"subj":"Time","type":"measure"};
+    txt = 'Time is defined to be a type of measure.';
+    it(txt, (function(txt, res) {
+        return TUtils.processExp(nlp, txt)
+            .then(function(ret) {
+                assert.deepEqual(getDefineRes(ret), res);
             });
-    });
-    it('Time is of type Measure.', ()=>{
-        return TUtils.processExp(nlp, 'Time is of type Measure.')
-            .then(function(res) {
-                assert.equal(res, 'Define Data [{"subj":"Time","type":"Measure"}]');
+    }).bind(null, txt, res));
+
+    res = {"subj":"Time","type":"Unit"};
+    txt = 'Time is defined to be a type of Unit.';
+    it(txt, (function(txt, res) {
+        return TUtils.processExp(nlp, txt)
+            .then(function(ret) {
+                assert.deepEqual(getDefineRes(ret), res);
             });
-    });
-    it('Time is defined to be a type of measure.', ()=>{
-        return TUtils.processExp(nlp, 'Time is defined to be a type of measure.')
-            .then(function(res) {
-                assert.equal(res, 'Define Data [{"subj":"Time","type":"measure"}]');
+    }).bind(null, txt, res));
+
+    res = undefined;
+    txt ='Measuring Time is fun.';
+    it(txt, (function(txt, res) {
+        return TUtils.processExp(nlp, txt)
+            .then(function(ret) {
+                assert.deepEqual(getDefineRes(ret), res);
             });
-    });
-    it('Time is defined to be a type of Unit.', ()=>{
-        return TUtils.processExp(nlp, 'Time is defined to be a type of Unit.')
-            .then(function(res) {
-                assert.equal(res, 'Define Data [{"subj":"Time","type":"Unit"}]');
+    }).bind(null, txt, res));
+
+    res = undefined;
+    txt = 'today is a rainy day.';
+    it(txt, (function(txt, res) {
+        return TUtils.processExp(nlp, txt)
+            .then(function(ret) {
+                assert.deepEqual(getDefineRes(ret), res);
             });
-    });
-    it('Measuring Time is fun.', ()=>{
-        return TUtils.processExp(nlp, 'Measuring time is fun.')
-            .then(function(res) {
-                assert.equal(res, '');
-            });
-    });
-    it('today is a rainy day.', ()=>{
-        return TUtils.processExp(nlp, 'today is a rainy day.')
-            .then(function(res) {
-                assert.equal(res, '');
-            });
-    });
+    }).bind(null, txt, res));
 
 });

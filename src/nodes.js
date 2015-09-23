@@ -86,67 +86,70 @@ class Nodes {
         return new gNodeMapper['DEFAULT'][0](this, tknId, level);
     }
 
-
-    processAllExpDB(db) {
-        return new Promise(
-            (function(_this, resolve, reject) {
-
-                /*
-                // get all the verb's
-                // and get all the rules from the db
-                // do mix-match
-                let verbGr = [];
-                for (let idx in _this.grMatches) {
-                    let gr = _this.grMatches[idx];
-                    let grName = gr.getName();
-                    if (grName.match(/VerbBase/)) {
-                        verbGr.push(gr);
+    processAllExpDB_(verb, db, graphDB, resolve, mHistory) {
+        db.find({})
+            .then((function (_this, dt) {
+                //console.log(' TEST - DB - dt = ' + JSON.stringify(dt));
+                let found = false;
+                for (let dbItem of dt) {
+                    let match = LearnUtils.verbDBMatch(dbgdbm, verb, _this.expMatches, dbItem);
+                    if (match[0] !== '') {
+                        dbgexp('Found a match dbItem [' + JSON.stringify(match) + '] ');
+                        dbgdb('Matching DB Entry:' + JSON.stringify(dbItem));
+                        let fn = gExpMapper._map[match[0]];
+                        // call validity check on the expression-node
+                        if (fn.checkValidArguments(this, match[1], graphDB)) {
+                            dbgexp(' Match Succeded with arguments [' + JSON.stringify(match));
+                            // check if the new expression is not already present
+                            let alreadyFound = false;
+                            let cnt = 0;
+                            for (let exp of mHistory) {
+                                if (!alreadyFound) {
+                                    cnt++;
+                                    if (exp === JSON.stringify(match[1])) {
+                                        alreadyFound = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (!alreadyFound) {
+                                dbgexp('EXP MATCH FOUND for [' + match[0] + ']');
+                                mHistory.push(JSON.stringify(match[1]));
+                                let expHandle = new fn(_this, match[1]);
+                                _this.expMatches.push(expHandle);
+                                found = true;
+                            }
+                        } else {
+                            dbgexp(' Match Failed with arguments [' + JSON.stringify(match));
+                        }
                     }
                 }
-                //dbgdb('TEST - DB - Verb Gr len = ' + verbGr.length);
-                if (verbGr.length !== 1) {
-                    console.log('EXPDB::ERROR::Unable to handle processing with verb.length = ' + verbGr.length);
-                    resolve(false);
-                    //return false;
+                if (!found) {
+                    resolve(true);
+                } else {
+                    _this.processAllExpDB_(verb, db, graphDB, resolve, mHistory);
                 }
-                let verb = verbGr[0];
-                */
+            }).bind(null, this))
+            .catch(function (e) {
+                console.log("Error :: " + e);
+                console.log(e.stack);
+                resolve(false);
+            });
 
-                let verb = '';
+    }
+
+    processAllExpDB(db, graphDB) {
+        let mHistory = [];
+        return new Promise(
+            (function(_this, resolve, reject) {
+                let root = '';
                 if (_this.grMatches.length) {
-                    verb = _this.grMatches[0].processNode();
+                    root = _this.grMatches[0].processNode();
                 } else {
                     return ;
                 }
-                dbgdb(' - VERB - ::' + JSON.stringify(verb));
-
-
-                db.find({})
-                    .then((function (_this, dt) {
-                        //console.log(' TEST - DB - dt = ' + JSON.stringify(dt));
-                        for (let dbItem of dt) {
-                            let match = LearnUtils.verbDBMatch(dbgdbm, verb, dbItem);
-                            if (match[0] !== '') {
-                                dbgexp('Found a match dbItem [' + JSON.stringify(match) + '] ');
-                                dbgdb('Matching DB Entry:' + JSON.stringify(dbItem));
-                                let fn = gExpMapper._map[match[0]];
-                                // call validity check on the expression nodead
-                                if (fn.checkValidArguments(this, match[1])) {
-                                    dbgexp(' Match Succeded with arguments [' + JSON.stringify(match));
-                                    let expHandle = new fn(_this, match[1]);
-                                    _this.expMatches.push(expHandle);
-                                } else {
-                                    dbgexp(' Match Failed with arguments [' + JSON.stringify(match));
-                                }
-                            }
-                        }
-                        resolve(true);
-                    }).bind(null, _this))
-                    .catch(function (e) {
-                        console.log("Error :: " + e);
-                        console.log(e.stack);
-                        resolve(false);
-                    });
+                dbgdb(' - ROOT - ::' + JSON.stringify(root));
+                _this.processAllExpDB_(root, db, graphDB, resolve, mHistory);
             }).bind(null, this));
     }
 
