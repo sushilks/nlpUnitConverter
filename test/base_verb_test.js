@@ -26,6 +26,7 @@ describe('Grammar VerbBase Test ::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
+                console.log(' RET = ' + JSON.stringify(ret));
                 assert.deepEqual(ret[0].verb.obj.dataValueTagged, res.verb.obj.dataValueTagged);
                 assert.deepEqual(ret[0].verb.subj.dataValueTagged, res.verb.subj.dataValueTagged);
             });
@@ -33,7 +34,7 @@ describe('Grammar VerbBase Test ::', function() {
     txt = 'there is 60 sec in one min.';
     res = {
         verb : {
-            dataValueTagged: 'VerbBase::<<there> subj::<nummod::<60> what::<<in> nummod::<one> min> sec> is>'
+            dataValueTagged: 'VerbBase::<<there> subj::<nummod::<60> nmod:in::<<in> nummod::<one> min> sec> is>'
         }
     };
 

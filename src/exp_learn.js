@@ -21,7 +21,6 @@ class ExpLearn {
             }
         }*/
     }
-
     readPattern(msg, vlist, learnData, res){
         return new Promise((function(_this, resolve, reject) {
             if (vlist.length === 0) {

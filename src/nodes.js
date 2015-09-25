@@ -1,5 +1,7 @@
 'use strict';
 
+//declare function require(name:string);
+
 var Utils = require('./nodes_utils');
 var LearnUtils = require('./exp_learn_utils');
 var FS = require('fs');
@@ -86,7 +88,7 @@ class Nodes {
         return new gNodeMapper['DEFAULT'][0](this, tknId, level);
     }
 
-    processAllExpDB_(verb, db, graphDB, resolve, mHistory) {
+    processAllExpDB_(verb, db, graphDB, mHistory, resolve) {
         db.find({})
             .then((function (_this, dt) {
                 //console.log(' TEST - DB - dt = ' + JSON.stringify(dt));
@@ -127,7 +129,7 @@ class Nodes {
                 if (!found) {
                     resolve(true);
                 } else {
-                    _this.processAllExpDB_(verb, db, graphDB, resolve, mHistory);
+                    _this.processAllExpDB_(verb, db, graphDB,  mHistory, resolve);
                 }
             }).bind(null, this))
             .catch(function (e) {
@@ -142,14 +144,24 @@ class Nodes {
         let mHistory = [];
         return new Promise(
             (function(_this, resolve, reject) {
+
+
+               // let nodeCnt = _this.tkn.tokenCount();
+
                 let root = '';
                 if (_this.grMatches.length) {
                     root = _this.grMatches[0].processNode();
                 } else {
+                    resolve(false);
                     return ;
                 }
                 dbgdb(' - ROOT - ::' + JSON.stringify(root));
-                _this.processAllExpDB_(root, db, graphDB, resolve, mHistory);
+                // TODO::
+                // there should be a full crawl of the tree
+                // making sure not to do repeated work
+                _this.processAllExpDB_(root, db, graphDB, mHistory, (function(resolve,dt){
+                    resolve(dt);
+                }).bind(null, resolve));
             }).bind(null, this));
     }
 

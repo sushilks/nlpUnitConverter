@@ -33,8 +33,8 @@ describe('Explanation Type:Question Converstion Test::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
-                console.log(JSON.stringify(getQConvRes(ret)));
-                console.log(JSON.stringify(res));
+                //console.log(JSON.stringify(getQConvRes(ret)));
+               // console.log(JSON.stringify(res));
                 assert.deepEqual(getQConvRes(ret), res);
             });
     }).bind(null, txt, res));

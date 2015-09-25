@@ -1,13 +1,22 @@
+/// < r eference path="dependency.ts" />
+/// < reference path="../node_modules/source-map-support/source-map-support.js" />
 'use strict';
 
 /* @flow */
-import { install } from 'source-map-support';
-install();
+//import { install } from 'source-map-support';
+//install();
+require('source-map-support').install();
+
+// typescript needs the definition.
+declare function require(name:string);
 
 var parser;
+import NLPPP from './nlp_pp';
+import Dependency from './dependency';
+import Tokens from './tokens';
+
 var ArgumentParser = require('argparse').ArgumentParser;
 var NLPClient = require('./nlp_client.js');
-var NLPPP = require('./nlp_pp');
 var Nodes = require('./nodes.js');
 var ExpDB = require('./expdb');
 var ExpLearn = require('./exp_learn');
@@ -17,6 +26,7 @@ var readline = require('readline');
 var Utils = require('./nodes_utils');
 var debug = require('debug');
 let expLearn;
+let expDB;
 
 //import NLPPP from './nlp_pp';
 //var ToDefine = require('./to_define');
@@ -52,8 +62,8 @@ parser.addArgument(
 
 
 var args = parser.parseArgs();
-var port = args.port || 8990;
-var learnData = (args.learn_data)?args.learn_data.split(','):[];
+//var port: number = args.port || 8990;
+var learnData: Array<string> = (args.learn_data)?args.learn_data.split(','):[];
 //console.log('PORT = ' + port);
 //console.log("DEBUG = " + args.debug);
 // process a node
@@ -63,7 +73,7 @@ var learnData = (args.learn_data)?args.learn_data.split(','):[];
   * Helper function to display the nodes'
   * Only for debugging
   */
-function parseNodes(dep, tokens, tknid : number, linkType, level) {
+function parseNodes(dep: Dependency, tokens: Tokens, tknid: number, linkType: string, level: number) {
     if (level === undefined) {
         level = 1;
     }
@@ -78,7 +88,7 @@ function parseNodes(dep, tokens, tknid : number, linkType, level) {
     }
  }
 
-function parse(data, gr, dbge = false) {
+function parse(data, gr, dbge: boolean = false) {
     var pp = new NLPPP();
     var res = pp.read(data.body);
     var dbg = debug('eparser:parse');
@@ -88,11 +98,11 @@ function parse(data, gr, dbge = false) {
     if (dbg.enabled) {
         dbg(' Parser result : ' + JSON.stringify(res));
         dbg(' Number of Sentences :' + pp.sentenceCount());
-        for (var idx = 0; idx < pp.sentenceCount(); idx = idx + 1) {
+        for (let idx = 0; idx < pp.sentenceCount(); idx = idx + 1) {
             dbg(' Sentence ' + idx + ' :' + pp.getSentence(idx));
             dbg(' \tParse Tree :' + pp.getParseTree(idx));
             let tkn = pp.getTokens(idx);
-            var tknString = '';
+            var tknString: string = '';
             for (var tid = 1; tid <= tkn.tokenCount(); tid++ ) {
                 tknString += tid + ':' + tkn.getToken(tid) + '(' + tkn.getTokenPOS(tid) + ') ';
             }
@@ -100,7 +110,7 @@ function parse(data, gr, dbge = false) {
             let dep = pp.getSentenceDep(idx);
             let rootId = dep.getRootToken();
             dbg(' \tRoot : ' + rootId);
-            parseNodes(dep, dep.getTokens(), rootId, 'root');
+            parseNodes(dep, dep.getTokens(), rootId, 'root', 0);
         }
     }
     let rt = pp.getSentenceDep(0).getRootToken();
@@ -127,7 +137,7 @@ function parse(data, gr, dbge = false) {
                     dbg("Done with processing DBExplain");
                     {
                         log_dt += ' \tParsedMeaning[';
-                        for (idx in nd.expMatches) {
+                        for (let idx in nd.expMatches) {
                             //console.log('   Exp[' + idx + '-' + nd.expMatches[idx].getName()
                             //    + ']::' + nd.expMatches[idx].text());
                             log_dt += nd.expMatches[idx].getName() + ' ';
@@ -138,7 +148,7 @@ function parse(data, gr, dbge = false) {
                     // just some debug prints
                     if (dbgGr.enabled || dbgExp.enabled) {
                         //dbgGr("List of Grammar Matches Found ")
-                        for (idx in nd.grMatches) {
+                        for (let idx in nd.grMatches) {
                             let dbgSelect = dbgGr;
                             if (nd.grMatches[idx].getName().match(/VerbBase/)) {
                                 dbgSelect = dbgGrV;
@@ -147,14 +157,19 @@ function parse(data, gr, dbge = false) {
                                 + '] Matched Text  ::' + nd.grMatches[idx].text());
                         }
                         //dbgExp("List of Expresive Matches Found ")
-                        for (idx in nd.expMatches) {
+                        for (let idx in nd.expMatches) {
                             dbgExp('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
                                 + '] Matched Text  ::' + nd.expMatches[idx].text());
                         }
                     }
                     // execute all the exp matches
-                    for (idx in nd.expMatches) {
-                        nd.expMatches[idx].exec(gr);
+                    for (let idx in nd.expMatches) {
+                        try {
+                            nd.expMatches[idx].exec(gr);
+                        } catch (e) {
+                            console.log('Node:' + nd.expMatches[idx].name + ' had an exception when runing exec.')
+                            console.log(e);
+                        }
                     }
                 })
                 .then(function(dt) {
@@ -172,7 +187,7 @@ function parse(data, gr, dbge = false) {
 
                     if (args.learn && !alreadyLearned && learnData.length !== 0) {
                         let v = [];
-                        for (idx in nd.grMatches) {
+                        for (let idx in nd.grMatches) {
                             if (nd.grMatches[idx].getName().match(/VerbBase/)) {
                                 //console.log('   Verb in this statement :: ' + JSON.stringify(nd.grMatches[idx].processNode()));
                                 v.push(nd.grMatches[idx]);
@@ -239,7 +254,12 @@ function processList(client, txtList, gr, dbg, fn) {
             console.log(e.stack);
         });
 }
-function startCLI(fn) {
+ function startCLI(fn) {
+    /*
+    let dt1 = await Utils.getStdin('>');
+    let dt2 = await fn(dt1);
+    ldt dt3 = await startCLI(fn);
+*/
     return Utils.getStdin('>')
         .then(function(res) {
             return fn(res);
@@ -257,7 +277,7 @@ Not able to parse even simple constructs right now. need to analyze them a bit.
 
 let nlp = new NLPClient();
 let gr = {};
-let expDB = new ExpDB('lexp.db');
+expDB = new ExpDB('lexp.db');
 /*
 var rl = readline.createInterface({
     input:process.stdin,

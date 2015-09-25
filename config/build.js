@@ -14,8 +14,20 @@ module.exports = function (grunt, options) {
         files: [{
             'expand': true,
             'cwd': options.srcFolderPath + '/',
-            'src': ['*.js', '**/*.js'],
-            'dest': targetFolder + '/src',
+            'src': ['**/*.js'],
+            'dest': targetFolder + 'src',
+            'flatten': false
+        }]
+    };
+    fn.tasks.babel['compile-typescript'] = {
+        'options': {
+            'sourceMap': true
+        },
+        files: [{
+            'expand': true,
+            'cwd': options.targetFolderPath + '/ts/src',
+            'src': ['**/*.js'],
+            'dest': targetFolder + 'src',
             'flatten': false
         }]
     };

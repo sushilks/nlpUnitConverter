@@ -44,8 +44,8 @@ describe('Grammar Type:Define Test::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
-                console.log(JSON.stringify(getDefineRes(ret)));
-                console.log(JSON.stringify(res));
+                //console.log(JSON.stringify(getDefineRes(ret)));
+                //console.log(JSON.stringify(res));
                 assert.deepEqual(getDefineRes(ret), res);
             });
     }).bind(null, txt, res));
