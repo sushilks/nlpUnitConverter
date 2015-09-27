@@ -1,3 +1,4 @@
+/// <reference path="base_node.d.ts" />
 
 'use strict';
 /*
@@ -7,36 +8,51 @@ A Node needs the following capabilities
 - Is it of type:NN* and has a child with link:cop and child-type:VB* and child-token:is
 
 need access to parent node with link type.
-
 */
+declare function require(name:string);
+//import Tokens from './tokens';
+//import Dependency from './dependency';
+
 var dbg = require('debug')('node:pos:base');
 
-
 class BaseNode {
-    constructor(nodes, tknId, level, noprocess) {
-        let name = tknId + '_' + nodes.tkn.getToken(tknId) + '_' + nodes.tkn.getTokenPOS(tknId);
+    name: string;
+    nodes: any;
+    tknId: number;
+    level: number;
+    children: {[key:number]:LinkedNode};
+    parent: LinkedNode;
+    grProcessingOngoing: boolean;
+    grProcessingDone: boolean;
+    grMatches: Array<GrBase>;
+    //nd:BaseNode;
+
+    constructor(nodes: any, tknId: number, level: number, noprocess: boolean) {
+        let name = tknId + '_' + nodes.tkn.getToken(tknId) + '_'
+            + nodes.tkn.getTokenPOS(tknId);
         this.name = (name === undefined) ? 'Unnamed-Node' : name;
         this.nodes = nodes;
         this.tknId = tknId;
         this.level = level;
         this.children = {};
-        this.parent = {};
+        //this.parent = {};
         this.grProcessingOngoing = false;
         this.grProcessingDone = false;
         this.grMatches = [];
         dbg(this.tabs() + ' Creating Node with Name : ' + this.name);
         if (noprocess === true) {
-            this.nd = null;
+            //this.nd = null;
         } else {
-            this.nd = this.process(tknId);
+            //this.nd =
+            this.process(tknId);
         }
         nodes.setNodeMap(tknId, this);
     }
-    static getMatchToken() {
+    static getMatchToken(): string {
         return 'DEFAULT';
     }
 
-    tabs() {
+    tabs(): string {
         let t = '';
         for (var i = 0; i < this.level; ++i) {
             t += '\t';
@@ -44,44 +60,47 @@ class BaseNode {
         return t;
     }
 
-    isGrammarProcessingDone() {
+    isGrammarProcessingDone(): boolean {
         return this.grProcessingDone;
     }
-    setGrammarProcessingDone(b = true) {
+    setGrammarProcessingDone(b = true)  {
         this.grProcessingDone = b;
     }
-    addGrammarMatch(gr) {
+    addGrammarMatch(gr: GrBase) {
         this.grMatches.push(gr);
     }
-    getGrammarMatches() {
+    getGrammarMatches(): Array<GrBase> {
         return this.grMatches;
     }
-    getChildren() {
+    getChildren(): {[key:number]:LinkedNode} {
         return this.children;
     }
-    getChild(loc) {
+    getChild(loc): LinkedNode {
         return this.children[loc];
     }
-    getDep(loc) {
+    /*
+    getDep(loc): Dependency {
+        //console.trace('-----------------' + JSON.stringify(Object.keys(this.children[loc])));
         return this.children[loc].dep;
-    }
-    getListOfPos() {
+    }*/
+    getListOfPos(): Array<string> {
         return Object.keys(this.children);
     }
-    getToken() {
+    getToken(): string {
         return this.nodes.tkn.getToken(this.tknId);
     }
-    getTokenId() {
+    getTokenId(): number {
         return this.tknId;
     }
-    getTokenPOS() {
+    getTokenPOS(): string {
         return this.nodes.tkn.getTokenPOS(this.tknId);
     }
-    getPOS() {
-        return this.nodes.tkn.getTokenPOS(this.tknId);
+    getPOS(): string {
+        return this.getTokenPOS();
+        //return this.nodes.tkn.getTokenPOS(this.tknId);
     }
     // this function may be overwritten by inheritance.
-    getValues(tagged=false) {
+    getValues(tagged=false): string {
         let data = [];
         let gr = this.getGrammarMatches();
         //console.log(' getValues called for :' + this.getToken() + ' [' + gr.length + ']');
@@ -122,11 +141,11 @@ class BaseNode {
                     */
 
 
-    noOfChildren() {
+    noOfChildren(): number {
         return Object.keys(this.children).length;
     }
 
-    print(tab) {
+    print(tab: number) {
         tab = (tab === undefined) ? 0 : tab;
         var tg = '';
         for (var i = 0; i < tab; ++i ){
@@ -138,14 +157,13 @@ class BaseNode {
             this.children[loc].node.print(tab + 1);
         }
     }
-    getParent() {
+    getParent(): LinkedNode {
         return this.parent;
     }
-    addParent(node, type) {
-        this.parent.node = node;
-        this.parent.type = type;
+    addParent(node: BaseNode, type: string) {
+        this.parent = {node :node, type : type} ;
     }
-    addChild(tkn, type) {
+    addChild(tkn: number, type: string) {
         dbg(this.tabs() + ' BASE:: addChild adding tkn:' + tkn + ' linktype:' + type);
         this.children[tkn] = {
             'type': type,
@@ -154,7 +172,7 @@ class BaseNode {
         this.children[tkn].node.addParent(this, this.children[tkn].type);
     }
     // create the tree of all the nodes that are connected.
-    process(tknid) {
+    process(tknid: number) {
         let dep = this.nodes.dep;
         let children = dep.getChildNodes(tknid);
         for (let idx in children) {

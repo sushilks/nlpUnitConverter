@@ -1,5 +1,5 @@
 'use strict';
-var BaseNode = require('./base');
+var BaseNode = require('./base_node');
 
 
 class VBNode extends BaseNode {

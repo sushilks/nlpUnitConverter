@@ -1,5 +1,5 @@
 'use strict';
-var BaseNode = require('./base.js');
+var BaseNode = require('./base_node.js');
 var Utils = require('../nodes_utils');
 /*
 NN connected with VB as "cop" link is to be identified and the verb to be propegrated

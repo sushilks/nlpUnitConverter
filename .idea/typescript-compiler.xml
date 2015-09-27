@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="TypeScriptCompiler">
-    <option name="isCompilerEnabled" value="true" />
+    <option name="typeScriptServiceDirectory" value="$USER_HOME$/.nvm/versions/node/v0.12.7/lib/node_modules/typescript/lib/" />
+    <option name="typeScriptCompilerParams" value="--moduleResolution node --experimentalAsyncFunctions -d --target ES6 --outDir build/ts/ " />
+    <option name="nodeInterpreterTextField" value="$USER_HOME$/.nvm/versions/node/v0.12.7/bin/node" />
+    <option name="scopeName" value="build-exclude" />
+    <option name="hasOutDirectory" value="true" />
+    <option name="outDirectory" value="build/ts/$FileDirRelativeToProjectRoot$" />
+    <option name="versionType" value="SERVICE_DIRECTORY" />
   </component>
 </project>

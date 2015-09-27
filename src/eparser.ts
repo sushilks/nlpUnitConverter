@@ -1,4 +1,4 @@
-/// < r eference path="dependency.ts" />
+
 /// < reference path="../node_modules/source-map-support/source-map-support.js" />
 'use strict';
 
@@ -6,14 +6,16 @@
 //import { install } from 'source-map-support';
 //install();
 require('source-map-support').install();
-
+require("babel/register")({
+    optional: ['es7.asyncFunctions']
+});
 // typescript needs the definition.
 declare function require(name:string);
 
 var parser;
 import NLPPP from './nlp_pp';
-import Dependency from './dependency';
-import Tokens from './tokens';
+//import Dependency from './dependency';
+//import Tokens from './tokens';
 
 var ArgumentParser = require('argparse').ArgumentParser;
 var NLPClient = require('./nlp_client.js');
@@ -88,31 +90,32 @@ function parseNodes(dep: Dependency, tokens: Tokens, tknid: number, linkType: st
     }
  }
 
-function parse(data, gr, dbge: boolean = false) {
+async function parse(data, gr, dbge: boolean = false) {
     var pp = new NLPPP();
     var res = pp.read(data.body);
     var dbg = debug('eparser:parse');
     var dbgGr = debug('eparser:gr');
     var dbgGrV = debug('eparser:gr:verb');
     var dbgExp = debug('eparser:exp');
-    if (dbg.enabled) {
-        dbg(' Parser result : ' + JSON.stringify(res));
-        dbg(' Number of Sentences :' + pp.sentenceCount());
-        for (let idx = 0; idx < pp.sentenceCount(); idx = idx + 1) {
-            dbg(' Sentence ' + idx + ' :' + pp.getSentence(idx));
-            dbg(' \tParse Tree :' + pp.getParseTree(idx));
-            let tkn = pp.getTokens(idx);
-            var tknString: string = '';
-            for (var tid = 1; tid <= tkn.tokenCount(); tid++ ) {
-                tknString += tid + ':' + tkn.getToken(tid) + '(' + tkn.getTokenPOS(tid) + ') ';
+    try {
+        if (dbg.enabled) {
+            dbg(' Parser result : ' + JSON.stringify(res));
+            dbg(' Number of Sentences :' + pp.sentenceCount());
+            for (let idx = 0; idx < pp.sentenceCount(); idx = idx + 1) {
+                dbg(' Sentence ' + idx + ' :' + pp.getSentence(idx));
+                dbg(' \tParse Tree :' + pp.getParseTree(idx));
+                let tkn = pp.getTokens(idx);
+                var tknString:string = '';
+                for (var tid = 1; tid <= tkn.tokenCount(); tid++) {
+                    tknString += tid + ':' + tkn.getToken(tid) + '(' + tkn.getTokenPOS(tid) + ') ';
+                }
+                dbg(' \tTOKEN -  ' + tknString);
+                let dep = pp.getSentenceDep(idx);
+                let rootId = dep.getRootToken();
+                dbg(' \tRoot : ' + rootId);
+                parseNodes(dep, dep.getTokens(), rootId, 'root', 0);
             }
-            dbg(' \tTOKEN -  ' + tknString);
-            let dep = pp.getSentenceDep(idx);
-            let rootId = dep.getRootToken();
-            dbg(' \tRoot : ' + rootId);
-            parseNodes(dep, dep.getTokens(), rootId, 'root', 0);
         }
-    }
     let rt = pp.getSentenceDep(0).getRootToken();
     let log_dt = '';
     if (dbg.enabled) {
@@ -130,111 +133,90 @@ function parse(data, gr, dbge: boolean = false) {
     dbg("Done with processing Explain");
 
     // check if any of the database entries are matching
-    return new Promise(
-        function (resolve, reject) {
-            nd.processAllExpDB(expDB, gr)
-                .then(function(dt) {
-                    dbg("Done with processing DBExplain");
-                    {
-                        log_dt += ' \tParsedMeaning[';
-                        for (let idx in nd.expMatches) {
-                            //console.log('   Exp[' + idx + '-' + nd.expMatches[idx].getName()
-                            //    + ']::' + nd.expMatches[idx].text());
-                            log_dt += nd.expMatches[idx].getName() + ' ';
-                        }
-                        console.log(log_dt + ']');
-                    }
+    let dt = await nd.processAllExpDB(expDB, gr);
+    dbg("Done with processing DBExplain");
+    {
+        log_dt += ' \tParsedMeaning[';
+        for (let idx in nd.expMatches) {
+            //console.log('   Exp[' + idx + '-' + nd.expMatches[idx].getName()
+            //    + ']::' + nd.expMatches[idx].text());
+            log_dt += nd.expMatches[idx].getName() + ' ';
+        }
+        console.log(log_dt + ']');
+    }
 
-                    // just some debug prints
-                    if (dbgGr.enabled || dbgExp.enabled) {
-                        //dbgGr("List of Grammar Matches Found ")
-                        for (let idx in nd.grMatches) {
-                            let dbgSelect = dbgGr;
-                            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
-                                dbgSelect = dbgGrV;
-                            }
-                            dbgSelect('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
-                                + '] Matched Text  ::' + nd.grMatches[idx].text());
-                        }
-                        //dbgExp("List of Expresive Matches Found ")
-                        for (let idx in nd.expMatches) {
-                            dbgExp('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
-                                + '] Matched Text  ::' + nd.expMatches[idx].text());
-                        }
-                    }
-                    // execute all the exp matches
-                    for (let idx in nd.expMatches) {
-                        try {
-                            nd.expMatches[idx].exec(gr);
-                        } catch (e) {
-                            console.log('Node:' + nd.expMatches[idx].name + ' had an exception when runing exec.')
-                            console.log(e);
-                        }
-                    }
-                })
-                .then(function(dt) {
-                    // If failed to match
-                    //  go through the learning routine.
-                    let alreadyLearned = false;
-                    for (let p of nd.expMatches) {
-                        if (learnData[1] === p.name) {
-                             alreadyLearned = true;
-                        }
-                    }
-                    if (nd.expMatches.length === 0) {
-                        console.log('   This Statement did not match any of the types that I am able to recognize.');
-                    }
+    // just some debug prints
+    if (dbgGr.enabled || dbgExp.enabled) {
+        //dbgGr("List of Grammar Matches Found ")
+        for (let idx in nd.grMatches) {
+            let dbgSelect = dbgGr;
+            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
+                dbgSelect = dbgGrV;
+            }
+            dbgSelect('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
+                + '] Matched Text  ::' + nd.grMatches[idx].text());
+        }
+        //dbgExp("List of Expresive Matches Found ")
+        for (let idx in nd.expMatches) {
+            dbgExp('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
+                + '] Matched Text  ::' + nd.expMatches[idx].text());
+        }
+    }
+    // execute all the exp matches
+    for (let idx in nd.expMatches) {
+        try {
+            nd.expMatches[idx].exec(gr);
+        } catch (e) {
+            console.log('Node:' + nd.expMatches[idx].name + ' had an exception when runing exec.')
+            console.log(e);
+        }
+    }
 
-                    if (args.learn && !alreadyLearned && learnData.length !== 0) {
-                        let v = [];
-                        for (let idx in nd.grMatches) {
-                            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
-                                //console.log('   Verb in this statement :: ' + JSON.stringify(nd.grMatches[idx].processNode()));
-                                v.push(nd.grMatches[idx]);
-                            }
-                        }
-                        /*
-                         Call the learning Routing to collect the information and write it to the database.
-                         */
-                        return expLearn.learn(pp.getSentence(0), v, learnData, nd.expMatches);
-                    } else {
-                        resolve(res);
-                    }
-                })
-                .then(function(dt){
-                    resolve(dt);
-                })
-                .catch(function(e) {
-                    console.log("Error :: " + e);
-                    console.log(e.stack);
+    // If failed to match
+    //  go through the learning routine.
+    let alreadyLearned = false;
+    for (let p of nd.expMatches) {
+        if (learnData[1] === p.name) {
+            alreadyLearned = true;
+        }
+    }
+    if (nd.expMatches.length === 0) {
+        console.log('   This Statement did not match any of the types that I am able to recognize.');
+    }
 
-                });
-        });
+    if (args.learn && !alreadyLearned && learnData.length !== 0) {
+        let v = [];
+        for (let idx in nd.grMatches) {
+            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
+                //console.log('   Verb in this statement :: ' + JSON.stringify(nd.grMatches[idx].processNode()));
+                v.push(nd.grMatches[idx]);
+            }
+        }
+        /*
+          Call the learning Routing to collect the information and write it to the database.
+        */
+        return expLearn.learn(pp.getSentence(0), v, learnData, nd.expMatches);
+    } else {
+        return res;
+    }
+
+    } catch(e) {
+        console.log(' Exception e ' + e);
+        console.log('   -> ' + e.stack);
+    }
+
 }
 
 /**
   * Send a text to the Client get the
   * nlp response and process it
   */
-function processText(client, txt, gr={}, dbg=false) {
-    return new Promise(
-        function(resolve, reject) {
-            client.req(txt).then(function(res) {
-                return parse(res, gr, dbg);
-            }, function(err) {
-                reject(err);
-            }).then(function(res) {
-                resolve(res);
-            }, function(err) {
-                console.log('ERROR when processing request :: ' + err.stack);
-            }).catch(function(e) {
-                console.log("Error :: " + e);
-                console.log(e.stack);
-            });
-
-        });
+async function processText(client, txt, gr={}, dbg=false) {
+    let res = await client.req(txt);
+    let p = await parse(res, gr, dbg);
+    return p;
 }
-function processList(client, txtList, gr, dbg, fn) {
+async function processList(client, txtList, gr, dbg, fn) {
     let t = txtList.shift();
     if (t === '') {
         if (txtList.length)
@@ -242,34 +224,72 @@ function processList(client, txtList, gr, dbg, fn) {
         fn();
         return;
     }
-    return processText(client, t, gr, dbg)
-    .then(function(r) {
-            if (txtList.length) {
-                processList(client, txtList, gr, dbg, fn);
-            } else {
-                fn();
-            }
-        }).catch(function(e) {
-            console.log("Error :: " + e);
-            console.log(e.stack);
-        });
+    let r = await processText(client, t, gr, dbg);
+    if (txtList.length) {
+        processList(client, txtList, gr, dbg, fn);
+    } else {
+        fn();
+    }
 }
- function startCLI(fn) {
-    /*
+ async function startCLI(fn) {
+
     let dt1 = await Utils.getStdin('>');
     let dt2 = await fn(dt1);
-    ldt dt3 = await startCLI(fn);
-*/
-    return Utils.getStdin('>')
-        .then(function(res) {
-            return fn(res);
-        }).then(function(res) {
-            return startCLI(fn);
-        }).catch(function(e) {
-            console.log("Error :: " + e);
-            console.log(e.stack);
-        });
+    let dt3 = await startCLI(fn);
+    return dt3;
 }
+
+async function main(args, nlp, gr) {
+    if (args.input && args.input !== '') {
+        var contents = FS.readFileSync(args.input).toString();
+        let txt = contents.split('\n');
+        if (args.txt && args.txt !== '') {
+            txt.push(args.txt);
+        }
+        processList(nlp, txt, gr, args.debug, async function () {
+            if (args.debug) {
+                console.log(' Status of the graph created so far');
+                for (var gkey in gr) {
+                    console.log("gkey=" + gkey);
+                    console.log('Details of Graph: key=' + gkey + '  ::  ' + gr[gkey].toString());
+                    console.log('   Details of Nodes:' + JSON.stringify(gr[gkey].nodes(true)));
+                    console.log('   Details of Edges:' + JSON.stringify(gr[gkey].edges(true)));
+                }
+            }
+            if (args.cli) {
+                await startCLI(async function(line) {
+                    let re1 = line.match(/enable.*debug[ ]+([^ ]+)/i);
+                    let re2 = line.match(/disable.*debug[ ]+([^ ]+)/i);
+                    if (re1) {
+                        console.log("Enabeling Debug for " + re1[1]);
+                        //debug.enable(re1[1]);
+                        debug.enable('*');
+                        //rl.__block_l1 = false;
+                        //rl.prompt();
+                        return ;
+                    } else if (re2) {
+                        console.log("Disabeling Debug for " + re2[1]);
+                        debug.disable('-' + re2[1]);
+                        //rl.__block_l1 = false;
+                        //rl.prompt();
+                        return ;
+                    } else {
+                        return await processText(nlp, line, gr, args.debug)
+
+                    }
+                });
+                console.log("DONE CLI.");
+            }
+
+        });
+    } else if (args.txt && args.txt !== '') {
+        await processText(nlp, args.txt, gr, args.debug)
+        console.log("eParser Done");
+    }
+}
+
+
+
 /*
 the ProcessGr part needs some more thought
 Not able to parse even simple constructs right now. need to analyze them a bit.
@@ -286,61 +306,4 @@ var rl = readline.createInterface({
 */
 expLearn = new ExpLearn(expDB, Nodes.getGlobalExpMapper());
 
-if (args.input && args.input !== '') {
-    var contents = FS.readFileSync(args.input).toString();
-    let txt = contents.split('\n');
-    if (args.txt && args.txt !== '') {
-        txt.push(args.txt);
-    }
-    processList(nlp, txt, gr, args.debug, function () {
-        if (args.debug) {
-            console.log(' Status of the graph created so far');
-            for (var gkey in gr) {
-                console.log("gkey=" + gkey);
-                console.log('Details of Graph: key=' + gkey + '  ::  ' + gr[gkey].toString());
-                console.log('   Details of Nodes:' + JSON.stringify(gr[gkey].nodes(true)));
-                console.log('   Details of Edges:' + JSON.stringify(gr[gkey].edges(true)));
-            }
-        }
-        if (args.cli) {
-            startCLI(function(line) {
-                return new Promise(function(resolve, reject) {
-                    let re1 = line.match(/enable.*debug[ ]+([^ ]+)/i);
-                    let re2 = line.match(/disable.*debug[ ]+([^ ]+)/i);
-                    if (re1) {
-                        console.log("Enabeling Debug for " + re1[1]);
-                        //debug.enable(re1[1]);
-                        debug.enable('*');
-                        //rl.__block_l1 = false;
-                        //rl.prompt();
-                        resolve(null);
-                    } else if (re2) {
-                        console.log("Disabeling Debug for " + re2[1]);
-                        debug.disable('-' + re2[1]);
-                        //rl.__block_l1 = false;
-                        //rl.prompt();
-                        resolve(null);
-                    } else {
-                        processText(nlp, line, gr, args.debug)
-                            .then(function (r) {
-                                //rl.__block_l1 = false;
-                                // rl.prompt();
-                                resolve(null);
-                            });
-                    }
-                });
-            }).then(function(done) {
-                console.log("DONE CLI.");
-            }).catch(function(e) {
-                console.log("Error :: " + e);
-                console.log(e.stack);
-            });
-        }
-
-    });
-} else if (args.txt && args.txt !== '') {
-        processText(nlp, args.txt, gr, args.debug)
-            .then(function (r) {
-                console.log("eParser Done");
-            });
-}
+main(args, nlp, gr);

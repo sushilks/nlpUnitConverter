@@ -44,7 +44,7 @@ module.exports = function (grunt) {
     grunt.registerTask('tests', [
         'clean:compile',
         'clean:compile-test',
-        'typescript:compile',
+        'ts:compile',
         'babel:compile',
         'babel:compile-typescript',
         'babel:compile-test',
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:compile',
         'clean:compile-test',
-        'typescript:compile',
+        'ts:compile',
         'babel:compile',
         'babel:compile-typescript',
         'babel:compile-test',

@@ -1,15 +1,20 @@
+/// <reference path="nodes.d.ts" />
+
 'use strict';
 
-//declare function require(name:string);
+declare function require(name:string);
+//import Tokens from './tokens';
+//import Dependency from './dependency';
 
 var Utils = require('./nodes_utils');
 var LearnUtils = require('./exp_learn_utils');
 var FS = require('fs');
 
-var gNodeMapper = {}; /** To hold different node types */
-var gGrMapper = {};   /** To hold different grammer rules */
-var gExpMapper = {};   /** To hold different grammer rules */
+var gNodeMapper: {[key:string]: BaseNode} = {}; /** To hold different node types */
+var gGrMapper:   {[key:string]: GrBase} = {};   /** To hold different grammer rules */
+var gExpMapper:  {[key:string]: Array<typeof ExpBase>} = {};   /** To hold different grammer rules */
 
+declare var __dirname: any;
 var normalizedPath = require('path').join(__dirname);
 var dbg = require('debug')('nodes:base');
 var dbgdb = require('debug')('nodes:base:db');
@@ -46,7 +51,15 @@ FS.readdirSync(normalizedPath + '/nodes_exp').forEach(function(file) {
     */
 
 class Nodes {
-    constructor(dep) {
+    dep: Dependency;
+    tknNodeMap: {[key:number]:BaseNode};
+    rootToken : number;
+    tkn : Tokens;
+    nd: BaseNode;
+    grMatches: Array<GrBase>;
+    expMatches: Array<ExpBase>;
+  //  diGraph: ;
+    constructor(dep: Dependency) {
         this.tknNodeMap = {};
         this.dep = dep;
         this.rootToken = dep.getRootToken();
@@ -54,28 +67,28 @@ class Nodes {
         this.nd = this.process(this.rootToken, 1);
         this.grMatches = []; /** store all the grammar matches **/
         this.expMatches = [];
-        this.diGraph = {};
+//        this.diGraph = {};
     }
-    createGraph(name, attr = {}) {
-    }
-    getGraph(name) {
-        console.log("getGraph [" + name + "] = " + this.diGraph[name]);
-
-        return this.diGraph[name];
-    }
-    static getGlobalExpMapper() {
+//    createGraph(name, attr = {}) {
+//    }
+//    getGraph(name) {
+//        console.log("getGraph [" + name + "] = " + this.diGraph[name]);
+//
+//        return this.diGraph[name];
+//    }
+    static getGlobalExpMapper(): {[key:string]: Array<typeof ExpBase>} {
         return gExpMapper;
     }
-    getTokens() {
+    getTokens(): Tokens {
         return this.tkn;
     }
-    setNodeMap(tknId, node) {
+    setNodeMap(tknId: number, node: BaseNode) {
         this.tknNodeMap[tknId] = node;
     }
-    getNodeMap(tknId) {
+    getNodeMap(tknId: number): BaseNode {
         return this.tknNodeMap[tknId];
     }
-    process(tknId, level) {
+    process(tknId: number, level: number): BaseNode {
        let pos = this.tkn.getTokenPOS(tknId);
         for (let rkey in Object.keys(gNodeMapper)) {
             let pat = Object.keys(gNodeMapper)[rkey];
@@ -98,7 +111,7 @@ class Nodes {
                     if (match[0] !== '') {
                         dbgexp('Found a match dbItem [' + JSON.stringify(match) + '] ');
                         dbgdb('Matching DB Entry:' + JSON.stringify(dbItem));
-                        let fn = gExpMapper._map[match[0]];
+                        let fn = (<any>gExpMapper)._map[match[0]];
                         // call validity check on the expression-node
                         if (fn.checkValidArguments(this, match[1], graphDB)) {
                             dbgexp(' Match Succeded with arguments [' + JSON.stringify(match));
@@ -185,31 +198,41 @@ class Nodes {
         }
     }
 
-    populateGrammarTree(treeTop, grTree, tokenId, type, followChildren = true) {
+    populateGrammarTree(treeTop: GrTreeTop, grTree: GrTree, tokenId: number, type, followChildren: boolean = true) {
         let node = this.getNodeMap(tokenId);
         //grTree.node = node;
-        grTree.tokenId = tokenId;
-        grTree.pos = node.getPOS();
-        grTree.type = type;
-        grTree.getNode = (function(node) {
-            return node;
-        }).bind(null, node);
+        grTree = {
+            tokenId: tokenId,
+            pos: node.getPOS(),
+            type: type,
+            children: null,
+            getNode: (function (node) {
+                return node;
+            }).bind(null, node)
+        };
         if (!followChildren) {
-            return;
+            return grTree;
         }
         let children = this.dep.getChildNodes(tokenId);
         treeTop.processedTokens.push(tokenId);
         for (let tkn of children) {
-            if (!('children' in grTree)) {
+            if (!('children' in grTree) ||  !grTree.children) {
                 grTree.children = {};
             }
+            grTree.children[tkn.tokenIdx] = {
+                tokenId: null,
+                pos: null,
+                type: null,
+                children: null,
+                getNode: null
+            };
             if (treeTop.processedTokens.indexOf(tkn.tokenIdx) == -1) {
-                this.populateGrammarTree(treeTop, grTree.children, tkn.tokenIdx, tkn.type);
+                grTree.children[tkn.tokenIdx] = this.populateGrammarTree(treeTop, grTree.children[tkn.tokenIdx], tkn.tokenIdx, tkn.type);
             } else {
-                this.populateGrammarTree(treeTop, grTree.children, tkn.tokenIdx, tkn.type, false);
+                grTree.children[tkn.tokenIdx] = this.populateGrammarTree(treeTop, grTree.children[tkn.tokenIdx], tkn.tokenIdx, tkn.type, false);
             }
         }
-
+        return grTree;
     }
 
     /** Process all the tokens in order
@@ -217,13 +240,10 @@ class Nodes {
      *
      */
     processAllGrammar() {
-
-
-        let rootNode = this.dep.getRootToken();
-        let grTree = {root : { }, processedTokens:[] };
-        this.populateGrammarTree(grTree, grTree.root, rootNode, 'root');
+        let rootNode: number = this.dep.getRootToken();
+        let grTree: GrTreeTop = {root : null, processedTokens:[] };
+        grTree.root = this.populateGrammarTree(grTree, grTree.root, rootNode, 'root');
         //console.log(' ---- > ' + JSON.stringify(grTree));
-
 
         let matchedRules = Utils.findGrammarRules(gGrMapper, null, 'root', grTree.root.getNode());
         if (matchedRules.length) {
@@ -239,18 +259,16 @@ class Nodes {
         this.processNodeGrammar(grTree.root.getNode())
 
 
-
-
         this.grMatches = grTree.root.getNode().getGrammarMatches();
 
         //console.log(' After Process Gr:' + gm.length);
         if (this.grMatches.length) {
-            let r = this.grMatches[0].processNode();
+            let r = this.grMatches[0].processNode(null);
             //console.log(' r= ' + JSON.stringify(r));
         }
     }
 
-    processNodeGrammar(nd) {
+    processNodeGrammar(nd: BaseNode) {
         // find all the children and recurse
         var children = nd.getChildren();
         var loc;
@@ -326,4 +344,4 @@ class Nodes {
 }
 
 
-module.exports = Nodes;
+export default Nodes;

@@ -1,10 +1,21 @@
+/// <reference path="../nodes_gr/base_gr.d.ts" />
 'use strict';
+declare function require(name:string);
+//import Tokens from './tokens';
+//import Dependency from './dependency';
+
 var Utils = require('../nodes_utils');
 var assert = require('assert');
 var dbg = require('debug')('node:gr:base');
 
 class GrBase {
-    constructor(nodes, fromNode, linkType, toNode, result){
+    fromNode: BaseNode;
+    toNode: BaseNode;
+    nodes: any;
+    linkType: string;
+    name: string;
+    match: GrBaseMatch;
+    constructor(nodes: any, fromNode: BaseNode, linkType: string, toNode: BaseNode, result: GrBaseMatch){
         this.fromNode = fromNode;
         this.toNode = toNode;
         this.linkType = linkType;
@@ -12,14 +23,13 @@ class GrBase {
         this.match = result;
         this.name = 'BASE';
     }
-    getName() {
+    getName(): string {
         return this.name;
     }
-    static getMatchToken() {
+    static getMatchToken():Array<string> {
         return ['BaseGr'];
     }
-
-
+/*
     resolveItem(itm) {
         if (!(('tokenId' in itm) && !('_processed' in itm))) {
             return;
@@ -38,9 +48,14 @@ class GrBase {
             console.log('   Unable to find any Grammar on node ' + itm.tokenId + ' :: ' + nd.getToken() );
             itm.data = [{status:'ERROR: No Grammar [' + nd.getToken() + ']'}];
         }
-    }
-    resolveSubNodes(data) {
-        let keys = Object.keys(data);
+    }*/
+    resolveSubNodes(data: GrProcessNodeValue) {
+        let keys_ = Object.keys(data);
+        let keys = [];
+        for (let k of keys_) {
+            if (data[k]) keys.push(k);
+        }
+
         //let resolveList = [];
         for (let k of keys) {
             //console.log('k1=' + k + ' array=' + Array.isArray(data[k]));
@@ -65,23 +80,16 @@ class GrBase {
                     data.dataValueTagged = n.getValues(true);
                 }
                 //this.resolveItem(data);
-            } else {
+            } else if (data[k]) {
+               // console.log("----k=" + k + ". == " + JSON.stringify(data[k]));
                 if ('tokenId' in data[k]) {
                     this.resolveSubNodes(data[k]);
 
                 }
             }
-/*
-            if (Array.isArray(data[k])) {
-                //console.log('k = ' + k);
-                for (let itm of data[k]) {
-                    this.resolveItem(itm);
-                }
-            }
-            */
         }
     }
-    getValues(tagged=false) {
+    getValues(tagged=false): string {
         let res = [];
         let children = this.toNode.getChildren();
         //console.log(' gr::getValues called ' + this.name );
@@ -92,25 +100,33 @@ class GrBase {
         }
         res.push(this.toNode.getToken());
         //console.log('  \t\t getValues::GrBase called for id ' + this.toNode.getTokenId() + ' reeturning :' + res.join(' '));
-        res = res.join(' ');
+        let resStr = res.join(' ');
         if (tagged) {
             if (this.match.type) {
-                res = this.match.type + '::<' + res + '>';
+                resStr = this.match.type + '::<' + resStr + '>';
             } else {
-                res = this.getName() + '::<' + res + '>';
+                resStr = this.getName() + '::<' + resStr + '>';
             }
         }
-        return res;
+        return resStr;
     }
 //--->> {"verb":{"tokenId":4,"type":"root","What":[{"tokenId":8,"type":"nmod:in","_processed":true}],"Unresolved":[{"tokenId":5,"type":"expl","_processed":true}],
 // "_processed":true},"subj":{"tokenId":"3","type":"nsubj","Unresolved":[{"tokenId":2,"type":"amod","_processed":true}],"_processed":true}}
-    processNode(ret) {
+    processNode(ret: GrProcessNodeValueMap): GrProcessNodeValueMap {
+        //console.log(' ----==> ret = ' + JSON.stringify(ret));
         if (ret === undefined) {
             ret = {};
-            ret[this.getName()] = {tokenId: this.toNode.getTokenId()};
+            ret[this.getName()] = {
+                tokenId: this.toNode.getTokenId(),
+                token: undefined,
+                data: undefined,
+                dataValue: undefined,
+                dataValueTagged: undefined
+            };
             //return {implementMe:this.getName()};
         }
         //console.log('Implement ME');
+        //console.log(" -===> " + JSON.stringify(ret));
         for (let itm in ret)
             this.resolveSubNodes(ret[itm]);
         return ret;

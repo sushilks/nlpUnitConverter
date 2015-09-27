@@ -1,10 +1,10 @@
-'use strict';
+/// <r eference path="common_ifc.ts" />
+/// <reference path="dependency.d.ts" />
+//'use strict';
 
 // typescript needs the definition.
 declare function require(name:string);
 
-//var Tokens = require('./tokens');
-import Tokens from './tokens';
 
 /**
     * @class
