@@ -30,13 +30,14 @@ class Units extends BaseExp {
     exec(gr) {
         //dbg('Adding to graph:' + this.getName());
         //dbg('Graph name:' + this.getUnitsFor());
-        let nm = this.result.unitsFor;
+        //console.log('units :: exec = ' + JSON.stringify(this.result));
+        let nm = this.result.args.unitsFor;
         let g = gr[nm];
         if (!g) {
             console.trace('ERROR: Dont know about [' + nm + ']');
         }
-        let units = this.result['units'];
-        //console.log('UNIT = ' + units);
+        let units = this.result.args['units'];
+        // console.log('UNIT = ' + units);
         if (Array.isArray(units)) {
             units.forEach(function (x) {
                 //dbg(' UNIT =  ' + x)

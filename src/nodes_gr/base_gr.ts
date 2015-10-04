@@ -1,21 +1,22 @@
 /// <reference path="../nodes_gr/base_gr.d.ts" />
 'use strict';
 declare function require(name:string);
-//import Tokens from './tokens';
-//import Dependency from './dependency';
+import Tokens from './tokens';
+import Dependency from './dependency';
 
-var Utils = require('../nodes_utils');
+import * as Utils from '../nodes_utils';
 var assert = require('assert');
 var dbg = require('debug')('node:gr:base');
 
 class GrBase {
-    fromNode: BaseNode;
-    toNode: BaseNode;
-    nodes: any;
-    linkType: string;
-    name: string;
-    match: GrBaseMatch;
-    constructor(nodes: any, fromNode: BaseNode, linkType: string, toNode: BaseNode, result: GrBaseMatch){
+    fromNode:BaseNode;
+    toNode:BaseNode;
+    nodes:any;
+    linkType:string;
+    name:string;
+    match:GrBaseMatch;
+
+    constructor(nodes:any, fromNode:BaseNode, linkType:string, toNode:BaseNode, result:GrBaseMatch) {
         this.fromNode = fromNode;
         this.toNode = toNode;
         this.linkType = linkType;
@@ -23,33 +24,44 @@ class GrBase {
         this.match = result;
         this.name = 'BASE';
     }
-    getName(): string {
+
+    getName():string {
         return this.name;
     }
-    static getMatchToken():Array<string> {
-        return ['BaseGr'];
+
+    dict():GrProcessNodeValueMap  {
+        let r;
+        r =  this.processNode(r);
+        return r;
     }
-/*
-    resolveItem(itm) {
-        if (!(('tokenId' in itm) && !('_processed' in itm))) {
-            return;
-        }
-        itm._processed = true;
-        // find any grammar associated with the node
-        let nd = this.nodes.getNodeMap(itm.tokenId);
-        let gr = nd.grMatches;
-        for (let grItm of gr) {
-            if (!('data' in itm)) {
-                itm.data = [];
-            }
-            itm.data.push(grItm.processNode());
-        }
-        if (!('data' in itm)) {
-            console.log('   Unable to find any Grammar on node ' + itm.tokenId + ' :: ' + nd.getToken() );
-            itm.data = [{status:'ERROR: No Grammar [' + nd.getToken() + ']'}];
-        }
-    }*/
-    resolveSubNodes(data: GrProcessNodeValue) {
+
+    static getMatchToken():GrMatchTokenType {
+        return [{
+            name: 'BaseGr', fromPOS: '', toPOS: '', edge: ''
+        }];
+    }
+
+    /*
+     resolveItem(itm) {
+     if (!(('tokenId' in itm) && !('_processed' in itm))) {
+     return;
+     }
+     itm._processed = true;
+     // find any grammar associated with the node
+     let nd = this.nodes.getNodeMap(itm.tokenId);
+     let gr = nd.grMatches;
+     for (let grItm of gr) {
+     if (!('data' in itm)) {
+     itm.data = [];
+     }
+     itm.data.push(grItm.processNode());
+     }
+     if (!('data' in itm)) {
+     console.log('   Unable to find any Grammar on node ' + itm.tokenId + ' :: ' + nd.getToken() );
+     itm.data = [{status:'ERROR: No Grammar [' + nd.getToken() + ']'}];
+     }
+     }*/
+    resolveSubNodes(data:GrProcessNodeValue) {
         let keys_ = Object.keys(data);
         let keys = [];
         for (let k of keys_) {
@@ -70,7 +82,7 @@ class GrBase {
                     let c = children[loc];
                     let gr = c.node.getGrammarMatches();
                     //console.log('    children ' + loc + ' type = ' + c.type + ' name=' + c.node.name + ' gr.len = ' + gr.length);
-                    if(gr.length)
+                    if (gr.length)
                         for (let gritm of gr) {
                             data.data.push(gritm.processNode());
                         }
@@ -81,7 +93,7 @@ class GrBase {
                 }
                 //this.resolveItem(data);
             } else if (data[k]) {
-               // console.log("----k=" + k + ". == " + JSON.stringify(data[k]));
+                // console.log("----k=" + k + ". == " + JSON.stringify(data[k]));
                 if ('tokenId' in data[k]) {
                     this.resolveSubNodes(data[k]);
 
@@ -89,11 +101,12 @@ class GrBase {
             }
         }
     }
-    getValues(tagged=false): string {
+
+    getValues(tagged = false):string {
         let res = [];
         let children = this.toNode.getChildren();
         //console.log(' gr::getValues called ' + this.name );
-        for(let child in children) {
+        for (let child in children) {
             let c = this.toNode.getChild(child);
             // check if there is any grammar on the node
             res.push(c.node.getValues(tagged));
@@ -110,9 +123,10 @@ class GrBase {
         }
         return resStr;
     }
+
 //--->> {"verb":{"tokenId":4,"type":"root","What":[{"tokenId":8,"type":"nmod:in","_processed":true}],"Unresolved":[{"tokenId":5,"type":"expl","_processed":true}],
 // "_processed":true},"subj":{"tokenId":"3","type":"nsubj","Unresolved":[{"tokenId":2,"type":"amod","_processed":true}],"_processed":true}}
-    processNode(ret: GrProcessNodeValueMap): GrProcessNodeValueMap {
+    processNode(ret:GrProcessNodeValueMap):GrProcessNodeValueMap {
         //console.log(' ----==> ret = ' + JSON.stringify(ret));
         if (ret === undefined) {
             ret = {};
@@ -132,6 +146,9 @@ class GrBase {
         return ret;
     }
 
+    static checkValid(nodeList, fromNode, linkType, toNode) {
+        return [false, {}];
+    }
 }
 
 export default GrBase;

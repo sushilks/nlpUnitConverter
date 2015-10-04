@@ -1,4 +1,10 @@
-'use strict';
+/// <reference path="nodes.d.ts" />
+/// <reference path="nodes_utils.d.ts" />
+/// <reference path="../nodejs.d.ts" />
+import Nodes from './nodes';
+
+declare function require(name:string);
+//'use strict';
 var Jsnx = require('jsnetworkx');
 
 function nodeAdd_(nmap, d, fn) {
@@ -7,7 +13,7 @@ function nodeAdd_(nmap, d, fn) {
     }
     nmap[d].push(fn);
 }
-export function nodeInit(nmap, fn) {
+export function nodeInit(nmap: any, fn: any) {
     let dt = fn.getMatchToken();
     if (!('_map' in nmap)) {
         nmap['_map'] = {};
@@ -27,7 +33,7 @@ export function nodeInit(nmap, fn) {
     return fn;
 }
 
-export function nodeInitGr(nmap, fn) {
+export function nodeInitGr(nmap: GrMapperType, fn) {
     let dt = fn.getMatchToken();
     for (let d of dt) {
         if (!(d.name in nmap)) {
@@ -40,13 +46,13 @@ export function nodeInitGr(nmap, fn) {
 
 // Make sure the  node is precessed for grammar
 // and then get the value of the node.
-export function getNodeValues(nodeList, tknId) {
+export function getNodeValues(nodeList: Nodes, tknId: number) {
     let nd = nodeList.getNodeMap(tknId);
     checkAndProcessNodeGrammar(nodeList, nd);
     return nd.getValues();
 }
 
-export function normalizeUnit(dt) {
+export function normalizeUnit(dt: string): string {
     let r = dt.toLowerCase();
     r = r.replace(/shes$/,'sh')
         .replace(/ches$/,'ch')
@@ -58,13 +64,13 @@ export function normalizeUnit(dt) {
 
 // Check and make sure all the child nodes for the current nodes
 // have there grammar processed.
-export function checkAndProcessNodeGrammar(nodeList, node) {
+export function checkAndProcessNodeGrammar(nodeList: Nodes, node: BaseNode) {
     if (!node.isGrammarProcessingDone()) {
         // do grammar processing of the child first
         nodeList.processGr(node.getTokenId());
     }
 }
-
+/*
 // Check and make sure all the child nodes for the current nodes
 // have there grammar processed.
 export function checkAndProcessChildNodeGrammar(nodeList, node) {
@@ -88,18 +94,16 @@ export function checkAndProcessParentNodeGrammar(nodeList, node) {
         }
     }
 }
-
+*/
 // check if a grammar node is hit
 //export function findGrammarRules(grMapper, tkn, pos) {
-export function findGrammarRules(grMapper, fromNode, linkType, toNode) {
+export function findGrammarRules(grMapper: GrMapperType, fromNode: BaseNode, linkType: string, toNode: BaseNode): Array<FindGrammarRetTypeDt> {
 //    let r = tkn + ':' + pos;
-    let fromNodePOS = '';
+    let fromNodePOS: string = '';
     if (fromNode) {
         fromNodePOS = fromNode.getPOS();
     }
-
     let toNodePOS = toNode.getPOS();
-
     let retRules = [];
     for (let k in grMapper) {
         for (let gr of grMapper[k]) {
@@ -149,7 +153,7 @@ export function findGrammarRules(grMapper, fromNode, linkType, toNode) {
  * @param {string} linkType - regex text
  * @returns {Array} - array of token id's that match
  */
-export function checkChildLinks(nd, linkType) {
+export function checkChildLinks(nd: BaseNode, linkType: string): Array<number> {
     let resLoc  = [];
     let re = new RegExp('^' + linkType + '$');
     for (let loc in nd.getChildren()) {
@@ -166,7 +170,7 @@ export function checkChildLinks(nd, linkType) {
  * @param {string} linkType - regex text
  * @returns {Array} - array of token id's that match
  */
-export function getChildLink(nodes, pToken, cToken) {
+export function getChildLink(nodes: Nodes, pToken: number, cToken: number) {
     let pNode = nodes.getNodeMap(pToken);
     if (!pNode) return '';
     for (let loc in pNode.getChildren()) {
@@ -178,7 +182,7 @@ export function getChildLink(nodes, pToken, cToken) {
     return '';
 }
 
-function checkMatchAny_(txt, arr) {
+function checkMatchAny_(txt: any, arr: any): boolean {
     let re;
     if (Object.prototype.toString.call(txt) === '[object RegExp]') {
         re = txt;
@@ -205,7 +209,7 @@ function checkMatchAny_(txt, arr) {
  * @param itm2 - same as itm1 except some combinations are not allowed.
  * @returns {*} - true or false
  */
-export function checkMatchAny(itm1, itm2) {
+export function checkMatchAny(itm1, itm2): boolean {
     if (Array.isArray(itm1) && !Array.isArray(itm2)) {
         return checkMatchAny_(itm2, itm1);
     } else if (!Array.isArray(itm1) && Array.isArray(itm2)) {
@@ -226,7 +230,7 @@ export function checkMatchAny(itm1, itm2) {
     }
 }
 
-export function kMatch(dict, key, re) {
+export function kMatch(dict: {[key: string]: any}, key: string, re) {
     if (key in dict && dict[key]) {
         return dict[key].match(re);
     }
@@ -234,7 +238,7 @@ export function kMatch(dict, key, re) {
 }
 
 // check if the node value matched any of the items listend in the array (arr)
-export function checkNodeValuesMatchAny(nd, arr, regex=false) {
+export function checkNodeValuesMatchAny(nd: BaseNode, arr: Array<any>, regex=false): boolean {
     if (regex) {
         let v = nd.getValues();
         for (let dt of arr) {
@@ -301,7 +305,7 @@ const Magnitude = {
     'nonillion':    1000000000000000000000000000000,
     'decillion':    1000000000000000000000000000000000,
 };
-function textToNumberFeach(dt, word) {
+function textToNumberFeach(dt: {n: number, g: number}, word: string) {
     let w = word.toLowerCase().replace(/,/g,'');
     var x = Small[w];
     if (x != null) {
@@ -322,7 +326,7 @@ function textToNumberFeach(dt, word) {
         }
     }
 }
-export function textToNumber(s) {
+export function textToNumber(s : string): number {
 /*    let num1 = parseFloat(s);
     if (num1) {
         console.log("OUTPUT FLOAT = " + num1);
@@ -330,9 +334,8 @@ export function textToNumber(s) {
     }
     */
     let a = s.toString().split(/[\s-]+/);
-    let dt = {};
-    dt.n = 0;
-    dt.g = 0;
+    let dt = {n :0, g:0};
+
     a.forEach(textToNumberFeach.bind(null,dt));
     let ret = dt.n + dt.g;
     //console.log("OUTPUT FINAL " + dt.n + ' ' +  dt.g + ' = ' + ret);
@@ -340,19 +343,19 @@ export function textToNumber(s) {
 }
 
 
-export function createGraph(gr, name, attr) {
+export function createGraph(gr, name: string, attr) {
     attr.name = name;
     gr[name] = new Jsnx.DiGraph(null, attr);
     //console.log('CREATED [' + name + '] = ' + gr[name]);
     return gr[name];
 }
 
-export function getStdin(prompt, cannedData){
+export function getStdin(prompt: string, cannedData: Array<string>){
     process.stdout.write(prompt);
     return new Promise(function(resolve, reject) {
-        var input = '';
+        var input: string = '';
         if (cannedData && cannedData.length > 0) {
-            let dt = cannedData.shift();
+            let dt: string = cannedData.shift();
             process.stdout.write(dt + '\n');
             resolve(dt);
         } else {
@@ -371,5 +374,6 @@ export function getStdin(prompt, cannedData){
         }
     });
 }
+
 
 

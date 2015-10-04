@@ -34,7 +34,9 @@ class FromArg extends BaseExp {
     exec(gr) {
         //console.log('\t IMPLEMENT THIS :: Adding to graph:' + this.getName());
         //console.log(' MATCH = ' + JSON.stringify(this.result));
-        return this.result.fromArg;
+        let r = {};
+        r[this.result.args.fromArg] = this.result.args.fromArgValue;
+        return r;
     }
 }
 

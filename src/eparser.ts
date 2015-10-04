@@ -1,4 +1,6 @@
 
+
+
 /// < reference path="../node_modules/source-map-support/source-map-support.js" />
 'use strict';
 
@@ -11,22 +13,21 @@ require("babel/register")({
 });
 // typescript needs the definition.
 declare function require(name:string);
-
-var parser;
-import NLPPP from './nlp_pp';
-//import Dependency from './dependency';
-//import Tokens from './tokens';
-
 var ArgumentParser = require('argparse').ArgumentParser;
-var NLPClient = require('./nlp_client.js');
-var Nodes = require('./nodes.js');
-var ExpDB = require('./expdb');
-var ExpLearn = require('./exp_learn');
 var FS = require('fs');
 var Ut = require('util');
 var readline = require('readline');
-var Utils = require('./nodes_utils');
 var debug = require('debug');
+var NLPClient = require('./nlp_client.js');
+
+import NLPPP from './nlp_pp';
+import Dependency from './dependency';
+import Tokens from './tokens';
+import Nodes from './nodes';
+import ExpDB from './expdb';
+import ExpLearn from './exp_learn';
+import * as Utils from './nodes_utils';
+var parser;
 let expLearn;
 let expDB;
 
@@ -131,7 +132,6 @@ async function parse(data, gr, dbge: boolean = false) {
     // check if any hardcoded patterns match
     nd.processAllExp();
     dbg("Done with processing Explain");
-
     // check if any of the database entries are matching
     let dt = await nd.processAllExpDB(expDB, gr);
     dbg("Done with processing DBExplain");
@@ -154,7 +154,7 @@ async function parse(data, gr, dbge: boolean = false) {
                 dbgSelect = dbgGrV;
             }
             dbgSelect('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
-                + '] Matched Text  ::' + nd.grMatches[idx].text());
+                + '] Matched Text  ::' );//+ nd.grMatches[idx].dict());
         }
         //dbgExp("List of Expresive Matches Found ")
         for (let idx in nd.expMatches) {
@@ -168,7 +168,8 @@ async function parse(data, gr, dbge: boolean = false) {
             nd.expMatches[idx].exec(gr);
         } catch (e) {
             console.log('Node:' + nd.expMatches[idx].name + ' had an exception when runing exec.')
-            console.log(e);
+            //console.log(e);
+            console.log(e.stack);
         }
     }
 
@@ -216,6 +217,7 @@ async function processText(client, txt, gr={}, dbg=false) {
     let p = await parse(res, gr, dbg);
     return p;
 }
+
 async function processList(client, txtList, gr, dbg, fn) {
     let t = txtList.shift();
     if (t === '') {
@@ -232,8 +234,7 @@ async function processList(client, txtList, gr, dbg, fn) {
     }
 }
  async function startCLI(fn) {
-
-    let dt1 = await Utils.getStdin('>');
+    let dt1 = await Utils.getStdin('>', []);
     let dt2 = await fn(dt1);
     let dt3 = await startCLI(fn);
     return dt3;
@@ -257,6 +258,7 @@ async function main(args, nlp, gr) {
                 }
             }
             if (args.cli) {
+
                 await startCLI(async function(line) {
                     let re1 = line.match(/enable.*debug[ ]+([^ ]+)/i);
                     let re2 = line.match(/disable.*debug[ ]+([^ ]+)/i);

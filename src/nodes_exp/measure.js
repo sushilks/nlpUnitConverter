@@ -34,7 +34,7 @@ class DefineMeasure extends BaseExp {
     }
     exec(gr) {
         //console.log('Adding to graph:' + this.getName());
-        let g = Utils.createGraph(gr, this.result.subj, { type : this.result.type});
+        let g = Utils.createGraph(gr, this.result.args.subj, { type : this.result.args.type});
         //console.log(' New Graph Name = ' + JSON.stringify(g.toString()));
     }
 

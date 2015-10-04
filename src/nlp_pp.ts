@@ -1,10 +1,8 @@
-/// <reference path="dependency.d.ts" />
+/// <re ference path="dependency.d.ts" />
 'use strict';
 declare function require(name:string);
-var Tokens = require('./tokens');
-var Dependency = require('./dependency');
-//import Tokens from './tokens';
-//import Dependency from './dependency';
+import Tokens from './tokens';
+import Dependency from './dependency';
 
 
 /**

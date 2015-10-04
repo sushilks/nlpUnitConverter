@@ -1,4 +1,4 @@
-/// <reference path="tokens.d.ts" />
+/// <re ference path="tokens.d.ts" />
 /**
     * @class
     * @classdesc Class to hold the dependency info between the tokens
@@ -30,8 +30,8 @@ interface LinkedNode {
     node: any;
 //    node: BaseNode;
 }
-
-declare class Dependency {
+/*
+declare class Dependency2 {
     private dep;
     tok: Tokens;
     constructor(dep: Array<DepType>, tok: Tokens);
@@ -42,3 +42,4 @@ declare class Dependency {
     getChildNodes(tokenIdx: number): Array<ChildNodeList>;
     getParentNodes(tokenIdx: number): any[];
 }
+*/

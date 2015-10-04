@@ -1,18 +1,24 @@
 /// <reference path="nodes.d.ts" />
+/// <re ference path="../build/ts/src/exp_learn_utils.d.ts" />
 
 'use strict';
 
 declare function require(name:string);
-//import Tokens from './tokens';
-//import Dependency from './dependency';
 
-var Utils = require('./nodes_utils');
-var LearnUtils = require('./exp_learn_utils');
+var assert = require('assert');
 var FS = require('fs');
+//require('typescript-require');
+import Tokens from './tokens';
+import Dependency from './dependency';
+import ExpDB from './expdb';
+import * as Utils from './nodes_utils';
+//var LearnUtils = require('./exp_learn_utils');
+import * as LearnUtils from './exp_learn_utils';
+import GrBase from './nodes_gr/base_gr';
 
-var gNodeMapper: {[key:string]: BaseNode} = {}; /** To hold different node types */
-var gGrMapper:   {[key:string]: GrBase} = {};   /** To hold different grammer rules */
-var gExpMapper:  {[key:string]: Array<typeof ExpBase>} = {};   /** To hold different grammer rules */
+var gNodeMapper:  NodeMapperType= {}; /** To hold different node types */
+var gGrMapper: GrMapperType = {};   /** To hold different grammer rules */
+var gExpMapper: ExpMapperType  = {};   /** To hold different grammer rules */
 
 declare var __dirname: any;
 var normalizedPath = require('path').join(__dirname);
@@ -101,36 +107,41 @@ class Nodes {
         return new gNodeMapper['DEFAULT'][0](this, tknId, level);
     }
 
-    processAllExpDB_(verb, db, graphDB, mHistory, resolve) {
+    processAllExpDB_(verb: GrProcessNodeValueMap, db: ExpDB, graphDB, mHistory, resolve, cnt = 0) {
+        if (cnt > 20) {
+            assert(0,1, 'Too much recurstion');
+        }
         db.find({})
             .then((function (_this, dt) {
                 //console.log(' TEST - DB - dt = ' + JSON.stringify(dt));
                 let found = false;
                 for (let dbItem of dt) {
-                    let match = LearnUtils.verbDBMatch(dbgdbm, verb, _this.expMatches, dbItem);
-                    if (match[0] !== '') {
+                    let match: VerbDBMatchRet = LearnUtils.verbDBMatch(dbgdbm, verb, _this.expMatches, dbItem);
+                    if (match.matchType !== '') {
                         dbgexp('Found a match dbItem [' + JSON.stringify(match) + '] ');
                         dbgdb('Matching DB Entry:' + JSON.stringify(dbItem));
-                        let fn = (<any>gExpMapper)._map[match[0]];
+                        let fn = (<any>gExpMapper)._map[match.matchType];
                         // call validity check on the expression-node
-                        if (fn.checkValidArguments(this, match[1], graphDB)) {
+                        if (fn.checkValidArguments(this, match.matchResult, graphDB)) {
                             dbgexp(' Match Succeded with arguments [' + JSON.stringify(match));
                             // check if the new expression is not already present
                             let alreadyFound = false;
                             let cnt = 0;
                             for (let exp of mHistory) {
+                                //console.log('processAllExp Checking [' + JSON.stringify([match.matchType, match.matchResult.args]) + '] with Prior Expression [' + exp + ']' );
                                 if (!alreadyFound) {
                                     cnt++;
-                                    if (exp === JSON.stringify(match[1])) {
+                                    if (exp === JSON.stringify([match.matchType, match.matchResult.args])) {
                                         alreadyFound = true;
+                                        dbgexp(' Match Already Processed');
                                         break;
                                     }
                                 }
                             }
                             if (!alreadyFound) {
-                                dbgexp('EXP MATCH FOUND for [' + match[0] + ']');
-                                mHistory.push(JSON.stringify(match[1]));
-                                let expHandle = new fn(_this, match[1]);
+                                dbgexp('EXP MATCH FOUND for [' + match.matchType + ']');
+                                mHistory.push(JSON.stringify([match.matchType, match.matchResult.args]));
+                                let expHandle = new fn(_this, match.matchResult);
                                 _this.expMatches.push(expHandle);
                                 found = true;
                             }
@@ -142,7 +153,7 @@ class Nodes {
                 if (!found) {
                     resolve(true);
                 } else {
-                    _this.processAllExpDB_(verb, db, graphDB,  mHistory, resolve);
+                    _this.processAllExpDB_(verb, db, graphDB,  mHistory, resolve, cnt + 1);
                 }
             }).bind(null, this))
             .catch(function (e) {
@@ -157,7 +168,6 @@ class Nodes {
         let mHistory = [];
         return new Promise(
             (function(_this, resolve, reject) {
-
 
                // let nodeCnt = _this.tkn.tokenCount();
 
@@ -245,12 +255,12 @@ class Nodes {
         grTree.root = this.populateGrammarTree(grTree, grTree.root, rootNode, 'root');
         //console.log(' ---- > ' + JSON.stringify(grTree));
 
-        let matchedRules = Utils.findGrammarRules(gGrMapper, null, 'root', grTree.root.getNode());
+        let matchedRules =  Utils.findGrammarRules(gGrMapper, null, 'root', grTree.root.getNode());
         if (matchedRules.length) {
             for (let mrule of matchedRules) {
                 let v = mrule.fn.checkValid(this, null, 'root', grTree.root.getNode());
                 if (v[0]) {
-                    let grHandle = new mrule.fn(this, null, 'root', grTree.root.getNode(), v[1]);
+                    let grHandle = new mrule.fn(this, null, 'root', grTree.root.getNode(), <GrBaseMatch>v[1]);
                     //console.log('FOUND :: ' + grHandle.getName());
                     grTree.root.getNode().addGrammarMatch(grHandle);
                 }
@@ -285,7 +295,7 @@ class Nodes {
                 for (let mrule of matchedRules) {
                     let v = mrule.fn.checkValid(this, nd, c.type, c.node);
                     if (v[0]) {
-                        let grHandle = new mrule.fn(this, nd, c.type, c.node, v[1]);
+                        let grHandle = new mrule.fn(this, nd, c.type, c.node, <GrBaseMatch>v[1]);
                         //console.log('FOUND :: ' + grHandle.getName() + ' adding to node:' + c.node.name + ' attach type ' + mrule.type);
                         if (mrule.type === 'parent') {
                             nd.addGrammarMatch(grHandle);
@@ -303,14 +313,15 @@ class Nodes {
      * @param tknId - Specify the token to process
      * @returns {*} - return [true if match was found, grammar that matched]
      */
-    /*
-    processGr(tknId) {
+    processGr(tknId: number): boolean {
         let tkn = this.tkn.getToken(tknId);
         let pos = this.tkn.getTokenPOS(tknId);
         let nd = this.getNodeMap(tknId);
         if (nd.grProcessingOngoing) return false;
         nd.grProcessingOngoing = true;
         //console.trace("processGr:"+tknId);
+        assert(0,1); // the call below needs to be migrated to new fromat
+        /*
         let GRRules = Utils.findGrammarRules(gGrMapper, tkn, pos);
         let ruleHitCount = 0;
         if (GRRules.length) {
@@ -338,9 +349,8 @@ class Nodes {
             nd.setGrammarProcessingDone();
             nd.grProcessingOngoing = false;
             return false;
-        }
+        }*/
     }
-    */
 }
 
 

@@ -1,5 +1,8 @@
 
 interface ExpBaseMatch {
+    args: {[key:string]: string};
+    defaultUsed?: {[idx: number]: string};
+    _keys?: {[key: string]: string};
 }
 interface ExpTokenType {
     [index: number]: string;
@@ -24,7 +27,7 @@ declare class ExpBase {
     getArgs(): ExpArgType;
     text(): string;
     exec(gr: any): void;
-    static checkValid(gr: any): {}[];
+    static checkValid(gr: any): [boolean, ExpBaseMatch];
     static checkValidArguments(nodes: any, match: any): boolean;
 }
 /*

@@ -9,10 +9,10 @@ class relationMath extends BaseExp {
     constructor(nodes, matchResult) {
         //console.trace(" ----> " + JSON.stringify(matchResult));
         matchResult.r = {};
-        matchResult.r.nodeFrom = matchResult.nodeFrom.fromArg;
-        matchResult.r.nodeTo = matchResult.nodeTo.toArg;
-        matchResult.r.convD = matchResult.nodeFrom.fromArgValue;
-        matchResult.r.convN = matchResult.nodeTo.toArgValue;
+        matchResult.r.nodeFrom = matchResult.args.nodeFrom.args.fromArg;
+        matchResult.r.nodeTo = matchResult.args.nodeTo.args.toArg;
+        matchResult.r.convD = matchResult.args.nodeFrom.args.fromArgValue;
+        matchResult.r.convN = matchResult.args.nodeTo.args.toArgValue;
        // console.trace(" ----> " + JSON.stringify(matchResult));
         //matchResult.convD = (matchResult['convD'])?matchResult['convD'] : 1;
         //matchResult.convN = (matchResult['convN'])?matchResult['convN'] : 1;
@@ -52,14 +52,14 @@ class relationMath extends BaseExp {
                 return;
             }
         }
-        console.log('ERROR Unable to add relation between [' + nFrom + '] and [' + nTo + '], one of these nodes are defined');
+        console.log('ERROR Unable to add relation between [' + nFrom + '] and [' + nTo + '], one of these nodes is not defined');
     }
     static checkValidArguments(nodes, match, graphDB) {
         //console.log(' match = ' + JSON.stringify(match));
-        if (match.nodeFrom &&
-            match.nodeTo &&
-            match.nodeFrom.defaultUsed &&
-            match.nodeTo.defaultUsed) {
+        if (match.args.nodeFrom &&
+            match.args.nodeTo &&
+            match.defaultUsed.indexOf('nodeFrom') !== -1 &&
+            match.defaultUsed.indexOf('nodeTo') !== -1) {
             return false;
         }
 /*

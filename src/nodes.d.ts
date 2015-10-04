@@ -14,7 +14,16 @@ interface GrTreeTop {
     root: GrTree;
     processedTokens: Array<number>;
 }
-
+interface GrMapperType {
+    [key:string]: Array<{fn:typeof GrBase, match:GrMatchTokenTypeItem}>;
+}
+interface NodeMapperType {
+    [key:string]: BaseNode;
+}
+interface ExpMapperType {
+    [key:string]: Array<typeof ExpBase>;
+}
+/*
 declare class Nodes {
     dep: Dependency;
     tknNodeMap: {
@@ -36,7 +45,9 @@ declare class Nodes {
     processAllExpDB_(verb: any, db: any, graphDB: any, mHistory: any, resolve: any): void;
     processAllExpDB(db: any, graphDB: any): Promise<{}>;
     processAllExp(): void;
-    populateGrammarTree(treeTop: GrTreeTop, grTree: GrTree, tokenId: number, type: any, followChildren?: boolean): void;
+    populateGrammarTree(treeTop: GrTreeTop, grTree: GrTree, tokenId: number, type: any, followChildren?: boolean): GrTree;
     processAllGrammar(): void;
     processNodeGrammar(nd: BaseNode): void;
-}
+    processGr(tknId: number): boolean;
+    }
+*/

@@ -40,8 +40,9 @@ class QConvert extends BaseExp {
     exec(gr) {
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());
-        let nFrom = Utils.normalizeUnit(this.result.convFrom);
-        let nTo = Utils.normalizeUnit(this.result.convTo);
+        //console.log("----- " + JSON.stringify(this.result));
+        let nFrom = Utils.normalizeUnit(this.result.args.convFrom);
+        let nTo = Utils.normalizeUnit(this.result.args.convTo);
         for (let k in gr) {
             let g = gr[k];
             //console.log('LOOKING FOR [' + nFrom + '] [' + nTo + ']');
@@ -52,14 +53,14 @@ class QConvert extends BaseExp {
                     ' is [' + sp + ']');
                 let currentNode = nFrom;
                 sp.shift();
-                let val = Utils.textToNumber(this.result.fromValue);
+                let val = Utils.textToNumber(this.result.args.fromValue);
                 for (let nextNode of sp) {
                     let ed = g.getEdgeData(currentNode, nextNode);
                     dbg('\t' + currentNode + '->' + nextNode + 'E[' + JSON.stringify(ed) + ']');
                     val = val * ed.conv;
                     currentNode = nextNode;
                 }
-                console.log('\t\t' + this.getName() + '::Converted ' + this.result.fromValue + ' ' + nFrom + ' to ' +
+                console.log('\t\t' + this.getName() + '::Converted ' + this.result.args.fromValue + ' ' + nFrom + ' to ' +
                     nTo + ' Value = ' + val);
                 //g.addEdge(nFrom, nTo, {conv: this.getConv()});
                 //g.addEdge(nTo, nFrom, {conv: 1.0/this.getConv()});

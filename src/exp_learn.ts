@@ -1,16 +1,45 @@
+require('source-map-support').install();
+require("babel/register")({
+    optional: ['es7.asyncFunctions']
+});
 'use strict';
+declare function require(name:string);
 
 var readline = require('readline');
-var Utils = require('./nodes_utils');
-var LearnUtils = require('./exp_learn_utils');
+import * as Utils from './nodes_utils';
+import * as LearnUtils from './exp_learn_utils';
+import ExpDB from "./expdb";
+
 var assert = require('assert');
 var dbg = require('debug')('exp:learn');
 
+
+async function readPattern(msg: string, vlist: Array<string>, learnData: Array<string>, res: {[key:string]: string;}) {
+    if (vlist.length === 0) {
+        return [];
+    } else {
+        var line = await Utils.getStdin('>> Processing [' + vlist[0] + '] ' + msg, learnData);
+        res[vlist[0]] = <string>line;
+        vlist.shift();
+        if (vlist.length == 0) {
+            return res;
+        } else {
+            let rt = await readPattern(msg, vlist, learnData, res);
+            return rt;
+        }
+    }
+}
+
+
 class ExpLearn {
-    constructor(db,  gExpMapper) {
+    db: ExpDB;
+    gExpMapper: ExpMapperType;
+    gExpFn : any;
+
+    constructor(db: ExpDB,  gExpMapper: ExpMapperType) {
         this.db = db;
         this.gExpMapper = gExpMapper;
-        this.gExpFn = gExpMapper._map;
+        this.gExpFn = (<any>gExpMapper)._map;
         /*
         for (var id in this.gExpMapper) {
             let dt = this.gExpMapper[id];
@@ -21,7 +50,8 @@ class ExpLearn {
             }
         }*/
     }
-    readPattern(msg, vlist, learnData, res){
+    /*
+    readPattern(msg: string, vlist: Array<string>, learnData: Array<string>, res:{[key:string]: string}){
         return new Promise((function(_this, resolve, reject) {
             if (vlist.length === 0) {
                 resolve([]);
@@ -41,7 +71,7 @@ class ExpLearn {
                     });
             }
         }).bind(null, this));
-    }
+    }*/
     /*
      Searching for val[Kilos] in tree=[object Object]
      FOUND DT= root.verb.data.0.advmod.data.0.dep.token
@@ -63,9 +93,10 @@ class ExpLearn {
 
 
 
-    autoExtractMatch(verb, res, expMatches) {
-        //console.log("---- > " + JSON.stringify(verb));
-        //console.log("---- > " + JSON.stringify(res));
+    autoExtractMatch(verb: GrProcessNodeValueMap, res: LearnEntry, expMatches) {
+        /*console.log("---- > autoExtractMatch::verb " + JSON.stringify(verb));
+        console.log("---- > autoExtractMatch::res " + JSON.stringify(res));
+        console.log("---- > autoExtractMatch::expMatches " + JSON.stringify(expMatches));*/
         let ekeys = Object.keys(res.extract);
 
 
@@ -94,9 +125,12 @@ class ExpLearn {
                             res.extract[resItem] = foundPtr;
                         } else {
                             if (res.fixedExtract === undefined) {
-                                res.fixedExtract = {}
+                                res.fixedExtract = {
+                                    resItem: res.extract[resItem]
+                                };
+                            } else {
+                                res.fixedExtract[resItem] = res.extract[resItem];
                             }
-                            res.fixedExtract[resItem] = res.extract[resItem];
                             delete res.extract[resItem];
                         }
                     }
@@ -115,9 +149,9 @@ class ExpLearn {
                         let keyLoc = extArgs.extractionNode;
                         let key = res.extract[keyLoc].split('.');
                         key.pop();
-                        key = key.join('.') + '.numnode.dataValue';
+                        let keyStr = key.join('.') + '.numnode.dataValue';
                         //console.log(' --- ' + resItem + ' => ' + keyLoc + ' => ' +  res.extract[keyLoc] + ' => ' + key);
-                        res.extract[resItem] = key;
+                        res.extract[resItem] = keyStr;
                     } else if (extArgs.type  && 'extractionNode' in extArgs) {
                         let nodetype = extArgs.extractionNode;
                         res.extract[resItem] = 'EXPNODE:' + nodetype;
@@ -128,13 +162,14 @@ class ExpLearn {
 
         }).bind(null, this));
 
-        let expDep = {};
+        let expDep: {[key: string] : string};
+        expDep = <{[key: string] : string}> {};
         for (let k1 in res.extract) {
             if (res.extract[k1].match(/^EXPNODE/)) {
                 let eNode= res.extract[k1].split(':')[1];
                 let expMatchFound = false ;
                 for (let itm of expMatches) {
-                    //console.log(' ---- >>> ' + itm + ' name = ' + itm.name);
+                    console.log(' ---- >>> ' + itm + ' name = ' + itm.name);
                     if (itm.name === eNode) {
                         expMatchFound = true;
                         expDep[eNode] = itm;
@@ -148,12 +183,16 @@ class ExpLearn {
         }
         res.expExtract = expDep;
         //console.log(' --- > RET = ' + JSON.stringify(res));
-        LearnUtils.copyMatchTree(verb,res);
-        console.log(' RET = ' + JSON.stringify(res));
+        LearnUtils.copyMatchTree(verb, <MatchTreeData>res);
+        delete res.expExtract;
+        //console.log(' RET = ' + JSON.stringify(res));
         //return _this.readPattern('Regexp >', vlist, vres.match);
     }
 
-    learn(stmt, verbMatches, learnData = null, expMatches=null) {
+    learn(stmt: string, verbMatches: Array<GrBase>, learnData: Array<string> = null, expMatches: Array<string>=null) {
+        //console.log('learn::verbMatches ' + JSON.stringify(Object.keys(verbMatches[0])));
+        //console.log('learn::learnData' + JSON.stringify(learnData));
+        //console.log('learn::expMatches ' + JSON.stringify(expMatches));
         // ask what type of node it is ?
         // enumurate each item of the verb and ask for pattern match
         //console.log('LEARNING '+verbMatches);
@@ -162,15 +201,19 @@ class ExpLearn {
 
         return new Promise(
             (function(_this, resolve, reject) {
-                let vres = { };
-                vres.stmt = stmt;
-                vres.match = {};
-                vres.extract = {};
+                let vres: LearnEntry = {
+                    stmt: stmt,
+                    match: {},
+                    extract: {},
+                    type: null,
+                    args: null,
+                    prop: null
+                };
                 let vlist = [];
                 let alist = [];
                 let done = false;
                 Utils.getStdin('>> Do you want to learn this pattern (Yes/No)>', learnData)
-                .then(function(line) {
+                .then(function(line: string) {
                         if (line.match(/no/i)) {
                             console.log('OK Will skip.')
                             resolve(null);
@@ -183,7 +226,7 @@ class ExpLearn {
                             done = true;
                         }
                     })
-                .then(function(line) {
+                .then(function(line: string) {
                         if (done) return false;
                         let nd;
                         for (let key in _this.gExpFn) {
@@ -221,7 +264,7 @@ class ExpLearn {
                                 }
                             }
                             //console.log('Node:[' + line + '] Args Needed :' + JSON.stringify(alist));
-                            return _this.readPattern('Select > ', alistNoTags, learnData, vres.extract);
+                            return readPattern('Select > ', alistNoTags, learnData, vres.extract);
                             /*
                              Object.keys(verbMatches[0].dict()).map(function(item) {
                              if(!item.match(/^raw/)) {
@@ -262,4 +305,4 @@ class ExpLearn {
 
 }
 
-module.exports = ExpLearn;
+export default ExpLearn;

@@ -1,34 +1,40 @@
-'use strict';
+/// <reference path="nodes.d.ts" />
+/// <reference path="exp_learn_utils.d.ts" />
 
+declare function require(name:string);
+//'use strict';
 var readline = require('readline');
-var Utils = require('./nodes_utils');
 var assert = require('assert');
+import ExpDB from './expdb';
+import * as Utils from './nodes_utils';
 var dbg = require('debug')('exp:learn:util');
 var sep = '.';
 
-function treePathNormalize(r) {
+
+function treePathNormalize(r: string): string {
     return r.replace(/\.\d+\./g, '.')
         .replace(/data\./g, '')
         .replace(/^root./, '');
 }
-function findInTreeMatch(dt,val) {
+function findInTreeMatch(dt: string|Array<string>, val: RegExp|Array<string>): boolean {
     if (!(Array.isArray(val))) {
-        return (String(dt).match(val));
+        return (String(dt).match(val))? true: false;
     }
     if (!(dt)) return false;
-    //console.log(' => DT = ' + dt + ' val = ' + val);
-    let dtArr = dt.split(' ');
-    if (dtArr.length !== val.length) {
+    var valArr: Array<string> = (<Array<string>> val);
+        //console.log(' => DT = ' + dt + ' val = ' + val);
+    let dtArr = (<string>dt).split(' ');
+    if (dtArr.length !== valArr.length) {
         return false;
     }
     for (let idx in dtArr) {
-        if(val.indexOf(dtArr[idx]) === -1)
+        if(valArr.indexOf(dtArr[idx]) === -1)
             return false;
     }
     return true;
 }
 
-function findInTree_(tree, val, key) {
+function findInTree_(tree: any, val: RegExp, key: string): string {
     let treeType = Object.prototype.toString.call(tree);
     dbg(' findInTree_ Called for:' + key + ' tree=' + tree + ' type='+treeType);
     if (treeType === '[object Array]') {
@@ -76,7 +82,7 @@ function findInTree_(tree, val, key) {
 // search and Find a specific value in the tree
 // returns the full path of where the value was found
 // value is string
-export function findInTree(tree, val) {
+export function findInTree(tree: any, val: string): string {
     dbg(' Searching for val[' + val + '] in tree=' + tree);
     let r;
     r = findInTree_(tree, new RegExp('^' + val + '$', 'i'), 'root');
@@ -87,7 +93,7 @@ export function findInTree(tree, val) {
     return;
 }
 
-function findListInTree_(tree, val, key) {
+function findListInTree_(tree: any, val: Array<string>, key: string): string {
     let treeType = Object.prototype.toString.call(tree);
     dbg(' findInTree_ Called for:' + key + ' tree=' + tree + ' type='+treeType);
     if (treeType === '[object Array]') {
@@ -165,7 +171,7 @@ function findListInTree_(tree, val, key) {
 // search and Find a specific value in the tree
 // returns the full path of where the value was found
 // value is string
-export function findListInTree(tree, val) {
+export function findListInTree(tree: any, val: Array<string>): string {
     dbg(' Searching for val[' + JSON.stringify(val) + '] in tree=' + tree);
     let r;
     r = findListInTree_(tree, val, 'root');
@@ -176,7 +182,7 @@ export function findListInTree(tree, val) {
     return;
 }
 
-function copyMatchTree_(extracted, tree, key) {
+function copyMatchTree_(extracted: Array<string>, tree: any, key: string): string {
     let treeType = Object.prototype.toString.call(tree);
     dbg(' copyMatchTree_ Called for:' + key + ' tree=' + tree + ' type='+treeType);
     if (treeType === '[object Array]') {
@@ -219,7 +225,14 @@ function copyMatchTree_(extracted, tree, key) {
 // as match criteria
 // dest.extract has all the fields for extraction.
 // all the other fields that are not there will be used for matching.
-export function copyMatchTree(verb, dest) {
+
+/*
+ verb::{"verb":
+ {"tokenId":"4","token":"are",
+ "data":[{"advmod":{"tokenId":"1","token":"How","data":[{"dep":{"tokenId":"3","token":"meteres","data":[],"dataValue":"<many> meteres","dataValueTagged":"dep::<<many> meteres>"}}],"dataValue":"<many> meteres How","dataValueTagged":"advmod::<dep::<<many> meteres> How>"}},{"nmod:in":{"tokenId":"8","token":"mile","data":[],"dataValue":"<in> <a> mile","dataValueTagged":"nmod:in::<<in> <a> mile>"}}],"dataValue":"<many> meteres How <there> <in> <a> mile are","dataValueTagged":"VerbBase::<advmod::<dep::<<many> meteres> How> <there> nmod:in::<<in> <a> mile> are>"}}
+ */
+
+export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) {
     dbg('\tcopyMatchTree INPUT Verb::' + JSON.stringify(verb));
     dbg('\tcopyMatchTree INPUT Dest::' + JSON.stringify(dest.extract));
         let extracted = [];
@@ -285,13 +298,13 @@ export function copyMatchTree(verb, dest) {
 
         if (!match && singleVerbEdge) {
             // extract the comm branch
-            let minBr = [];
+            let minBrArr = [];
             for (let ex of extractedStr) {
-                if (ex.split('.').length < minBr.length || minBr.length === 0) {
-                    minBr = ex.split('.');
+                if (ex.split('.').length < minBrArr.length || minBrArr.length === 0) {
+                    minBrArr = ex.split('.');
                 }
             }
-            minBr = minBr.join('.');
+            let minBr = minBrArr.join('.');
             //console.log(' minBR = ' + minBr + ' vm = ' + vm);
             if (!vm.match(new RegExp(minBr))) {
                 match = true;
@@ -320,7 +333,7 @@ export function copyMatchTree(verb, dest) {
         }
     }
 }
-function extractTreeValue_(tree, key) {
+function extractTreeValue_(tree: any, key: Array<string>): Array<string> {
     if (key.length == 0) {
         return tree;
     }
@@ -365,7 +378,7 @@ function extractTreeValue_(tree, key) {
 // key is a specific key pointing to data in the tree
 // some variability exist in the key such that array inex etc are serarched.
 
-export function extractTreeValue(tree, key) {
+export function extractTreeValue(tree: any, key: string): Array<string> {
     //console.log ('extractTreeeValue-1 key=' + key );
     let k = key.split('.');
     let r = extractTreeValue_(tree, k);
@@ -423,7 +436,7 @@ export function findInTreeNumberNode(tree, key) {
     return r;
 }
 */
-export function verbDBMatch(dbgdb, verb, expMatches, dbItem) {
+export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Array<ExpBase>, dbItem) : VerbDBMatchRet {
     // check if all the keys in dbItem are present in verb.
 
     let dbItemKeys = Object.keys(dbItem.match);
@@ -432,10 +445,6 @@ export function verbDBMatch(dbgdb, verb, expMatches, dbItem) {
     dbgdb('verb is ::: ' + JSON.stringify(verb));
     dbgdb('db is ::: ' + JSON.stringify(dbItem));
     dbgdb('-------------------------> exp is ::: ' + JSON.stringify(Object.keys(expMatches)));
-    //if (expMatches[0]) {
-//        dbgdb('-------------------------> exp is ::: ' + JSON.stringify(expMatches[0].name));
-//        dbgdb('-------------------------> exp is ::: ' + JSON.stringify(expMatches[0].result));
-//    }
     // Gather all the extracts that are using EXP nodes
     let expDep = {};
     let extPathList = [];
@@ -453,7 +462,8 @@ export function verbDBMatch(dbgdb, verb, expMatches, dbItem) {
             }
             if (!expMatchFound) {
                 // if any of the exp node is not yet parsed no point going further
-                return ['', {}];
+                //return ['', {}];
+                return {matchType:'', dbId:'', matchResult:null };
             }
         }
     }
@@ -461,7 +471,8 @@ export function verbDBMatch(dbgdb, verb, expMatches, dbItem) {
 
     //dbgdb('-------------------------> exp is ::: ' + JSON.stringify(Object.keys(expMatches[0])));
     // extract all the items from the verb
-    let tmatch = {extract:dbItem.extract,match:{}, prop:dbItem.prop, expExtract:expDep};
+    let tmatch: MatchTreeData = {extract:dbItem.extract,match:{}, prop:dbItem.prop, expExtract:expDep};
+    //dbgdb(' Before copyMatchTree: ' + JSON.stringify(tmatch));
     copyMatchTree(verb, tmatch);
     dbgdb(' Extracted Match:::' + JSON.stringify(tmatch));
     let groupKey = Object.keys(tmatch.match).concat(Object.keys(dbItem.match));
@@ -483,10 +494,20 @@ export function verbDBMatch(dbgdb, verb, expMatches, dbItem) {
         }
     }
     if (!match) {
-        return ['', {}];
+        return {matchType:'', dbId:'', matchResult:null };//return ['', {}];
     }
-    let res = {};
-    let resKey = {};
+
+    //let res = {};
+    //let resKey = {};
+    let res : VerbDBMatchRet = {
+        matchType: '',
+        dbId: '',
+        matchResult: {
+            args: {},
+            defaultUsed: [],
+            _keys: {}
+        }
+    };
     for (let itm of Object.keys(dbItem.extract)) {
         let itmPath = dbItem.extract[itm];
         let dt;
@@ -502,32 +523,36 @@ export function verbDBMatch(dbgdb, verb, expMatches, dbItem) {
         //if ('type' in dtArgs[itm] && dtArgs[itm].type.toLowerCase() === 'list') {
         //            dt = dt.split(' ');
         //        }
-        res[itm] = dt;
-        resKey[itm] = itmPath;
-        dbgdb(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + res[itm]);
+        res.matchResult.args[itm] = dt;
+        res.matchResult._keys[itm] = itmPath;
+        //res[itm] = dt;
+        //resKey[itm] = itmPath;
+        dbgdb(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + dt);
     }
     // have found a match
     // check for argument being presented in extracted data
     for (let key in dbItem.args) {
         let schema = dbItem.args[key];
-        if (res[key] === undefined && dbItem.fixedExtract !== undefined && dbItem.fixedExtract[key] !== undefined){
-            //console.log(' ---> SCHEMA : key = ' + key + ' filedextract = ' +dbItem.fixedExtract[key] );
-            res[key] = dbItem.fixedExtract[key];
-            resKey[key] = key;
+        if (res.matchResult.args[key] === undefined && dbItem.fixedExtract !== undefined && dbItem.fixedExtract[key] !== undefined) {
+            dbgdb(' ---> SCHEMA : key = ' + key + ' filedextract = ' + dbItem.fixedExtract[key] );
+            res.matchResult.args[key] = dbItem.fixedExtract[key];
+            res.matchResult._keys[key] = key;
+            //res[key] = dbItem.fixedExtract[key];
+            //resKey[key] = key;
         }
-        if (schema.default === undefined && res[key] === undefined) {
-            //console.log(' Failed on schema validation key[' + key + '] missing in match [' + JSON.stringify(res) + '].');
-            return ['', {}];
-        } else if (schema.default !== undefined && res[key] === undefined) {
-            res[key] = schema.default;
-            if (res['defaultUsed'] === undefined) {
-                res['defaultUsed'] = [];
-            }
-            res.defaultUsed.push(key);
+        if (schema.default === undefined && res.matchResult.args[key] === undefined) {
+            dbgdb(' Failed on schema validation key[' + key + '] missing in match [' + JSON.stringify(res) + '].');
+            return {matchType:'', dbId:'', matchResult:null };//return ['', {}];
+        } else if (schema.default !== undefined && res.matchResult.args[key] === undefined) {
+            //console.log(' res = '  + JSON.stringify(res));
+            res.matchResult.args[key] = schema.default;
+            res.matchResult.defaultUsed.push(key);
         }
     }
-    res['_keys'] = resKey;
-    //console.log(' ---------> RESULT = ' + JSON.stringify([dbItem.type, res, dbItem._id]));
-    return [dbItem.type, res, dbItem._id];
+    res.dbId = dbItem._id;
+    res.matchType = dbItem.type;
+    //res['_keys'] = resKey;
+    dbgdb(' -----> verbDBMatch::RESULT = ' + JSON.stringify([dbItem.type, res, dbItem._id]));
+    return res; //[dbItem.type, res, dbItem._id];
 
 }
