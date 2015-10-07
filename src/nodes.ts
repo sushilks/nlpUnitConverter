@@ -1,69 +1,74 @@
 /// <reference path="nodes.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 /// <re ference path="../build/ts/src/exp_learn_utils.d.ts" />
 
-'use strict';
+// 'use strict';
+// require('source-map-support').install();
 
-declare function require(name:string);
+// declare function require(name: string);
 
-var assert = require('assert');
-var FS = require('fs');
-//require('typescript-require');
+import * as assert from 'assert';
+import * as FS from 'fs';
+// require('typescript-require');
 import Tokens from './tokens';
 import Dependency from './dependency';
 import ExpDB from './expdb';
 import * as Utils from './nodes_utils';
-//var LearnUtils = require('./exp_learn_utils');
+// var LearnUtils = require('./exp_learn_utils');
 import * as LearnUtils from './exp_learn_utils';
 import GrBase from './nodes_gr/base_gr';
 
-var gNodeMapper:  NodeMapperType= {}; /** To hold different node types */
-var gGrMapper: GrMapperType = {};   /** To hold different grammer rules */
-var gExpMapper: ExpMapperType  = {};   /** To hold different grammer rules */
+let gNodeMapper:  NodeMapperType = {}; /** To hold different node types */
+let gGrMapper: GrMapperType = {};   /** To hold different grammer rules */
+let gExpMapper: ExpMapperType  = {};   /** To hold different grammer rules */
 
 declare var __dirname: any;
-var normalizedPath = require('path').join(__dirname);
-var dbg = require('debug')('nodes:base');
-var dbgdb = require('debug')('nodes:base:db');
-var dbgdbm = require('debug')('nodes:base:db:match');
-var dbgexp = require('debug')('nodes:base:exp');
+let normalizedPath = require('path').join(__dirname);
+import * as Debug from 'debug';
+let dbg = Debug('nodes:base');
+let dbgdb = Debug('nodes:base:db');
+let dbgdbm = Debug('nodes:base:db:match');
+let dbgexp = Debug('nodes:base:exp');
 
+const DEFAULT = 'DEFAULT';
+dbg.log('foo');
 /** Load and init the nodes */
-FS.readdirSync(normalizedPath + '/nodes_pos').forEach(function(file) {
+FS.readdirSync(normalizedPath + '/nodes_pos').forEach(function(file: string): void {
     if (file.match(/\.js$/)) {
         Utils.nodeInit(gNodeMapper, require('./nodes_pos/' + file));
     }
 });
 
 /** Load and init the grammer rules */
-FS.readdirSync(normalizedPath + '/nodes_gr').forEach(function(file) {
+FS.readdirSync(normalizedPath + '/nodes_gr').forEach(function(file: string): void {
     if (file.match(/\.js$/)) {
         Utils.nodeInitGr(gGrMapper, require('./nodes_gr/' + file));
     }
 });
 
 /** Load and init the explanation/meanign rules */
-FS.readdirSync(normalizedPath + '/nodes_exp').forEach(function(file) {
+FS.readdirSync(normalizedPath + '/nodes_exp').forEach(function(file: string): void {
     if (file.match(/\.js$/)) {
         Utils.nodeInit(gExpMapper, require('./nodes_exp/' + file));
     }
 });
 
 /**
-    * Class to hold all the nodes and
-    *  This will be used for parsing the tree
-    *  node to token mapping is held here
-    *  on contruction pass the dependency tree to the class
-    *  it will walk the tree and create a node map.
-    */
+ * Class to hold all the nodes and
+ *  This will be used for parsing the tree
+ *  node to token mapping is held here
+ *  on contruction pass the dependency tree to the class
+ *  it will walk the tree and create a node map.
+ */
 
 class Nodes {
-    dep: Dependency;
-    tknNodeMap: {[key:number]:BaseNode};
-    rootToken : number;
-    tkn : Tokens;
-    nd: BaseNode;
-    grMatches: Array<GrBase>;
-    expMatches: Array<ExpBase>;
+    private dep: Dependency;
+    private tknNodeMap: {[key: number]: BaseNode};
+    private rootToken: number;
+    private tkn: Tokens;
+    private nd: BaseNode;
+    private grMatches: Array<GrBase>;
+    private expMatches: Array<ExpBase>;
   //  diGraph: ;
     constructor(dep: Dependency) {
         this.tknNodeMap = {};
@@ -71,45 +76,37 @@ class Nodes {
         this.rootToken = dep.getRootToken();
         this.tkn = dep.getTokens();
         this.nd = this.process(this.rootToken, 1);
-        this.grMatches = []; /** store all the grammar matches **/
+        this.grMatches = []; /* store all the grammar matches */
         this.expMatches = [];
-//        this.diGraph = {};
     }
-//    createGraph(name, attr = {}) {
-//    }
-//    getGraph(name) {
-//        console.log("getGraph [" + name + "] = " + this.diGraph[name]);
-//
-//        return this.diGraph[name];
-//    }
-    static getGlobalExpMapper(): {[key:string]: Array<typeof ExpBase>} {
+    public static getGlobalExpMapper(): {[key: string]: Array<typeof ExpBase>} {
         return gExpMapper;
     }
-    getTokens(): Tokens {
+    public getTokens(): Tokens {
         return this.tkn;
     }
-    setNodeMap(tknId: number, node: BaseNode) {
+    public setNodeMap(tknId: number, node: BaseNode): void {
         this.tknNodeMap[tknId] = node;
     }
-    getNodeMap(tknId: number): BaseNode {
+    public getNodeMap(tknId: number): BaseNode {
         return this.tknNodeMap[tknId];
     }
-    process(tknId: number, level: number): BaseNode {
-       let pos = this.tkn.getTokenPOS(tknId);
+    public process(tknId: number, level: number): BaseNode {
+        let pos: string = this.tkn.getTokenPOS(tknId);
         for (let rkey in Object.keys(gNodeMapper)) {
-            let pat = Object.keys(gNodeMapper)[rkey];
-            let found = pos.match(new RegExp('^' + pat + '$'));
+            let pat: string = Object.keys(gNodeMapper)[rkey];
+            let found: RegExpMatchArray = pos.match(new RegExp('^' + pat + '$'));
             if (found) {
                 return new gNodeMapper[pat][0](this, tknId, level);
             }
         }
         dbg('Unable to find a matching node for ' + pos + ' using default');
-        return new gNodeMapper['DEFAULT'][0](this, tknId, level);
+        return new gNodeMapper[DEFAULT][0](this, tknId, level);
     }
 
-    processAllExpDB_(verb: GrProcessNodeValueMap, db: ExpDB, graphDB, mHistory, resolve, cnt = 0) {
+    public processAllExpDB_(verb: GrProcessNodeValueMap, db: ExpDB, graphDB, mHistory, resolve, cnt = 0) {
         if (cnt > 20) {
-            assert(0,1, 'Too much recurstion');
+            assert.equal(0,1, 'Too much recurstion');
         }
         db.find({})
             .then((function (_this, dt) {
@@ -128,7 +125,8 @@ class Nodes {
                             let alreadyFound = false;
                             let cnt = 0;
                             for (let exp of mHistory) {
-                                //console.log('processAllExp Checking [' + JSON.stringify([match.matchType, match.matchResult.args]) + '] with Prior Expression [' + exp + ']' );
+                                // console.log('processAllExp Checking [' + JSON.stringify([match.matchType, match.matchResult.args]) +
+                                // '] with Prior Expression [' + exp + ']' );
                                 if (!alreadyFound) {
                                     cnt++;
                                     if (exp === JSON.stringify([match.matchType, match.matchResult.args])) {
@@ -320,7 +318,7 @@ class Nodes {
         if (nd.grProcessingOngoing) return false;
         nd.grProcessingOngoing = true;
         //console.trace("processGr:"+tknId);
-        assert(0,1); // the call below needs to be migrated to new fromat
+        assert.equal(0,1); // the call below needs to be migrated to new fromat
         /*
         let GRRules = Utils.findGrammarRules(gGrMapper, tkn, pos);
         let ruleHitCount = 0;

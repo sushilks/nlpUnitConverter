@@ -21,7 +21,8 @@ module.exports = function (grunt, options) {
     };
     fn.tasks.babel['compile-typescript'] = {
         'options': {
-            'sourceMap': true
+            'sourceMap': true,
+            'inputSourceMap': true
         },
         files: [{
             'expand': true,

@@ -8,9 +8,13 @@
 //import { install } from 'source-map-support';
 //install();
 require('source-map-support').install();
+require('babel/polyfill');
+/*
 require("babel/register")({
     optional: ['es7.asyncFunctions']
-});
+});*/
+
+var assert = require('assert');
 // typescript needs the definition.
 declare function require(name:string);
 var ArgumentParser = require('argparse').ArgumentParser;
@@ -90,7 +94,6 @@ function parseNodes(dep: Dependency, tokens: Tokens, tknid: number, linkType: st
         parseNodes(dep, tokens, childNodes[id].tokenIdx, childNodes[id].type, level + 1);
     }
  }
-
 async function parse(data, gr, dbge: boolean = false) {
     var pp = new NLPPP();
     var res = pp.read(data.body);
@@ -202,7 +205,7 @@ async function parse(data, gr, dbge: boolean = false) {
     }
 
     } catch(e) {
-        console.log(' Exception e ' + e);
+        console.log(' Exception in eparser:parse e [' + e + ']');
         console.log('   -> ' + e.stack);
     }
 
@@ -296,10 +299,9 @@ async function main(args, nlp, gr) {
 the ProcessGr part needs some more thought
 Not able to parse even simple constructs right now. need to analyze them a bit.
 */
-
-let nlp = new NLPClient();
-let gr = {};
 expDB = new ExpDB('lexp.db');
+let nlp =  new NLPClient();
+let gr = {};
 /*
 var rl = readline.createInterface({
     input:process.stdin,

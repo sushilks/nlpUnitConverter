@@ -1,6 +1,7 @@
 'use strict';
 declare function require(name:string);
 var  Datastore = require('nedb');
+var assert = require('assert');
 
 
 class ExpDB {
@@ -8,6 +9,7 @@ class ExpDB {
     constructor(fileName) {
         this.db = new Datastore({filename: fileName,
             autoload: true});
+        assert(1,0);
 
     }
     insert(doc: string) {

@@ -1,7 +1,3 @@
-require('source-map-support').install();
-require("babel/register")({
-    optional: ['es7.asyncFunctions']
-});
 'use strict';
 declare function require(name:string);
 

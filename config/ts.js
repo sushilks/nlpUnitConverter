@@ -16,7 +16,8 @@ module.exports = function (grunt, options) {
             additionalFlags: '--experimentalAsyncFunctions'
         },
         src: [options.srcFolderPath + '/**/*.ts'],
-        dest: targetFolder + 'ts/src'
+        dest: targetFolder + 'ts/src',
+        ext: '.es6'
     };
     return fn;
 };
