@@ -11,8 +11,8 @@ function getQConvRes(ret) {
         let n = itm.substr(0,itm.indexOf('['));
         let dj = JSON.parse(d)[0];
         if (n.match(/QConv/)) {
-            delete dj._keys;
-            return dj;
+            //delete dj._keys;
+            return dj.args;
         }
     }
     return;

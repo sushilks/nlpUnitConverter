@@ -32,6 +32,25 @@ export function nodeInit(nmap: any, fn: any) {
     }
     return fn;
 }
+export function nodeInitExp(nmap: ExpMapperType, fn: any) {
+    let dt = fn.getMatchToken();
+    //if (!('_map' in nmap)) {
+    //    nmap['_map'] = {};
+   // }
+    if ('getName' in fn) {
+        nmap.fnMap[fn.getName()] = fn;
+    }
+    if (dt instanceof Array) {
+        for (let d of dt) {
+            //nmap[d] = fn;
+            nodeAdd_(nmap.match, d, fn);
+        }
+    } else {
+        //nmap[dt] = fn;
+        nodeAdd_(nmap.match, dt, fn);
+    }
+    return fn;
+}
 
 export function nodeInitGr(nmap: GrMapperType, fn) {
     let dt = fn.getMatchToken();

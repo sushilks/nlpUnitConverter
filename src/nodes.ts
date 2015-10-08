@@ -2,7 +2,7 @@
 /// <reference path="../typings/tsd.d.ts" />
 /// <re ference path="../build/ts/src/exp_learn_utils.d.ts" />
 
-// 'use strict';
+'use strict';
 // require('source-map-support').install();
 
 // declare function require(name: string);
@@ -20,18 +20,18 @@ import GrBase from './nodes_gr/base_gr';
 
 let gNodeMapper:  NodeMapperType = {}; /** To hold different node types */
 let gGrMapper: GrMapperType = {};   /** To hold different grammer rules */
-let gExpMapper: ExpMapperType  = {};   /** To hold different grammer rules */
+let gExpMapper: ExpMapperType  = {fnMap: {}, match: {}};   /** To hold different grammer rules */
 
 declare var __dirname: any;
-let normalizedPath = require('path').join(__dirname);
-import * as Debug from 'debug';
-let dbg = Debug('nodes:base');
-let dbgdb = Debug('nodes:base:db');
-let dbgdbm = Debug('nodes:base:db:match');
-let dbgexp = Debug('nodes:base:exp');
+let normalizedPath: string = require('path').join(__dirname);
+// import * as Debug from 'debug';
+let dbg = require('debug')('nodes:base');
+let dbgdb = require('debug')('nodes:base:db');
+let dbgdbm = require('debug')('nodes:base:db:match');
+let dbgexp = require('debug')('nodes:base:exp');
 
 const DEFAULT = 'DEFAULT';
-dbg.log('foo');
+
 /** Load and init the nodes */
 FS.readdirSync(normalizedPath + '/nodes_pos').forEach(function(file: string): void {
     if (file.match(/\.js$/)) {
@@ -49,9 +49,11 @@ FS.readdirSync(normalizedPath + '/nodes_gr').forEach(function(file: string): voi
 /** Load and init the explanation/meanign rules */
 FS.readdirSync(normalizedPath + '/nodes_exp').forEach(function(file: string): void {
     if (file.match(/\.js$/)) {
-        Utils.nodeInit(gExpMapper, require('./nodes_exp/' + file));
+        Utils.nodeInitExp(gExpMapper, require('./nodes_exp/' + file));
     }
 });
+
+
 
 /**
  * Class to hold all the nodes and
@@ -62,35 +64,41 @@ FS.readdirSync(normalizedPath + '/nodes_exp').forEach(function(file: string): vo
  */
 
 class Nodes {
+    public grMatches: Array<GrBase>;
+    public expMatches: Array<ExpBase>;
     private dep: Dependency;
     private tknNodeMap: {[key: number]: BaseNode};
     private rootToken: number;
     private tkn: Tokens;
     private nd: BaseNode;
-    private grMatches: Array<GrBase>;
-    private expMatches: Array<ExpBase>;
-  //  diGraph: ;
+    //  diGraph:  ;
     constructor(dep: Dependency) {
         this.tknNodeMap = {};
         this.dep = dep;
         this.rootToken = dep.getRootToken();
         this.tkn = dep.getTokens();
         this.nd = this.process(this.rootToken, 1);
-        this.grMatches = []; /* store all the grammar matches */
+        this.grMatches = [];
+        /* store all the grammar matches */
         this.expMatches = [];
     }
-    public static getGlobalExpMapper(): {[key: string]: Array<typeof ExpBase>} {
+
+    public static getGlobalExpMapper(): ExpMapperType {
         return gExpMapper;
     }
+
     public getTokens(): Tokens {
         return this.tkn;
     }
+
     public setNodeMap(tknId: number, node: BaseNode): void {
         this.tknNodeMap[tknId] = node;
     }
+
     public getNodeMap(tknId: number): BaseNode {
         return this.tknNodeMap[tknId];
     }
+
     public process(tknId: number, level: number): BaseNode {
         let pos: string = this.tkn.getTokenPOS(tknId);
         for (let rkey in Object.keys(gNodeMapper)) {
@@ -104,100 +112,94 @@ class Nodes {
         return new gNodeMapper[DEFAULT][0](this, tknId, level);
     }
 
-    public processAllExpDB_(verb: GrProcessNodeValueMap, db: ExpDB, graphDB, mHistory, resolve, cnt = 0) {
+    public async processAllExpDB_(root: GrProcessNodeValueMap, db: ExpDB, graphDB: any, mHistory: Array<string>,
+                                  cnt: number = 0) {
         if (cnt > 20) {
-            assert.equal(0,1, 'Too much recurstion');
+            assert.equal(0, 1, 'Too much recurstion');
         }
-        db.find({})
-            .then((function (_this, dt) {
-                //console.log(' TEST - DB - dt = ' + JSON.stringify(dt));
-                let found = false;
-                for (let dbItem of dt) {
-                    let match: VerbDBMatchRet = LearnUtils.verbDBMatch(dbgdbm, verb, _this.expMatches, dbItem);
-                    if (match.matchType !== '') {
-                        dbgexp('Found a match dbItem [' + JSON.stringify(match) + '] ');
-                        dbgdb('Matching DB Entry:' + JSON.stringify(dbItem));
-                        let fn = (<any>gExpMapper)._map[match.matchType];
-                        // call validity check on the expression-node
-                        if (fn.checkValidArguments(this, match.matchResult, graphDB)) {
-                            dbgexp(' Match Succeded with arguments [' + JSON.stringify(match));
-                            // check if the new expression is not already present
-                            let alreadyFound = false;
-                            let cnt = 0;
-                            for (let exp of mHistory) {
-                                // console.log('processAllExp Checking [' + JSON.stringify([match.matchType, match.matchResult.args]) +
-                                // '] with Prior Expression [' + exp + ']' );
-                                if (!alreadyFound) {
-                                    cnt++;
-                                    if (exp === JSON.stringify([match.matchType, match.matchResult.args])) {
-                                        alreadyFound = true;
-                                        dbgexp(' Match Already Processed');
-                                        break;
-                                    }
+        let dt: {[key: string] : any} = await db.find({});
+        // console.log(' TEST - DB - dt = ' + JSON.stringify(dt));
+        let found: boolean = false;
+        try {
+            for (let dbItemKey in  Object.keys(dt)) {
+                let dbItem: DBItem = dt[dbItemKey];
+                let match: VerbDBMatchRet = LearnUtils.verbDBMatch(dbgdbm, root, this.expMatches, dbItem);
+                if (match.matchType !== '') {
+                    dbgexp('Found a match dbItem [' + JSON.stringify(match) + '] ');
+                    dbgdb('Matching DB Entry:' + JSON.stringify(dbItem));
+                    let fn: typeof ExpBase = gExpMapper.fnMap[match.matchType];
+                    // call validity check on the expression-node
+                    if (fn.checkValidArguments(this, match.matchResult, graphDB)) {
+                        dbgexp(' Match Succeded with arguments [' + JSON.stringify(match));
+                        // check if the new expression is not already present
+                        let alreadyFound: boolean = false;
+                        // let cnt: number = 0;
+                        for (let exp of mHistory) {
+                            // console.log('processAllExp Checking [' + JSON.stringify([match.matchType, match.matchResult.args]) +
+                            // '] with Prior Expression [' + exp + ']' );
+                            if (!alreadyFound) {
+                                // cnt++;
+                                if (exp === JSON.stringify([match.matchType, match.matchResult.args])) {
+                                    alreadyFound = true;
+                                    dbgexp(' Match Already Processed');
+                                    break;
                                 }
                             }
-                            if (!alreadyFound) {
-                                dbgexp('EXP MATCH FOUND for [' + match.matchType + ']');
-                                mHistory.push(JSON.stringify([match.matchType, match.matchResult.args]));
-                                let expHandle = new fn(_this, match.matchResult);
-                                _this.expMatches.push(expHandle);
-                                found = true;
-                            }
-                        } else {
-                            dbgexp(' Match Failed with arguments [' + JSON.stringify(match));
                         }
+                        if (!alreadyFound) {
+                            dbgexp('EXP MATCH FOUND for [' + match.matchType + ']');
+                            mHistory.push(JSON.stringify([match.matchType, match.matchResult.args]));
+                            let expHandle: ExpBase = new fn(this, match.matchResult);
+                            this.expMatches.push(expHandle);
+                            found = true;
+                        }
+                    } else {
+                        dbgexp(' Match Failed with arguments [' + JSON.stringify(match));
                     }
                 }
-                if (!found) {
-                    resolve(true);
-                } else {
-                    _this.processAllExpDB_(verb, db, graphDB,  mHistory, resolve, cnt + 1);
-                }
-            }).bind(null, this))
-            .catch(function (e) {
-                console.log("Error :: " + e);
-                console.log(e.stack);
-                resolve(false);
-            });
+            }
+            if (!found) {
+                // resolve(true);
+                return true;
+            } else {
+                return await this.processAllExpDB_(root, db, graphDB, mHistory, cnt + 1);
+            }
+        } catch (e) {
+            console.log('Error :: ' + e);
+            console.log(e.stack);
+            // resolve(false);
+            return false;
+        }
 
     }
 
-    processAllExpDB(db, graphDB) {
-        let mHistory = [];
-        return new Promise(
-            (function(_this, resolve, reject) {
-
-               // let nodeCnt = _this.tkn.tokenCount();
-
-                let root = '';
-                if (_this.grMatches.length) {
-                    root = _this.grMatches[0].processNode();
-                } else {
-                    resolve(false);
-                    return ;
-                }
-                dbgdb(' - ROOT - ::' + JSON.stringify(root));
-                // TODO::
-                // there should be a full crawl of the tree
-                // making sure not to do repeated work
-                _this.processAllExpDB_(root, db, graphDB, mHistory, (function(resolve,dt){
-                    resolve(dt);
-                }).bind(null, resolve));
-            }).bind(null, this));
+    public async processAllExpDB(db: ExpDB, graphDB: any) {
+        let mHistory: Array<string> = [];
+        let root: GrProcessNodeValueMap = {};
+        if (this.grMatches.length) {
+            root = this.grMatches[0].processNode(root);
+        } else {
+            return false;
+        }
+        dbgdb(' - ROOT - ::' + JSON.stringify(root));
+        // todo::
+        // there should be a full crawl of the tree
+        // making sure not to do repeated work
+        return await this.processAllExpDB_(root, db, graphDB, mHistory);
     }
 
-    processAllExp() {
+    public processAllExp(): void {
         for (let idx in this.grMatches) {
-            let gr = this.grMatches[idx];
-            let grName = gr.getName();
-            let grMatchToken = grName;
-            let expList = gExpMapper[grMatchToken];
-            //console.log('  - GR Name = ' + grName);
+            let gr: GrBase = this.grMatches[idx];
+            let grName: string = gr.getName();
+            let grMatchToken: string = grName;
+            let expList: Array<typeof ExpBase> = gExpMapper.match[grMatchToken];
+            // console.log('  - GR Name = ' + grName);
             if (expList && expList.length) {
                 for (let exp of expList) {
-                    let found = exp.checkValid(gr);
+                    let found: [boolean, ExpBaseMatch] = exp.checkValid(gr);
                     if (found[0]) {
-                        let expHandle = new exp(this, found[1]);
+                        let expHandle: ExpBase = new exp(this, found[1]);
                         this.expMatches.push(expHandle);
                         dbg('  - Found Exp[' + expHandle.getName() + '] : ' + found[0] + ' :: ' + found[1]);
                     }
@@ -206,15 +208,15 @@ class Nodes {
         }
     }
 
-    populateGrammarTree(treeTop: GrTreeTop, grTree: GrTree, tokenId: number, type, followChildren: boolean = true) {
-        let node = this.getNodeMap(tokenId);
-        //grTree.node = node;
+    public populateGrammarTree(treeTop: GrTreeTop, grTree: GrTree, tokenId: number, type: string, followChildren: boolean = true) {
+        let node: BaseNode = this.getNodeMap(tokenId);
+        // grTree.node = node;
         grTree = {
             tokenId: tokenId,
             pos: node.getPOS(),
             type: type,
             children: null,
-            getNode: (function (node) {
+            getNode: (function (node: BaseNode): BaseNode {
                 return node;
             }).bind(null, node)
         };
@@ -224,7 +226,7 @@ class Nodes {
         let children = this.dep.getChildNodes(tokenId);
         treeTop.processedTokens.push(tokenId);
         for (let tkn of children) {
-            if (!('children' in grTree) ||  !grTree.children) {
+            if (!('children' in grTree) || !grTree.children) {
                 grTree.children = {};
             }
             grTree.children[tkn.tokenIdx] = {
@@ -235,9 +237,11 @@ class Nodes {
                 getNode: null
             };
             if (treeTop.processedTokens.indexOf(tkn.tokenIdx) == -1) {
-                grTree.children[tkn.tokenIdx] = this.populateGrammarTree(treeTop, grTree.children[tkn.tokenIdx], tkn.tokenIdx, tkn.type);
+                grTree.children[tkn.tokenIdx] =
+                    this.populateGrammarTree(treeTop, grTree.children[tkn.tokenIdx], tkn.tokenIdx, tkn.type);
             } else {
-                grTree.children[tkn.tokenIdx] = this.populateGrammarTree(treeTop, grTree.children[tkn.tokenIdx], tkn.tokenIdx, tkn.type, false);
+                grTree.children[tkn.tokenIdx] =
+                    this.populateGrammarTree(treeTop, grTree.children[tkn.tokenIdx], tkn.tokenIdx, tkn.type, false);
             }
         }
         return grTree;
@@ -247,40 +251,38 @@ class Nodes {
      *  Try to match all the grammar rules
      *
      */
-    processAllGrammar() {
+    public processAllGrammar() {
         let rootNode: number = this.dep.getRootToken();
-        let grTree: GrTreeTop = {root : null, processedTokens:[] };
+        let grTree: GrTreeTop = {root: null, processedTokens: []};
         grTree.root = this.populateGrammarTree(grTree, grTree.root, rootNode, 'root');
-        //console.log(' ---- > ' + JSON.stringify(grTree));
-
-        let matchedRules =  Utils.findGrammarRules(gGrMapper, null, 'root', grTree.root.getNode());
+        // console.log(' ---- > ' + JSON.stringify(grTree));
+        let matchedRules = Utils.findGrammarRules(gGrMapper, null, 'root', grTree.root.getNode());
         if (matchedRules.length) {
             for (let mrule of matchedRules) {
                 let v = mrule.fn.checkValid(this, null, 'root', grTree.root.getNode());
                 if (v[0]) {
                     let grHandle = new mrule.fn(this, null, 'root', grTree.root.getNode(), <GrBaseMatch>v[1]);
-                    //console.log('FOUND :: ' + grHandle.getName());
+                    // console.log('FOUND :: ' + grHandle.getName());
                     grTree.root.getNode().addGrammarMatch(grHandle);
                 }
             }
         }
         this.processNodeGrammar(grTree.root.getNode())
-
-
         this.grMatches = grTree.root.getNode().getGrammarMatches();
-
-        //console.log(' After Process Gr:' + gm.length);
+        // console.log(' After Process Gr:' + gm.length);
         if (this.grMatches.length) {
-            let r = this.grMatches[0].processNode(null);
-            //console.log(' r= ' + JSON.stringify(r));
+            //let r =
+                this.grMatches[0].processNode(null);
+            // console.log(' r= ' + JSON.stringify(r));
         }
     }
 
-    processNodeGrammar(nd: BaseNode) {
+
+    public processNodeGrammar(nd: BaseNode) {
         // find all the children and recurse
         var children = nd.getChildren();
         var loc;
-        let fromNodePOS = nd.getPOS();
+        // let fromNodePOS = nd.getPOS();
         for (loc in children) {
             let c = children[loc];
             let type = c.type;
@@ -307,48 +309,52 @@ class Nodes {
         }
     }
 
+
     /** Process only one token "tknId" for grammar match
      * @param tknId - Specify the token to process
      * @returns {*} - return [true if match was found, grammar that matched]
      */
-    processGr(tknId: number): boolean {
-        let tkn = this.tkn.getToken(tknId);
-        let pos = this.tkn.getTokenPOS(tknId);
-        let nd = this.getNodeMap(tknId);
-        if (nd.grProcessingOngoing) return false;
-        nd.grProcessingOngoing = true;
-        //console.trace("processGr:"+tknId);
-        assert.equal(0,1); // the call below needs to be migrated to new fromat
+    public processGr(tknId: number): boolean {
+        assert.equal(0, 1); // the call below needs to be migrated to new fromat
+        return false;
         /*
-        let GRRules = Utils.findGrammarRules(gGrMapper, tkn, pos);
-        let ruleHitCount = 0;
-        if (GRRules.length) {
-            for (let GRM of GRRules)
-            {
-                let found = GRM.fn.checkValid(this, nd);
-                if (found[0]) {
-                    dbg('  - gGrMapper Checking with tkn [' + tkn + ']');
-                    dbg('\tFound ' + JSON.stringify(found[1]));
-                }
-                if (found[0]) {
-                    let grHandle = new GRM.fn(this, nd, found[1]);
-                    dbg('\tAdding Grammar Node:' + grHandle.getName());
-                    nd.addGrammarMatch(grHandle);
-                    this.grMatches.push(grHandle);
-                    ruleHitCount++;
-                }
-            }
-            nd.setGrammarProcessingDone();
-            nd.grProcessingOngoing = false;
-            dbg('processGr:' + tknId + ' RETURN.');
-            return (ruleHitCount > 0);
-        } else {
-            dbg('  - gGrMapper no hit found for tkn [' + tkn + ']');
-            nd.setGrammarProcessingDone();
-            nd.grProcessingOngoing = false;
-            return false;
-        }*/
+         let tkn = this.tkn.getToken(tknId);
+         let pos = this.tkn.getTokenPOS(tknId);
+         let nd = this.getNodeMap(tknId);
+         if (nd.grProcessingOngoing) return false;
+         nd.grProcessingOngoing = true;
+         //console.trace("processGr: "+tknId);
+         let GRRules = Utils.findGrammarRules(gGrMapper, tkn, pos);
+         let ruleHitCount = 0;
+         if (GRRules.length) {
+         for (let GRM of GRRules)
+         {
+         let found = GRM.fn.checkValid(this, nd);
+         if (found[0]) {
+         dbg('  - gGrMapper Checking with tkn [' + tkn + ']');
+         dbg('\tFound ' + JSON.stringify(found[1]));
+         }
+         if (found[0]) {
+         let grHandle = new GRM.fn(this, nd, found[1]);
+         dbg('\tAdding Grammar Node:' + grHandle.getName());
+         nd.addGrammarMatch(grHandle);
+         this.grMatches.push(grHandle);
+         ruleHitCount++;
+         }
+         }
+         nd.setGrammarProcessingDone();
+         nd.grProcessingOngoing = false;
+         dbg('processGr:' + tknId + ' RETURN.');
+         return (ruleHitCount > 0);
+         } else {
+         dbg('  - gGrMapper no hit found for tkn [' + tkn + ']');
+         nd.setGrammarProcessingDone();
+         nd.grProcessingOngoing = false;
+         return false;
+         }*/
     }
+
+
 }
 
 

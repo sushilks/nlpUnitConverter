@@ -21,8 +21,28 @@ interface NodeMapperType {
     [key:string]: BaseNode;
 }
 interface ExpMapperType {
-    [key:string]: Array<typeof ExpBase>;
+    fnMap : {[key: string]: typeof ExpBase};
+    match: {[key:string]: Array<typeof ExpBase>};
 }
+
+interface DBItem {
+    stmt: string;
+    type: string;
+    _id : string;
+    match: {[key: string]: string};
+    extract: {[key: string]: string};
+    args: {[key: string]: {
+        type: string;
+        extractionNode: string;
+        default: string | number;
+        }
+    };
+    prop: {
+        singleVerbEdge: boolean;
+    };
+    fixedExtract: {[key: string]: string};
+}
+
 /*
 declare class Nodes {
     dep: Dependency;

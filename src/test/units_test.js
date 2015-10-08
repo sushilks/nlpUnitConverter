@@ -7,10 +7,11 @@ function getRes(ret) {
     for (let itm of ret) {
         let d = itm.substr(itm.indexOf('['));
         let n = itm.substr(0,itm.indexOf('['));
-        let dj = JSON.parse(d)[0];
         if (n.match(/Units/)) {
+            let dj = JSON.parse(d)[0];
             delete dj._keys;
-            return dj;
+            delete dj.defaultUsed;
+            return dj.args;
         }
     }
     return;

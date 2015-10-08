@@ -11,10 +11,11 @@ interface ExpPropType {
     singleVerbEdge: boolean;
 }
 interface ExpArgType {
-    type: string,
-    extractionNode: string,
-    default: any
+    type: string;
+    extractionNode: string;
+    default: any;
 }
+
 declare class ExpBase {
     nodes: any;
     result: ExpBaseMatch;
@@ -28,7 +29,7 @@ declare class ExpBase {
     text(): string;
     exec(gr: any): void;
     static checkValid(gr: any): [boolean, ExpBaseMatch];
-    static checkValidArguments(nodes: any, match: any): boolean;
+    static checkValidArguments(nodes: any, match: any, graphDB: any): boolean;
 }
 /*
 interface console {

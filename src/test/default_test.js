@@ -10,7 +10,7 @@ function getRes(ret) {
         let dj = JSON.parse(d)[0];
         if (n.match(/Default/)) {
             delete dj._keys;
-            return dj;
+            return dj.args;
         }
     }
     return;

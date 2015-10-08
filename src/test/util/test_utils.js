@@ -2,9 +2,8 @@
  * Created by sushil on 8/15/15.
  */
 'use strict';
-import { install } from 'source-map-support';
-install();
-
+require('source-map-support').install();
+require('babel/polyfill');
 var NLPPP = require('./../../nlp_pp');
 var Nodes = require('./../../nodes.js');
 var ExpDB = require('../../expdb');

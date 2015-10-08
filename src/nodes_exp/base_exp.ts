@@ -12,9 +12,9 @@ class ExpBase {
 
     constructor(nodes: any, matchResult: ExpBaseMatch) {
         this.nodes = (function(nd) { return nd; }).bind(null, nodes);
-        //this.dbg = nodes.dbg;
+        // this.dbg = nodes.dbg;
         this.name = 'expBase';
-        //"matchResult":{"args":
+        // "matchResult":{"args":
         //               {"toArgValue":1,"toArg":"dollar"},
         //              "defaultUsed":["toArgValue"],
         //              "_keys":{"toArgValue":"verb.subj.nmod:in.numnode.dataValue",
@@ -49,10 +49,12 @@ class ExpBase {
         console.log('IMPLEMENT ME PLEASE');
         assert(1,0);
     }
+
     static checkValid(gr): [boolean, ExpBaseMatch] {
         return [false, {args: null}];
     }
-    static checkValidArguments(nodes, match) {
+
+    static checkValidArguments(nodes, match, graphDB) {
         return true;
     }
 }

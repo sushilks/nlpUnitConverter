@@ -436,7 +436,7 @@ export function findInTreeNumberNode(tree, key) {
     return r;
 }
 */
-export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Array<ExpBase>, dbItem) : VerbDBMatchRet {
+export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Array<ExpBase>, dbItem: DBItem) : VerbDBMatchRet {
     // check if all the keys in dbItem are present in verb.
 
     let dbItemKeys = Object.keys(dbItem.match);
@@ -545,7 +545,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
             return {matchType:'', dbId:'', matchResult:null };//return ['', {}];
         } else if (schema.default !== undefined && res.matchResult.args[key] === undefined) {
             //console.log(' res = '  + JSON.stringify(res));
-            res.matchResult.args[key] = schema.default;
+            res.matchResult.args[key] = <string>schema.default;
             res.matchResult.defaultUsed.push(key);
         }
     }

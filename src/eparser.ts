@@ -110,6 +110,7 @@ async function parse(data, gr, dbge: boolean = false) {
                 dbg(' \tParse Tree :' + pp.getParseTree(idx));
                 let tkn = pp.getTokens(idx);
                 var tknString:string = '';
+                console.log(' tocket = ' + tkn);
                 for (var tid = 1; tid <= tkn.tokenCount(); tid++) {
                     tknString += tid + ':' + tkn.getToken(tid) + '(' + tkn.getTokenPOS(tid) + ') ';
                 }
