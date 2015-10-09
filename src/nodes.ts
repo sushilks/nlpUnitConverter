@@ -146,9 +146,10 @@ class Nodes {
                                 }
                             }
                         }
-                        if (!alreadyFound) {
+                        if (!alreadyFound)  {
                             dbgexp('EXP MATCH FOUND for [' + match.matchType + ']');
                             mHistory.push(JSON.stringify([match.matchType, match.matchResult.args]));
+                            match.matchResult.dbId = match.dbId;
                             let expHandle: ExpBase = new fn(this, match.matchResult);
                             this.expMatches.push(expHandle);
                             found = true;

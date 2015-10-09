@@ -35,7 +35,7 @@ class ExpLearn {
     constructor(db: ExpDB,  gExpMapper: ExpMapperType) {
         this.db = db;
         this.gExpMapper = gExpMapper;
-        this.gExpFn = (<any>gExpMapper)._map;
+        this.gExpFn = gExpMapper.fnMap;
         /*
         for (var id in this.gExpMapper) {
             let dt = this.gExpMapper[id];

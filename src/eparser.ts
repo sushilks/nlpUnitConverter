@@ -172,7 +172,7 @@ async function parse(data, gr, dbge: boolean = false) {
             nd.expMatches[idx].exec(gr);
         } catch (e) {
             console.log('Node:' + nd.expMatches[idx].name + ' had an exception when runing exec.')
-            //console.log(e);
+            console.log(e);
             console.log(e.stack);
         }
     }

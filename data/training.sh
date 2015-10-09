@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -x
-EPARSER=./release/eparser.js
-#trap read debug
+EPARSER=./build/eparser.js
+trap read debug
 
 # node type : Unit
 # Node:[Units] Args Needed :["unitsFor","units"]
@@ -38,6 +38,7 @@ node $EPARSER -l -t 'how many meters make 3 kilometer?' -L 'yes,QConv,kilometer,
 node $EPARSER -l -t 'how many meters make a kilometer?' -L 'yes,QConv,kilometer,meters,1'
 node $EPARSER -l -t 'how many meters makes 3 kilometer?' -L 'yes,QConv,kilometer,meters,3'
 node $EPARSER -l -t 'how many meters makes a kilometer?' -L 'yes,QConv,kilometer,meters,1'
+
 ##node $EPARSER -l -t 'what is 10 parsec in lightyears?' -L 'yes,QConv,lightyears,parsec,10'
 ## node $EPARSER -l -t 'Convert 60 Yards into meters.' -L 'yes,QConv,meters,Yards,60'
 ## node $EPARSER -l -t 'how many fathoms are there in a centimeters?' -L 'yes,QConv,fathoms,centimeters,1'
@@ -54,11 +55,20 @@ node $EPARSER -l -t 'How many Kilos are there in 30 Tons?' -L 'yes,fromArg,Tons'
 node $EPARSER -l -t 'How many Kilos are there in 30 Tons?' -L 'yes,toArg,Kilos'
 
 node $EPARSER -l -t 'twenty thousand moo makes 4000 boo.' -L 'yes,toArg,boo'
+node $EPARSER -l -t 'twenty thousand moo makes 4000 boo.' -L 'yes,fromArg,moo'
 node $EPARSER -l -t '4 quarters is equal to one dollar.' -L 'yes,toArg,dollar'
-###node $EPARSER -l -t '4 quarters is one dollar.' -L 'yes,toArg,dollar'
+node $EPARSER -l -t '4 quarters is equal to one dollar.' -L 'yes,fromArg,quarters'
+node $EPARSER -l -t '4 quarters is same as one dollar.' -L 'yes,toArg,dollar'
+node $EPARSER -l -t '4 quarters is same as one dollar.' -L 'yes,fromArg,quarters'
 
-node $EPARSER -l -t 'One Foot is 12 Inch .'  -L 'yes,toArg,Inch'
-#node $EPARSER -l -t 'Twenty Moo equals 40 Boo.' -L 'yes,toArg,Boo'
+#node $EPARSER -l -t 'One Foot is 12 Inch .'  -L 'yes,toArg,Inch'
+#node $EPARSER -l -t 'One Foot is 12 Inch .'  -L 'yes,fromArg,Foot'
+
+node $EPARSER -l -t 'Twenty Moo equals 40 Boo.' -L 'yes,toArg,Boo'
+node $EPARSER -l -t 'Twenty Moo equals 40 Boo.' -L 'yes,fromArg,Moo'
+
+node $EPARSER -l -t 'There is 2 foo in Five bar.' -L 'yes,fromArg,foo'
+node $EPARSER -l -t 'One inch is same as 2.54 cm.'  -L 'yes,toArg,cm'
 
 # node type : Relation (Relations ship between units)
 # [Relation] Args Needed :["nodeFrom","nodeTo","convN", "convD"]
@@ -69,8 +79,9 @@ node $EPARSER -l -t 'Twenty Moo equals 40 Boo.' -L 'yes,Relation,Moo,Boo,Twenty,
 node $EPARSER -l -t 'Twenty moo is equal to 4 hundred boo.' -L 'yes,Relation,moo,boo,Twenty,4 hundred'
 node $EPARSER -l -t 'twenty thousand Moo makes 4000 Boo.' -L 'yes,Relation,Moo,Boo,twenty thousand,4000'
 ## node $EPARSER -l -t 'Four quarters makes a Dollar.' -L 'yes,Relation,quarters,Dollar,Four,1'
-node $EPARSER -l -t '4 quarters is one Dollar.' -L 'yes,Relation,quarters,Dollar,4,one'
-node $EPARSER -l -t '4 quarters is equal to one Dollar.' -L 'yes,Relation,quarters,Dollar,4,one'
+##node $EPARSER -l -t '4 quarters is one Dollar.' -L 'yes,Relation,quarters,Dollar,4,one'
+#node $EPARSER -l -t '4 quarters is equal to one Dollar.' -L 'yes,Relation,quarters,Dollar,4,one'
+node $EPARSER -l -t 'One inch is same as 2.54 cm.'  -L 'yes,Relation'
 
 
 # node type : Default

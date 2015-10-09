@@ -28,10 +28,12 @@ interface MatchTreeData {
 interface VerbDBMatchRet {
     matchType: string;
     dbId: string;
+
     matchResult: {
         args: {[keys: string]: string};
         defaultUsed: Array<string>;
         _keys: {[keys: string]: string};
+        dbId?: string;
     }
 }
 

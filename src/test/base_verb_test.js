@@ -15,20 +15,17 @@ describe('Grammar VerbBase Test ::', function() {
     txt = 'units for time are hours, minutes, days, months and seconds.';
     res = {
         verb : {
-            obj: {
-                dataValueTagged: 'obj::<appos::<minutes> appos::<days> appos::<months> appos::<seconds> hours>'
-            },
+            dataValueTagged: 'VerbBase::<are> obj::<subj::<nmod:for::<<for> time> units> appos::<minutes> appos::<days> appos::<months> <and> appos::<seconds> hours>',
             subj: {
-                dataValueTagged: 'subj::<Who::<<for> time> units>'
+                dataValueTagged: 'subj::<nmod:for::<<for> time> units>'
             }
         }
     };
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
-                console.log(' RET = ' + JSON.stringify(ret));
-                assert.deepEqual(ret[0].verb.obj.dataValueTagged, res.verb.obj.dataValueTagged);
-                assert.deepEqual(ret[0].verb.subj.dataValueTagged, res.verb.subj.dataValueTagged);
+                assert.deepEqual(ret[0].verb.dataValueTagged, res.verb.dataValueTagged);
+                assert.deepEqual(ret[0].verb.data[0].subj.dataValueTagged, res.verb.subj.dataValueTagged);
             });
     }).bind(null, txt, res));
     txt = 'there is 60 sec in one min.';
@@ -47,7 +44,7 @@ describe('Grammar VerbBase Test ::', function() {
 
     txt = 'in one minute there is 60 seconds.';
     res = { verb : {
-        dataValueTagged: 'VerbBase::<what::<<in> nummod::<one> minute> <there> subj::<nummod::<60> seconds> is>'
+        dataValueTagged: 'VerbBase::<nmod:in::<<in> nummod::<one> minute> <there> subj::<nummod::<60> seconds> is>'
     }};
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
@@ -59,7 +56,7 @@ describe('Grammar VerbBase Test ::', function() {
     txt = 'there are 60 sec in a min.';
     res = { verb : {
         token: 'are',
-        dataValueTagged: 'VerbBase::<<there> subj::<nummod::<60> what::<<in> <a> min> sec> are>'
+        dataValueTagged: 'VerbBase::<<there> subj::<nummod::<60> nmod:in::<<in> <a> min> sec> are>'
     }};
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
@@ -72,10 +69,8 @@ describe('Grammar VerbBase Test ::', function() {
     txt = '60 Seconds is equal to one Minute.';
     res = {
         verb : {
-            token : 'is',
-            obj: {
-                dataValueTagged: 'obj::<Who::<<to> nummod::<one> Minute> equal>'
-            },
+            token : 'equal',
+            dataValueTagged: 'VerbBase::<is> obj::<subj::<nummod::<60> Seconds> nmod:to::<<to> nummod::<one> Minute> equal>',
             subj: {
                 dataValueTagged: 'subj::<nummod::<60> Seconds>'
             }
@@ -85,9 +80,10 @@ describe('Grammar VerbBase Test ::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
+                // console.log(' RET = ' + JSON.stringify(ret));
                 assert.deepEqual(ret[0].verb.token, res.verb.token);
-                assert.deepEqual(ret[0].verb.obj.dataValueTagged, res.verb.obj.dataValueTagged);
-                assert.deepEqual(ret[0].verb.subj.dataValueTagged, res.verb.subj.dataValueTagged);
+                assert.deepEqual(ret[0].verb.dataValueTagged, res.verb.dataValueTagged);
+                assert.deepEqual(ret[0].verb.data[0].subj.dataValueTagged, res.verb.subj.dataValueTagged);
             });
     }).bind(null, txt, res));
 
@@ -112,7 +108,7 @@ describe('Grammar VerbBase Test ::', function() {
     //verb=[makes] Subj=[] Object=[] SubjOnly: ObjectOnly:
     res = { verb : {
         token: 'convert',
-        dataValueTagged: 'VerbBase::<Who::<nummod::<837> Weeks> what::<<into> Seconds> convert>'
+        dataValueTagged: 'VerbBase::<nmod:tmod::<nummod::<837> Weeks> nmod:into::<<into> Seconds> convert>'
     }};
 
     it(txt, (function(txt, res) {

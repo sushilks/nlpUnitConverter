@@ -305,8 +305,25 @@ export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) 
                 }
             }
             let minBr = minBrArr.join('.');
-            //console.log(' minBR = ' + minBr + ' vm = ' + vm);
-            if (!vm.match(new RegExp(minBr))) {
+            let minBrm1; // drop one of the last legs of extraction
+            if (minBrArr.length > 1) {
+                minBrm1 = minBrArr.slice(0, -1).join('.');
+                let s = minBrArr[minBrArr.length-2];
+                if (s.match(/subj|nmod/)) {
+                    //if (!s.match(/verb/)) {
+                    minBrm1 = 'NOMATCH';
+                }
+
+            }
+            dbg(' minBR = ' + minBr + '[' + minBrm1 + '] vm = ' + vm );
+
+            if (vm.match(new RegExp(minBrm1 + '$')) ) {
+                // accept this a an match
+                // vm = 'verb:cop' , minBr = '^verb:cob.nmod:to', minBrm1 = '^verb:cob'
+            } else if (vm.match(new RegExp(minBrm1 + '.cop$'))) {
+                // accept this a an match
+                // vm = 'verb:cop.cop' , minBr = '^verb:cob.nmod:to', minBrm1 = '^verb:cob'
+            } else if (!vm.match(new RegExp(minBr))) {
                 match = true;
             } else if (vm.match(new RegExp(minBr + '.subj')) ||
                     vm.match(new RegExp(minBr + '.obj'))
@@ -321,7 +338,6 @@ export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) 
                     //console.log(' ======================== vm = ' + vm + ' ex=' + ex + ' m=' + m1 );
                 }
             }
-
         }
         //console.log('Match = ' + match + ' for = ' + vm);
         if (!match) {
