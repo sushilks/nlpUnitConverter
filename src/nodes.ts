@@ -183,6 +183,7 @@ class Nodes {
             return false;
         }
         dbgdb(' - ROOT - ::' + JSON.stringify(root));
+
         // todo::
         // there should be a full crawl of the tree
         // making sure not to do repeated work

@@ -21,7 +21,6 @@ class NumMod extends GrBase {
     processNode() {
         let ret = {};
         ret.numnode = {tokenId: this.toNode.getTokenId()};
-
         // identify all the compund nodes and pass it on
         // every thing else is unresolved.
         return super.processNode(ret);

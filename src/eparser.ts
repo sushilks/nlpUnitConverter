@@ -70,7 +70,7 @@ parser.addArgument(
 
 var args = parser.parseArgs();
 //var port: number = args.port || 8990;
-var learnData: Array<string> = (args.learn_data)?args.learn_data.split(','):[];
+var learnData: Array<string> = [];
 //console.log('PORT = ' + port);
 //console.log("DEBUG = " + args.debug);
 // process a node
@@ -166,16 +166,16 @@ async function parse(data, gr, dbge: boolean = false) {
                 + '] Matched Text  ::' + nd.expMatches[idx].text());
         }
     }
-    // execute all the exp matches
-    for (let idx in nd.expMatches) {
-        try {
-            nd.expMatches[idx].exec(gr);
-        } catch (e) {
-            console.log('Node:' + nd.expMatches[idx].name + ' had an exception when runing exec.')
-            console.log(e);
-            console.log(e.stack);
+        // execute all the exp matches
+        for (let idx in nd.expMatches) {
+            try {
+                nd.expMatches[idx].exec(gr);
+            } catch (e) {
+                console.log('Node:' + nd.expMatches[idx].name + ' had an exception when runing exec.')
+                console.log(e);
+                console.log(e.stack);
+            }
         }
-    }
 
     // If failed to match
     //  go through the learning routine.
@@ -216,25 +216,24 @@ async function parse(data, gr, dbge: boolean = false) {
   * Send a text to the Client get the
   * nlp response and process it
   */
-async function processText(client, txt, gr={}, dbg=false) {
+async function processText(client, txt, gr, dbg=false) {
     let res = await client.req(txt);
     let p = await parse(res, gr, dbg);
     return p;
 }
 
-async function processList(client, txtList, gr, dbg, fn) {
+async function processList(client, txtList, gr, dbg) {
     let t = txtList.shift();
     if (t === '') {
         if (txtList.length)
-            return processList(client, txtList, gr, dbg, fn);
-        fn();
+            return processList(client, txtList, gr, dbg);
         return;
     }
     let r = await processText(client, t, gr, dbg);
     if (txtList.length) {
-        processList(client, txtList, gr, dbg, fn);
+        return processList(client, txtList, gr, dbg);
     } else {
-        fn();
+        return;
     }
 }
  async function startCLI(fn) {
@@ -248,47 +247,54 @@ async function main(args, nlp, gr) {
     if (args.input && args.input !== '') {
         var contents = FS.readFileSync(args.input).toString();
         let txt = contents.split('\n');
+        await processList(nlp, txt, gr, args.debug);
+
         if (args.txt && args.txt !== '') {
-            txt.push(args.txt);
+            txt = [args.txt];
+            learnData = (args.learn_data)?args.learn_data.split(','):[];
+            await processList(nlp, txt, gr, args.debug);
         }
-        processList(nlp, txt, gr, args.debug, async function () {
-            if (args.debug) {
-                console.log(' Status of the graph created so far');
-                for (var gkey in gr) {
-                    console.log("gkey=" + gkey);
-                    console.log('Details of Graph: key=' + gkey + '  ::  ' + gr[gkey].toString());
-                    console.log('   Details of Nodes:' + JSON.stringify(gr[gkey].nodes(true)));
-                    console.log('   Details of Edges:' + JSON.stringify(gr[gkey].edges(true)));
+
+        //    processList(nlp, txt, gr, args.debug, async function () {
+
+        if (args.debug) {
+            console.log(' Status of the graph created so far');
+            for (var gkey in gr) {
+                console.log("gkey=" + gkey);
+                console.log('Details of Graph: key=' + gkey + '  ::  ' + gr[gkey].toString());
+                console.log('   Details of Nodes:' + JSON.stringify(gr[gkey].nodes(true)));
+                console.log('   Details of Edges:' + JSON.stringify(gr[gkey].edges(true)));
+            }
+        }
+        if (args.cli) {
+
+            await startCLI(async function(line) {
+                let re1 = line.match(/enable.*debug[ ]+([^ ]+)/i);
+                let re2 = line.match(/disable.*debug[ ]+([^ ]+)/i);
+                if (re1) {
+                    console.log("Enabeling Debug for " + re1[1]);
+                    //debug.enable(re1[1]);
+                    debug.enable('*');
+                    //rl.__block_l1 = false;
+                    //rl.prompt();
+                    return ;
+                } else if (re2) {
+                    console.log("Disabeling Debug for " + re2[1]);
+                    debug.disable('-' + re2[1]);
+                    //rl.__block_l1 = false;
+                    //rl.prompt();
+                    return ;
+                } else {
+                    return await processText(nlp, line, gr, args.debug)
+
                 }
-            }
-            if (args.cli) {
+            });
+            console.log("DONE CLI.");
+        }
 
-                await startCLI(async function(line) {
-                    let re1 = line.match(/enable.*debug[ ]+([^ ]+)/i);
-                    let re2 = line.match(/disable.*debug[ ]+([^ ]+)/i);
-                    if (re1) {
-                        console.log("Enabeling Debug for " + re1[1]);
-                        //debug.enable(re1[1]);
-                        debug.enable('*');
-                        //rl.__block_l1 = false;
-                        //rl.prompt();
-                        return ;
-                    } else if (re2) {
-                        console.log("Disabeling Debug for " + re2[1]);
-                        debug.disable('-' + re2[1]);
-                        //rl.__block_l1 = false;
-                        //rl.prompt();
-                        return ;
-                    } else {
-                        return await processText(nlp, line, gr, args.debug)
-
-                    }
-                });
-                console.log("DONE CLI.");
-            }
-
-        });
+        //});
     } else if (args.txt && args.txt !== '') {
+        learnData = (args.learn_data)?args.learn_data.split(','):[];
         await processText(nlp, args.txt, gr, args.debug)
         console.log("eParser Done");
     }

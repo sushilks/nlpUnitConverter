@@ -45,5 +45,5 @@ interface LearnEntry {
     type: string;
     args: {[key: string]: {type: string, extractionNode: string, default: string|number}};
     prop: {[key: string]: string};
-    expExtract?: {[key: string] : string};
+    expExtract?: {[key: string] : Array<string>};
 }

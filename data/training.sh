@@ -73,15 +73,15 @@ node $EPARSER -l -t 'One inch is same as 2.54 cm.'  -L 'yes,toArg,cm'
 # node type : Relation (Relations ship between units)
 # [Relation] Args Needed :["nodeFrom","nodeTo","convN", "convD"]
 #node $EPARSER -l -t '' -L 'yes,Relation,'
-node $EPARSER -l -t 'There are 100 cents in a dollar.' -L 'yes,Relation,cents,dollar,100,1'
-node $EPARSER -l -t 'There is 2 foo in Five bar.' -L 'yes,Relation,foo,bar,2,Five'
-node $EPARSER -l -t 'Twenty Moo equals 40 Boo.' -L 'yes,Relation,Moo,Boo,Twenty,40'
-node $EPARSER -l -t 'Twenty moo is equal to 4 hundred boo.' -L 'yes,Relation,moo,boo,Twenty,4 hundred'
-node $EPARSER -l -t 'twenty thousand Moo makes 4000 Boo.' -L 'yes,Relation,Moo,Boo,twenty thousand,4000'
+node $EPARSER -i ./data/sample-training.txt -l -t 'There are 100 cents in a dollar.' -L 'yes,Relation,cents,dollar,100,1'
+node $EPARSER -i ./data/sample-training.txt -l -t 'There is 2 foo in Five bar.' -L 'yes,Relation,foo,bar,2,Five'
+node $EPARSER -i ./data/sample-training.txt -l -t 'Twenty Moo equals 40 Boo.' -L 'yes,Relation,Moo,Boo,Twenty,40'
+node $EPARSER -i ./data/sample-training.txt -l -t 'Twenty moo is equal to 4 hundred boo.' -L 'yes,Relation,moo,boo,Twenty,4 hundred'
+node $EPARSER -i ./data/sample-training.txt -l -t 'twenty thousand Moo makes 4000 Boo.' -L 'yes,Relation,Moo,Boo,twenty thousand,4000'
 ## node $EPARSER -l -t 'Four quarters makes a Dollar.' -L 'yes,Relation,quarters,Dollar,Four,1'
 ##node $EPARSER -l -t '4 quarters is one Dollar.' -L 'yes,Relation,quarters,Dollar,4,one'
 #node $EPARSER -l -t '4 quarters is equal to one Dollar.' -L 'yes,Relation,quarters,Dollar,4,one'
-node $EPARSER -l -t 'One inch is same as 2.54 cm.'  -L 'yes,Relation'
+node $EPARSER -i ./data/sample-training.txt -l -t 'One inch is same as 2.54 cm.'  -L 'yes,Relation'
 
 
 # node type : Default

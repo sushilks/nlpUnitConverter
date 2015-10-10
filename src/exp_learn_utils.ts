@@ -126,7 +126,7 @@ function findListInTree_(tree: any, val: Array<string>, key: string): string {
                     for (let cNode of tree.data) {
                         if (cNode.appos) {
                             let dt = cNode.appos.dataValue;
-                            console.log(' dt = ' + dt);
+                            // console.log(' dt = ' + dt);
                             list = list.concat(dt.split(' '));
                         }
                     }
@@ -244,7 +244,8 @@ export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) 
     }
     if (dest.expExtract) {
         for (let key_ in  dest.expExtract) {
-            let k = dest.expExtract[key_].result._keys;
+            // console.log(' ----- >>> ' + JSON.stringify(dest.expExtract[key_]));
+            let k = dest.expExtract[key_][0].result._keys;
             for (let key in k) {
                 let dt = k[key];
                 let d = dt.replace(/dataValue$/, '*').replace(/\.token$/, '');
@@ -471,9 +472,13 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
             for (let itm of expMatches) {
                 if (itm.name === eNode) {
                     expMatchFound = true;
-                    expDep[eNode] = itm;
+                    //console.log(' EXPDEP[' + eNode +'];;;');
+                    if (!expDep[eNode]) {
+                        expDep[eNode] = [];
+                    }
+                    expDep[eNode].push(itm);
                     ///extPathList.push(itm.result._keys[eNode]);
-                    break;
+                    //break;
                 }
             }
             if (!expMatchFound) {
@@ -524,13 +529,19 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
             _keys: {}
         }
     };
+    // console.log('dbItem.extract ' + JSON.stringify(dbItem.extract));
+    // console.log('==== ::expDep ' + JSON.stringify(expDep));
     for (let itm of Object.keys(dbItem.extract)) {
         let itmPath = dbItem.extract[itm];
         let dt;
         if (itmPath.match(/^EXPNODE:/)) {
+            // console.log(' EXPNODE:::' + itmPath + ' expDep::: ' + Object.keys(expDep));
             let k = itmPath.split(':')[1];
             //console.log(' k = ' + k + ' -- ' + JSON.stringify(expDep[k]));
-            dt = expDep[k].result;
+            //dt = expDep[k][0].result;
+            dt = [];
+            for (let itm of expDep[k])
+                dt.push(itm.result);
             //dt = extractTreeValue(verb, itmPath);
         } else {
             dt = extractTreeValue(verb, itmPath);
@@ -543,7 +554,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
         res.matchResult._keys[itm] = itmPath;
         //res[itm] = dt;
         //resKey[itm] = itmPath;
-        dbgdb(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + dt);
+        dbgdb(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + JSON.stringify(dt));
     }
     // have found a match
     // check for argument being presented in extracted data

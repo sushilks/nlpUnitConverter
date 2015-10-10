@@ -18,10 +18,10 @@ describe('Grammar nummod Test ::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
-                assert.deepEqual(ret[0].verb.data[0].subj.token, 'Seconds');
-                assert.deepEqual(ret[0].verb.data[0].subj.data[0].numnode.dataValue, 'sixty');
-                assert.deepEqual(ret[0].verb.data[0].subj.data[1].what.token, 'parsec');
-                assert.deepEqual(ret[0].verb.data[0].subj.data[1].what.data[0].numnode.dataValue, 'two hundred');
+                assert.deepEqual(ret[0]['verb:root'].data[0].subj.token, 'Seconds');
+                assert.deepEqual(ret[0]['verb:root'].data[0].subj.data[0].numnode.dataValue, 'sixty');
+                assert.deepEqual(ret[0]['verb:root'].data[0].subj.data[1]['nmod:in'].token, 'parsec');
+                assert.deepEqual(ret[0]['verb:root'].data[0].subj.data[1]['nmod:in'].data[0].numnode.dataValue, 'two hundred');
             });
     }).bind(null, txt, res));
 /*
@@ -40,8 +40,8 @@ describe('Grammar nummod Test ::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
-                assert.deepEqual(ret[0].verb.data[1].obj.token, 'steps');
-                assert.deepEqual(ret[0].verb.data[1].obj.data[0].numnode.dataValue, '3490');
+                assert.deepEqual(ret[0]['verb:root'].data[1].obj.token, 'steps');
+                assert.deepEqual(ret[0]['verb:root'].data[1].obj.data[0].numnode.dataValue, '3490');
 //                assert.deepEqual(ret, res);
             });
     }).bind(null, txt, res));
@@ -52,10 +52,10 @@ describe('Grammar nummod Test ::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
-                assert.deepEqual(ret[0].verb.data[0].subj.token, 'weeks');
-                assert.deepEqual(ret[0].verb.data[0].subj.data[0].numnode.dataValue, '52');
-                assert.deepEqual(ret[0].verb.data[0].subj.data[1].what.token, 'days');
-                assert.deepEqual(ret[0].verb.data[0].subj.data[1].what.data[0].numnode.dataValue, '<or> 365');
+                assert.deepEqual(ret[0]['verb:root'].data[0].subj.token, 'weeks');
+                assert.deepEqual(ret[0]['verb:root'].data[0].subj.data[0].numnode.dataValue, '52');
+                assert.deepEqual(ret[0]['verb:root'].data[0].subj.data[1]['nmod:in'].token, 'days');
+                assert.deepEqual(ret[0]['verb:root'].data[0].subj.data[1]['nmod:in'].data[0].numnode.dataValue, '<or> 365');
 //                assert.deepEqual(ret, res);
             });
     }).bind(null, txt, res));

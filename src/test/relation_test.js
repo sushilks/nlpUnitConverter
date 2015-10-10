@@ -7,6 +7,9 @@ function getRelationRes(ret) {
     for (let itm of ret) {
         let d = itm.substr(itm.indexOf('['));
         let n = itm.substr(0,itm.indexOf('['));
+        //console.log(' itm ' + itm);
+        //console.log('  d ' + d);
+        //console.log('  n ' + n);
         let dj = JSON.parse(d)[0];
         if (n.match(/Relation/)) {
             return dj.r;
@@ -19,15 +22,28 @@ describe('Explanation Type:RelationMath Test ::', function() {
 
     before(()=>{
         nlp = new NLPClient();
+
+
     });
 
-    var txt, res;
+    var txt, res = '';
+    txt = 'ZEQtest is a type of measure.';
+    it(txt, (function (txt, res) {
+        return TUtils.processExp(nlp, txt);
+    }).bind(null, txt, res));;
+
+
+    txt = 'Units for ZEQtest are seconds, minutes, FOA, Dal, boo, moo, quarter, dollar.';
+    it(txt, (function (txt, res) {
+        return TUtils.processExp(nlp, txt);
+    }).bind(null, txt, res));
 
     txt = 'There are 60 Seconds in a Minute.';
     res = {"convD":"60","convN":1,"nodeFrom":"Seconds","nodeTo":"Minute"};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
+                //console.log(' = ' + JSON.stringify((ret)));
                 assert.deepEqual(getRelationRes(ret), res);
             });
     }).bind(null, txt, res));

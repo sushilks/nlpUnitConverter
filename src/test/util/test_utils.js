@@ -9,6 +9,7 @@ var Nodes = require('./../../nodes.js');
 var ExpDB = require('../../expdb');
 let expDB = new ExpDB('./lexp.db');
 
+let graphDB = {};
 export function parse(data, grMatch, dict = false, exp = false,  dbg = false) {
     var pp = new NLPPP();
     var res = pp.read(data.body);
@@ -36,7 +37,7 @@ export function parse(data, grMatch, dict = false, exp = false,  dbg = false) {
         nd.processAllExp();
         return new Promise(
             function(resolve, reject) {
-                nd.processAllExpDB(expDB)
+                nd.processAllExpDB(expDB, graphDB)
                     .then(function (dt) {
                         for (let idx in nd.expMatches) {
                             if (false) {
@@ -45,12 +46,24 @@ export function parse(data, grMatch, dict = false, exp = false,  dbg = false) {
                             }
                             res.push(nd.expMatches[idx].text());
                         }
+                        return res;
+                    })
+                    .then( function(dt) {
+                        for (let idx in nd.expMatches) {
+                            try {
+                                nd.expMatches[idx].exec(graphDB);
+                            } catch (e) {
+                                console.log('Node:' + nd.expMatches[idx].name + ' had an exception when runing exec.')
+                                console.log(e);
+                                console.log(e.stack);
+                            }
+                        }
                         resolve(res);
                     }).catch(function(e) {
                         console.log("Error :: " + e);
                         console.log(e.stack);
 
-                    });;
+                    });
             });
     }
 }

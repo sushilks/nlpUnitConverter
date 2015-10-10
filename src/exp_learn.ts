@@ -92,7 +92,8 @@ class ExpLearn {
     autoExtractMatch(verb: GrProcessNodeValueMap, res: LearnEntry, expMatches) {
         /*console.log("---- > autoExtractMatch::verb " + JSON.stringify(verb));
         console.log("---- > autoExtractMatch::res " + JSON.stringify(res));
-        console.log("---- > autoExtractMatch::expMatches " + JSON.stringify(expMatches));*/
+        console.log("---- > autoExtractMatch::expMatches " + JSON.stringify(expMatches));
+        */
         let ekeys = Object.keys(res.extract);
 
 
@@ -108,7 +109,7 @@ class ExpLearn {
                     let resItem = ekeys[idx];
                     let resVal = res.extract[resItem];
                     let extArgs = res.args[resItem];
-                    //console.log('     resItem = ' + resItem + ' v = ' + resVal + ' args =' + JSON.stringify(extArgs));
+                    // console.log('     resItem = ' + resItem + ' v = ' + resVal + ' extArgs =' + JSON.stringify(extArgs));
                     // check for exact match first
                     if (!(extArgs.type && 'extractionNode' in extArgs)) {
                         let foundPtr;
@@ -120,13 +121,9 @@ class ExpLearn {
                         if (foundPtr) {
                             res.extract[resItem] = foundPtr;
                         } else {
-                            if (res.fixedExtract === undefined) {
-                                res.fixedExtract = {
-                                    resItem: res.extract[resItem]
-                                };
-                            } else {
-                                res.fixedExtract[resItem] = res.extract[resItem];
-                            }
+                            if (res.fixedExtract === undefined)
+                                res.fixedExtract = {}
+                            res.fixedExtract[resItem] = res.extract[resItem];
                             delete res.extract[resItem];
                         }
                     }
@@ -158,17 +155,17 @@ class ExpLearn {
 
         }).bind(null, this));
 
-        let expDep: {[key: string] : string};
-        expDep = <{[key: string] : string}> {};
+        let expDep: {[key: string] : Array<string>};
+        expDep = <{[key: string] : Array<string>}> {};
         for (let k1 in res.extract) {
             if (res.extract[k1].match(/^EXPNODE/)) {
                 let eNode= res.extract[k1].split(':')[1];
                 let expMatchFound = false ;
                 for (let itm of expMatches) {
-                    console.log(' ---- >>> ' + itm + ' name = ' + itm.name);
+                    // console.log(' ---- >>> ' + itm + ' name = ' + itm.name);
                     if (itm.name === eNode) {
                         expMatchFound = true;
-                        expDep[eNode] = itm;
+                        expDep[eNode] = [itm];
                         break;
                     }
                 }
@@ -178,7 +175,7 @@ class ExpLearn {
             }
         }
         res.expExtract = expDep;
-        //console.log(' --- > RET = ' + JSON.stringify(res));
+        // console.log(' --- > RET = ' + JSON.stringify(res));
         LearnUtils.copyMatchTree(verb, <MatchTreeData>res);
         delete res.expExtract;
         //console.log(' RET = ' + JSON.stringify(res));

@@ -36,7 +36,6 @@ class relationMath extends BaseExp {
         };
     }
     exec(gr) {
-        console.log
 //        console.log('Adding to graph:' + this.getName());
         let resData = this.result.r;
         let nFrom = Utils.normalizeUnit(resData.nodeFrom);
@@ -55,14 +54,60 @@ class relationMath extends BaseExp {
         console.log('ERROR Unable to add relation between [' + nFrom + '] and [' + nTo + '], one of these nodes is not defined');
     }
     static checkValidArguments(nodes, match, graphDB) {
-        //console.log(' match = ' + JSON.stringify(match));
+        //console.log(' ------------------- ' + graphDB+ " :: " + Object.keys(graphDB));
+        //let e = new Error().stack;
+        //console.log(' match2 = ' + JSON.stringify(match));
+        if (!(match.args.nodeFrom &&
+            match.args.nodeTo)) {
+            return false;
+        }
+
+        // check if from node is valid
+        let found = false;
+        for (let dt of match.args.nodeFrom) {
+            if (found) break;
+            let argName = Utils.normalizeUnit(dt.args.fromArg);
+            for (let key in graphDB) {
+                if (graphDB[key].hasNode(argName)) {
+                    // found
+                    match.args.nodeFrom = dt;
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found) {
+            //console.log(' missing Valid ArgFrom');
+            return false;
+        }
+        found = false;
+        for (let dt of match.args.nodeTo) {
+            if (found) break;
+            let argName = Utils.normalizeUnit(dt.args.toArg);
+            for (let key in graphDB) {
+                if (graphDB[key].hasNode(argName)) {
+                    // found
+                    match.args.nodeTo = dt;
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if (!found) {
+           // console.log(' missing Valid ArgTo');
+            return false;
+        }
+
+
+        //console.log(e);
         if (match.args.nodeFrom &&
             match.args.nodeTo &&
             match.defaultUsed.indexOf('nodeFrom') !== -1 &&
             match.defaultUsed.indexOf('nodeTo') !== -1) {
             return false;
         }
-/*
+        return found;
+        /*
         console.log(' ---> A1');
         if (match.defaultUsed !== undefined && match.defaultUsed.indexOf('convD') !== -1 &&
             match.defaultUsed.indexOf('convN') !== -1) {
@@ -73,7 +118,6 @@ class relationMath extends BaseExp {
         // should check for node being present.
         console.log(' ---> A3');
 */
-        return true;
     }
 
 }
