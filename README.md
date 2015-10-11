@@ -24,21 +24,21 @@ I am using this to investigate if it's possible to accept input from use in plai
  
  you can test out if everything is fine by running
   
- `grunt run-server`
+ `gulp server-start`
  
  bunch of output on the screen with last line as "Server is listening at 8990"
  
 ## To Build
 
-`grunt build`
+`gulp build`
 
 ## To Test
 
-`grunt server-start`
+`gulp server-start`
 
-`grunt test`
+`gulp test`
 
-`grunt server-stop`
+`gulp server-stop`
 
 
 ## Some Sample 
@@ -143,29 +143,13 @@ New :
 * To allow multiple rules to match. 
 * To have a better checkValid implementation that is able to understand if the statement is a fit.
   For example in case of measure grammar : it's only valid if Measure is mentioned.
-  
- * Remove when, who, what etc... from nmod.js
- * Break each leg of the verb into seperate recognition type. 
-    so combination of patterns are handled better.
-    
-    
-    VBP(convert) (dobj, nmod:into)
-    VB (convert) (dobj, nmod:to)
-    VB(translate)(dobj, nmod:to)
-    VBZ(is)      (nsubj->nmod:in)(dep)
-    VBP(are)     (nmod:in, advmod)
-    VBP(are)     (nmod:in, nsubj)
-    VBP(are)     (nmod:in, nsubj)
-    VB(tell)     (nmod:in<-dep)(dobj)
-    ----- COP -----
-    VB(are)      (cop->nsubj)
-    VBZ(is)      (nsubj->nmod:in)
+* Added Argument Nodes that feed to Relation Node. (First hierarchical implementation).
+New Project Changes:
+* Moved to Gulp from Grunt
+* Moved to Typescript... Work in progress.
+* Moving from Promise to Async/Await
 
 
 
- - Add nodes for Arguments 
- - Add ability to build exp-nodes on exp-nodes.
- - add ability to force learn even if a grammer is matching
- - add grammar on top of grammar.
  
  
