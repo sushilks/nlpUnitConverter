@@ -37,7 +37,9 @@ class Dependency {
     getChildNodes(tokenIdx: number): Array<ChildNodeList> {
         let ret = [];
         for (var cidx in this.dep) {
-            if (this.dep[cidx].governor.$.idx === tokenIdx) {
+            // todo:: over ride <string> because someone is passing a string in tokenIdx
+            // have to find and remove <strign>
+            if (parseInt(this.dep[cidx].governor.$.idx) === parseInt(<string>tokenIdx)) {
                 let r: ChildNodeList = {
                     tokenIdx: this.dep[cidx].dependent.$.idx,
                     type: this.dep[cidx].$.type
@@ -50,7 +52,7 @@ class Dependency {
     getParentNodes(tokenIdx: number) {
         let ret = [];
         for (var cidx in this.dep) {
-            if (this.dep[cidx].dependent.$.idx === tokenIdx) {
+            if (parseInt(this.dep[cidx].dependent.$.idx) === parseInt(<string>tokenIdx)) {
                 let r: ChildNodeList = {
                     tokenIdx: this.dep[cidx].governor.$.idx,
                     type: this.dep[cidx].$.type
@@ -58,6 +60,7 @@ class Dependency {
                 ret.push(r);
             }
         }
+
         return ret;
     }
 }

@@ -54,7 +54,7 @@ class relationMath extends BaseExp {
         console.log('ERROR Unable to add relation between [' + nFrom + '] and [' + nTo + '], one of these nodes is not defined');
     }
     static checkValidArguments(nodes, match, graphDB) {
-        //console.log(' ------------------- ' + graphDB+ " :: " + Object.keys(graphDB));
+        // console.log(' ------------------- ' + graphDB+ " :: " + Object.keys(graphDB));
         //let e = new Error().stack;
         //console.log(' match2 = ' + JSON.stringify(match));
         if (!(match.args.nodeFrom &&

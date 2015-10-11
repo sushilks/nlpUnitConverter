@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -x
 EPARSER=./build/eparser.js
-trap read debug
+#trap read debug
 
 # node type : Unit
 # Node:[Units] Args Needed :["unitsFor","units"]
@@ -61,8 +61,12 @@ node $EPARSER -l -t '4 quarters is equal to one dollar.' -L 'yes,fromArg,quarter
 node $EPARSER -l -t '4 quarters is same as one dollar.' -L 'yes,toArg,dollar'
 node $EPARSER -l -t '4 quarters is same as one dollar.' -L 'yes,fromArg,quarters'
 
-#node $EPARSER -l -t 'One Foot is 12 Inch .'  -L 'yes,toArg,Inch'
-#node $EPARSER -l -t 'One Foot is 12 Inch .'  -L 'yes,fromArg,Foot'
+##
+node $EPARSER -l -t 'One foot is 12 inch .'  -L 'yes,toArg,Inch'
+##
+node $EPARSER -l -t 'One foot is 12 inch .'  -L 'yes,fromArg,Foot'
+node $EPARSER -l -t '4 quarters is one Dollar.'  -L 'yes,fromArg,quarters'
+
 
 node $EPARSER -l -t 'Twenty Moo equals 40 Boo.' -L 'yes,toArg,Boo'
 node $EPARSER -l -t 'Twenty Moo equals 40 Boo.' -L 'yes,fromArg,Moo'
@@ -79,7 +83,7 @@ node $EPARSER -i ./data/sample-training.txt -l -t 'Twenty Moo equals 40 Boo.' -L
 node $EPARSER -i ./data/sample-training.txt -l -t 'Twenty moo is equal to 4 hundred boo.' -L 'yes,Relation,moo,boo,Twenty,4 hundred'
 node $EPARSER -i ./data/sample-training.txt -l -t 'twenty thousand Moo makes 4000 Boo.' -L 'yes,Relation,Moo,Boo,twenty thousand,4000'
 ## node $EPARSER -l -t 'Four quarters makes a Dollar.' -L 'yes,Relation,quarters,Dollar,Four,1'
-##node $EPARSER -l -t '4 quarters is one Dollar.' -L 'yes,Relation,quarters,Dollar,4,one'
+node $EPARSER -l -t '4 quarters is one Dollar.' -L 'yes,Relation,quarters,Dollar,4,one'
 #node $EPARSER -l -t '4 quarters is equal to one Dollar.' -L 'yes,Relation,quarters,Dollar,4,one'
 node $EPARSER -i ./data/sample-training.txt -l -t 'One inch is same as 2.54 cm.'  -L 'yes,Relation'
 

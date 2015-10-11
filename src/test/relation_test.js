@@ -106,6 +106,7 @@ describe('Explanation Type:RelationMath Test ::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
+                //console.log(' RET = ' + JSON.stringify(ret));
                 assert.deepEqual(getRelationRes(ret), res);
             });
     }).bind(null, txt, res));

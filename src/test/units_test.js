@@ -26,6 +26,15 @@ describe('Grammar Type:Unit Test::', function() {
 
 
     var txt, res;
+    txt = 'zTime is a type of measure.';
+    it(txt, (function (txt, res) {
+        return TUtils.processExp(nlp, txt);
+    }).bind(null, txt, res));;
+
+    txt = 'zLength is a type of measure.';
+    it(txt, (function (txt, res) {
+        return TUtils.processExp(nlp, txt);
+    }).bind(null, txt, res));;
 
     txt = 'Units for zTime are Hours, Minutes, Seconds, Days, Weeks.';
     res = {"unitsFor":"zTime","units":["Hours","Minutes","Seconds","Days","Weeks"]};

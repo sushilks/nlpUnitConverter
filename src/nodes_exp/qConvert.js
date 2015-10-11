@@ -37,7 +37,7 @@ class QConvert extends BaseExp {
         };
 
     }
-    exec(gr) {
+    exec(gr, verbose = true) {
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());
         //console.log("----- " + JSON.stringify(this.result));
@@ -60,8 +60,10 @@ class QConvert extends BaseExp {
                     val = val * ed.conv;
                     currentNode = nextNode;
                 }
-                console.log('\t\t' + this.getName() + '::Converted ' + this.result.args.fromValue + ' ' + nFrom + ' to ' +
-                    nTo + ' Value = ' + val);
+                if (verbose) {
+                    console.log('\t\t' + this.getName() + '::Converted ' + this.result.args.fromValue + ' ' + nFrom + ' to ' +
+                        nTo + ' Value = ' + val);
+                }
                 //g.addEdge(nFrom, nTo, {conv: this.getConv()});
                 //g.addEdge(nTo, nFrom, {conv: 1.0/this.getConv()});
                 return;

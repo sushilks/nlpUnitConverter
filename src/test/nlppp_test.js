@@ -181,7 +181,7 @@ describe('NLPPP Test::', function() {
 
     it('txt1 dep child', ()=>{
         let dep = pp1.getSentenceDep(0);
-        let d1 = dep.getChildNodes(dep.getRootToken());
+        let d1 = dep.getChildNodes(parseInt(dep.getRootToken()));
         assert.equal(3, d1.length);
         assert.equal(1, d1[0].tokenIdx);
         assert.equal('nsubjpass', d1[0].type);

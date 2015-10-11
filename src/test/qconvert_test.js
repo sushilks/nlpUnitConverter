@@ -27,6 +27,41 @@ describe('Explanation Type:Question Converstion Test::', function() {
 
 
     var txt, res;
+    txt = 'ZEQtest is a type of measure.';
+    it(txt, (function (txt, res) {
+        return TUtils.processExp(nlp, txt);
+    }).bind(null, txt, res));;
+
+
+    txt = 'Units for ZEQtest are xx, yy, meters, yards, foot, centimeter, miles, inches';
+    it(txt, (function (txt, res) {
+        return TUtils.processExp(nlp, txt);
+    }).bind(null, txt, res));
+
+    txt = 'there is one xx in two yy.';
+    it(txt, (function (txt, res) {
+        return TUtils.processExp(nlp, txt);
+    }).bind(null, txt, res));
+
+    txt = 'there is one meter in two yard.';
+    it(txt, (function (txt, res) {
+        return TUtils.processExp(nlp, txt);
+    }).bind(null, txt, res));
+
+    txt = 'there is one meter in two foot.';
+    it(txt, (function (txt, res) {
+        return TUtils.processExp(nlp, txt);
+    }).bind(null, txt, res));
+
+    txt = 'there is one mile in two inch.';
+    it(txt, (function (txt, res) {
+        return TUtils.processExp(nlp, txt);
+    }).bind(null, txt, res));
+
+    txt = 'there is 100 centimeter in one meter.';
+    it(txt, (function (txt, res) {
+        return TUtils.processExp(nlp, txt);
+    }).bind(null, txt, res));
 
     txt = 'Convert 60 xx to yy.';
     res = {"fromValue":"60","convTo":"yy","convFrom":"xx"};

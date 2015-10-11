@@ -51,7 +51,7 @@ export function parse(data, grMatch, dict = false, exp = false,  dbg = false) {
                     .then( function(dt) {
                         for (let idx in nd.expMatches) {
                             try {
-                                nd.expMatches[idx].exec(graphDB);
+                                nd.expMatches[idx].exec(graphDB, false);
                             } catch (e) {
                                 console.log('Node:' + nd.expMatches[idx].name + ' had an exception when runing exec.')
                                 console.log(e);

@@ -24,8 +24,8 @@ describe('Grammar VerbBase Test ::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
-                assert.deepEqual(ret[0].verb.dataValueTagged, res.verb.dataValueTagged);
-                assert.deepEqual(ret[0].verb.data[0].subj.dataValueTagged, res.verb.subj.dataValueTagged);
+                assert.deepEqual(ret[0]['verb:cop'].dataValueTagged, res.verb.dataValueTagged);
+                assert.deepEqual(ret[0]['verb:cop'].data[0].subj.dataValueTagged, res.verb.subj.dataValueTagged);
             });
     }).bind(null, txt, res));
     txt = 'there is 60 sec in one min.';
@@ -38,7 +38,7 @@ describe('Grammar VerbBase Test ::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
-                assert.deepEqual(ret[0].verb.dataValueTagged, res.verb.dataValueTagged);
+                assert.deepEqual(ret[0]['verb:root'].dataValueTagged, res.verb.dataValueTagged);
             });
     }).bind(null, txt, res));
 
@@ -49,7 +49,7 @@ describe('Grammar VerbBase Test ::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
-                assert.deepEqual(ret[0].verb.dataValueTagged, res.verb.dataValueTagged);
+                assert.deepEqual(ret[0]['verb:root'].dataValueTagged, res.verb.dataValueTagged);
             });
     }).bind(null, txt, res));
 
@@ -61,8 +61,8 @@ describe('Grammar VerbBase Test ::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
-                assert.deepEqual(ret[0].verb.dataValueTagged, res.verb.dataValueTagged);
-                assert.deepEqual(ret[0].verb.token, res.verb.token);
+                assert.deepEqual(ret[0]['verb:root'].dataValueTagged, res.verb.dataValueTagged);
+                assert.deepEqual(ret[0]['verb:root'].token, res.verb.token);
             });
     }).bind(null, txt, res));
 
@@ -81,9 +81,9 @@ describe('Grammar VerbBase Test ::', function() {
         return TUtils.processGrDict(nlp, txt, /VerbBase/)
             .then(function(ret) {
                 // console.log(' RET = ' + JSON.stringify(ret));
-                assert.deepEqual(ret[0].verb.token, res.verb.token);
-                assert.deepEqual(ret[0].verb.dataValueTagged, res.verb.dataValueTagged);
-                assert.deepEqual(ret[0].verb.data[0].subj.dataValueTagged, res.verb.subj.dataValueTagged);
+                assert.deepEqual(ret[0]['verb:cop'].token, res.verb.token);
+                assert.deepEqual(ret[0]['verb:cop'].dataValueTagged, res.verb.dataValueTagged);
+                assert.deepEqual(ret[0]['verb:cop'].data[0].subj.dataValueTagged, res.verb.subj.dataValueTagged);
             });
     }).bind(null, txt, res));
 
@@ -99,8 +99,8 @@ describe('Grammar VerbBase Test ::', function() {
             .then(function(ret) {
                 //console.log('ret[0] = ' + JSON.stringify(ret[0]));
                 //console.log('RES    = ' + JSON.stringify(res));
-                assert.deepEqual(ret[0].verb.dataValueTagged, res.verb.dataValueTagged);
-                assert.deepEqual(ret[0].verb.token, res.verb.token);
+                assert.deepEqual(ret[0]['verb:root'].dataValueTagged, res.verb.dataValueTagged);
+                assert.deepEqual(ret[0]['verb:root'].token, res.verb.token);
             });
     }).bind(null, txt, res));
 
@@ -117,8 +117,8 @@ describe('Grammar VerbBase Test ::', function() {
                 //console.log('ret[0] = ' + JSON.stringify(ret[0]));
                 //console.log('RES    = ' + JSON.stringify(res));
                 //assert.deepEqual(ret[0], res);
-                assert.deepEqual(ret[0].verb.dataValueTagged, res.verb.dataValueTagged);
-                assert.deepEqual(ret[0].verb.token, res.verb.token);
+                assert.deepEqual(ret[0]['verb:root'].dataValueTagged, res.verb.dataValueTagged);
+                assert.deepEqual(ret[0]['verb:root'].token, res.verb.token);
             });
     }).bind(null, txt, res));
 

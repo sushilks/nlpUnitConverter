@@ -1,0 +1,6 @@
+Length is a type of measure.
+Units for Length are Foot, Inch.
+Money is a type of measure.
+Units for Money are dollar, cents.
+Weight is a type of measure.
+Units for Weight are tons, kilos.
