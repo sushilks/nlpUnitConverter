@@ -35,11 +35,11 @@ class Dependency {
         }
     }
     getChildNodes(tokenIdx: number): Array<ChildNodeList> {
-        let ret = [];
+        let ret: Array<ChildNodeList> = [];
         for (var cidx in this.dep) {
             // todo:: over ride <string> because someone is passing a string in tokenIdx
             // have to find and remove <strign>
-            if (parseInt(this.dep[cidx].governor.$.idx) === parseInt(<string>tokenIdx)) {
+            if (parseInt(<any>this.dep[cidx].governor.$.idx) === parseInt(<any>tokenIdx)) {
                 let r: ChildNodeList = {
                     tokenIdx: this.dep[cidx].dependent.$.idx,
                     type: this.dep[cidx].$.type
@@ -49,10 +49,10 @@ class Dependency {
         }
         return ret;
     }
-    getParentNodes(tokenIdx: number) {
-        let ret = [];
+    getParentNodes(tokenIdx: number): Array<ChildNodeList> {
+        let ret: Array<ChildNodeList> = [];
         for (var cidx in this.dep) {
-            if (parseInt(this.dep[cidx].dependent.$.idx) === parseInt(<string>tokenIdx)) {
+            if (parseInt(<any>this.dep[cidx].dependent.$.idx) === parseInt(<any>tokenIdx)) {
                 let r: ChildNodeList = {
                     tokenIdx: this.dep[cidx].governor.$.idx,
                     type: this.dep[cidx].$.type

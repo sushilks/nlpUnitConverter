@@ -43,7 +43,7 @@ interface DBItem {
     fixedExtract: {[key: string]: string};
 }
 
-/*
+
 declare class Nodes {
     dep: Dependency;
     tknNodeMap: {
@@ -70,4 +70,3 @@ declare class Nodes {
     processNodeGrammar(nd: BaseNode): void;
     processGr(tknId: number): boolean;
     }
-*/

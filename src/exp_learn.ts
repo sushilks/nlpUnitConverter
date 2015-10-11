@@ -1,5 +1,7 @@
+/// <reference path="../nodejs.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
+//import ExpLearn from "./";
 'use strict';
-declare function require(name:string);
 
 var readline = require('readline');
 import * as Utils from './nodes_utils';
@@ -10,9 +12,10 @@ var assert = require('assert');
 var dbg = require('debug')('exp:learn');
 
 
-async function readPattern(msg: string, vlist: Array<string>, learnData: Array<string>, res: {[key:string]: string;}) {
+async function readPattern(msg: string, vlist: Array<string>, learnData: Array<string>,
+                           res: {[key:string]: string;}): Promise<{[key:string]: string;}> {
     if (vlist.length === 0) {
-        return [];
+        return <{[key:string]: string;}>{};
     } else {
         var line = await Utils.getStdin('>> Processing [' + vlist[0] + '] ' + msg, learnData);
         res[vlist[0]] = <string>line;
@@ -30,7 +33,7 @@ async function readPattern(msg: string, vlist: Array<string>, learnData: Array<s
 class ExpLearn {
     db: ExpDB;
     gExpMapper: ExpMapperType;
-    gExpFn : any;
+    gExpFn : {[key: string]: typeof ExpBase};
 
     constructor(db: ExpDB,  gExpMapper: ExpMapperType) {
         this.db = db;
@@ -89,7 +92,7 @@ class ExpLearn {
 
 
 
-    autoExtractMatch(verb: GrProcessNodeValueMap, res: LearnEntry, expMatches) {
+    autoExtractMatch(verb: GrProcessNodeValueMap, res: LearnEntry, expMatches: Array<ExpBase>) {
         /*console.log("---- > autoExtractMatch::verb " + JSON.stringify(verb));
         console.log("---- > autoExtractMatch::res " + JSON.stringify(res));
         console.log("---- > autoExtractMatch::expMatches " + JSON.stringify(expMatches));
@@ -97,7 +100,7 @@ class ExpLearn {
         let ekeys = Object.keys(res.extract);
 
 
-        Object.keys(verb).map((function(this_,verbItem) {
+        Object.keys(verb).map((function(this_: ExpLearn, verbItem: string) {
             // a verb is found
             //let verbDt = res.match[verbItem];
             //console.log(' item = ' + verbItem + ' = ' + verb[verbItem]);
@@ -112,7 +115,7 @@ class ExpLearn {
                     // console.log('     resItem = ' + resItem + ' v = ' + resVal + ' extArgs =' + JSON.stringify(extArgs));
                     // check for exact match first
                     if (!(extArgs.type && 'extractionNode' in extArgs)) {
-                        let foundPtr;
+                        let foundPtr: string;
                         if (extArgs.type && extArgs.type.toLowerCase() === 'list') {
                             foundPtr = LearnUtils.findListInTree(verb, resVal.split(' '));
                         } else {
@@ -155,8 +158,8 @@ class ExpLearn {
 
         }).bind(null, this));
 
-        let expDep: {[key: string] : Array<string>};
-        expDep = <{[key: string] : Array<string>}> {};
+        let expDep: {[key: string] : Array<ExpBase>};
+        expDep = <{[key: string] : Array<ExpBase>}> {};
         for (let k1 in res.extract) {
             if (res.extract[k1].match(/^EXPNODE/)) {
                 let eNode= res.extract[k1].split(':')[1];
@@ -182,7 +185,9 @@ class ExpLearn {
         //return _this.readPattern('Regexp >', vlist, vres.match);
     }
 
-    learn(stmt: string, verbMatches: Array<GrBase>, learnData: Array<string> = null, expMatches: Array<string>=null) {
+//    learn(stmt: string, verbMatches: Array<GrBase>, learnData: Array<string> = null, expMatches: Array<string>=null) {
+    async learn(stmt: string, verbMatches: Array<GrBase>, learnData: Array<string> = null,
+          expMatches: Array<ExpBase>=null): Promise<boolean> {
         //console.log('learn::verbMatches ' + JSON.stringify(Object.keys(verbMatches[0])));
         //console.log('learn::learnData' + JSON.stringify(learnData));
         //console.log('learn::expMatches ' + JSON.stringify(expMatches));
@@ -192,6 +197,98 @@ class ExpLearn {
         //console.log('LEARNING '+verbMatches.length);
         assert.equal(verbMatches.length,1,'Un-Implemented.' + verbMatches.length);
 
+        try {
+            let vres:LearnEntry = {
+                stmt: stmt,
+                match: {},
+                extract: {},
+                type: null,
+                args: null,
+                prop: null
+            };
+            let line = await Utils.getStdin('>> Do you want to learn this pattern (Yes/No)>', learnData);
+            if (line.match(/no/i)) {
+                console.log('OK Will skip.')
+                return false;
+            } else if (line.match(/yes/i)) {
+                let k = Object.keys(this.gExpFn);
+                line = await Utils.getStdin('>> Select Node type (' + k + ')? ', learnData);
+            } else {
+                console.error('invalid answer [' + line + ']');
+                return false;
+            }
+
+            let nd:typeof ExpBase;
+            for (let key in this.gExpFn) {
+                if (key.toLowerCase() === line.toLowerCase()) {
+                    nd = this.gExpFn[key];
+                    line = key;
+                    break;
+                }
+            }
+            if (!nd) {
+                console.log('Unable to find definition for node [' + line + ']');
+                console.error('invalid Node ' + line);
+                return false;
+            } else {
+                vres.type = line;
+                let alistDict = nd.getArgs();
+                let prop = nd.getProp();
+                let alist = Object.keys(alistDict);
+                vres.args = alistDict;
+                let alistNoTags = [];
+                {
+                    for (let k of alist) {
+                        //let kl = k.split(':');
+                        if ('extractionNode' in alistDict[k] && 'type' in alistDict[k]) {
+                            vres.extract[k] = alistDict[k].type + ':' + alistDict[k].extractionNode;
+                            // }
+                            //if (kl.length === 2 && kl[0] === 'Number' && alist.indexOf(kl[1])!== -1) {
+                            //    vres.extract[k] = 'insert-extracted-NUM';
+                        } else {
+                            alistNoTags.push(k);
+                        }
+                    }
+                    if (prop !== undefined && prop != {}) {
+                        vres.prop = prop;
+                    }
+                }
+                //console.log('Node:[' + line + '] Args Needed :' + JSON.stringify(alist));
+                await readPattern('Select > ', alistNoTags, learnData, vres.extract);
+                /*
+                 let vlist = [];
+
+                 Object.keys(verbMatches[0].dict()).map(function(item) {
+                 if(!item.match(/^raw/)) {
+                 vlist.push(item);
+                 }
+                 });
+                 return _this.readPattern('Regexp >', vlist, vres.match);
+                 */
+                //return Utils.getStdin('>> Processing [' + vlist[0] + '] Regex >' )
+                //resolve(null);
+            }
+//            let alist = [];
+
+            //.then(function(res) {
+            //        if (done) return false;
+            //        //console.log('LEARNED ::: ' + JSON.stringify(vres));
+            //        return _this.readPattern('Select > ', alist, vres.extract);
+            //    })
+            // at this point we have the
+            // verb and the argument
+            this.autoExtractMatch(verbMatches[0].dict(), vres, expMatches)
+            console.log('LEARNED :::' + JSON.stringify(vres));
+            let res = await this.db.insert(vres);
+            return (res)?true:false;
+        } catch(e) {
+            console.log("Error :: " + e);
+            console.log(e.stack);
+            return false;
+        };
+
+
+        /*
         return new Promise(
             (function(_this, resolve, reject) {
                 let vres: LearnEntry = {
@@ -258,23 +355,21 @@ class ExpLearn {
                             }
                             //console.log('Node:[' + line + '] Args Needed :' + JSON.stringify(alist));
                             return readPattern('Select > ', alistNoTags, learnData, vres.extract);
-                            /*
-                             Object.keys(verbMatches[0].dict()).map(function(item) {
-                             if(!item.match(/^raw/)) {
-                             vlist.push(item);
-                             }
-                             });
-                             return _this.readPattern('Regexp >', vlist, vres.match);
-                             */
+                             //Object.keys(verbMatches[0].dict()).map(function(item) {
+                             //if(!item.match(/^raw/)) {
+                             //vlist.push(item);
+                            // }
+                            // });
+                            // return _this.readPattern('Regexp >', vlist, vres.match);
                             //return Utils.getStdin('>> Processing [' + vlist[0] + '] Regex >' )
                             //resolve(null);
                         }
                     })
-                /*.then(function(res) {
-                        if (done) return false;
-                        //console.log('LEARNED ::: ' + JSON.stringify(vres));
-                        return _this.readPattern('Select > ', alist, vres.extract);
-                    })*/
+                //.then(function(res) {
+                //        if (done) return false;
+                //        //console.log('LEARNED ::: ' + JSON.stringify(vres));
+                //        return _this.readPattern('Select > ', alist, vres.extract);
+                //    })
                 .then(function(res) {
                         // at this point we have the
                         // verb and the argument
@@ -294,6 +389,7 @@ class ExpLearn {
                     });
 
             }).bind(null, this));
+*/
     }
 
 }

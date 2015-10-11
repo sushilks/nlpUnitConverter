@@ -1,6 +1,6 @@
+/// <reference path="../../nodejs.d.ts" />
 /// <reference path="../nodes_gr/base_gr.d.ts" />
 'use strict';
-declare function require(name:string);
 import Tokens from './tokens';
 import Dependency from './dependency';
 
@@ -30,7 +30,7 @@ class GrBase {
     }
 
     dict():GrProcessNodeValueMap  {
-        let r;
+        let r: GrProcessNodeValueMap;
         r =  this.processNode(r);
         return r;
     }
@@ -61,18 +61,19 @@ class GrBase {
      itm.data = [{status:'ERROR: No Grammar [' + nd.getToken() + ']'}];
      }
      }*/
-    resolveSubNodes(data:GrProcessNodeValue) {
+    resolveSubNodes(data: GrProcessNodeValue) {
         let keys_ = Object.keys(data);
-        let keys = [];
+        let keys: Array<string> = [];
         for (let k of keys_) {
-            if (data[k]) keys.push(k);
+            if ((<any>data)[k])
+                keys.push(k);
         }
 
         //let resolveList = [];
         for (let k of keys) {
             //console.log('k1=' + k + ' array=' + Array.isArray(data[k]));
             if (k === 'tokenId') {
-                let n = this.nodes.getNodeMap(data[k]);
+                let n = this.nodes.getNodeMap((<any>data)[k]);
                 //console.log('   k2 = ' + data[k] + ' ::' + n.getToken());
                 data.token = n.getToken();
 
@@ -92,10 +93,10 @@ class GrBase {
                     data.dataValueTagged = n.getValues(true);
                 }
                 //this.resolveItem(data);
-            } else if (data[k]) {
+            } else if ((<any>data)[k]) {
                 // console.log("----k=" + k + ". == " + JSON.stringify(data[k]));
-                if ('tokenId' in data[k]) {
-                    this.resolveSubNodes(data[k]);
+                if ('tokenId' in (<any>data)[k]) {
+                    this.resolveSubNodes((<any>data)[k]);
 
                 }
             }
@@ -103,7 +104,7 @@ class GrBase {
     }
 
     getValues(tagged = false):string {
-        let res = [];
+        let res: Array<string> = [];
         let children = this.toNode.getChildren();
         //console.log(' gr::getValues called ' + this.name );
         for (let child in children) {
@@ -146,7 +147,7 @@ class GrBase {
         return ret;
     }
 
-    static checkValid(nodeList, fromNode, linkType, toNode) {
+    static checkValid(nodeList: Nodes, fromNode: string, linkType: string, toNode: string) {
         return [false, {}];
     }
 }

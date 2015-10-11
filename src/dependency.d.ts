@@ -30,8 +30,7 @@ interface LinkedNode {
     node: any;
 //    node: BaseNode;
 }
-/*
-declare class Dependency2 {
+declare class Dependency {
     private dep;
     tok: Tokens;
     constructor(dep: Array<DepType>, tok: Tokens);
@@ -42,4 +41,3 @@ declare class Dependency2 {
     getChildNodes(tokenIdx: number): Array<ChildNodeList>;
     getParentNodes(tokenIdx: number): any[];
 }
-*/

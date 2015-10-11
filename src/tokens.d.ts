@@ -28,8 +28,7 @@ interface TokenType {
         id: number
     };
 }
-/*
-declare class Tokens2 {
+declare class Tokens {
     private tokens;
     constructor(tkn: Array<TokenTypeRAW>);
     tokenCount(): number;
@@ -37,4 +36,3 @@ declare class Tokens2 {
     getTokenPOS(idx: number): string;
     getTokenNER(idx: number): number;
 }
-*/

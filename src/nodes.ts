@@ -113,13 +113,13 @@ class Nodes {
     }
 
     public async processAllExpDB_(root: GrProcessNodeValueMap, db: ExpDB, graphDB: any, mHistory: Array<string>,
-                                  cnt: number = 0) {
+                                  cnt: number = 0): Promise<boolean> {
         if (cnt > 20) {
             assert.equal(0, 1, 'Too much recurstion');
         }
         let dt: {[key: string] : any} = await db.find({});
-        // console.log(' TEST - DB - dt = ' + JSON.stringify(dt));
-        let found: boolean = false;
+        //console.log(' TEST - DB - dt = ' + JSON.stringify(dt));
+         let found: boolean = false;
         try {
             for (let dbItemKey in  Object.keys(dt)) {
                 let dbItem: DBItem = dt[dbItemKey];
@@ -283,7 +283,7 @@ class Nodes {
     public processNodeGrammar(nd: BaseNode) {
         // find all the children and recurse
         var children = nd.getChildren();
-        var loc;
+        var loc: string;
         // let fromNodePOS = nd.getPOS();
         for (loc in children) {
             let c = children[loc];

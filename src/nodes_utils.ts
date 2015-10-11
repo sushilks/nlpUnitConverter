@@ -2,12 +2,12 @@
 /// <reference path="nodes_utils.d.ts" />
 /// <reference path="../nodejs.d.ts" />
 import Nodes from './nodes';
+import assert from 'assert';
 
-declare function require(name:string);
 //'use strict';
 var Jsnx = require('jsnetworkx');
 
-function nodeAdd_(nmap, d, fn) {
+function nodeAdd_(nmap: {[key: string]: Array<any>}, d: string, fn: any) {
     if (!(d in nmap)) {
         nmap[d] = [];
     }
@@ -32,7 +32,7 @@ export function nodeInit(nmap: any, fn: any) {
     }
     return fn;
 }
-export function nodeInitExp(nmap: ExpMapperType, fn: any) {
+export function nodeInitExp(nmap: ExpMapperType, fn: typeof ExpBase) {
     let dt = fn.getMatchToken();
     //if (!('_map' in nmap)) {
     //    nmap['_map'] = {};
@@ -47,13 +47,14 @@ export function nodeInitExp(nmap: ExpMapperType, fn: any) {
         }
     } else {
         //nmap[dt] = fn;
+        //assert(0,1);
         nodeAdd_(nmap.match, dt, fn);
     }
     return fn;
 }
 
-export function nodeInitGr(nmap: GrMapperType, fn) {
-    let dt = fn.getMatchToken();
+export function nodeInitGr(nmap: GrMapperType, fn: typeof GrBase) {
+    let dt: GrMatchTokenType = fn.getMatchToken();
     for (let d of dt) {
         if (!(d.name in nmap)) {
             nmap[d.name] = [];
@@ -123,7 +124,7 @@ export function findGrammarRules(grMapper: GrMapperType, fromNode: BaseNode, lin
         fromNodePOS = fromNode.getPOS();
     }
     let toNodePOS = toNode.getPOS();
-    let retRules = [];
+    let retRules: Array<FindGrammarRetTypeDt> = [];
     for (let k in grMapper) {
         for (let gr of grMapper[k]) {
             let found = true;
@@ -173,7 +174,7 @@ export function findGrammarRules(grMapper: GrMapperType, fromNode: BaseNode, lin
  * @returns {Array} - array of token id's that match
  */
 export function checkChildLinks(nd: BaseNode, linkType: string): Array<number> {
-    let resLoc  = [];
+    let resLoc: Array<number>  = [];
     let re = new RegExp('^' + linkType + '$');
     for (let loc in nd.getChildren()) {
         let c = nd.getChild(loc);
@@ -202,7 +203,7 @@ export function getChildLink(nodes: Nodes, pToken: number, cToken: number) {
 }
 
 function checkMatchAny_(txt: any, arr: any): boolean {
-    let re;
+    let re: string | RegExp;
     if (Object.prototype.toString.call(txt) === '[object RegExp]') {
         re = txt;
     } else {
@@ -228,7 +229,7 @@ function checkMatchAny_(txt: any, arr: any): boolean {
  * @param itm2 - same as itm1 except some combinations are not allowed.
  * @returns {*} - true or false
  */
-export function checkMatchAny(itm1, itm2): boolean {
+export function checkMatchAny(itm1: any, itm2: any): boolean {
     if (Array.isArray(itm1) && !Array.isArray(itm2)) {
         return checkMatchAny_(itm2, itm1);
     } else if (!Array.isArray(itm1) && Array.isArray(itm2)) {
@@ -249,7 +250,7 @@ export function checkMatchAny(itm1, itm2): boolean {
     }
 }
 
-export function kMatch(dict: {[key: string]: any}, key: string, re) {
+export function kMatch(dict: {[key: string]: any}, key: string, re: string|RegExp) {
     if (key in dict && dict[key]) {
         return dict[key].match(re);
     }
@@ -281,7 +282,7 @@ export function checkNodeValuesMatchAny(nd: BaseNode, arr: Array<any>, regex=fal
 }
 
 
-const Small = {
+const Small: {[key:string]: number} = {
     'zero': 0,
     'one': 1,
     'two': 2,
@@ -311,7 +312,7 @@ const Small = {
     'eighty': 80,
     'ninety': 90
 };
-const Magnitude = {
+const Magnitude: {[key:string]: number} = {
     'thousand':     1000,
     'million':      1000000,
     'billion':      1000000000,
@@ -326,7 +327,7 @@ const Magnitude = {
 };
 function textToNumberFeach(dt: {n: number, g: number}, word: string) {
     let w = word.toLowerCase().replace(/,/g,'');
-    var x = Small[w];
+    let x: number = Small[w];
     if (x != null) {
         dt.g = dt.g + x;
     } else if (w.match(/^[ 0-9.]*$/)) {
@@ -362,14 +363,14 @@ export function textToNumber(s : string): number {
 }
 
 
-export function createGraph(gr, name: string, attr) {
+export function createGraph(gr: NodeGraph, name: string, attr: any) {
     attr.name = name;
     gr[name] = new Jsnx.DiGraph(null, attr);
     //console.log('CREATED [' + name + '] = ' + gr[name]);
     return gr[name];
 }
 
-export function getStdin(prompt: string, cannedData: Array<string>){
+export function getStdin(prompt: string, cannedData: Array<string>): Promise<string> {
     process.stdout.write(prompt);
     return new Promise(function(resolve, reject) {
         var input: string = '';
@@ -380,7 +381,7 @@ export function getStdin(prompt: string, cannedData: Array<string>){
         } else {
             process.stdin.resume();
             process.stdin.setEncoding('utf8');
-            var f1 = function(chunk) {
+            var f1 = function(chunk: string): void {
                 input += chunk;
                 if (chunk.indexOf('\n') != 1) { //(theyPressedEnter(chunk)) {
                     input = input.replace(/\n/g, '');

@@ -1,22 +1,14 @@
-
-
-
+/// <reference path="../nodejs.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 /// < reference path="../node_modules/source-map-support/source-map-support.js" />
 'use strict';
 
-/* @flow */
-//import { install } from 'source-map-support';
-//install();
 require('source-map-support').install();
 require('babel/polyfill');
-/*
-require("babel/register")({
-    optional: ['es7.asyncFunctions']
-});*/
 
 var assert = require('assert');
 // typescript needs the definition.
-declare function require(name:string);
+//declare function require(name:string);
 var ArgumentParser = require('argparse').ArgumentParser;
 var FS = require('fs');
 var Ut = require('util');
@@ -31,14 +23,13 @@ import Nodes from './nodes';
 import ExpDB from './expdb';
 import ExpLearn from './exp_learn';
 import * as Utils from './nodes_utils';
-var parser;
-let expLearn;
-let expDB;
+let expLearn: ExpLearn;
+let expDB: ExpDB;
 
 //import NLPPP from './nlp_pp';
 //var ToDefine = require('./to_define');
 
-parser = new ArgumentParser({
+let parser = new ArgumentParser({
     version: '1.0.0',
     addHelp: true,
     description: 'A language parser'});
@@ -94,7 +85,7 @@ function parseNodes(dep: Dependency, tokens: Tokens, tknid: number, linkType: st
         parseNodes(dep, tokens, childNodes[id].tokenIdx, childNodes[id].type, level + 1);
     }
  }
-async function parse(data, gr, dbge: boolean = false) {
+async function parse(data:{body: string}, gr: NodeGraph, dbge: boolean = false): Promise<boolean> {
     var pp = new NLPPP();
     var res = pp.read(data.body);
     var dbg = debug('eparser:parse');
@@ -190,7 +181,7 @@ async function parse(data, gr, dbge: boolean = false) {
     }
 
     if (args.learn && !alreadyLearned && learnData.length !== 0) {
-        let v = [];
+        let v: Array<GrBase> = [];
         for (let idx in nd.grMatches) {
             if (nd.grMatches[idx].getName().match(/VerbBase/)) {
                 //console.log('   Verb in this statement :: ' + JSON.stringify(nd.grMatches[idx].processNode()));
@@ -202,12 +193,13 @@ async function parse(data, gr, dbge: boolean = false) {
         */
         return expLearn.learn(pp.getSentence(0), v, learnData, nd.expMatches);
     } else {
-        return res;
+        return true;
     }
 
     } catch(e) {
         console.log(' Exception in eparser:parse e [' + e + ']');
         console.log('   -> ' + e.stack);
+        return false;
     }
 
 }
@@ -216,13 +208,13 @@ async function parse(data, gr, dbge: boolean = false) {
   * Send a text to the Client get the
   * nlp response and process it
   */
-async function processText(client, txt, gr, dbg=false) {
+async function processText(client: NLPClient, txt: string, gr: NodeGraph, dbg=false) {
     let res = await client.req(txt);
     let p = await parse(res, gr, dbg);
     return p;
 }
 
-async function processList(client, txtList, gr, dbg) {
+async function processList(client: NLPClient, txtList: Array<string>, gr: NodeGraph, dbg: typeof debug): Promise<void> {
     let t = txtList.shift();
     if (t === '') {
         if (txtList.length)
@@ -236,14 +228,14 @@ async function processList(client, txtList, gr, dbg) {
         return;
     }
 }
- async function startCLI(fn) {
+ async function startCLI(fn: (line: string)=>void ): Promise<void> {
     let dt1 = await Utils.getStdin('>', []);
     let dt2 = await fn(dt1);
     let dt3 = await startCLI(fn);
     return dt3;
 }
 
-async function main(args, nlp, gr) {
+async function main(args: any, nlp: NLPClient, gr: NodeGraph): Promise<void> {
     if (args.input && args.input !== '') {
         var contents = FS.readFileSync(args.input).toString();
         let txt = contents.split('\n');
@@ -308,7 +300,7 @@ Not able to parse even simple constructs right now. need to analyze them a bit.
 */
 expDB = new ExpDB('lexp.db');
 let nlp =  new NLPClient();
-let gr = {};
+let gr: NodeGraph = <NodeGraph>{};
 /*
 var rl = readline.createInterface({
     input:process.stdin,

@@ -1,21 +1,20 @@
+/// <reference path="../nodejs.d.ts" />
 'use strict';
-declare function require(name:string);
 var  Datastore = require('nedb');
 var assert = require('assert');
 
 
 class ExpDB {
     db: any;
-    constructor(fileName) {
+    constructor(fileName: string) {
         this.db = new Datastore({filename: fileName,
             autoload: true});
-        assert(1,0);
-
+        // assert(1,0);
     }
-    insert(doc: string) {
+    async insert(doc: any): Promise<any> {
         return new Promise(
-            (function(_this, resolve, reject) {
-                _this.db.insert(doc, function(err, newDoc) {
+            (function(_this: ExpDB, resolve: (dt:any)=>void, reject: (dt:any)=>void) {
+                _this.db.insert(doc, function(err: any, newDoc: any) {
                     if (err) {
                         reject(err);
                     } else {
@@ -24,10 +23,10 @@ class ExpDB {
                 });
             }).bind(null, this));
     }
-    find(pat: any) {
+    async find(pat: any): Promise<any> {
         return new Promise(
-            (function(_this, resolve, reject) {
-                _this.db.find(pat, function(err, docs) {
+            (function(_this: ExpDB, resolve: (dt:any)=>void, reject: (dt:any)=>void) {
+                _this.db.find(pat, function(err: any, docs: any) {
                     if (err) {
                         reject(err);
                     } else {
@@ -36,10 +35,10 @@ class ExpDB {
                 });
             }).bind(null, this));
     }
-    remove(pat: any) {
+    remove(pat: any): Promise<any> {
         return new Promise(
-            (function(_this, resolve, reject) {
-                _this.db.remove(pat, {multi:true}, function(err, numRemoved) {
+            (function(_this: ExpDB, resolve: (dt:any)=>void, reject: (dt:any)=>void) {
+                _this.db.remove(pat, {multi:true}, function(err: any, numRemoved: any) {
                     if (err) {
                         reject(err);
                     } else {

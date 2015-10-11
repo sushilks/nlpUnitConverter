@@ -9,7 +9,6 @@ A Node needs the following capabilities
 
 need access to parent node with link type.
 */
-declare function require(name:string);
 //import Tokens from './tokens';
 //import Dependency from './dependency';
 
@@ -75,7 +74,7 @@ class BaseNode {
     getChildren(): {[key:number]:LinkedNode} {
         return this.children;
     }
-    getChild(loc): LinkedNode {
+    getChild(loc: string): LinkedNode {
         return this.children[loc];
     }
     /*
@@ -101,7 +100,7 @@ class BaseNode {
     }
     // this function may be overwritten by inheritance.
     getValues(tagged=false): string {
-        let data = [];
+        let data: Array<string> = [];
         let gr = this.getGrammarMatches();
         //console.log(' getValues called for :' + this.getToken() + ' [' + gr.length + ']');
         if (gr.length) {

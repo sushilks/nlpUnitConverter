@@ -1,6 +1,6 @@
+/// <reference path="nodes.d.ts" />
 /// <re ference path="dependency.d.ts" />
 'use strict';
-declare function require(name:string);
 import Tokens from './tokens';
 import Dependency from './dependency';
 

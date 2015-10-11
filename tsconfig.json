@@ -2,7 +2,8 @@
   "compilerOptions": {
     "target": "ES6",
     "experimentalAsyncFunctions": true,
-    "declaration": true
+    "declaration": true,
+    "noImplicitAny": true
 
   }
 }

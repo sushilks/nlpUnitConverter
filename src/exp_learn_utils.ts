@@ -1,8 +1,9 @@
+/// <reference path="../nodejs.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 /// <reference path="nodes.d.ts" />
 /// <reference path="exp_learn_utils.d.ts" />
 
-declare function require(name:string);
-//'use strict';
+'use strict';
 var readline = require('readline');
 var assert = require('assert');
 import ExpDB from './expdb';
@@ -84,8 +85,7 @@ function findInTree_(tree: any, val: RegExp, key: string): string {
 // value is string
 export function findInTree(tree: any, val: string): string {
     dbg(' Searching for val[' + val + '] in tree=' + tree);
-    let r;
-    r = findInTree_(tree, new RegExp('^' + val + '$', 'i'), 'root');
+    let r = findInTree_(tree, new RegExp('^' + val + '$', 'i'), 'root');
     if (r) {
         let dt = treePathNormalize(r);
         return dt;
@@ -173,8 +173,7 @@ function findListInTree_(tree: any, val: Array<string>, key: string): string {
 // value is string
 export function findListInTree(tree: any, val: Array<string>): string {
     dbg(' Searching for val[' + JSON.stringify(val) + '] in tree=' + tree);
-    let r;
-    r = findListInTree_(tree, val, 'root');
+    let r = findListInTree_(tree, val, 'root');
     if (r) {
         let dt = treePathNormalize(r);
         return dt;
@@ -235,8 +234,8 @@ function copyMatchTree_(extracted: Array<string>, tree: any, key: string): strin
 export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) {
     dbg('\tcopyMatchTree INPUT Verb::' + JSON.stringify(verb));
     dbg('\tcopyMatchTree INPUT Dest::' + JSON.stringify(dest.extract));
-        let extracted = [];
-    let extractedStr = [];
+    let extracted: Array<RegExp> = [];
+    let extractedStr: Array<string> = [];
     for (let key in  dest.extract) {
         let d = dest.extract[key].replace(/dataValue$/,'*').replace(/\.token$/, '');
         extracted.push(new RegExp(d + '$'));
@@ -258,7 +257,7 @@ export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) 
 
 
     dbg('\t\t EXTract = ' + JSON.stringify(extractedStr));
-    let vmatch = [];
+    let vmatch: Array<string> = [];
     copyMatchTree_(vmatch, verb, '');
     dbg('\t\t vmatch = ' + JSON.stringify(vmatch));
     let singleVerbEdge = false;
@@ -278,9 +277,9 @@ export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) 
             if (e1.match(/dataList/)) {
                 let e2 = ex.split('.');
                 e2.pop();
-                e2 = e2.join('.');
-                if (vm.match(new RegExp(e2 + '$')) ||
-                    vm.match(new RegExp(e2 + '.appos(.(appos|compound))*$')) // this is a bit hacky
+                let e2Str = e2.join('.');
+                if (vm.match(new RegExp(e2Str + '$')) ||
+                    vm.match(new RegExp(e2Str + '.appos(.(appos|compound))*$')) // this is a bit hacky
                 ) {
                     match = true;
                 }
@@ -299,14 +298,14 @@ export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) 
 
         if (!match && singleVerbEdge) {
             // extract the comm branch
-            let minBrArr = [];
+            let minBrArr: Array<string> = [];
             for (let ex of extractedStr) {
                 if (ex.split('.').length < minBrArr.length || minBrArr.length === 0) {
                     minBrArr = ex.split('.');
                 }
             }
             let minBr = minBrArr.join('.');
-            let minBrm1; // drop one of the last legs of extraction
+            let minBrm1: string; // drop one of the last legs of extraction
             if (minBrArr.length > 1) {
                 minBrm1 = minBrArr.slice(0, -1).join('.');
                 let s = minBrArr[minBrArr.length-2];
@@ -371,7 +370,7 @@ function extractTreeValue_(tree: any, key: Array<string>): Array<string> {
         //console.log(' k1 = ' + k1 + ' KEY = ' + key);
         if (key[0].match(/dataList/)) {
             // put list primitiv here ...
-            let e = [];
+            let e: Array<string> = [];
             e.push(tree.token)
             for (let dNode of tree.data) {
                 if (dNode.appos) {
@@ -463,8 +462,8 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
     dbgdb('db is ::: ' + JSON.stringify(dbItem));
     dbgdb('-------------------------> exp is ::: ' + JSON.stringify(Object.keys(expMatches)));
     // Gather all the extracts that are using EXP nodes
-    let expDep = {};
-    let extPathList = [];
+    let expDep: {[key: string]: Array<ExpBase>;} = {};
+    // let extPathList = [];
     for (let k1 in dbItem.extract) {
         if (dbItem.extract[k1].match(/^EXPNODE/)) {
             let eNode= dbItem.extract[k1].split(':')[1];
@@ -533,7 +532,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
     // console.log('==== ::expDep ' + JSON.stringify(expDep));
     for (let itm of Object.keys(dbItem.extract)) {
         let itmPath = dbItem.extract[itm];
-        let dt;
+        let dt: Array<string>;
         if (itmPath.match(/^EXPNODE:/)) {
             // console.log(' EXPNODE:::' + itmPath + ' expDep::: ' + Object.keys(expDep));
             let k = itmPath.split(':')[1];

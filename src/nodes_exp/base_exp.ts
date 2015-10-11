@@ -1,7 +1,7 @@
+/// <reference path="../nodes.d.ts" />
 /// <reference path="base_exp.d.ts" />
 
 'use strict';
-declare function require(name:string);
 import * as Utils from '../nodes_utils';
 var dbg = require('debug')('node:exp:base');
 var assert = require('assert');
@@ -10,8 +10,8 @@ class ExpBase {
     result: ExpBaseMatch;
     name: string;
 
-    constructor(nodes: any, matchResult: ExpBaseMatch) {
-        this.nodes = (function(nd) { return nd; }).bind(null, nodes);
+    constructor(nodes: Nodes, matchResult: ExpBaseMatch) {
+        this.nodes = (function(nd: Nodes): Nodes { return nd; }).bind(null, nodes);
         // this.dbg = nodes.dbg;
         this.name = 'expBase';
         // "matchResult":{"args":
@@ -32,6 +32,7 @@ class ExpBase {
     getName(): string {
         return this.name;
     }
+
     getResult(): ExpBaseMatch {
         return this.result;
     }
@@ -43,18 +44,19 @@ class ExpBase {
     text(): string {
         return this.getName() + ' Data [' + JSON.stringify(this.result) + ']';
     }
-    exec(gr) {
+    exec(gr: NodeGraph): boolean {
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());
         console.log('IMPLEMENT ME PLEASE');
         assert(1,0);
+        return true;
     }
 
-    static checkValid(gr): [boolean, ExpBaseMatch] {
+    static checkValid(gr: NodeGraph): [boolean, ExpBaseMatch] {
         return [false, {args: null}];
     }
 
-    static checkValidArguments(nodes, match, graphDB) {
+    static checkValidArguments(nodes: Nodes, match: any, graphDB: NodeGraph) {
         return true;
     }
 }

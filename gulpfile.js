@@ -23,7 +23,7 @@ var paths = {
 
 gulp.task('build-ts', function() {
     return gulp.src(paths.typescript)
-        .pipe(gulpNewer({dest: outDir, ext: '.js'}))
+//        .pipe(gulpNewer({dest: outDir, ext: '.js'}))
         .pipe(sourcemaps.init())
         .pipe(ts(tsProject))
         .pipe(babel())
