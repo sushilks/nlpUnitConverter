@@ -95,13 +95,12 @@ Processing :: How many Kilos are there in 30 Tons ? 	ParsedMeaning[]
 >> Select Node type (Default,Define,QConv,Relation,Units)? QConv
 >> Processing [convTo] Select > Kilos
 >> Processing [convFrom] Select > Tons
->> Processing [fromValue] Select > 30
 LEARNED :::{"stmt":"How many Kilos are there in 30 Tons ?","match":{"verb":"/are/i","verbModWhat":"/([^>]+)>nummod>([^>]+)/i","verbMod":"/are>mod>How>dep>([^>]+)>mod>many/i"},"extract":{"convTo":"verbMod[1]","convFrom":"verbModWhat[1]","fromValue":"verbModWhat[2]"},"type":"QConv"}
 ```
 alternatively you can use a single command line without any question/answers to learn a single line. (This is the mechanism 
 used to create the first database as in ./data/training.sh)
 ```
->node ./build/src/eparser.js -l -t 'How many Kilos are there in 30 Tons?' -L 'yes,QConv,Kilos,Tons,30'
+>node ./build/src/eparser.js -l -t 'How many Kilos are there in 30 Tons?' -L 'yes,QConv,Kilos,Tons'
 Processing :: How many Kilos are there in 30 Tons ? 	ParsedMeaning[]
    This Statement did not match any of the types that I am able to recognize.
    Verb in this statement :: VerbBase:: {"verb":"are","rawVerbMod":"are>nmod:in>Tons>nummod>30","verbModWhat":"Tons>nummod>30","verbMod":"are>mod>How>dep>Kilos>mod>many","rawVerbAdvMod":"are>mod>How>dep>Kilos>mod>many"}
@@ -110,7 +109,6 @@ Processing :: How many Kilos are there in 30 Tons ? 	ParsedMeaning[]
 Node:[QConv] Args Needed :["convTo","convFrom","fromValue"]
 >> Processing [convTo] Select > Kilos
 >> Processing [convFrom] Select > Tons
->> Processing [fromValue] Select > 30
 LEARNED :::{"stmt":"How many Kilos are there in 30 Tons ?","match":{"verb":"/are/i","verbModWhat":"/([^>]+)>nummod>([^>]+)/i","verbMod":"/are>mod>How>dep>([^>]+)>mod>many/i"},"extract":{"convTo":"verbMod[1]","convFrom":"verbModWhat[1]","fromValue":"verbModWhat[2]"},"type":"QConv"}
 Done
 ```
