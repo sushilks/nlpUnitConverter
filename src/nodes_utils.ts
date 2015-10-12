@@ -1,8 +1,9 @@
 /// <reference path="nodes.d.ts" />
 /// <reference path="nodes_utils.d.ts" />
 /// <reference path="../nodejs.d.ts" />
+/// <reference path="../typings/tsd.d.ts" />
 import Nodes from './nodes';
-import assert from 'assert';
+import * as assert from 'assert';
 
 //'use strict';
 var Jsnx = require('jsnetworkx');
@@ -13,23 +14,19 @@ function nodeAdd_(nmap: {[key: string]: Array<any>}, d: string, fn: any) {
     }
     nmap[d].push(fn);
 }
-export function nodeInit(nmap: any, fn: any) {
+export function nodeInit(nmap: NodeMapperType, fn: typeof BaseNode) {
     let dt = fn.getMatchToken();
+/*
     if (!('_map' in nmap)) {
         nmap['_map'] = {};
     }
     if ('getName' in fn) {
         nmap._map[fn.getName()] = fn;
     }
-    if (dt instanceof Array) {
-        for (let d of dt) {
-            //nmap[d] = fn;
-            nodeAdd_(nmap, d, fn);
-        }
-    } else {
-        //nmap[dt] = fn;
-        nodeAdd_(nmap, dt, fn);
-    }
+    */
+    //nmap[dt] = fn;
+    nmap[dt] = fn;
+    //nodeAdd_(nmap, dt, fn);
     return fn;
 }
 export function nodeInitExp(nmap: ExpMapperType, fn: typeof ExpBase) {
@@ -47,15 +44,17 @@ export function nodeInitExp(nmap: ExpMapperType, fn: typeof ExpBase) {
         }
     } else {
         //nmap[dt] = fn;
-        //assert(0,1);
-        nodeAdd_(nmap.match, dt, fn);
+        assert.equal(0, 1);
+  //        console.log(' dt = ' + JSON.stringify(dt));
+  //      nodeAdd_(nmap.match, dt, fn);
     }
     return fn;
 }
 
 export function nodeInitGr(nmap: GrMapperType, fn: typeof GrBase) {
     let dt: GrMatchTokenType = fn.getMatchToken();
-    for (let d of dt) {
+    for (let key in dt) {
+        let d = dt[key];
         if (!(d.name in nmap)) {
             nmap[d.name] = [];
         }
@@ -159,7 +158,7 @@ export function findGrammarRules(grMapper: GrMapperType, fromNode: BaseNode, lin
                 attachType = 'parent';
             }
             if (cnt !== 0) {
-                retRules.push({fn:gr.fn, type:attachType});
+                retRules.push({fn:gr.fn, attachType:attachType});
             }
         }
 

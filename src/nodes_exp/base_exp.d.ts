@@ -1,8 +1,9 @@
 
 interface ExpBaseMatch {
-    args: {[key:string]: string};
+    args: {[key:string]: string | Array<string> | Array<ExpBaseMatch>};
     defaultUsed?: {[idx: number]: string};
     _keys?: {[key: string]: string};
+    dbId?: string;
 }
 interface ExpTokenType {
     [index: number]: string;
@@ -13,7 +14,7 @@ interface ExpPropType {
 interface ExpArgType {
     type: string;
     extractionNode: string;
-    default: any;
+    default: string| number;
 }
 
 declare class ExpBase {
@@ -24,8 +25,9 @@ declare class ExpBase {
     static getMatchToken(): ExpTokenType;
     static getProp(): ExpPropType;
     getName(): string;
+    static getName(): string;
     getResult(): ExpBaseMatch;
-    getArgs(): ExpArgType;
+    static getArgs(): {[key: string]: ExpArgType};
     text(): string;
     exec(gr: any): void;
     static checkValid(gr: any): [boolean, ExpBaseMatch];

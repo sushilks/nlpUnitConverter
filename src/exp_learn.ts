@@ -236,7 +236,7 @@ class ExpLearn {
                 let prop = nd.getProp();
                 let alist = Object.keys(alistDict);
                 vres.args = alistDict;
-                let alistNoTags = [];
+                let alistNoTags: Array<string> = [];
                 {
                     for (let k of alist) {
                         //let kl = k.split(':');

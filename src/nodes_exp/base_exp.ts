@@ -23,10 +23,14 @@ class ExpBase {
     }
 
     static getMatchToken(): ExpTokenType {
-        return {'DEFAULT': {} };
+        return ['DEFAULT'];//{'DEFAULT': {} };
     }
     static getProp(): ExpPropType {
         return null;
+    }
+
+    static getName(): string {
+        return 'DEFAULT';//this.name;
     }
 
     getName(): string {
@@ -36,13 +40,13 @@ class ExpBase {
     getResult(): ExpBaseMatch {
         return this.result;
     }
-    getArgs(): ExpArgType {
+    static getArgs(): {[key: string]: ExpArgType} {
         console.log('Implement getArgs().');
         assert(1,0);
         return null;
     }
     text(): string {
-        return this.getName() + ' Data [' + JSON.stringify(this.result) + ']';
+        return this.name + ' Data [' + JSON.stringify(this.result) + ']';
     }
     exec(gr: NodeGraph): boolean {
         //console.log('Adding to graph:' + this.getName());

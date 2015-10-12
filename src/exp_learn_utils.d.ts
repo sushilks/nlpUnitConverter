@@ -30,7 +30,7 @@ interface VerbDBMatchRet {
     dbId: string;
 
     matchResult: {
-        args: {[keys: string]: string};
+        args: {[keys: string]: string | Array<string> | Array<ExpBaseMatch>;};
         defaultUsed: Array<string>;
         _keys: {[keys: string]: string};
         dbId?: string;
@@ -43,7 +43,7 @@ interface LearnEntry {
     extract: {[key: string]: string};
     fixedExtract?: {[key: string]: string};
     type: string;
-    args: {[key: string]: {type: string, extractionNode: string, default: string|number}};
-    prop: {[key: string]: string};
-    expExtract?: {[key: string] : Array<string>};
+    args: {[key: string]: ExpArgType};
+    prop: ExpPropType;
+    expExtract?: {[key: string] : Array<ExpBase>};
 }

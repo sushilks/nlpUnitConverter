@@ -9,6 +9,7 @@ var assert = require('assert');
 import ExpDB from './expdb';
 import * as Utils from './nodes_utils';
 var dbg = require('debug')('exp:learn:util');
+var debug = require('debug');
 var sep = '.';
 
 
@@ -349,7 +350,7 @@ export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) 
         }
     }
 }
-function extractTreeValue_(tree: any, key: Array<string>): Array<string> {
+function extractTreeValue_(tree: any, key: Array<string>): string | Array<string> {
     if (key.length == 0) {
         return tree;
     }
@@ -377,7 +378,7 @@ function extractTreeValue_(tree: any, key: Array<string>): Array<string> {
                     e = e.concat(dNode.appos.dataValue.split(' '));
                 }
             }
-            //console.log('extract key=' + JSON.stringify(key)+ ' v = ' + e);
+            // console.log('extract key=' + JSON.stringify(key)+ ' v = ' + e);
             return e;
         } else if (k1.indexOf(key[0]) === -1) {
             if (k1.indexOf('data') === -1) {
@@ -394,7 +395,7 @@ function extractTreeValue_(tree: any, key: Array<string>): Array<string> {
 // key is a specific key pointing to data in the tree
 // some variability exist in the key such that array inex etc are serarched.
 
-export function extractTreeValue(tree: any, key: string): Array<string> {
+export function extractTreeValue(tree: any, key: string): string | Array<string>  {
     //console.log ('extractTreeeValue-1 key=' + key );
     let k = key.split('.');
     let r = extractTreeValue_(tree, k);
@@ -453,6 +454,7 @@ export function findInTreeNumberNode(tree, key) {
 }
 */
 export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Array<ExpBase>, dbItem: DBItem) : VerbDBMatchRet {
+//    export function verbDBMatch(dbgdb: typeof debug, verb: GrProcessNodeValueMap, expMatches: Array<ExpBase>, dbItem: DBItem) : VerbDBMatchRet {
     // check if all the keys in dbItem are present in verb.
 
     let dbItemKeys = Object.keys(dbItem.match);
@@ -532,28 +534,29 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
     // console.log('==== ::expDep ' + JSON.stringify(expDep));
     for (let itm of Object.keys(dbItem.extract)) {
         let itmPath = dbItem.extract[itm];
-        let dt: Array<string>;
         if (itmPath.match(/^EXPNODE:/)) {
             // console.log(' EXPNODE:::' + itmPath + ' expDep::: ' + Object.keys(expDep));
             let k = itmPath.split(':')[1];
             //console.log(' k = ' + k + ' -- ' + JSON.stringify(expDep[k]));
             //dt = expDep[k][0].result;
-            dt = [];
+            let dt: Array<ExpBaseMatch>  = [];
             for (let itm of expDep[k])
                 dt.push(itm.result);
             //dt = extractTreeValue(verb, itmPath);
+            res.matchResult.args[itm] = dt;
         } else {
-            dt = extractTreeValue(verb, itmPath);
+            let dt = extractTreeValue(verb, itmPath);
+            res.matchResult.args[itm] = dt;
         }
         let dtArgs = dbItem.args;
         //if ('type' in dtArgs[itm] && dtArgs[itm].type.toLowerCase() === 'list') {
         //            dt = dt.split(' ');
         //        }
-        res.matchResult.args[itm] = dt;
         res.matchResult._keys[itm] = itmPath;
         //res[itm] = dt;
         //resKey[itm] = itmPath;
-        dbgdb(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + JSON.stringify(dt));
+        dbgdb(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + JSON.stringify(res.matchResult.args[itm]));
+        //console.log(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + JSON.stringify(dt)+ '  -- ' + JSON.stringify(res.matchResult));
     }
     // have found a match
     // check for argument being presented in extracted data
@@ -579,6 +582,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
     res.matchType = dbItem.type;
     //res['_keys'] = resKey;
     dbgdb(' -----> verbDBMatch::RESULT = ' + JSON.stringify([dbItem.type, res, dbItem._id]));
+    // console.log(' -----> verbDBMatch::RESULT = ' + JSON.stringify([dbItem.type, res, dbItem._id]));
     return res; //[dbItem.type, res, dbItem._id];
 
 }

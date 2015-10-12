@@ -3,7 +3,6 @@
 interface FindGrammarRetTypeDt{
     fn:typeof GrBase;
     attachType: string;
-    type: string;
 }
 
 declare class JSNetworkx {

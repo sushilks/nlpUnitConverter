@@ -18,7 +18,7 @@ interface GrMapperType {
     [key:string]: Array<{fn:typeof GrBase, match:GrMatchTokenTypeItem}>;
 }
 interface NodeMapperType {
-    [key:string]: BaseNode;
+    [key:string]: typeof BaseNode;
 }
 interface ExpMapperType {
     fnMap : {[key: string]: typeof ExpBase};

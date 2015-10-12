@@ -19,14 +19,14 @@ class BaseNode {
     nodes: any;
     tknId: number;
     level: number;
-    children: {[key:number]:LinkedNode};
+    children: {[key: number]: LinkedNode};
     parent: LinkedNode;
     grProcessingOngoing: boolean;
     grProcessingDone: boolean;
     grMatches: Array<GrBase>;
     //nd:BaseNode;
 
-    constructor(nodes: any, tknId: number, level: number, noprocess: boolean) {
+    constructor(nodes: Nodes, tknId: number, level: number, noprocess: boolean) {
         let name = tknId + '_' + nodes.tkn.getToken(tknId) + '_'
             + nodes.tkn.getTokenPOS(tknId);
         this.name = (name === undefined) ? 'Unnamed-Node' : name;
@@ -74,7 +74,7 @@ class BaseNode {
     getChildren(): {[key:number]:LinkedNode} {
         return this.children;
     }
-    getChild(loc: string): LinkedNode {
+    getChild(loc: number): LinkedNode {
         return this.children[loc];
     }
     /*

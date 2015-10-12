@@ -105,11 +105,12 @@ class Nodes {
             let pat: string = Object.keys(gNodeMapper)[rkey];
             let found: RegExpMatchArray = pos.match(new RegExp('^' + pat + '$'));
             if (found) {
-                return new gNodeMapper[pat][0](this, tknId, level);
+                return new gNodeMapper[pat](this, tknId, level, false);
             }
         }
         dbg('Unable to find a matching node for ' + pos + ' using default');
-        return new gNodeMapper[DEFAULT][0](this, tknId, level);
+        return new gNodeMapper[DEFAULT](this, tknId, level, false);
+        //return new gNodeMapper[DEFAULT][0](this, tknId, level);
     }
 
     public async processAllExpDB_(root: GrProcessNodeValueMap, db: ExpDB, graphDB: any, mHistory: Array<string>,
@@ -282,8 +283,8 @@ class Nodes {
 
     public processNodeGrammar(nd: BaseNode) {
         // find all the children and recurse
-        var children = nd.getChildren();
-        var loc: string;
+        var children: {[idx: number]: LinkedNode}  = nd.getChildren();
+        var loc: any;
         // let fromNodePOS = nd.getPOS();
         for (loc in children) {
             let c = children[loc];
@@ -299,7 +300,7 @@ class Nodes {
                     if (v[0]) {
                         let grHandle = new mrule.fn(this, nd, c.type, c.node, <GrBaseMatch>v[1]);
                         //console.log('FOUND :: ' + grHandle.getName() + ' adding to node:' + c.node.name + ' attach type ' + mrule.type);
-                        if (mrule.type === 'parent') {
+                        if (mrule.attachType === 'parent') {
                             nd.addGrammarMatch(grHandle);
                         } else {
                             c.node.addGrammarMatch(grHandle);
