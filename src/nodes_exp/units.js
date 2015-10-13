@@ -4,6 +4,7 @@ var Utils = require('../nodes_utils');
 var BaseExp = require('./base_exp.js');
 //var assert = require('assert');
 var dbg = require('debug')('node:exp:units');
+var assert = require('assert');
 
 /*
 */
@@ -30,13 +31,14 @@ class Units extends BaseExp {
     exec(gr) {
         //dbg('Adding to graph:' + this.getName());
         //dbg('Graph name:' + this.getUnitsFor());
-        //console.log('units :: exec = ' + JSON.stringify(this.result));
-        let nm = this.result.args.unitsFor;
+        // console.log('units :: exec = ' + JSON.stringify(this.result));
+        assert.equal(this.result.args.unitsFor.listStr.length, 1);
+        let nm = this.result.args.unitsFor.listStr[0];
         let g = gr[nm];
         if (!g) {
             console.trace('ERROR: Dont know about [' + nm + ']');
         }
-        let units = this.result.args['units'];
+        let units = this.result.args['units'].listStr;
         //console.log('UNIT = ' + units);
         if (Array.isArray(units)) {
             units.forEach(function (x) {

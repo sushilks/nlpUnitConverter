@@ -33,9 +33,8 @@ class ToArg extends BaseExp {
 
     exec(gr) {
         //console.log('\t IMPLEMENT THIS :: Adding to graph:' + this.getName());
-        //console.log(' MATCH = ' + JSON.stringify(this.result));
         let r = {};
-        r[this.result.args.toArg] = this.result.args.toArgValue;
+        r[this.result.args.toArg.listStr[0]] = this.result.args.toArgValue.listStr[0];
         return r;
     }
 }

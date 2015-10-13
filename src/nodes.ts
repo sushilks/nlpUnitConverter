@@ -22,7 +22,7 @@ let gNodeMapper:  NodeMapperType = {}; /** To hold different node types */
 let gGrMapper: GrMapperType = {};   /** To hold different grammer rules */
 let gExpMapper: ExpMapperType  = {fnMap: {}, match: {}};   /** To hold different grammer rules */
 
-declare var __dirname: any;
+declare var __dirname: string;
 let normalizedPath: string = require('path').join(__dirname);
 // import * as Debug from 'debug';
 let dbg = require('debug')('nodes:base');
@@ -113,7 +113,7 @@ class Nodes {
         //return new gNodeMapper[DEFAULT][0](this, tknId, level);
     }
 
-    public async processAllExpDB_(root: GrProcessNodeValueMap, db: ExpDB, graphDB: any, mHistory: Array<string>,
+    public async processAllExpDB_(root: GrProcessNodeValueMap, db: ExpDB, graphDB: NodeGraph, mHistory: Array<string>,
                                   cnt: number = 0): Promise<boolean> {
         if (cnt > 20) {
             assert.equal(0, 1, 'Too much recurstion');
@@ -175,7 +175,7 @@ class Nodes {
 
     }
 
-    public async processAllExpDB(db: ExpDB, graphDB: any) {
+    public async processAllExpDB(db: ExpDB, graphDB: NodeGraph) {
         let mHistory: Array<string> = [];
         let root: GrProcessNodeValueMap = {};
         if (this.grMatches.length) {
@@ -200,7 +200,7 @@ class Nodes {
             // console.log('  - GR Name = ' + grName);
             if (expList && expList.length) {
                 for (let exp of expList) {
-                    let found: [boolean, ExpBaseMatch] = exp.checkValid(gr);
+                    let found: [boolean, ExpMatch] = exp.checkValid(gr);
                     if (found[0]) {
                         let expHandle: ExpBase = new exp(this, found[1]);
                         this.expMatches.push(expHandle);

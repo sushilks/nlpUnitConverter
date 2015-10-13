@@ -64,7 +64,7 @@ describe('Explanation Type:Question Converstion Test::', function() {
     }).bind(null, txt, res));
 
     txt = 'Convert 60 xx to yy.';
-    res = {"fromValue":"60","convTo":"yy","convFrom":"xx"};
+    res = {"fromValue":{"listStr":["60"]},"convTo":{"listStr":["yy"]},"convFrom":{"listStr":["xx"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -75,7 +75,7 @@ describe('Explanation Type:Question Converstion Test::', function() {
     }).bind(null, txt, res));
 
     txt = 'Convert 60 xx into yy.';
-    res = {"fromValue":"60","convTo":"yy","convFrom":"xx"};
+    res = {"fromValue":{"listStr":["60"]},"convTo":{"listStr":["yy"]},"convFrom":{"listStr":["xx"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -84,7 +84,7 @@ describe('Explanation Type:Question Converstion Test::', function() {
     }).bind(null, txt, res));
 
     txt = 'Convert 60 thousand Meters in to Yards.';
-    res = {"fromValue":"60 thousand","convTo":"Yards","convFrom":"Meters"};
+    res = {"fromValue":{"listStr":["60 thousand"]},"convTo":{"listStr":["Yards"]},"convFrom":{"listStr":["Meters"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -93,7 +93,7 @@ describe('Explanation Type:Question Converstion Test::', function() {
     }).bind(null, txt, res));
 
     txt = 'How many meters are there in 602 foot?';
-    res = {"fromValue":"602","convTo":"meters","convFrom":"foot"};
+    res = {"fromValue":{"listStr":["602"]},"convTo":{"listStr":["meters"]},"convFrom":{"listStr":["foot"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -102,7 +102,7 @@ describe('Explanation Type:Question Converstion Test::', function() {
     }).bind(null, txt, res));
 
     txt = 'How many meters are there in 6 thousand foot?';
-    res = {"fromValue":"6 thousand","convTo":"meters","convFrom":"foot"};
+    res = {"fromValue":{"listStr":["6 thousand"]},"convTo":{"listStr":["meters"]},"convFrom":{"listStr":["foot"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -111,7 +111,7 @@ describe('Explanation Type:Question Converstion Test::', function() {
     }).bind(null, txt, res));
 
     txt = 'How much is two yards in centimeter?';
-    res = {"fromValue":"two","convTo":"centimeter","convFrom":"yards"};
+    res = {"fromValue":{"listStr":["two"]},"convTo":{"listStr":["centimeter"]},"convFrom":{"listStr":["yards"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -120,7 +120,7 @@ describe('Explanation Type:Question Converstion Test::', function() {
     }).bind(null, txt, res));
 
     txt = 'How many inches are there in two mile?';
-    res = {"fromValue":"two","convTo":"inches","convFrom":"mile"};
+    res = {"fromValue":{"listStr":["two"]},"convTo":{"listStr":["inches"]},"convFrom":{"listStr":["mile"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -129,7 +129,7 @@ describe('Explanation Type:Question Converstion Test::', function() {
     }).bind(null, txt, res));
 
     txt = 'How many meters are in 2 yards?';
-    res = {"fromValue":"2","convTo":"meters","convFrom":"yards"};
+    res = {"fromValue":{"listStr":["2"]},"convTo":{"listStr":["meters"]},"convFrom":{"listStr":["yards"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {

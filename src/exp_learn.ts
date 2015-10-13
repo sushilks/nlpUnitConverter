@@ -179,7 +179,7 @@ class ExpLearn {
         }
         res.expExtract = expDep;
         // console.log(' --- > RET = ' + JSON.stringify(res));
-        LearnUtils.copyMatchTree(verb, <MatchTreeData>res);
+        LearnUtils.copyMatchTree(verb, res); //<MatchTreeData>res);
         delete res.expExtract;
         //console.log(' RET = ' + JSON.stringify(res));
         //return _this.readPattern('Regexp >', vlist, vres.match);

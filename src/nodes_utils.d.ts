@@ -8,6 +8,9 @@ interface FindGrammarRetTypeDt{
 declare class JSNetworkx {
     nodes(flag: boolean): any;
     edges(flag: boolean): any;
+    hasNode(nd:string): boolean;
+    addEdge(src: string, dst: string, edge: any);
+
 }
 
 interface NodeGraph {

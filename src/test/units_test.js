@@ -37,7 +37,7 @@ describe('Grammar Type:Unit Test::', function() {
     }).bind(null, txt, res));;
 
     txt = 'Units for zTime are Hours, Minutes, Seconds, Days, Weeks.';
-    res = {"unitsFor":"zTime","units":["Hours","Minutes","Seconds","Days","Weeks"]};
+    res = {"unitsFor":{ "listStr": ["zTime"] },"units":{ "listStr" :["Hours","Minutes","Seconds","Days","Weeks"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -46,7 +46,7 @@ describe('Grammar Type:Unit Test::', function() {
     }).bind(null, txt, res));
 
     txt = 'unit for zLength is Meters, Lines, Inches and Yards.';
-    res = {"unitsFor":"zLength","units":["Meters", "Lines","Inches","Yards"]};
+    res = {"unitsFor":{ "listStr": ["zLength"]},"units":{"listStr" :["Meters", "Lines","Inches","Yards"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -55,7 +55,7 @@ describe('Grammar Type:Unit Test::', function() {
     }).bind(null, txt, res));
 
     txt = 'unit for zTime is Hour.';
-    res = {"unitsFor":"zTime","units":["Hour"]};
+    res = {"unitsFor":{"listStr":["zTime"]},"units":{"listStr":["Hour"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
@@ -64,7 +64,7 @@ describe('Grammar Type:Unit Test::', function() {
     }).bind(null, txt, res));
 
     txt = 'unit for measuring zTime is Minutes, Hours.';
-    res = {"unitsFor":"zTime","units":["Minutes","Hours"]};
+    res = {"unitsFor":{"listStr":["zTime"]},"units":{"listStr": ["Minutes","Hours"]}};
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {

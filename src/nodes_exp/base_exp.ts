@@ -7,10 +7,10 @@ var dbg = require('debug')('node:exp:base');
 var assert = require('assert');
 class ExpBase {
     nodes: any;
-    result: ExpBaseMatch;
+    result: ExpMatch;
     name: string;
 
-    constructor(nodes: Nodes, matchResult: ExpBaseMatch) {
+    constructor(nodes: Nodes, matchResult: ExpMatch) {
         this.nodes = (function(nd: Nodes): Nodes { return nd; }).bind(null, nodes);
         // this.dbg = nodes.dbg;
         this.name = 'expBase';
@@ -37,7 +37,7 @@ class ExpBase {
         return this.name;
     }
 
-    getResult(): ExpBaseMatch {
+    getResult(): ExpMatch {
         return this.result;
     }
     static getArgs(): {[key: string]: ExpArgType} {
@@ -56,11 +56,11 @@ class ExpBase {
         return true;
     }
 
-    static checkValid(gr: NodeGraph): [boolean, ExpBaseMatch] {
-        return [false, {args: null}];
+    static checkValid(gr: NodeGraph): [boolean, ExpMatch] {
+        return [false, null];
     }
 
-    static checkValidArguments(nodes: Nodes, match: any, graphDB: NodeGraph) {
+    static checkValidArguments(nodes: Nodes, match: ExpMatch, graphDB: NodeGraph) {
         return true;
     }
 }

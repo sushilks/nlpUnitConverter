@@ -7,11 +7,24 @@
 var readline = require('readline');
 var assert = require('assert');
 import ExpDB from './expdb';
+import ExpMatch from './exp_match';
 import * as Utils from './nodes_utils';
 var dbg = require('debug')('exp:learn:util');
 var debug = require('debug');
 var sep = '.';
-
+function checkExpArgValid(ematch: ExpMatch, key: string): boolean {
+    let a = ematch.args[key];
+    if (a.listStr === undefined && a.listExp === undefined)
+        return false;
+    let t1 = false;
+    let t2 = false;
+    if (a.listStr && a.listStr.length !=0)
+        t1 = (a.listStr[0] !== undefined);
+    if (a.listExp && a.listExp.length != 0)
+        t2 = (a.listExp[0] !== undefined);
+    if (!(t1 || t2)) return false;
+    return true;
+}
 
 function treePathNormalize(r: string): string {
     return r.replace(/\.\d+\./g, '.')
@@ -397,8 +410,10 @@ function extractTreeValue_(tree: any, key: Array<string>): string | Array<string
 
 export function extractTreeValue(tree: any, key: string): string | Array<string>  {
     //console.log ('extractTreeeValue-1 key=' + key );
+    //console.log ('extractTreeeValue-1 tree=' + JSON.stringify(tree) );
     let k = key.split('.');
     let r = extractTreeValue_(tree, k);
+    //console.log('extractTreeeValue-2 key=' + key + ' retVal = ' + JSON.stringify(r));
     dbg('extractTreeeValue-2 key=' + key + ' retVal = ' + JSON.stringify(r));
     return r;
 }
@@ -497,6 +512,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
     //dbgdb(' Before copyMatchTree: ' + JSON.stringify(tmatch));
     copyMatchTree(verb, tmatch);
     dbgdb(' Extracted Match:::' + JSON.stringify(tmatch));
+    //console.log(' Extracted Match:::' + JSON.stringify(tmatch));
     let groupKey = Object.keys(tmatch.match).concat(Object.keys(dbItem.match));
     // remove duplicate keys
     let uniqueKey = groupKey.filter(function(elem, pos) {
@@ -510,7 +526,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
             break;
         }
         dbgdb(' Comparing [' + tmatch.match[key] + '] to [' + dbItem.match[key] +']');
-        if (tmatch.match[key].toLowerCase() !== dbItem.match[key].toLowerCase()) {
+        if ((<string>tmatch.match[key]).toLowerCase() !== dbItem.match[key].toLowerCase()) {
             match = false;
             break;
         }
@@ -524,11 +540,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
     let res : VerbDBMatchRet = {
         matchType: '',
         dbId: '',
-        matchResult: {
-            args: {},
-            defaultUsed: [],
-            _keys: {}
-        }
+        matchResult: new ExpMatch()
     };
     // console.log('dbItem.extract ' + JSON.stringify(dbItem.extract));
     // console.log('==== ::expDep ' + JSON.stringify(expDep));
@@ -538,15 +550,14 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
             // console.log(' EXPNODE:::' + itmPath + ' expDep::: ' + Object.keys(expDep));
             let k = itmPath.split(':')[1];
             //console.log(' k = ' + k + ' -- ' + JSON.stringify(expDep[k]));
-            //dt = expDep[k][0].result;
-            let dt: Array<ExpBaseMatch>  = [];
+            let dt: Array<ExpMatch>  = [];
             for (let itm of expDep[k])
                 dt.push(itm.result);
-            //dt = extractTreeValue(verb, itmPath);
-            res.matchResult.args[itm] = dt;
+            //res.matchResult.args[itm]= {listExp: dt};
+            res.matchResult.setArgExp(itm, dt);
         } else {
             let dt = extractTreeValue(verb, itmPath);
-            res.matchResult.args[itm] = dt;
+            res.matchResult.setArgStr(itm, dt);
         }
         let dtArgs = dbItem.args;
         //if ('type' in dtArgs[itm] && dtArgs[itm].type.toLowerCase() === 'list') {
@@ -556,25 +567,29 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
         //res[itm] = dt;
         //resKey[itm] = itmPath;
         dbgdb(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + JSON.stringify(res.matchResult.args[itm]));
-        //console.log(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + JSON.stringify(dt)+ '  -- ' + JSON.stringify(res.matchResult));
+        //console.log(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + JSON.stringify(res.matchResult.args[itm]));
     }
     // have found a match
     // check for argument being presented in extracted data
     for (let key in dbItem.args) {
         let schema = dbItem.args[key];
-        if (res.matchResult.args[key] === undefined && dbItem.fixedExtract !== undefined && dbItem.fixedExtract[key] !== undefined) {
+        let res_valid = res.matchResult.isArgValid(key);
+        if (!res_valid && dbItem.fixedExtract !== undefined && dbItem.fixedExtract[key] !== undefined) {
             dbgdb(' ---> SCHEMA : key = ' + key + ' filedextract = ' + dbItem.fixedExtract[key] );
-            res.matchResult.args[key] = dbItem.fixedExtract[key];
+            //res.matchResult.args[key] = {listStr: [dbItem.fixedExtract[key]]};
+            res.matchResult.setArgStr(key, dbItem.fixedExtract[key]);
             res.matchResult._keys[key] = key;
             //res[key] = dbItem.fixedExtract[key];
             //resKey[key] = key;
         }
-        if (schema.default === undefined && res.matchResult.args[key] === undefined) {
+        if (schema.default === undefined && !res_valid) {
             dbgdb(' Failed on schema validation key[' + key + '] missing in match [' + JSON.stringify(res) + '].');
             return {matchType:'', dbId:'', matchResult:null };//return ['', {}];
-        } else if (schema.default !== undefined && res.matchResult.args[key] === undefined) {
+        } else if (schema.default !== undefined && !res_valid) {
             //console.log(' res = '  + JSON.stringify(res));
-            res.matchResult.args[key] = <string>schema.default;
+            //res.matchResult.args[key] = {listStr: [<string>schema.default]};
+            res.matchResult.setArgStr(key, <string>schema.default);
+            // console.log(" DEFAULT USED ==== " + key)
             res.matchResult.defaultUsed.push(key);
         }
     }
@@ -582,7 +597,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
     res.matchType = dbItem.type;
     //res['_keys'] = resKey;
     dbgdb(' -----> verbDBMatch::RESULT = ' + JSON.stringify([dbItem.type, res, dbItem._id]));
-    // console.log(' -----> verbDBMatch::RESULT = ' + JSON.stringify([dbItem.type, res, dbItem._id]));
+    //console.log(' -----> verbDBMatch::RESULT = ' + JSON.stringify([dbItem.type, res, dbItem._id]));
     return res; //[dbItem.type, res, dbItem._id];
 
 }

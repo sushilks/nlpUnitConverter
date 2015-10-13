@@ -25,7 +25,7 @@ describe('Grammar Type:Default Test::', function() {
     var txt, res;
 
 
-    res = {"defaultFor":"time","default":"seconds","defaultWhat":"unit"};
+    res = {"defaultFor":{"listStr":["time"]},"default":{"listStr":["seconds"]},"defaultWhat":{"listStr":["unit"]}};
     txt =  'By default time is in seconds.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
@@ -34,7 +34,7 @@ describe('Grammar Type:Default Test::', function() {
             });
     }).bind(null, txt, res));
 
-    res = {"defaultFor":"time","default":"minutes","defaultWhat":"unit"};
+    res = {"defaultFor":{"listStr":["time"]},"default":{"listStr":["minutes"]},"defaultWhat":{"listStr":["unit"]}};
     txt = 'By default time is expressed in minutes.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
@@ -43,7 +43,7 @@ describe('Grammar Type:Default Test::', function() {
             });
     }).bind(null, txt, res));
 
-    res = {"defaultWhat":"unit","defaultFor":"foo","default":"Zque"};
+    res = {"defaultWhat":{"listStr":["unit"]},"defaultFor":{"listStr":["foo"]},"default":{"listStr":["Zque"]}};
     txt = 'The default unit for foo is Zque.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
@@ -52,7 +52,7 @@ describe('Grammar Type:Default Test::', function() {
             });
     }).bind(null, txt, res));
 
-    res = {"defaultWhat":"state","defaultFor":"water","default":"liquid"};
+    res = {"defaultWhat":{"listStr":["state"]},"defaultFor":{"listStr":["water"]},"default":{"listStr":["liquid"]}};
     txt = 'The default state of water is liquid.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
@@ -61,7 +61,7 @@ describe('Grammar Type:Default Test::', function() {
             });
     }).bind(null, txt, res));
 
-    res = {"defaultWhat":"state","defaultFor":"water","default":"liquid"};
+    res = {"defaultWhat":{"listStr":["state"]},"defaultFor":{"listStr":["water"]},"default":{"listStr":["liquid"]}};
     txt = 'default state of water is liquid.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
@@ -70,7 +70,7 @@ describe('Grammar Type:Default Test::', function() {
             });
     }).bind(null, txt, res));
 
-    res = {"defaultWhat":"state","defaultFor":"ZWater","default":"pLiquid"};
+    res = {"defaultWhat":{"listStr":["state"]},"defaultFor":{"listStr":["ZWater"]},"default":{"listStr":["pLiquid"]}};
     txt = 'Default state of ZWater is pLiquid.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
@@ -95,7 +95,7 @@ describe('Grammar Type:Default Test::', function() {
             });
     });
 */
-    res = {"defaultFor":"Time","default":"Minutes","defaultWhat":"unit"};
+    res = {"defaultFor":{"listStr":["Time"]},"default":{"listStr":["Minutes"]},"defaultWhat":{"listStr":["unit"]}};
     txt = 'By default Time is specified in Minutes.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)

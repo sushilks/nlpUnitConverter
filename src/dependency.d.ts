@@ -27,8 +27,7 @@ interface ChildNodeList {
 }
 interface LinkedNode {
     type: string;
-    node: any;
-//    node: BaseNode;
+    node: BaseNode;
 }
 declare class Dependency {
     private dep;
@@ -39,5 +38,5 @@ declare class Dependency {
     getTokensCount(): number;
     getRootToken(): number;
     getChildNodes(tokenIdx: number): Array<ChildNodeList>;
-    getParentNodes(tokenIdx: number): any[];
+    getParentNodes(tokenIdx: number): Array<ChildNodeList>;
 }

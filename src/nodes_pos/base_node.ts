@@ -27,8 +27,8 @@ class BaseNode {
     //nd:BaseNode;
 
     constructor(nodes: Nodes, tknId: number, level: number, noprocess: boolean) {
-        let name = tknId + '_' + nodes.tkn.getToken(tknId) + '_'
-            + nodes.tkn.getTokenPOS(tknId);
+        let name = tknId + '_' + nodes.getTokens().getToken(tknId) + '_'
+            + nodes.getTokens().getTokenPOS(tknId);
         this.name = (name === undefined) ? 'Unnamed-Node' : name;
         this.nodes = nodes;
         this.tknId = tknId;

@@ -43,30 +43,33 @@ interface DBItem {
     fixedExtract: {[key: string]: string};
 }
 
-
 declare class Nodes {
-    dep: Dependency;
-    tknNodeMap: {
-        [key: number]: BaseNode;
-    };
-    rootToken: number;
-    tkn: Tokens;
-    nd: BaseNode;
     grMatches: Array<GrBase>;
     expMatches: Array<ExpBase>;
+    private dep;
+    private tknNodeMap;
+    private rootToken;
+    private tkn;
+    private nd;
     constructor(dep: Dependency);
-    static getGlobalExpMapper(): {
-        [key: string]: Array<typeof ExpBase>;
-    };
+    static getGlobalExpMapper(): ExpMapperType;
     getTokens(): Tokens;
     setNodeMap(tknId: number, node: BaseNode): void;
     getNodeMap(tknId: number): BaseNode;
     process(tknId: number, level: number): BaseNode;
-    processAllExpDB_(verb: any, db: any, graphDB: any, mHistory: any, resolve: any): void;
-    processAllExpDB(db: any, graphDB: any): Promise<{}>;
+    //processAllExpDB_(root: GrProcessNodeValueMap, db: ExpDB, graphDB: NodeGraph, mHistory: Array<string>, cnt?: number): Promise<boolean>;
+    //processAllExpDB(db: ExpDB, graphDB: NodeGraph): Promise<boolean>;
     processAllExp(): void;
-    populateGrammarTree(treeTop: GrTreeTop, grTree: GrTree, tokenId: number, type: any, followChildren?: boolean): GrTree;
+    populateGrammarTree(treeTop: GrTreeTop, grTree: GrTree, tokenId: number, type: string, followChildren?: boolean): GrTree;
+    /** Process all the tokens in order
+     *  Try to match all the grammar rules
+     *
+     */
     processAllGrammar(): void;
     processNodeGrammar(nd: BaseNode): void;
+    /** Process only one token "tknId" for grammar match
+     * @param tknId - Specify the token to process
+     * @returns {*} - return [true if match was found, grammar that matched]
+     */
     processGr(tknId: number): boolean;
-    }
+}

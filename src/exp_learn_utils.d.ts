@@ -1,3 +1,5 @@
+/// <reference path="exp_match.d.ts" />
+
 /*
  ["fromArg",
  {"fromArgValue":1,
@@ -16,25 +18,35 @@
 //              "toArg":{"name":"toArg","result":{"toArgValue":1,"toArg":"dollar"}}
 // }}
 interface MatchTreeData {
-    extract: {[key:string]: string};
-    match: any;//{[key:string]: string};
+    extract: {[key: string]: string};
+    match: {[key: string]: string | Array<string>};
     prop: {singleVerbEdge?: boolean;};
-    expExtract?: any; /*{[key:string]: {
-        name: string;
-        result: {[key:string]: string};
-    };
-    }*/
+    expExtract?: {[key: string]: Array<{name: string, result: ExpMatch}>;}
 }
+/*
+interface ExpMatch {
+    args: {[key: string]: {
+        listStr?: Array<string>;
+        listExp?: Array<ExpMatch>;
+    }};
+    defaultUsed?: Array<string>;//{[idx: number]: string};
+    _keys?: {[key: string]: string};
+    dbId?: string;
+}*/
+/*
+ //args: {[key: string]: string | Array<string> | Array<ExpBaseMatch>};
+// use ExpBaseMatch
+interface MatchResults {
+    args: {[keys: string]: string | Array<string> | Array<ExpBaseMatch>;};
+    defaultUsed: Array<string>;
+    _keys: {[keys: string]: string};
+    dbId?: string;
+}
+*/
 interface VerbDBMatchRet {
     matchType: string;
     dbId: string;
-
-    matchResult: {
-        args: {[keys: string]: string | Array<string> | Array<ExpBaseMatch>;};
-        defaultUsed: Array<string>;
-        _keys: {[keys: string]: string};
-        dbId?: string;
-    }
+    matchResult: ExpMatch;
 }
 
 interface LearnEntry {

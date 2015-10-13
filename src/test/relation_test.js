@@ -12,7 +12,13 @@ function getRelationRes(ret) {
         //console.log('  n ' + n);
         let dj = JSON.parse(d)[0];
         if (n.match(/Relation/)) {
-            return dj.r;
+            return {
+                nodeFrom: dj.args['nodeFrom'].listExp[0].args.fromArg.listStr[0],
+                nodeTo: dj.args['nodeTo'].listExp[0].args.toArg.listStr[0],
+                convD: dj.args['nodeFrom'].listExp[0].args.fromArgValue.listStr[0],
+                convN: dj.args['nodeTo'].listExp[0].args.toArgValue.listStr[0]
+            };
+            //return dj.r;
         }
     }
     return;
