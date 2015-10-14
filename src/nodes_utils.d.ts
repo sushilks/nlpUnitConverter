@@ -10,7 +10,7 @@ declare class JSNetworkx {
     edges(flag: boolean): any;
     hasNode(nd:string): boolean;
     addEdge(src: string, dst: string, edge: any);
-
+    getEdgeData(src: string, dst: string): any;
 }
 
 interface NodeGraph {

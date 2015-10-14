@@ -1,43 +1,36 @@
+/// <reference path="../nodes.d.ts" />
+/// <reference path="base_exp.d.ts" />
 'use strict';
 
-var Utils = require('../nodes_utils');
+import * as Utils from '../nodes_utils';
+import BaseExp from './base_exp';
 var Jsnx = require('jsnetworkx');
-var BaseExp = require('./base_exp.js');
 var dbg = require('debug')('node:exp:qconv');
 
 //var assert = require('assert');
 
-/*
-*/
 
 class QConvert extends BaseExp {
-    constructor(nodes, matchResult) {
-        /*matchResult.r = {};
-        matchResult.r.convFrom = matchResult.convFrom.fromArg;
-        matchResult.r.convTo = matchResult.convTo.toArg;
-        matchResult.r.fromValue = matchResult.convFrom.fromArgValue;*/
-
-        //matchResult.fromValue = ((matchResult['fromValue']))? matchResult['fromValue'] : 1;
+    constructor(nodes: Nodes, matchResult: ExpMatch) {
         super(nodes, matchResult);
         this.name = QConvert.getName();
     }
-    static getName() {
+    static getName(): string {
         return 'QConv';
     }
-    static getMatchToken() {
+    static getMatchToken(): Array<string> {
         return ['VerbBase'];
     }
-    static getArgs() {
-        //return ['convTo', 'convFrom', 'fromValue'];
-        //return ['convTo', 'convFrom', 'Number:convFrom'];
+    static getArgs(): {[key: string]: ExpArgType} {
         return {
-            'convTo': {},
-            'convFrom': {},
+            'convTo': {type:''},
+            'convFrom': {type:''},
             'fromValue': { type: 'Number', extractionNode: 'convFrom', default: 1}
         };
 
     }
-    exec(gr, verbose = true) {
+    exec(gr: NodeGraph): boolean {
+        const verbose = false;
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());
         let a : ExpMatch = this.result;
@@ -72,7 +65,7 @@ class QConvert extends BaseExp {
         }
         console.log(this.getName() + ' :: ERROR Unable to find nodes [' + nFrom + '] [' + nTo + ']');
     }
-    static checkValidArguments(nodes, match, graphDB) {
+    static checkValidArguments(nodes: Nodes, match: ExpMatch, graphDB: NodeGraph) {
         return true;
     }
 }

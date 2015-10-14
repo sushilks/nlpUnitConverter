@@ -16,13 +16,13 @@ class relationMath extends BaseExp {
     constructor(nodes: Nodes, matchResult: ExpMatch) {
         super(nodes, matchResult);
         //console.log(" ----> " + JSON.stringify(matchResult));
-        assert.equal(1, matchResult.args['nodeFrom'].listExp.length);
-        assert.equal(1, matchResult.args['nodeTo'].listExp.length);
+        assert.equal(1, matchResult.getArgExpLength('nodeFrom'));
+        assert.equal(1, matchResult.getArgExpLength('nodeTo'));
         this.myResult = {
-            nodeFrom: matchResult.args['nodeFrom'].listExp[0].args['fromArg'].listStr[0],
-            nodeTo: matchResult.args['nodeTo'].listExp[0].args['toArg'].listStr[0],
-            convD: matchResult.args['nodeFrom'].listExp[0].args['fromArgValue'].listStr[0],
-            convN: matchResult.args['nodeTo'].listExp[0].args['toArgValue'].listStr[0]
+            nodeFrom: matchResult.getArgExp('nodeFrom').getArgStr('fromArg'),
+            nodeTo: matchResult.getArgExp('nodeTo').getArgStr('toArg'),
+            convD: matchResult.getArgExp('nodeFrom').getArgStr('fromArgValue'),
+            convN: matchResult.getArgExp('nodeTo').getArgStr('toArgValue')
         };
        //console.log(" ----> " + JSON.stringify(this.myResult));
         //matchResult.convD = (matchResult['convD'])?matchResult['convD'] : 1;
@@ -67,19 +67,11 @@ class relationMath extends BaseExp {
             return false;
         }
 
-        //if (!(match.args['nodeFrom'].listExp.length >= 1 &&
-//            match.args['nodeTo'].listExp.length >= 1)) {
-//            return false;
-//        }
-
         // check if from node is valid
         let found = false;
         for (let idx = 0 ; idx < match.getArgExpLength('nodeFrom'); ++idx) {
             let dt = match.getArgExp('nodeFrom', idx);
-//        }
-//        for (let dt of match.args['nodeFrom'].listExp) {
             if (found) break;
-            //if (dt.args['fromArg'].listStr.length !== 1 || dt.args['fromArg'].listStr[0] === undefined) continue;
             if (!dt.isArgStrValid('fromArg')) continue;
             let argName = Utils.normalizeUnit(dt.getArgStr('fromArg', 0));
             for (let key in graphDB) {
@@ -96,19 +88,6 @@ class relationMath extends BaseExp {
         if (!found) {
             console.log(' missing Valid ArgFrom');
             return false;
-        } else {
-            //console.log('  foundItem = ' + foundItem);
-            // remove all the other arguments
-            /*
-            for (let dt of  match.args['nodeFrom'].listExp) {
-                let argName = Utils.normalizeUnit(dt.args['fromArg']);
-                if (argName === foundItem) {
-             match.args['nodeFrom'].listExp = [dt];
-                    break;
-                }
-            }
-            console.log('  args nodeFrom = ' + JSON.stringify(match.args['nodeFrom']));
-            */
         }
         found = false;
         for (let idx = 0 ; idx < match.getArgExpLength('nodeTo'); ++idx) {
@@ -132,16 +111,6 @@ class relationMath extends BaseExp {
         if (!found) {
            console.log(' missing Valid ArgTo');
             return false;
-        } else {
-            /*
-            // remove all the other arguments
-            for (let dt of  match.args['nodeTo'].listExp) {
-                let argName = Utils.normalizeUnit(dt.args['toArg']);
-                if (argName === foundItem) {
-                    match.args['nodeTo'].listExp = [dt];
-                    break;
-                }
-            }*/
         }
         if (match.isDefaultUsed('nodeFrom') && match.isDefaultUsed('nodeTo'))
             return false;

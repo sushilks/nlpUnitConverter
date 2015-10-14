@@ -140,7 +140,7 @@ describe('Explanation Type:Question Converstion Test::', function() {
         txt = 'How many meters in 60 miles?';
         res = 'QConv Data [{"convTo":"meters","convFrom":"miles","fromValue":60}]';
         it(txt, (function(txt, res) {
-            return TUtils.processExp(nlp, txt)
+            reqturn TUtils.processExp(nlp, txt)
                 .then(function(ret) {
                     assert.equal(ret, res);
                 });
