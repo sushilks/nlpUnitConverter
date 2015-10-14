@@ -582,6 +582,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
             //res[key] = dbItem.fixedExtract[key];
             //resKey[key] = key;
         }
+        res_valid = res.matchResult.isArgValid(key);
         if (schema.default === undefined && !res_valid) {
             dbgdb(' Failed on schema validation key[' + key + '] missing in match [' + JSON.stringify(res) + '].');
             return {matchType:'', dbId:'', matchResult:null };//return ['', {}];

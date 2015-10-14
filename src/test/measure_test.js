@@ -23,7 +23,7 @@ describe('Grammar Type:Define Test::', function() {
         nlp = new NLPClient();
     });
     var res, txt;
-    res = {"subj":"Time","type":"Measure"};
+    res = {"subj":{"listStr":["Time"]},"type":{"listStr":["Measure"]}};
     txt = 'Time is  defined to be a Measure.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
@@ -39,7 +39,7 @@ describe('Grammar Type:Define Test::', function() {
                     assert.equal(res, 'Define Data [{"subj":"Time","type":"Measure"}]');
                 });
         });*/
-    res = {"subj":"Time","type":"Measure"};
+    res = {"subj":{"listStr":["Time"]},"type":{"listStr":["Measure"]}};
     txt = 'Time is defined as a Measure.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
@@ -51,7 +51,7 @@ describe('Grammar Type:Define Test::', function() {
     }).bind(null, txt, res));
 
 
-    res = {"subj":"Time","type":"Measure"};
+    res = {"subj":{"listStr":["Time"]},"type":{"listStr":["Measure"]}};
     txt = 'Time is a type of Measure.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
@@ -60,7 +60,7 @@ describe('Grammar Type:Define Test::', function() {
             });
     }).bind(null, txt, res));
 
-    res = {"subj":"Time","type":"Measure"};
+    res = {"subj":{"listStr":["Time"]},"type":{"listStr":["Measure"]}};
     txt = 'Time is of type Measure.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
@@ -69,7 +69,7 @@ describe('Grammar Type:Define Test::', function() {
             });
     }).bind(null, txt, res));
 
-    res = {"subj":"Time","type":"measure"};
+    res = {"subj":{"listStr":["Time"]},"type":{"listStr":["measure"]}};
     txt = 'Time is defined to be a type of measure.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
@@ -78,7 +78,7 @@ describe('Grammar Type:Define Test::', function() {
             });
     }).bind(null, txt, res));
 
-    res = {"subj":"Time","type":"Unit"};
+    res = {"subj":{"listStr":["Time"]},"type":{"listStr":["Unit"]}};
     txt = 'Time is defined to be a type of Unit.';
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)

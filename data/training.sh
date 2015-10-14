@@ -86,7 +86,8 @@ node $EPARSER -i ./data/sample-training.txt -l -t 'twenty thousand Moo makes 400
 node $EPARSER -l -t '4 quarters is one Dollar.' -L 'yes,Relation,quarters,Dollar,4,one'
 #node $EPARSER -l -t '4 quarters is equal to one Dollar.' -L 'yes,Relation,quarters,Dollar,4,one'
 node $EPARSER -i ./data/sample-training.txt -l -t 'One inch is same as 2.54 cm.'  -L 'yes,Relation'
-
+node $EPARSER -l -t '4 quarters is equal to one Dollar.' -L 'yes,relation'
+node $EPARSER -l -t 'One Dollar is equal to four quarters.' -L 'yes,relation'
 
 # node type : Default
 # Node:[Default] Args Needed :["defaultWhat","defaultFor","default"]

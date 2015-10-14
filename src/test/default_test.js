@@ -30,6 +30,8 @@ describe('Grammar Type:Default Test::', function() {
     it(txt, (function(txt, res) {
         return TUtils.processExp(nlp, txt)
             .then(function(ret) {
+                //console.log(' => ' + JSON.stringify(ret));
+                //console.log(' => ' + JSON.stringify(getRes(ret)));
                 assert.deepEqual(getRes(ret), res);
             });
     }).bind(null, txt, res));

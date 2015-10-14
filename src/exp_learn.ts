@@ -221,6 +221,7 @@ class ExpLearn {
             let nd:typeof ExpBase;
             for (let key in this.gExpFn) {
                 if (key.toLowerCase() === line.toLowerCase()) {
+                    console.log(' Selecting key = ' + key);
                     nd = this.gExpFn[key];
                     line = key;
                     break;

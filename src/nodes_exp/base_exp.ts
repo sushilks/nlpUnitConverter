@@ -23,14 +23,14 @@ class ExpBase {
     }
 
     static getMatchToken(): ExpTokenType {
-        return ['DEFAULT'];//{'DEFAULT': {} };
+        return ['DEFAULT_'];//{'DEFAULT': {} };
     }
     static getProp(): ExpPropType {
         return null;
     }
 
     static getName(): string {
-        return 'DEFAULT';//this.name;
+        return 'DEFAULT_';//this.name;
     }
 
     getName(): string {
