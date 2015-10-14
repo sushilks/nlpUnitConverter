@@ -1,0 +1,1116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="78effe0f-a68e-4422-915a-b7c8e9aee9c2" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_gr/nmod.js" afterPath="$PROJECT_DIR$/src/nodes_gr/nmod.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_utils.js" afterPath="$PROJECT_DIR$/src/nodes_utils.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_gr/verb_base.js" afterPath="$PROJECT_DIR$/src/nodes_gr/verb_base.js" />
+    </list>
+    <ignored path="measure.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="measure" />
+  </component>
+  <component name="FileEditorManager">
+    <splitter split-orientation="horizontal" split-proportion="0.21870047">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="verb_base.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/nodes_gr/verb_base.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="20.277779">
+                  <caret line="47" column="40" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="40" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="base_verb_test.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/test/base_verb_test.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-12.185185">
+                  <caret line="83" column="29" selection-start-line="83" selection-start-column="29" selection-end-line="83" selection-end-column="29" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="nodes.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/nodes.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="21.11111">
+                  <caret line="67" column="8" selection-start-line="67" selection-start-column="8" selection-end-line="67" selection-end-column="8" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="measure_test.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/test/measure_test.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-12.777778">
+                  <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="default_test.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/test/default_test.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-23.74074">
+                  <caret line="50" column="77" selection-start-line="50" selection-start-column="77" selection-end-line="50" selection-end-column="77" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="nodes_utils.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/nodes_utils.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-0.119521916">
+                  <caret line="40" column="17" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="verb_base.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/nodes_gr/verb_base.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-3.2962964">
+                  <caret line="314" column="30" selection-start-line="314" selection-start-column="30" selection-end-line="314" selection-end-column="30" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="nmod.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/nodes_gr/nmod.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.44820717">
+                  <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="mod.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/nodes_gr/mod.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-6.9444447">
+                  <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="dep.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/nodes_gr/dep.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-17.222221">
+                  <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GulpTreeLayoutManager">
+    <layout place="tools.popup">
+      <scroll-view-position x="0" y="0" />
+    </layout>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/test/node_test.js" />
+        <option value="$PROJECT_DIR$/test/base_node_test.js" />
+        <option value="module.js" />
+        <option value="node.js" />
+        <option value="$PROJECT_DIR$/src/node_utils.js" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/default.js" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/define.js" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/catagory.js" />
+        <option value="$PROJECT_DIR$/src/nodes_pos/vb.js" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/catagory.js" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/define.js" />
+        <option value="$PROJECT_DIR$/test/nodes_test.js" />
+        <option value="$PROJECT_DIR$/test/define_test.js" />
+        <option value="$PROJECT_DIR$/src/nodes_pos/nn.js" />
+        <option value="$PROJECT_DIR$/src/nodes_pos/base.js" />
+        <option value="$PROJECT_DIR$/config/build.js" />
+        <option value="$PROJECT_DIR$/config/run.js" />
+        <option value="$PROJECT_DIR$/config/tests.js" />
+        <option value="$PROJECT_DIR$/README" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/measure.js" />
+        <option value="$PROJECT_DIR$/test/units_test.js" />
+        <option value="$PROJECT_DIR$/src/nodes.js" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/default.js" />
+        <option value="$PROJECT_DIR$/data/sample-1.txt" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/units.js" />
+        <option value="$PROJECT_DIR$/src/eparser.js" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/appos.js" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/compound.js" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/cd.js" />
+        <option value="$PROJECT_DIR$/src/nodes_pos/cd.js" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/nummod.js" />
+        <option value="$PROJECT_DIR$/test/nummod_test.js" />
+        <option value="$PROJECT_DIR$/data/sample-2.txt" />
+        <option value="$PROJECT_DIR$/test/base_verb_test.js" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/qConvert.js" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/relationMath.js" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/data/sample-3.txt" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/verb_base2.js" />
+        <option value="$PROJECT_DIR$/test/measure_test.js" />
+        <option value="$PROJECT_DIR$/test/default_test.js" />
+        <option value="$PROJECT_DIR$/src/nodes_utils.js" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/dep.js" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/mod.js" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/verb_base.js" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/nmod.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBowerSettings">
+    <exe-path />
+    <config-path />
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true">
+    <gruntfile path="$PROJECT_DIR$/Gruntfile.js">
+      <alias-task name="build" info="Alias for &quot;clean:compile&quot;, &quot;clean:compile-test&quot;, &quot;babel:compile&quot;, &quot;babel:compile-test&quot; tasks." file-path="$PROJECT_DIR$/Gruntfile.js">
+        <dependency value="clean:compile" />
+        <dependency value="clean:compile-test" />
+        <dependency value="babel:compile" />
+        <dependency value="babel:compile-test" />
+      </alias-task>
+      <alias-task name="lint" info="Alias for &quot;lint-src&quot;, &quot;lint-test&quot; tasks." file-path="$PROJECT_DIR$/Gruntfile.js">
+        <dependency value="lint-src" />
+        <dependency value="lint-test" />
+      </alias-task>
+      <alias-task name="lint-file" info="Alias for &quot;clean:reports&quot;, &quot;eslint:file&quot; tasks." file-path="$PROJECT_DIR$/Gruntfile.js">
+        <dependency value="clean:reports" />
+        <dependency value="eslint:file" />
+      </alias-task>
+      <alias-task name="lint-src" info="Alias for &quot;eslint:src&quot; task." file-path="$PROJECT_DIR$/Gruntfile.js">
+        <dependency value="eslint:src" />
+      </alias-task>
+      <alias-task name="lint-test" info="Alias for &quot;eslint:test&quot; task." file-path="$PROJECT_DIR$/Gruntfile.js">
+        <dependency value="eslint:test" />
+      </alias-task>
+      <alias-task name="run-client" info="Alias for &quot;run:client&quot; task." file-path="$PROJECT_DIR$/Gruntfile.js">
+        <dependency value="run:client" />
+      </alias-task>
+      <alias-task name="run-client-debug" info="Alias for &quot;run:client-debug&quot; task." file-path="$PROJECT_DIR$/Gruntfile.js">
+        <dependency value="run:client-debug" />
+      </alias-task>
+      <alias-task name="run-server" info="Alias for &quot;run:server&quot; task." file-path="$PROJECT_DIR$/Gruntfile.js">
+        <dependency value="run:server" />
+      </alias-task>
+      <alias-task name="test" info="Alias for &quot;tests&quot; task." file-path="$PROJECT_DIR$/Gruntfile.js">
+        <dependency value="tests" />
+      </alias-task>
+      <alias-task name="tests" info="Alias for &quot;clean:compile&quot;, &quot;clean:compile-test&quot;, &quot;babel:compile&quot;, &quot;babel:compile-test&quot;, &quot;mochacli&quot; tasks." file-path="$PROJECT_DIR$/Gruntfile.js">
+        <dependency value="clean:compile" />
+        <dependency value="clean:compile-test" />
+        <dependency value="babel:compile" />
+        <dependency value="babel:compile-test" />
+        <dependency value="mochacli" />
+      </alias-task>
+      <core-task name="babel" info="Transpile ES6 to ES5" file-path="$PROJECT_DIR$/node_modules/grunt-babel/tasks/babel.js" multi="true">
+        <target value="compile" />
+        <target value="compile-test" />
+      </core-task>
+      <core-task name="clean" info="Clean files and folders." file-path="$PROJECT_DIR$/node_modules/grunt-contrib-clean/tasks/clean.js" multi="true">
+        <target value="compile" />
+        <target value="compile-test" />
+        <target value="reports" />
+      </core-task>
+      <core-task name="eslint" info="Validate files with ESLint" file-path="$PROJECT_DIR$/node_modules/grunt-eslint/tasks/eslint.js" multi="true">
+        <target value="src" />
+        <target value="test" />
+        <target value="file" />
+      </core-task>
+      <core-task name="mochacli" info="Run Mocha server-side tests." file-path="$PROJECT_DIR$/node_modules/grunt-mocha-cli/tasks/mochacli.js" multi="true">
+        <target value="all" />
+      </core-task>
+      <core-task name="run" info="used to start external processes (like servers)" file-path="$PROJECT_DIR$/node_modules/grunt-run/tasks/run.js" multi="true">
+        <target value="server" />
+        <target value="client" />
+        <target value="client-debug" />
+        <target value="test" />
+        <target value="file" />
+      </core-task>
+      <core-task name="stop" info="stop a process started with &quot;run&quot; (only works for tasks that use wait:false)" file-path="$PROJECT_DIR$/node_modules/grunt-run/tasks/run.js" multi="true" />
+      <core-task name="wait" info="wait for a process started with &quot;run&quot; to close (only works for tasks that use wait:false)" file-path="$PROJECT_DIR$/node_modules/grunt-run/tasks/run.js" multi="true" />
+    </gruntfile>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
+  <component name="NamedScopeManager">
+    <scope name="src" pattern="file[measure]:src/*" />
+    <scope name="test" pattern="file[measure]:test//*" />
+    <scope name="build-exclude" pattern="!file[measure]:build//*" />
+    <scope name="node_modules-exelude" pattern="!file[measure]:node_modules//*" />
+    <order />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="358" />
+    <option name="y" value="26" />
+    <option name="width" value="1517" />
+    <option name="height" value="1177" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>JavaScript</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nodes_gr" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Problems" />
+        <subPane subId="build-exclude">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="FullScreen" value="false" />
+    <property name="js.eslint.nodeInterpreter" value="/usr/local/bin/node" />
+    <property name="JavaScriptLanguageLevel" value="ES6" />
+    <property name="JavaScriptPreferStrict" value="true" />
+    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+    <property name="js.eslint.eslintPackage" value="/usr/local/lib/node_modules/eslint" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="recentsLimit" value="5" />
+    <property name="js.buildTools.gulp.node_interpreter" value="/usr/local/bin/node" />
+    <property name="js.buildTools.gulp.gulp_package_dir" value="" />
+    <property name="js.buildTools.grunt.node_interpreter" value="/usr/local/bin/node" />
+    <property name="js.buildTools.grunt.grunt-cli.package" value="$PROJECT_DIR$/node_modules/grunt-cli" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="full.screen.before.presentation.mode" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
+      <recent name="$PROJECT_DIR$/src/nodes_gr" />
+      <recent name="$PROJECT_DIR$/src/nodes_exp" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Node.js.node">
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="JsTestDriver-test-runner" factoryName="JsTestDriver">
+      <setting name="configLocationType" value="CONFIG_FILE" />
+      <setting name="settingsFile" value="" />
+      <setting name="serverType" value="INTERNAL" />
+      <setting name="preferredDebugBrowser" value="Chrome" />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.grunt" factoryName="Grunt.js">
+      <gruntfile value="$PROJECT_DIR$/Gruntfile.js" />
+      <tasks>
+        <task value="run-client" />
+      </tasks>
+      <pass-parent-env-vars value="true" />
+      <force value="false" />
+      <verbose value="false" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="run-client" type="js.build_tools.grunt" factoryName="Grunt.js">
+      <gruntfile value="$PROJECT_DIR$/Gruntfile.js" />
+      <tasks>
+        <task value="build" />
+        <task value="run-client" />
+      </tasks>
+      <pass-parent-env-vars value="true" />
+      <force value="false" />
+      <verbose value="false" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="bable-run" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="$USER_HOME$/work/node_modules/.bin/babel-node" path-to-js-file="src/eparser.js" working-dir="$PROJECT_DIR$">
+      <method />
+    </configuration>
+    <configuration default="false" name="node" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="/usr/local/bin/node" path-to-js-file="build/src/eparser.js" application-parameters=" -t &quot;There are sixty Seconds in two hundred parsec.&quot;" working-dir="$PROJECT_DIR$">
+      <method />
+    </configuration>
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="Grunt.js.run-client" />
+      <item index="1" class="java.lang.String" itemvalue="Node.js.bable-run" />
+      <item index="2" class="java.lang.String" itemvalue="Node.js.node" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="78effe0f-a68e-4422-915a-b7c8e9aee9c2" name="Default" comment="" />
+      <created>1438229215811</created>
+      <option name="number" value="Default" />
+      <updated>1438229215811</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="358" y="26" width="1517" height="1177" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20563595" sideWeight="0.50321984" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299539" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2496124" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15641712" sideWeight="0.49678013" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39809927" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22914466" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295562" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295562" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/nodes_exp/default.js</url>
+          <line>84</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/nodes_utils.js</url>
+          <line>288</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+      </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="javascript-exception">
+          <properties />
+        </breakpoint>
+      </default-breakpoints>
+      <option name="time" value="17" />
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="NodeJSConfigurationType">
+        <watch expression="expHandle.name()" language="JavaScript" />
+        <watch expression="nodes.getNodeMap(gr.verb)" language="JavaScript" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/nodes_pos/base.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eparser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="70" column="29" selection-start-line="70" selection-start-column="29" selection-end-line="70" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eparser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="70" column="29" selection-start-line="70" selection-start-column="29" selection-end-line="70" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eparser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="92" column="28" selection-start-line="92" selection-start-column="28" selection-end-line="92" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/work/node_modules/babel/node_modules/babel-core/node_modules/core-js/modules/es6.promise.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33281004">
+          <caret line="91" column="27" selection-start-line="91" selection-start-column="27" selection-end-line="91" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nlp_pp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="1" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_pos/vb.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="38" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_pos/nn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Gruntfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.4444447">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/tests.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.444445">
+          <caret line="26" column="21" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/run.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.111111">
+          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/lint.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.444445">
+          <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/build.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.888889">
+          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/corenlp_server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/default.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="71" column="32" selection-start-line="71" selection-start-column="32" selection-end-line="71" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eparser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="18.444445">
+          <caret line="115" column="3" selection-start-line="115" selection-start-column="3" selection-end-line="115" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/appos.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_pos/cd.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="28" selection-start-line="65" selection-start-column="28" selection-end-line="65" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/nummod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_pos/base.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="90" column="61" selection-start-line="90" selection-start-column="61" selection-end-line="90" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/compound.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/sample-1.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="2" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="62" column="18" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/nummod_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.111111">
+          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test_utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.67896676">
+          <caret line="66" column="20" selection-start-line="66" selection-start-column="20" selection-end-line="66" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/units_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.090405904">
+          <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/relation_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding>
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701126000" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/sample-2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="28" selection-start-line="0" selection-start-column="28" selection-end-line="0" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/measure.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="21" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="21" />
+          <folding>
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="/*...*/" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439541349000" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/units.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="14" selection-start-line="34" selection-start-column="14" selection-end-line="34" selection-end-column="14" />
+          <folding>
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="/*...*/" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="//..." />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439593350000" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/sunnu.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.888889">
+          <caret line="114" column="20" selection-start-line="114" selection-start-column="20" selection-end-line="114" selection-end-column="20" />
+          <folding>
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="/*...*/" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="/*...*/" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="//..." />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439715534000" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/qconvert_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6818182">
+          <caret line="21" column="15" selection-start-line="21" selection-start-column="15" selection-end-line="21" selection-end-column="15" />
+          <folding>
+            <marker date="1439701455000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701455000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701455000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701455000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701455000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701455000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701455000" expanded="true" signature="-1:-1" placeholder="{...}" />
+            <marker date="1439701455000" expanded="true" signature="-1:-1" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/sample-3.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="15" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/nlppp_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="167" column="25" selection-start-line="167" selection-start-column="25" selection-end-line="167" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37917086">
+          <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/verb_base2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6737864">
+          <caret line="274" column="66" selection-start-line="274" selection-start-column="66" selection-end-line="274" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/base_verb_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.185185">
+          <caret line="83" column="29" selection-start-line="83" selection-start-column="29" selection-end-line="83" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/measure_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.777778">
+          <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/default_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.74074">
+          <caret line="50" column="77" selection-start-line="50" selection-start-column="77" selection-end-line="50" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="21.11111">
+          <caret line="67" column="8" selection-start-line="67" selection-start-column="8" selection-end-line="67" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/mod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.9444447">
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/dep.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.222221">
+          <caret line="31" column="28" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.119521916">
+          <caret line="40" column="17" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/verb_base.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.2962964">
+          <caret line="314" column="30" selection-start-line="314" selection-start-column="30" selection-end-line="314" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/nmod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44820717">
+          <caret line="30" column="16" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <last-edited>build-exclude</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+          <order>
+            <scope name="src" />
+            <scope name="test" />
+            <scope name="build-exclude" />
+            <scope name="node_modules-exelude" />
+          </order>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

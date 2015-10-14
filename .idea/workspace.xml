@@ -1,0 +1,1276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/nodes.ts" line="24" mnemonic="0" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="78effe0f-a68e-4422-915a-b7c8e9aee9c2" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/training.sh" afterPath="$PROJECT_DIR$/data/training.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lexp.db" afterPath="$PROJECT_DIR$/lexp.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exp_learn.ts" afterPath="$PROJECT_DIR$/src/exp_learn.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exp_learn_utils.ts" afterPath="$PROJECT_DIR$/src/exp_learn_utils.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/base_exp.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/base_exp.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/default_test.js" afterPath="$PROJECT_DIR$/src/test/default_test.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/measure_test.js" afterPath="$PROJECT_DIR$/src/test/measure_test.js" />
+    </list>
+    <ignored path="measure.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="measure" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="relation_test.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/relation_test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="134" column="15" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="exp_learn_utils.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="591" column="67" selection-start-line="591" selection-start-column="67" selection-end-line="591" selection-end-column="67" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="training.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/training.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="81" column="105" selection-start-line="81" selection-start-column="105" selection-end-line="81" selection-end-column="105" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="exp_match.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/exp_match.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="19" column="61" selection-start-line="19" selection-start-column="61" selection-end-line="19" selection-end-column="61" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="units_test.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/units_test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="57" column="74" selection-start-line="57" selection-start-column="74" selection-end-line="57" selection-end-column="74" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="default_test.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/default_test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6209573">
+              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="exp_learn.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/exp_learn.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="210" column="44" selection-start-line="210" selection-start-column="44" selection-end-line="210" selection-end-column="44" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="qconvert_test.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/qconvert_test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="73" column="15" selection-start-line="73" selection-start-column="15" selection-end-line="73" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base_exp.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="default.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nodes_exp/default.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GulpTreeLayoutManager">
+    <layout place="tools.popup">
+      <scroll-view-position x="0" y="0" />
+    </layout>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/test/test_utils.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/tsd.json" />
+        <option value="$PROJECT_DIR$/tslint.json" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/verb_base.js" />
+        <option value="$PROJECT_DIR$/data/sample-2.txt" />
+        <option value="$PROJECT_DIR$/build/nodes_utils.js" />
+        <option value="$PROJECT_DIR$/data/sample-training.txt" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/nummod.js" />
+        <option value="$PROJECT_DIR$/src/test/nummod_test.js" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/default.js" />
+        <option value="$PROJECT_DIR$/src/test/base_verb_test.js" />
+        <option value="$PROJECT_DIR$/src/test/util/test_utils.js" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/relationMath.js" />
+        <option value="$PROJECT_DIR$/src/test/nlppp_test.js" />
+        <option value="$PROJECT_DIR$/tsconfig.json" />
+        <option value="$PROJECT_DIR$/gulpfile.js" />
+        <option value="$PROJECT_DIR$/src/nodes_pos/base_node.d.ts" />
+        <option value="$PROJECT_DIR$/src/nlp_pp.ts" />
+        <option value="$PROJECT_DIR$/src/expdb.ts" />
+        <option value="$PROJECT_DIR$/src/tokens.d.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_gr/base_gr.ts" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/eparser.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_utils.ts" />
+        <option value="$PROJECT_DIR$/src/dependency.ts" />
+        <option value="$PROJECT_DIR$/src/dependency.d.ts" />
+        <option value="$PROJECT_DIR$/src/nodes.d.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_pos/base_node.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_utils.d.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/relationMath.d.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/measure.js" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/fromArg.js" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/toArg.js" />
+        <option value="$PROJECT_DIR$/src/nodes.ts" />
+        <option value="$PROJECT_DIR$/src/exp_learn_utils.d.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/units.js" />
+        <option value="$PROJECT_DIR$/src/exp_match.d.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/qConvert.js" />
+        <option value="$PROJECT_DIR$/src/exp_match.ts" />
+        <option value="$PROJECT_DIR$/src/test/units_test.js" />
+        <option value="$PROJECT_DIR$/src/test/qconvert_test.js" />
+        <option value="$PROJECT_DIR$/src/exp_learn.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/base_exp.ts" />
+        <option value="$PROJECT_DIR$/src/test/measure_test.js" />
+        <option value="$PROJECT_DIR$/src/test/relation_test.js" />
+        <option value="$PROJECT_DIR$/data/training.sh" />
+        <option value="$PROJECT_DIR$/src/exp_learn_utils.ts" />
+        <option value="$PROJECT_DIR$/src/test/default_test.js" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBowerSettings">
+    <exe-path />
+    <config-path />
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" />
+  <component name="JsBuildToolPackageJson" detection-done="true">
+    <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <gulpfiles>
+      <GulpfileState>
+        <gulpfile-path>$PROJECT_DIR$/gulpfile.js</gulpfile-path>
+        <tasks>
+          <GulpTaskState>
+            <dependencies>
+              <dependency value="build-ts" />
+              <dependency value="build-js" />
+            </dependencies>
+            <task-name>build</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>build-js</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>build-ts</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>clean</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <dependencies>
+              <dependency value="build" />
+            </dependencies>
+            <task-name>default</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>lint</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>lint-style</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>server-connect</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>server-start</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>server-stop</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <dependencies>
+              <dependency value="build" />
+            </dependencies>
+            <task-name>test</task-name>
+          </GulpTaskState>
+          <GulpTaskState>
+            <task-name>watch</task-name>
+          </GulpTaskState>
+        </tasks>
+      </GulpfileState>
+    </gulpfiles>
+  </component>
+  <component name="NamedScopeManager">
+    <scope name="src" pattern="file[measure]:src/*" />
+    <scope name="test" pattern="file[measure]:test//*" />
+    <scope name="build-exclude" pattern="!file[measure]:build//*" />
+    <scope name="node_modules-exelude" pattern="!file[measure]:node_modules//*" />
+    <scope name="build-src-test" pattern="!file[measure]:build/src//*&amp;&amp;!file[measure]:build/test//*&amp;&amp;!file[measure]:build/build//*" />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="567" />
+    <option name="y" value="23" />
+    <option name="width" value="1677" />
+    <option name="height" value="1177" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>TypeScript</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>TypeScript</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="2" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope">
+        <subPane subId="Problems" />
+        <subPane subId="build-exclude">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="js.eslint.nodeInterpreter" value="$USER_HOME$/.nvm/versions/node/v0.12.7/bin/node" />
+    <property name="JavaScriptLanguageLevel" value="ES6" />
+    <property name="JavaScriptPreferStrict" value="true" />
+    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+    <property name="js.eslint.eslintPackage" value="$USER_HOME$/.nvm/versions/node/v0.12.7/lib/node_modules/eslint" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tslint.json" />
+    <property name="recentsLimit" value="5" />
+    <property name="js.buildTools.gulp.node_interpreter" value="$USER_HOME$/.nvm/versions/node/v0.12.7/bin/node" />
+    <property name="js.buildTools.gulp.gulp_package_dir" value="$PROJECT_DIR$/node_modules/gulp" />
+    <property name="js.buildTools.grunt.node_interpreter" value="/usr/local/bin/node" />
+    <property name="js.buildTools.grunt.grunt-cli.package" value="$PROJECT_DIR$/node_modules/grunt-cli" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="87" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="88" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="92" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="886" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="87" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="88" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="92" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="886" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+    <property name="typescript-compiler-editor-notification" value="false" />
+    <property name="js-tslint-nodeInterpreter" value="$USER_HOME$/.nvm/versions/node/v0.12.7/bin/node" />
+    <property name="js-tslint-package" value="$PROJECT_DIR$/node_modules/tslint" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data" />
+      <recent name="$PROJECT_DIR$/src/nodes_gr" />
+      <recent name="$PROJECT_DIR$/src/nodes_exp" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Node.js.node">
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
+      <option name="cucumberJsArguments" value="" />
+      <option name="executablePath" />
+      <option name="filePath" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.grunt" factoryName="Grunt.js">
+      <gruntfile value="$PROJECT_DIR$/Gruntfile.js" />
+      <tasks>
+        <task value="run-client" />
+      </tasks>
+      <pass-parent-env-vars value="true" />
+      <envs />
+      <force value="false" />
+      <verbose value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration default="false" name="run-client" type="js.build_tools.grunt" factoryName="Grunt.js">
+      <gruntfile value="$PROJECT_DIR$/Gruntfile.js" />
+      <tasks>
+        <task value="build" />
+        <task value="run-client" />
+      </tasks>
+      <pass-parent-env-vars value="true" />
+      <envs />
+      <force value="false" />
+      <verbose value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="bable-run" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="$USER_HOME$/work/node_modules/.bin/babel-node" path-to-js-file="src/eparser.js" working-dir="$PROJECT_DIR$">
+      <method />
+    </configuration>
+    <configuration default="false" name="node" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="$USER_HOME$/.nvm/versions/node/v0.12.7/bin/node" path-to-js-file="build/src/eparser.js" application-parameters="-l -t &quot;Foo is a Unit for Bar.&quot; -L &quot;yes,Units,Bar,Foo&quot;" working-dir="$PROJECT_DIR$">
+      <method />
+    </configuration>
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="Grunt.js.run-client" />
+      <item index="1" class="java.lang.String" itemvalue="Node.js.bable-run" />
+      <item index="2" class="java.lang.String" itemvalue="Node.js.node" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="78effe0f-a68e-4422-915a-b7c8e9aee9c2" name="Default" comment="" />
+      <created>1438229215811</created>
+      <option name="number" value="Default" />
+      <updated>1438229215811</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="567" y="23" width="1677" height="1177" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16304348" sideWeight="0.18476903" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16304348" sideWeight="0.81523097" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298647" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32809612" sideWeight="0.50712025" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16129032" sideWeight="0.1509434" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882413" sideWeight="0.49683544" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24362606" sideWeight="0.49287975" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24920887" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286119" sideWeight="0.49683544" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2136076" sideWeight="0.5136116" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34547347" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4276795" sideWeight="0.49332395" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24900925" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Grunt " active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2136076" sideWeight="0.07751938" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13610038" sideWeight="0.49769282" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/nodes_gr/compound.js</url>
+          <line>46</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/dependency.ts</url>
+          <line>5</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/tokens.ts</url>
+          <line>11</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/nodes_exp/base_exp.ts</url>
+          <line>15</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/nodes.ts</url>
+          <line>2</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/nlp_pp.ts</url>
+          <line>14</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/exp_learn_utils.ts</url>
+          <line>48</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/exp_learn.ts</url>
+          <line>109</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+      </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <default-breakpoints>
+        <breakpoint enabled="true" type="javascript-exception">
+          <properties />
+        </breakpoint>
+      </default-breakpoints>
+      <option name="time" value="53" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/test/base_verb_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="113" column="33" selection-start-line="112" selection-start-column="0" selection-end-line="113" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/advmod.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/sample-2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/nummod_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="32" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/util/test_utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.037037">
+          <caret line="77" column="17" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/sample-training.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tokens.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="22" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/nlppp_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-25.814816">
+          <caret line="183" column="27" selection-start-line="183" selection-start-column="27" selection-end-line="183" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tsconfig.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.625">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <marker date="1444630890000" expanded="true" signature="0:144" placeholder="{...}" />
+            <marker date="1444630890000" expanded="true" signature="23:142" placeholder="{&quot;target&quot;: &quot;ES6&quot;...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.875">
+          <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nlp_pp.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/expdb.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="28" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tokens.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/verb_base.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="118" column="23" selection-start-line="118" selection-start-column="23" selection-end-line="118" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.896552">
+          <caret line="136" column="155" selection-start-line="136" selection-start-column="155" selection-end-line="136" selection-end-column="155" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="22" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_pos/nn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_pos/vb.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_pos/cd.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_pos/base_node.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/base_gr.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="33" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="33" />
+          <folding>
+            <marker date="1444590266000" expanded="true" signature="0:92" placeholder="//..." />
+            <marker date="1444590266000" expanded="true" signature="309:5259" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="532:722" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="745:778" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="814:911" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="957:1055" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="974:1048" placeholder="[...]" />
+            <marker date="1444590266000" expanded="true" signature="975:1047" placeholder="{&quot;name&quot;: 'BaseGr'...}" />
+            <marker date="1444590266000" expanded="true" signature="1061:1673" placeholder="/*...*/" />
+            <marker date="1444590266000" expanded="true" signature="1720:3278" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="1828:1901" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="1963:3272" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="2073:3011" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="2380:2805" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="2695:2787" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="2822:2955" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="3037:3262" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="3170:3248" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="3317:4134" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="3504:3669" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="3895:4105" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="3930:4010" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="4016:4095" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="4136:4438" placeholder="//..." />
+            <marker date="1444590266000" expanded="true" signature="4504:5129" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="4601:4935" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="4659:4873" placeholder="{...}" />
+            <marker date="1444590266000" expanded="true" signature="4944:5030" placeholder="//..." />
+            <marker date="1444590266000" expanded="true" signature="5222:5257" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_gr/base_gr.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18691589">
+          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+          <folding>
+            <marker date="1443776319000" expanded="true" signature="85:164" placeholder="..." />
+            <marker date="1443776319000" expanded="true" signature="192:238" placeholder="..." />
+            <marker date="1443776319000" expanded="true" signature="261:282" placeholder="..." />
+            <marker date="1443776319000" expanded="true" signature="312:447" placeholder="..." />
+            <marker date="1443776319000" expanded="true" signature="563:1152" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dependency.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
+          <folding>
+            <marker date="1444634186000" expanded="true" signature="38:131" placeholder="/** @class ...*/" />
+            <marker date="1444634186000" expanded="true" signature="151:378" placeholder="..." />
+            <marker date="1444634186000" expanded="true" signature="161:190" placeholder="..." />
+            <marker date="1444634186000" expanded="true" signature="206:282" placeholder="..." />
+            <marker date="1444634186000" expanded="true" signature="240:276" placeholder="..." />
+            <marker date="1444634186000" expanded="true" signature="299:375" placeholder="..." />
+            <marker date="1444634186000" expanded="true" signature="333:369" placeholder="..." />
+            <marker date="1444634186000" expanded="true" signature="403:445" placeholder="..." />
+            <marker date="1444634186000" expanded="true" signature="467:508" placeholder="..." />
+            <marker date="1444634186000" expanded="true" signature="534:851" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_utils.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-41.11111">
+          <caret line="74" column="29" selection-start-line="74" selection-start-column="29" selection-end-line="74" selection-end-column="29" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dependency.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="36" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_pos/base_node.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="28" selection-start-line="39" selection-start-column="28" selection-end-line="39" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/eparser.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.222222">
+          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_utils.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="10" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="10" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/fromArg.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="40" column="1" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.0245905">
+          <caret line="72" column="25" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="25" />
+          <folding>
+            <marker date="1444709955000" expanded="true" signature="0:143" placeholder="//..." />
+            <marker date="1444709955000" expanded="true" signature="661:696" placeholder="/**...*/" />
+            <marker date="1444709955000" expanded="true" signature="733:771" placeholder="/**...*/" />
+            <marker date="1444709955000" expanded="true" signature="831:869" placeholder="/**...*/" />
+            <marker date="1444709955000" expanded="true" signature="1220:1250" placeholder="/**...*/" />
+            <marker date="1444709955000" expanded="true" signature="1334:1443" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="1365:1441" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="1447:1485" placeholder="/**...*/" />
+            <marker date="1444709955000" expanded="true" signature="1568:1676" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="1599:1674" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="1680:1730" placeholder="/**...*/" />
+            <marker date="1444709955000" expanded="true" signature="1814:1925" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="1845:1923" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="1931:2161" placeholder="/** Class to hold all the nodes and ...*/" />
+            <marker date="1444709955000" expanded="true" signature="2175:14312" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="2468:2764" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="2693:2728" placeholder="/*...*/" />
+            <marker date="1444709955000" expanded="true" signature="2820:2854" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="2887:2919" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="2980:3026" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="3075:3121" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="3182:3773" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="3290:3556" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="3459:3546" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="3963:6942" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="3987:4053" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="4228:6780" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="4282:6556" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="4487:6542" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="4876:6405" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="5205:5870" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="5235:5412" placeholder="//..." />
+            <marker date="1444709955000" expanded="true" signature="5460:5844" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="5607:5814" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="5915:6383" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="6411:6524" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="6581:6659" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="6665:6770" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="6791:6935" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="7008:7494" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="7133:7200" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="7206:7243" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="7307:7415" placeholder="//..." />
+            <marker date="1444709955000" expanded="true" signature="7529:8359" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="7571:8353" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="7896:8343" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="7939:8329" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="8048:8311" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="8491:9842" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="8596:8842" placeholder="{&quot;children&quot;: null...}" />
+            <marker date="1444709955000" expanded="true" signature="8770:8814" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="8873:8911" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="9049:9813" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="9112:9165" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="9210:9373" placeholder="{&quot;tokenId&quot;: null...}" />
+            <marker date="1444709955000" expanded="true" signature="9444:9617" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="9623:9803" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="9848:9941" placeholder="/**  Try to match all the grammar rules ...*/" />
+            <marker date="1444709955000" expanded="true" signature="9973:11198" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="10378:10833" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="10424:10823" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="10540:10809" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="11050:11192" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="11245:12661" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="11457:12655" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="11911:12600" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="11961:12586" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="12068:12568" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="12366:12451" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="12457:12546" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="12668:12856" placeholder="/** @param tknId - Specify the token to process ...*/" />
+            <marker date="1444709955000" expanded="true" signature="12902:14308" placeholder="{...}" />
+            <marker date="1444709955000" expanded="true" signature="13015:14302" placeholder="/*...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exp_match.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
+          <folding>
+            <marker date="1444729125000" expanded="true" signature="69:824" placeholder="{...}" />
+            <marker date="1444729125000" expanded="true" signature="88:178" placeholder="..." />
+            <marker date="1444729125000" expanded="true" signature="104:177" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="17" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-57.22222">
+          <caret line="124" column="28" selection-start-line="124" selection-start-column="28" selection-end-line="124" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/toArg.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/units.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.6666665">
+          <caret line="24" column="39" selection-start-line="24" selection-start-column="39" selection-end-line="24" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/measure.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="36" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+          <folding>
+            <marker date="1444712293000" expanded="true" signature="215:627" placeholder="/*...*/" />
+            <marker date="1444712293000" expanded="true" signature="665:2930" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="703:790" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="812:844" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="872:908" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="930:978" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="992:1378" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="1425:1453" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="1458:2928" placeholder="/*...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/measure_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="94" column="57" selection-start-line="94" selection-start-column="57" selection-end-line="94" selection-end-column="57" />
+          <folding>
+            <marker date="1444800833000" expanded="true" signature="167:444" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="194:430" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="356:424" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="496:3520" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="528:566" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="738:896" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="815:888" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="926:1192" placeholder="/*...*/" />
+            <marker date="1444800833000" expanded="true" signature="1340:1616" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="1417:1608" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="1435:1536" placeholder="//..." />
+            <marker date="1444800833000" expanded="true" signature="1787:1945" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="1864:1937" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="2113:2271" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="2190:2263" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="2455:2613" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="2532:2605" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="2791:2949" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="2868:2941" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="3063:3221" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="3140:3213" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="3335:3493" placeholder="{...}" />
+            <marker date="1444800833000" expanded="true" signature="3412:3485" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/relation_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="134" column="15" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/training.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="81" column="105" selection-start-line="81" selection-start-column="105" selection-end-line="81" selection-end-column="105" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exp_match.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="61" selection-start-line="19" selection-start-column="61" selection-end-line="19" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/units_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="57" column="74" selection-start-line="57" selection-start-column="74" selection-end-line="57" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exp_learn.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="210" column="44" selection-start-line="210" selection-start-column="44" selection-end-line="210" selection-end-column="44" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/qconvert_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="73" column="15" selection-start-line="73" selection-start-column="15" selection-end-line="73" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/default.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="591" column="67" selection-start-line="591" selection-start-column="67" selection-end-line="591" selection-end-column="67" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/default_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6209573">
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <last-edited>build-src-test</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+          <order>
+            <scope name="src" />
+            <scope name="test" />
+            <scope name="build-exclude" />
+            <scope name="node_modules-exelude" />
+            <scope name="build-src-test" />
+          </order>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
