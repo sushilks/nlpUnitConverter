@@ -63,6 +63,8 @@ class relationMath extends BaseExp {
         // console.log(' ------------------- ' + graphDB+ " :: " + Object.keys(graphDB));
         //let e = new Error().stack;
         // console.log(' match2 = ' + JSON.stringify(match));
+        dbg('CheckValidArguments: nodeFrom=' + match.getArgExp('nodeFrom').getArgStr('fromArg') +
+        ' nodeTo=' + match.getArgExp('nodeTo').getArgStr('toArg'));
         if( !match.isArgExpValid('nodeFrom') || !match.isArgExpValid('nodeTo')) {
             return false;
         }
@@ -114,6 +116,7 @@ class relationMath extends BaseExp {
         }
         if (match.isDefaultUsed('nodeFrom') && match.isDefaultUsed('nodeTo'))
             return false;
+        dbg('CheckValidArguments: returning [' + found + ']');
         return found;
     }
 

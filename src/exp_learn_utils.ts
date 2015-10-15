@@ -197,7 +197,7 @@ export function findListInTree(tree: any, val: Array<string>): string {
 
 function copyMatchTree_(extracted: Array<string>, tree: any, key: string): string {
     let treeType = Object.prototype.toString.call(tree);
-    dbg(' copyMatchTree_ Called for:' + key + ' tree=' + tree + ' type='+treeType);
+    //dbg(' copyMatchTree_ Called for:' + key + ' tree=' + tree + ' type='+treeType);
     if (treeType === '[object Array]') {
 // array
         for (let idx in tree) {

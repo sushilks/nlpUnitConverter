@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78effe0f-a68e-4422-915a-b7c8e9aee9c2" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/nodes_exp/fromArg.js" afterPath="$PROJECT_DIR$/src/nodes_exp/fromArg.ts" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/nodes_exp/qConvert.js" afterPath="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/nodes_exp/toArg.js" afterPath="$PROJECT_DIR$/src/nodes_exp/toArg.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exp_match.d.ts" afterPath="$PROJECT_DIR$/src/exp_match.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/sample-2.txt" afterPath="$PROJECT_DIR$/data/sample-2.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/training.sh" afterPath="$PROJECT_DIR$/data/training.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lexp.db" afterPath="$PROJECT_DIR$/lexp.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exp_learn_utils.ts" afterPath="$PROJECT_DIR$/src/exp_learn_utils.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_utils.d.ts" afterPath="$PROJECT_DIR$/src/nodes_utils.d.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/qconvert_test.js" afterPath="$PROJECT_DIR$/src/test/qconvert_test.js" />
     </list>
     <ignored path="measure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,158 +31,127 @@
     <favorites_list name="measure" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="qConvert.ts" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="38" column="58" selection-start-line="38" selection-start-column="58" selection-end-line="38" selection-end-column="58" />
-                  <folding>
-                    <element signature="n#!!doc" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="toArg.ts" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/nodes_exp/toArg.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.44516128">
-                  <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
-                  <folding>
-                    <element signature="n#!!doc" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="qconvert_test.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/test/qconvert_test.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="70" column="25" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="25" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="base_exp.ts" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
-                  <folding>
-                    <element signature="n#!!doc" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="default.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/nodes_exp/default.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="exp_learn_utils.d.ts" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.d.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="51" column="20" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="20" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="nodes_utils.d.ts" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/nodes_utils.d.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="measure.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/nodes_exp/measure.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="nodes_utils.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/build/nodes_utils.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="564" column="9" selection-start-line="564" selection-start-column="9" selection-end-line="564" selection-end-column="9" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="qConvert.ts" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
-                  <folding>
-                    <element signature="n#!!doc" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="relationMath.ts" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-                  <folding>
-                    <element signature="n#!!doc" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="base_exp.d.ts" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="32" column="1" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="fromArg.ts" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/nodes_exp/fromArg.ts">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.8516129">
-                  <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-                  <folding>
-                    <element signature="n#!!doc" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="qConvert.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.28387097">
+              <caret line="39" column="43" selection-start-line="39" selection-start-column="43" selection-end-line="39" selection-end-column="43" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="training.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/training.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="exp_learn_utils.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.333333">
+              <caret line="258" column="44" selection-start-line="258" selection-start-column="44" selection-end-line="258" selection-end-column="44" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="relation_test.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/relation_test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="134" column="15" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="relationMath.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="91" column="25" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="25" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="toArg.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nodes_exp/toArg.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="7" column="47" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="qconvert_test.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/qconvert_test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="70" column="25" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base_exp.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="default.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nodes_exp/default.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.2.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.2.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-12.931034">
+              <caret line="74" column="59" selection-start-line="74" selection-start-column="59" selection-end-line="74" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+          <provider editor-type-id="MultiMarkdownFxPreviewEditor">
+            <state />
+          </provider>
+          <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -203,7 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/tslint.json" />
         <option value="$PROJECT_DIR$/src/nodes_gr/verb_base.js" />
         <option value="$PROJECT_DIR$/data/sample-2.txt" />
         <option value="$PROJECT_DIR$/build/nodes_utils.js" />
@@ -243,17 +210,18 @@
         <option value="$PROJECT_DIR$/src/nodes_exp/base_exp.ts" />
         <option value="$PROJECT_DIR$/src/test/measure_test.js" />
         <option value="$PROJECT_DIR$/src/test/relation_test.js" />
-        <option value="$PROJECT_DIR$/data/training.sh" />
-        <option value="$PROJECT_DIR$/src/exp_learn_utils.ts" />
         <option value="$PROJECT_DIR$/src/test/default_test.js" />
         <option value="$PROJECT_DIR$/src/exp_match.d.ts" />
         <option value="$PROJECT_DIR$/src/exp_learn_utils.d.ts" />
         <option value="$PROJECT_DIR$/src/nodes_utils.d.ts" />
         <option value="$PROJECT_DIR$/src/test/qconvert_test.js" />
-        <option value="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" />
-        <option value="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/fromArg.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/toArg.ts" />
+        <option value="$PROJECT_DIR$/README.2.md" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" />
+        <option value="$PROJECT_DIR$/data/training.sh" />
+        <option value="$PROJECT_DIR$/src/exp_learn_utils.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" />
       </list>
     </option>
   </component>
@@ -329,7 +297,7 @@
     <scope name="build-src-test" pattern="!file[measure]:build/src//*&amp;&amp;!file[measure]:build/test//*&amp;&amp;!file[measure]:build/build//*" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="318" />
+    <option name="x" value="665" />
     <option name="y" value="23" />
     <option name="width" value="1581" />
     <option name="height" value="1177" />
@@ -454,6 +422,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="nodes_exp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nlpUnitConverter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -625,7 +607,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="318" y="23" width="1581" height="1177" extended-state="0" />
+    <frame x="665" y="23" width="1581" height="1177" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13205129" sideWeight="0.19302616" order="4" side_tool="true" content_ui="tabs" />
@@ -634,7 +616,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32809612" sideWeight="0.50712025" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16129032" sideWeight="0.1509434" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882413" sideWeight="0.49683544" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24316682" sideWeight="0.49287975" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24316682" sideWeight="0.49287975" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24920887" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286119" sideWeight="0.49683544" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2136076" sideWeight="0.5136116" order="3" side_tool="true" content_ui="tabs" />
@@ -719,13 +701,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/nodes_gr/advmod.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/sample-2.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -918,6 +893,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.222222">
           <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -928,13 +906,6 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1034,21 +1005,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/relation_test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="134" column="15" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/training.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="81" column="105" selection-start-line="81" selection-start-column="105" selection-end-line="81" selection-end-column="105" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/units_test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1124,28 +1080,260 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.ts">
+    <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-111.96296">
-          <caret line="476" column="23" selection-start-line="476" selection-start-column="23" selection-end-line="476" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="51" column="20" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="20" />
+          <folding>
+            <marker date="1444727063000" expanded="true" signature="41:242" placeholder="/*...*/" />
+            <marker date="1444727063000" expanded="true" signature="244:551" placeholder="//..." />
+            <marker date="1444727063000" expanded="true" signature="576:783" placeholder="..." />
+            <marker date="1444727063000" expanded="true" signature="784:1030" placeholder="/*...*/" />
+            <marker date="1444727063000" expanded="true" signature="1031:1318" placeholder="/*...*/" />
+            <marker date="1444727063000" expanded="true" signature="1344:1415" placeholder="..." />
+            <marker date="1444727063000" expanded="true" signature="1438:1708" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/nodes_utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="564" column="9" selection-start-line="564" selection-start-column="9" selection-end-line="564" selection-end-column="9" />
+          <folding>
+            <marker date="1444938755000" expanded="true" signature="60:79" placeholder="{&quot;value&quot;: true...}" />
+            <marker date="1444938755000" expanded="true" signature="1147:2034" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="1199:2030" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="1287:1466" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="1407:1454" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="1501:1634" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="1519:1571" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="1582:1624" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="1668:1802" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="1686:1739" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="1750:1792" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="1838:1994" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="2101:2178" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="2125:2154" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="2208:2504" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="2247:2417" placeholder="/*...*/" />
+            <marker date="1444938755000" expanded="true" signature="2537:3681" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="2576:2640" placeholder="//..." />
+            <marker date="1444938755000" expanded="true" signature="2666:2712" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="2742:3598" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="2882:3185" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3045:3175" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3198:3281" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3290:3592" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3308:3457" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3381:3443" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3466:3582" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3507:3568" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3604:3664" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3713:3944" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3772:3927" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3830:3872" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="3946:4032" placeholder="//..." />
+            <marker date="1444938755000" expanded="true" signature="4074:4191" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="4220:4384" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="4386:4483" placeholder="//..." />
+            <marker date="1444938755000" expanded="true" signature="4537:4688" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="4580:4686" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="4690:5526" placeholder="/*...*/" />
+            <marker date="1444938755000" expanded="true" signature="5527:5617" placeholder="//..." />
+            <marker date="1444938755000" expanded="true" signature="5682:8088" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="5763:5811" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="5900:8065" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="6043:7645" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="6221:7635" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="6453:6502" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="6621:6844" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="6703:6799" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="6886:7111" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="6970:7066" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="7155:7384" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="7243:7339" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="7434:7496" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="7528:7621" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="7658:7743" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="7752:8059" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="7770:7922" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="7845:7908" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="7931:8049" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="7973:8035" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="8090:8295" placeholder="/** ...*/" />
+            <marker date="1444938755000" expanded="true" signature="8336:8578" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="8444:8557" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="8510:8551" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="8580:8785" placeholder="/** ...*/" />
+            <marker date="1444938755000" expanded="true" signature="8832:9072" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="8944:9055" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="9011:9049" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="9108:10295" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="9201:9226" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="9232:9281" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="9407:9912" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="9573:9906" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="9685:9788" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="9722:9774" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="9794:9896" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="9830:9882" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="9925:9998" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="10007:10274" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="10021:10157" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="10092:10147" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="10166:10268" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="10204:10258" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="10296:10510" placeholder="/** ...*/" />
+            <marker date="1444938755000" expanded="true" signature="10547:11948" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="10602:10652" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="10707:10757" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="10813:11019" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="10887:10947" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="10953:11013" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="11025:11946" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="11168:11503" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="11339:11493" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="11427:11479" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="11516:11601" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="11610:11917" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="11628:11780" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="11703:11766" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="11789:11907" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="11831:11893" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="11981:12084" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="12017:12060" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="12208:15244" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="12318:14290" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="12493:13847" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="12663:13837" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="12930:13305" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="13106:13287" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="13197:13265" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="13318:13427" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="13436:13823" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="13462:13646" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="13545:13624" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="13655:13805" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="13705:13783" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="13860:13945" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="13954:14261" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="13972:14124" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="14047:14110" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="14133:14251" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="14175:14237" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="14296:15242" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="14471:14799" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="14641:14789" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="14723:14775" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="14812:14897" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="14906:15213" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="14924:15076" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="14999:15062" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="15085:15203" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="15127:15189" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="15258:15742" placeholder="{&quot;zero&quot;: 0...}" />
+            <marker date="1444938755000" expanded="true" signature="15760:16180" placeholder="{&quot;thousand&quot;: 1000...}" />
+            <marker date="1444938755000" expanded="true" signature="16219:16704" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="16312:16344" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="16377:16444" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="16470:16504" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="16510:16702" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="16561:16630" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="16636:16696" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="16731:17123" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="16737:16887" placeholder="/*...*/" />
+            <marker date="1444938755000" expanded="true" signature="17162:17312" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="17352:18137" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="17438:18133" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="17513:17635" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="17641:18127" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="17766:18074" placeholder="{...}" />
+            <marker date="1444938755000" expanded="true" signature="17846:18060" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/measure.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
+          <folding>
+            <marker date="1444712293000" expanded="true" signature="215:627" placeholder="/*...*/" />
+            <marker date="1444712293000" expanded="true" signature="665:2930" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="703:790" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="812:844" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="872:908" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="930:978" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="992:1378" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="1425:1453" placeholder="{...}" />
+            <marker date="1444712293000" expanded="true" signature="1458:2928" placeholder="/*...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_utils.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+          <folding>
+            <marker date="1444810225000" expanded="true" signature="78:127" placeholder="..." />
+            <marker date="1444810225000" expanded="true" signature="154:350" placeholder="{...}" />
+            <marker date="1444810225000" expanded="true" signature="372:407" placeholder="..." />
+            <marker date="1444810225000" expanded="true" signature="433:473" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/fromArg.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.d.ts">
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="20" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="20" />
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/default.js">
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/toArg.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
+          <caret line="7" column="47" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.2.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.931034">
+          <caret line="74" column="59" selection-start-line="74" selection-start-column="59" selection-end-line="74" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/qconvert_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="70" column="25" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -1160,34 +1348,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/nodes_utils.js">
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/default.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="564" column="9" selection-start-line="564" selection-start-column="9" selection-end-line="564" selection-end-column="9" />
+          <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/measure.js">
+    <entry file="file://$PROJECT_DIR$/data/training.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
+          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_utils.d.ts">
+    <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-          <folding />
+        <state vertical-scroll-proportion="-10.333333">
+          <caret line="258" column="44" selection-start-line="258" selection-start-column="44" selection-end-line="258" selection-end-column="44" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/qconvert_test.js">
+    <entry file="file://$PROJECT_DIR$/src/test/relation_test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="70" column="25" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="25" />
+          <caret line="134" column="15" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="15" />
           <folding />
         </state>
       </provider>
@@ -1195,7 +1385,7 @@
     <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+          <caret line="91" column="25" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="25" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -1204,28 +1394,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="58" selection-start-line="38" selection-start-column="58" selection-end-line="38" selection-end-column="58" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/fromArg.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8516129">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/toArg.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44516128">
-          <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.28387097">
+          <caret line="39" column="43" selection-start-line="39" selection-start-column="43" selection-end-line="39" selection-end-column="43" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

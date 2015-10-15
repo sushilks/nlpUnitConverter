@@ -30,13 +30,14 @@ class QConvert extends BaseExp {
 
     }
     exec(gr: NodeGraph): boolean {
-        const verbose = false;
+        const verbose = true;
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());
         let a : ExpMatch = this.result;
         //console.log("----- " + JSON.stringify(this.result));
         let nFrom = Utils.normalizeUnit(this.result.getArgStr('convFrom'));
         let nTo = Utils.normalizeUnit(this.result.getArgStr('convTo'));
+        let failedNodes = nFrom + ',' + nTo;
         for (let k in gr) {
             let g = gr[k];
             //console.log('LOOKING FOR [' + nFrom + '] [' + nTo + ']');
@@ -62,8 +63,10 @@ class QConvert extends BaseExp {
                 //g.addEdge(nTo, nFrom, {conv: 1.0/this.getConv()});
                 return;
             }
+            if (g.hasNode(nFrom) && !g.hasNode(nTo)) failedNodes=nTo;
+            if (!g.hasNode(nFrom) && g.hasNode(nTo)) failedNodes=nFrom;
         }
-        console.log(this.getName() + ' :: ERROR Unable to find nodes [' + nFrom + '] [' + nTo + ']');
+        console.log(this.getName() + ' :: ERROR Unable to find node [' + failedNodes + '] in translation between [' + nFrom + '] [' + nTo + ']');
     }
     static checkValidArguments(nodes: Nodes, match: ExpMatch, graphDB: NodeGraph) {
         return true;

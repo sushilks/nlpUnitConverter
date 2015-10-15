@@ -89,6 +89,11 @@ node $EPARSER -i ./data/sample-training.txt -l -t 'One inch is same as 2.54 cm.'
 node $EPARSER -l -t '4 quarters is equal to one Dollar.' -L 'yes,relation'
 node $EPARSER -l -t 'One Dollar is equal to four quarters.' -L 'yes,relation'
 
+
+#One fathom is equal to 2 yards .
+#One rod is equal to 5 meters .
+#
+#
 # node type : Default
 # Node:[Default] Args Needed :["defaultWhat","defaultFor","default"]
 node $EPARSER -l -t 'By default time is expressed in minutes.' -L 'yes,Default,unit,time,minutes'
