@@ -9,9 +9,13 @@ var dbg = require('debug')('node:exp:default');
 
 
 class ToArg extends BaseExp {
+    toArg: string;
+    toArgValue: string;
     constructor(nodes: Nodes, matchResult: ExpMatch) {
         super(nodes, matchResult);
         this.name = ToArg.getName();
+        this.toArg = this.result.getArgStr('toArg');
+        this.toArgValue = this.result.getArgStr('toArgValue');
     }
     static getName(): string {
         return 'toArg';
@@ -33,11 +37,11 @@ class ToArg extends BaseExp {
         return {singleVerbEdge : true};
     }
 
-    exec(gr: NodeGraph): boolean {
+    exec(globalBucket: GlobalBucket): boolean {
         //console.log('\t IMPLEMENT THIS :: Adding to graph:' + this.getName());
         let r = {};
         //r[this.result.args.toArg.listStr[0]] = this.result.args.toArgValue.listStr[0];
-        r[this.result.getArgStr('toArg')] = this.result.getArgStr('toArgValue');
+        r[this.toArg] = this.toArgValue;
         dbg('fromArg::EXEC = ' + JSON.stringify(r));
         return true;
     }

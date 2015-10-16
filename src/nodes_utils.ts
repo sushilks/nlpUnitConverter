@@ -6,7 +6,6 @@ import Nodes from './nodes';
 import * as assert from 'assert';
 
 //'use strict';
-var Jsnx = require('jsnetworkx');
 
 function nodeAdd_(nmap: {[key: string]: Array<any>}, d: string, fn: any) {
     if (!(d in nmap)) {
@@ -359,14 +358,6 @@ export function textToNumber(s : string): number {
     let ret = dt.n + dt.g;
     //console.log("OUTPUT FINAL " + dt.n + ' ' +  dt.g + ' = ' + ret);
     return ret;
-}
-
-
-export function createGraph(gr: NodeGraph, name: string, attr: any) {
-    attr.name = name;
-    gr[name] = new Jsnx.DiGraph(null, attr);
-    //console.log('CREATED [' + name + '] = ' + gr[name]);
-    return gr[name];
 }
 
 export function getStdin(prompt: string, cannedData: Array<string>): Promise<string> {

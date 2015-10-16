@@ -48,19 +48,20 @@ class ExpBase {
     text(): string {
         return this.name + ' Data [' + JSON.stringify(this.result) + ']';
     }
-    exec(gr: NodeGraph): boolean {
+    exec(globalBucket: GlobalBucket): boolean {
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());
         console.log('IMPLEMENT ME PLEASE');
         assert(1,0);
         return true;
     }
-
+/*
     static checkValid(gr: NodeGraph): [boolean, ExpMatch] {
+        // deprecated/
         return [false, null];
     }
-
-    static checkValidArguments(nodes: Nodes, match: ExpMatch, graphDB: NodeGraph) {
+*/
+    static checkValidArguments(nodes: Nodes, match: ExpMatch, graphDB: GlobalBucket) {
         return true;
     }
 }

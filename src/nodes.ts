@@ -113,7 +113,7 @@ class Nodes {
         //return new gNodeMapper[DEFAULT][0](this, tknId, level);
     }
 
-    public async processAllExpDB_(root: GrProcessNodeValueMap, db: ExpDB, graphDB: NodeGraph, mHistory: Array<string>,
+    public async processAllExpDB_(root: GrProcessNodeValueMap, db: ExpDB, globalBucket: GlobalBucket, mHistory: Array<string>,
                                   cnt: number = 0): Promise<boolean> {
         if (cnt > 20) {
             assert.equal(0, 1, 'Too much recurstion');
@@ -130,7 +130,7 @@ class Nodes {
                     dbgdb('Matching DB Entry:' + JSON.stringify(dbItem));
                     let fn: typeof ExpBase = gExpMapper.fnMap[match.matchType];
                     // call validity check on the expression-node
-                    if (fn.checkValidArguments(this, match.matchResult, graphDB)) {
+                    if (fn.checkValidArguments(this, match.matchResult, globalBucket)) {
                         dbgexp(' Match Succeded with arguments [' + JSON.stringify(match));
                         // check if the new expression is not already present
                         let alreadyFound: boolean = false;
@@ -164,7 +164,7 @@ class Nodes {
                 // resolve(true);
                 return true;
             } else {
-                return await this.processAllExpDB_(root, db, graphDB, mHistory, cnt + 1);
+                return await this.processAllExpDB_(root, db, globalBucket, mHistory, cnt + 1);
             }
         } catch (e) {
             console.log('Error :: ' + e);
@@ -175,7 +175,7 @@ class Nodes {
 
     }
 
-    public async processAllExpDB(db: ExpDB, graphDB: NodeGraph) {
+    public async processAllExpDB(db: ExpDB, globalBucket: GlobalBucket) {
         let mHistory: Array<string> = [];
         let root: GrProcessNodeValueMap = {};
         if (this.grMatches.length) {
@@ -188,7 +188,7 @@ class Nodes {
         // todo::
         // there should be a full crawl of the tree
         // making sure not to do repeated work
-        return await this.processAllExpDB_(root, db, graphDB, mHistory);
+        return await this.processAllExpDB_(root, db, globalBucket, mHistory);
     }
 
     public processAllExp(): void {
@@ -200,12 +200,13 @@ class Nodes {
             // console.log('  - GR Name = ' + grName);
             if (expList && expList.length) {
                 for (let exp of expList) {
+                    /*
                     let found: [boolean, ExpMatch] = exp.checkValid(gr);
                     if (found[0]) {
                         let expHandle: ExpBase = new exp(this, found[1]);
                         this.expMatches.push(expHandle);
                         dbg('  - Found Exp[' + expHandle.getName() + '] : ' + found[0] + ' :: ' + found[1]);
-                    }
+                    }*/
                 }
             }
         }

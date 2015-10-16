@@ -11,9 +11,15 @@ var dbg = require('debug')('node:exp:qconv');
 
 
 class QConvert extends BaseExp {
+    convTo: string;
+    convFrom: string;
+    fromValue: number;
     constructor(nodes: Nodes, matchResult: ExpMatch) {
         super(nodes, matchResult);
         this.name = QConvert.getName();
+        this.convFrom = Utils.normalizeUnit(this.result.getArgStr('convFrom'));
+        this.convTo = Utils.normalizeUnit(this.result.getArgStr('convTo'));
+        this.fromValue = Utils.textToNumber(this.result.getArgStr('fromValue'));
     }
     static getName(): string {
         return 'QConv';
@@ -29,26 +35,28 @@ class QConvert extends BaseExp {
         };
 
     }
-    exec(gr: NodeGraph): boolean {
+    exec(globalBucket: GlobalBucket): boolean {
+        let gr = globalBucket.gr;
         const verbose = true;
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());
-        let a : ExpMatch = this.result;
+        //let a : ExpMatch = this.result;
         //console.log("----- " + JSON.stringify(this.result));
-        let nFrom = Utils.normalizeUnit(this.result.getArgStr('convFrom'));
-        let nTo = Utils.normalizeUnit(this.result.getArgStr('convTo'));
-        let failedNodes = nFrom + ',' + nTo;
+        //let nFrom = Utils.normalizeUnit(this.result.getArgStr('convFrom'));
+        //let nTo = Utils.normalizeUnit(this.result.getArgStr('convTo'));
+        let failedNodes = this.convFrom + ',' + this.convTo;
         for (let k in gr) {
             let g = gr[k];
             //console.log('LOOKING FOR [' + nFrom + '] [' + nTo + ']');
-            if (g.hasNode(nFrom) && g.hasNode(nTo)) {
+            if (g.hasNode(this.convFrom) && g.hasNode(this.convTo)) {
                 //console.log("FOUDN NODES 1");
-                let sp = Jsnx.shortestPath(g, {source: nFrom, target: nTo});
-                dbg('SHORTEST PATH From:' + nFrom + ' TO:' + nTo +
+                let sp = Jsnx.shortestPath(g, {source: this.convFrom, target: this.convTo});
+                dbg('SHORTEST PATH From:' + this.convFrom + ' TO:' + this.convTo +
                     ' is [' + sp + ']');
-                let currentNode = nFrom;
+                let currentNode = this.convFrom;
                 sp.shift();
-                let val = Utils.textToNumber(this.result.getArgStr('fromValue'));
+                //let val = Utils.textToNumber(this.result.getArgStr('fromValue'));
+                let val = this.fromValue;
                 for (let nextNode of sp) {
                     let ed = g.getEdgeData(currentNode, nextNode);
                     dbg('\t' + currentNode + '->' + nextNode + 'E[' + JSON.stringify(ed) + ']');
@@ -56,19 +64,19 @@ class QConvert extends BaseExp {
                     currentNode = nextNode;
                 }
                 if (verbose) {
-                    console.log('\t\t' + this.getName() + '::Converted ' + this.result.getArgStr('fromValue') + ' ' + nFrom + ' to ' +
-                        nTo + ' Value = ' + val);
+                    console.log('\t\t' + this.getName() + '::Converted ' + this.result.getArgStr('fromValue') + ' ' + this.convFrom + ' to ' +
+                        this.convTo + ' Value = ' + val);
                 }
                 //g.addEdge(nFrom, nTo, {conv: this.getConv()});
                 //g.addEdge(nTo, nFrom, {conv: 1.0/this.getConv()});
                 return;
             }
-            if (g.hasNode(nFrom) && !g.hasNode(nTo)) failedNodes=nTo;
-            if (!g.hasNode(nFrom) && g.hasNode(nTo)) failedNodes=nFrom;
+            if (g.hasNode(this.convFrom) && !g.hasNode(this.convTo)) failedNodes=this.convTo;
+            if (!g.hasNode(this.convFrom) && g.hasNode(this.convTo)) failedNodes=this.convFrom;
         }
-        console.log(this.getName() + ' :: ERROR Unable to find node [' + failedNodes + '] in translation between [' + nFrom + '] [' + nTo + ']');
+        console.log(this.getName() + ' :: ERROR Unable to find node [' + failedNodes + '] in translation between [' + this.convFrom + '] [' + this.convTo + ']');
     }
-    static checkValidArguments(nodes: Nodes, match: ExpMatch, graphDB: NodeGraph) {
+    static checkValidArguments(nodes: Nodes, match: ExpMatch, globalBucket: GlobalBucket) {
         return true;
     }
 }

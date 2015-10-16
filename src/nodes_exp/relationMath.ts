@@ -41,7 +41,8 @@ class relationMath extends BaseExp {
             'nodeTo': {type: 'node', extractionNode: 'toArg'}
         };
     }
-    exec(gr: NodeGraph): boolean {
+    exec(globalBucket: GlobalBucket): boolean {
+        let gr = globalBucket.gr;
 //        console.log('Adding to graph:' + this.getName());
         let resData = this.myResult;
         let nFrom = Utils.normalizeUnit(resData.nodeFrom);
@@ -59,7 +60,8 @@ class relationMath extends BaseExp {
         }
         console.log('ERROR Unable to add relation between [' + nFrom + '] and [' + nTo + '], one of these nodes is not defined');
     }
-    static checkValidArguments(nodes: Nodes, match: ExpMatch, graphDB: NodeGraph) {
+    static checkValidArguments(nodes: Nodes, match: ExpMatch, globalBucket: GlobalBucket) {
+        let graphDB = globalBucket.gr;
         // console.log(' ------------------- ' + graphDB+ " :: " + Object.keys(graphDB));
         //let e = new Error().stack;
         // console.log(' match2 = ' + JSON.stringify(match));

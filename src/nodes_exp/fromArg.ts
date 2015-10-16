@@ -10,8 +10,12 @@ var dbg = require('debug')('node:exp:default');
 
 
 class FromArg extends BaseExp {
+    fromArg: string;
+    fromArgValue: string;
     constructor(nodes: Nodes, matchResult: ExpMatch) {
         super(nodes, matchResult);
+        this.fromArg = this.result.getArgStr('fromArg');
+        this.fromArgValue = this.result.getArgStr('fromArgValue');
         this.name = FromArg.getName();
     }
     static getName(): string {
@@ -34,12 +38,9 @@ class FromArg extends BaseExp {
         return {singleVerbEdge : true};
     }
 
-    exec(gr: NodeGraph): boolean {
-        //console.log('\t IMPLEMENT THIS :: Adding to graph:' + this.getName());
-        //console.log(' MATCH = ' + JSON.stringify(this.result));
+    exec(globalBucket: GlobalBucket): boolean {
         let r = {};
-        //r[this.result.args.fromArg.listStr[0]] = this.result.args.fromArgValue.listStr[0];
-        r[this.result.getArgStr('fromArg')] = this.result.getArgStr('fromArgValue');
+        r[this.fromArg] = this.fromArgValue;
         dbg('fromArg::EXEC = ' + JSON.stringify(r));
         return true;
     }

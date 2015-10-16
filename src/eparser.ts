@@ -85,7 +85,7 @@ function parseNodes(dep: Dependency, tokens: Tokens, tknid: number, linkType: st
         parseNodes(dep, tokens, childNodes[id].tokenIdx, childNodes[id].type, level + 1);
     }
  }
-async function parse(data:{body: string}, gr: NodeGraph, dbge: boolean = false): Promise<boolean> {
+async function parse(data:{body: string}, globalBucket: GlobalBucket, dbge: boolean = false): Promise<boolean> {
     var pp = new NLPPP();
     var res = pp.read(data.body);
     var dbg = debug('eparser:parse');
@@ -128,7 +128,7 @@ async function parse(data:{body: string}, gr: NodeGraph, dbge: boolean = false):
     nd.processAllExp();
     dbg("Done with processing Explain");
     // check if any of the database entries are matching
-    let dt = await nd.processAllExpDB(expDB, gr);
+    let dt = await nd.processAllExpDB(expDB, globalBucket);
     dbg("Done with processing DBExplain");
     {
         log_dt += ' \tParsedMeaning[';
@@ -160,7 +160,7 @@ async function parse(data:{body: string}, gr: NodeGraph, dbge: boolean = false):
         // execute all the exp matches
         for (let idx in nd.expMatches) {
             try {
-                nd.expMatches[idx].exec(gr);
+                nd.expMatches[idx].exec(globalBucket);
             } catch (e) {
                 console.log('Node:' + nd.expMatches[idx].name + ' had an exception when runing exec.')
                 console.log(e);
@@ -208,22 +208,22 @@ async function parse(data:{body: string}, gr: NodeGraph, dbge: boolean = false):
   * Send a text to the Client get the
   * nlp response and process it
   */
-async function processText(client: NLPClient, txt: string, gr: NodeGraph, dbg=false) {
+async function processText(client: NLPClient, txt: string, globalBucket: GlobalBucket, dbg=false) {
     let res = await client.req(txt);
-    let p = await parse(res, gr, dbg);
+    let p = await parse(res, globalBucket, dbg);
     return p;
 }
 
-async function processList(client: NLPClient, txtList: Array<string>, gr: NodeGraph, dbg: typeof debug): Promise<void> {
+async function processList(client: NLPClient, txtList: Array<string>, globalBucket: GlobalBucket, dbg: typeof debug): Promise<void> {
     let t = txtList.shift();
     if (t === '') {
         if (txtList.length)
-            return processList(client, txtList, gr, dbg);
+            return processList(client, txtList, globalBucket, dbg);
         return;
     }
-    let r = await processText(client, t, gr, dbg);
+    let r = await processText(client, t, globalBucket, dbg);
     if (txtList.length) {
-        return processList(client, txtList, gr, dbg);
+        return processList(client, txtList, globalBucket, dbg);
     } else {
         return;
     }
@@ -235,27 +235,27 @@ async function processList(client: NLPClient, txtList: Array<string>, gr: NodeGr
     return dt3;
 }
 
-async function main(args: any, nlp: NLPClient, gr: NodeGraph): Promise<void> {
+async function main(args: any, nlp: NLPClient, globalBucket: GlobalBucket): Promise<void> {
     if (args.input && args.input !== '') {
         var contents = FS.readFileSync(args.input).toString();
         let txt = contents.split('\n');
-        await processList(nlp, txt, gr, args.debug);
+        await processList(nlp, txt, globalBucket, args.debug);
 
         if (args.txt && args.txt !== '') {
             txt = [args.txt];
             learnData = (args.learn_data)?args.learn_data.split(','):[];
-            await processList(nlp, txt, gr, args.debug);
+            await processList(nlp, txt, globalBucket, args.debug);
         }
 
-        //    processList(nlp, txt, gr, args.debug, async function () {
+        //    processList(nlp, txt, globalBucket, args.debug, async function () {
 
         if (args.debug) {
             console.log(' Status of the graph created so far');
-            for (var gkey in gr) {
+            for (var gkey in globalBucket.gr) {
                 console.log("gkey=" + gkey);
-                console.log('Details of Graph: key=' + gkey + '  ::  ' + gr[gkey].toString());
-                console.log('   Details of Nodes:' + JSON.stringify(gr[gkey].nodes(true)));
-                console.log('   Details of Edges:' + JSON.stringify(gr[gkey].edges(true)));
+                console.log('Details of Graph: key=' + gkey + '  ::  ' + globalBucket.gr[gkey].toString());
+                console.log('   Details of Nodes:' + JSON.stringify(globalBucket.gr[gkey].nodes(true)));
+                console.log('   Details of Edges:' + JSON.stringify(globalBucket.gr[gkey].edges(true)));
             }
         }
         if (args.cli) {
@@ -277,7 +277,7 @@ async function main(args: any, nlp: NLPClient, gr: NodeGraph): Promise<void> {
                     //rl.prompt();
                     return ;
                 } else {
-                    return await processText(nlp, line, gr, args.debug)
+                    return await processText(nlp, line, globalBucket, args.debug)
 
                 }
             });
@@ -287,7 +287,7 @@ async function main(args: any, nlp: NLPClient, gr: NodeGraph): Promise<void> {
         //});
     } else if (args.txt && args.txt !== '') {
         learnData = (args.learn_data)?args.learn_data.split(','):[];
-        await processText(nlp, args.txt, gr, args.debug)
+        await processText(nlp, args.txt, globalBucket, args.debug)
         console.log("eParser Done");
     }
 }
@@ -300,7 +300,8 @@ Not able to parse even simple constructs right now. need to analyze them a bit.
 */
 expDB = new ExpDB('lexp.db');
 let nlp =  new NLPClient();
-let gr: NodeGraph = <NodeGraph>{};
+let globalBucket : GlobalBucket = <GlobalBucket> {};
+globalBucket.gr = <NodeGraph>{};
 /*
 var rl = readline.createInterface({
     input:process.stdin,
@@ -309,4 +310,4 @@ var rl = readline.createInterface({
 */
 expLearn = new ExpLearn(expDB, Nodes.getGlobalExpMapper());
 
-main(args, nlp, gr);
+main(args, nlp, globalBucket);

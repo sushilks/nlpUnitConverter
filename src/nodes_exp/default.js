@@ -21,7 +21,7 @@ class DefaultUnit extends BaseExp {
         return {'defaultWhat': {}, 'defaultFor': {}, 'default':{}};
     }
 
-    exec(gr) {
+    exec(globalBucket) {
         // console.log('\t IMPLEMENT THIS :: Adding to graph:' + this.getName());
     }
 }

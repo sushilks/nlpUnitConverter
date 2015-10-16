@@ -64,6 +64,10 @@ class ExpMatch {
         }
         return this.args[key].listStr[idx];
     }
+    public getArgStrArray(key: string): Array<string> {
+        if (!this.isArgStrValid(key)) return undefined;
+        return this.args[key].listStr;
+    }
     public getArgExp(key: string, idx = 0): ExpMatch {
         if (!this.isArgExpValid(key)) return undefined;
         if (this.getArgExpLength(key) <= idx) {

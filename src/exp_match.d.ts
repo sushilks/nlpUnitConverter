@@ -14,6 +14,7 @@ declare class ExpMatch {
     public isArgValid(key: string): boolean;
     public getArgStr(key: string, idx?): string;
     public getArgExp(key: string, idx?): ExpMatch;
+    public getArgStrArray(key: string): Array<string>;
     public getArgStrLength(key: string): number;
     public getArgExpLength(key: string): number;
     public setArgStr(key: string, dt: string| Array<string>);

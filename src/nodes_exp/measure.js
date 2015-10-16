@@ -5,6 +5,8 @@ var Utils = require('../nodes_utils');
 var BaseExp = require('./base_exp.js');
 var assert = require('assert');
 var dbg = require('debug')('node:exp:measure');
+var Jsnx = require('jsnetworkx');
+
 /*
 This node should create a new graph and install it.
 Details of the graph :-
@@ -19,9 +21,20 @@ g.addEdge(n1, n2, {data....});
 */
 
 class DefineMeasure extends BaseExp {
+    subj: string;
+    type: string;
     constructor(nodes, matchResult) {
         super(nodes, matchResult);
         this.name = DefineMeasure.getName();
+        /*
+        assert.equal(this.result.args.subj.listStr.length, 1);
+        assert.equal(this.result.args.type.listStr.length, 1);
+        this.subj = this.result.args.subj.listStr[0];
+        this.type = this.result.args.type.listStr[0];*/
+        assert.equal(this.result.getArgStrLength('subj'), 1);
+        assert.equal(this.result.getArgStrLength('type'), 1);
+        this.subj = this.result.getArgStr('subj');
+        this.type = this.result.getArgStr('type');
     }
     static getName() {
         return 'Define';
@@ -32,11 +45,20 @@ class DefineMeasure extends BaseExp {
     static getArgs() {
         return {'subj': {}, 'type': {}};
     }
-    exec(gr) {
+
+    createGraph(globalBucket: GlobalBucket, name: string, attr: any) {
+        attr.name = name;
+        if (!globalBucket.gr) {
+            globalBucket.gr = {};
+        }
+        globalBucket.gr[name] = new Jsnx.DiGraph(null, attr);
+        return globalBucket.gr[name];
+    }
+
+    exec(globalBucket) {
+        let gr = globalBucket.gr;
         //console.log('Adding to graph:' + this.getName());
-        assert.equal(this.result.args.subj.listStr.length, 1);
-        assert.equal(this.result.args.type.listStr.length, 1);
-        let g = Utils.createGraph(gr, this.result.args.subj.listStr[0], { type : this.result.args.type.listStr[0]});
+        let g = this.createGraph(globalBucket, this.subj, { type : this.type});
         //console.log(' New Graph Name = ' + JSON.stringify(g.toString()));
     }
 
