@@ -33,7 +33,18 @@ class QConvert extends BaseExp {
             'convFrom': {type:''},
             'fromValue': { type: 'Number', extractionNode: 'convFrom', default: 1}
         };
-
+/*
+        return {
+            input: {
+                'convTo': {type: ''},
+                'convFrom': {type: ''},
+                'fromValue': {type: 'Number', extractionNode: 'convFrom', default: 1}
+            },
+            output: {
+                'toValue': {type: 'Number'}
+            }
+        };
+*/
     }
     exec(globalBucket: GlobalBucket): boolean {
         let gr = globalBucket.gr;

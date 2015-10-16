@@ -11,6 +11,20 @@ interface ExpArgType {
     default?: string| number;
 }
 
+interface ExpArgElement {
+    type: string;
+    extractionNode?: string;
+    default?: string| number;
+}
+interface ExpArgType2 {
+    input: {
+        [key: string]: ExpArgElement;
+    },
+    output: {
+        [key: string]: ExpArgElement;
+    }
+}
+
 declare class ExpBase {
     nodes: any;
     result: ExpMatch;
@@ -39,7 +53,9 @@ declare class ExpBase {
     static getProp(): ExpPropType;
 
     // constructor should have a UUID + access to globalBucket.
-    //
+    // Arguments should be in from of
+    //      input and output
+    //      Also dependencies must be clearly defined. ( It probably captured in the arguemet defination)
 
 }
 /*

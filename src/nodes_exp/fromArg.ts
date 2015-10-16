@@ -33,6 +33,24 @@ class FromArg extends BaseExp {
                 default: 1
             }
         };
+/*
+        return {
+            input: {
+                'fromArg': {type: ''},
+                'fromArgValue': {
+                    type: 'Number',
+                    extractionNode: 'fromArg',
+                    default: 1
+                }
+            },
+            output: {
+                fromArg: { type: 'string'},
+                fromArgValue: {type: 'Number'}
+            }
+        };
+*/
+
+
     }
     static getProp(): ExpPropType {
         return {singleVerbEdge : true};

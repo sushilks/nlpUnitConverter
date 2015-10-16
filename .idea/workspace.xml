@@ -5,22 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78effe0f-a68e-4422-915a-b7c8e9aee9c2" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/nodes_exp/units.js" afterPath="$PROJECT_DIR$/src/nodes_exp/units.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eparser.ts" afterPath="$PROJECT_DIR$/src/eparser.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exp_match.d.ts" afterPath="$PROJECT_DIR$/src/exp_match.d.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exp_match.ts" afterPath="$PROJECT_DIR$/src/exp_match.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes.ts" afterPath="$PROJECT_DIR$/src/nodes.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/base_exp.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/base_exp.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/default.js" afterPath="$PROJECT_DIR$/src/nodes_exp/default.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/fromArg.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/fromArg.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/measure.js" afterPath="$PROJECT_DIR$/src/nodes_exp/measure.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/toArg.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/toArg.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_utils.d.ts" afterPath="$PROJECT_DIR$/src/nodes_utils.d.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_utils.ts" afterPath="$PROJECT_DIR$/src/nodes_utils.ts" />
     </list>
     <ignored path="measure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,118 +28,169 @@
     <favorites_list name="measure" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="units.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nodes_exp/units.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="relationMath.d.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.d.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base_exp.d.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="toArg.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nodes_exp/toArg.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="44" column="39" selection-start-line="44" selection-start-column="39" selection-end-line="44" selection-end-column="39" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base_exp.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.703703">
-              <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nodes_utils.d.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nodes_utils.d.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fromArg.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nodes_exp/fromArg.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nodes_utils.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nodes_utils.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="relationMath.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.65976715">
-              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="measure.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nodes_exp/measure.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <splitter split-orientation="vertical" split-proportion="0.5">
+          <split-first>
+            <leaf>
+              <file leaf-file-name="units.ts" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/src/nodes_exp/units.ts">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state vertical-scroll-proportion="0.0">
+                      <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+                      <folding>
+                        <element signature="n#!!doc" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="base_exp.d.ts" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state vertical-scroll-proportion="0.0">
+                      <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="toArg.ts" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/src/nodes_exp/toArg.ts">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state vertical-scroll-proportion="0.0">
+                      <caret line="44" column="39" selection-start-line="44" selection-start-column="39" selection-end-line="44" selection-end-column="39" />
+                      <folding>
+                        <element signature="n#!!doc" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="base_exp.ts" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.ts">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state vertical-scroll-proportion="-17.703703">
+                      <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
+                      <folding>
+                        <element signature="n#!!doc" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="fromArg.ts" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/src/nodes_exp/fromArg.ts">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state vertical-scroll-proportion="0.0">
+                      <caret line="50" column="2" selection-start-line="50" selection-start-column="2" selection-end-line="50" selection-end-column="2" />
+                      <folding>
+                        <element signature="n#!!doc" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="nodes_utils.ts" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/src/nodes_utils.ts">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state vertical-scroll-proportion="0.0">
+                      <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="relationMath.ts" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.ts">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state vertical-scroll-proportion="0.0">
+                      <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
+                      <folding>
+                        <element signature="n#!!doc" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="README.2.md" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/README.2.md">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state vertical-scroll-proportion="-4.172414">
+                      <caret line="92" column="22" selection-start-line="92" selection-start-column="22" selection-end-line="92" selection-end-column="22" />
+                      <folding />
+                    </state>
+                  </provider>
+                  <provider editor-type-id="MarkdownPreviewEditor">
+                    <state />
+                  </provider>
+                  <provider editor-type-id="MultiMarkdownFxPreviewEditor">
+                    <state />
+                  </provider>
+                  <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+                    <state />
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="measure.js" pinned="false" current-in-tab="false">
+                <entry file="file://$PROJECT_DIR$/src/nodes_exp/measure.js">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state vertical-scroll-proportion="0.0">
+                      <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="36" />
+                      <folding />
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+              <file leaf-file-name="qConvert.ts" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state vertical-scroll-proportion="0.65591395">
+                      <caret line="46" column="2" selection-start-line="46" selection-start-column="2" selection-end-line="46" selection-end-column="2" />
+                      <folding>
+                        <element signature="n#!!doc" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-first>
+          <split-second>
+            <leaf>
+              <file leaf-file-name="qConvert.ts" pinned="false" current-in-tab="true">
+                <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
+                  <provider selected="true" editor-type-id="text-editor">
+                    <state vertical-scroll-proportion="0.12096774">
+                      <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
+                      <folding>
+                        <element signature="n#!!doc" expanded="true" />
+                      </folding>
+                    </state>
+                  </provider>
+                </entry>
+              </file>
+            </leaf>
+          </split-second>
+        </splitter>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="qConvert.ts" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.5627426">
+                  <caret line="29" column="43" selection-start-line="29" selection-start-column="43" selection-end-line="29" selection-end-column="43" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -202,7 +241,6 @@
         <option value="$PROJECT_DIR$/src/test/default_test.js" />
         <option value="$PROJECT_DIR$/src/exp_learn_utils.d.ts" />
         <option value="$PROJECT_DIR$/src/test/qconvert_test.js" />
-        <option value="$PROJECT_DIR$/README.2.md" />
         <option value="$PROJECT_DIR$/data/training.sh" />
         <option value="$PROJECT_DIR$/src/exp_learn_utils.ts" />
         <option value="$PROJECT_DIR$/src/eparser.ts" />
@@ -211,17 +249,18 @@
         <option value="$PROJECT_DIR$/src/nodes_exp/base_exp.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" />
         <option value="$PROJECT_DIR$/build/nodes_utils.js" />
-        <option value="$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts" />
-        <option value="$PROJECT_DIR$/src/nodes_exp/fromArg.ts" />
         <option value="$PROJECT_DIR$/src/nodes_utils.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/measure.js" />
         <option value="$PROJECT_DIR$/src/nodes_exp/units.js" />
-        <option value="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" />
         <option value="$PROJECT_DIR$/src/exp_match.ts" />
         <option value="$PROJECT_DIR$/src/exp_match.d.ts" />
         <option value="$PROJECT_DIR$/src/nodes_utils.d.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/units.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/toArg.ts" />
+        <option value="$PROJECT_DIR$/README.2.md" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/fromArg.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" />
       </list>
     </option>
   </component>
@@ -608,7 +647,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="219" y="23" width="1581" height="1177" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13205129" sideWeight="0.19302616" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13205129" sideWeight="0.8069739" order="0" side_tool="false" content_ui="combo" />
@@ -992,23 +1031,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.2.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.931034">
-          <caret line="74" column="59" selection-start-line="74" selection-start-column="59" selection-end-line="74" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/qconvert_test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1077,31 +1099,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.048387">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-          <folding>
-            <marker date="1444952454000" expanded="true" signature="0:77" placeholder="//..." />
-            <marker date="1444952454000" expanded="true" signature="316:3568" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="436:755" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="785:816" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="859:895" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="946:1133" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="963:1125" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="1180:3447" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="1254:1621" placeholder="//..." />
-            <marker date="1444952454000" expanded="true" signature="1709:3279" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="1878:3079" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="2389:2657" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="2687:2907" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="2924:3041" placeholder="//..." />
-            <marker date="1444952454000" expanded="true" signature="3538:3566" placeholder="{...}" />
-            <marker date="1444952454000" expanded="true" signature="3570:4530" placeholder="/*...*/" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/exp_match.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1162,28 +1159,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="8" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-17.703703">
           <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/fromArg.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -1228,8 +1207,53 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65976715">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.2.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.172414">
+          <caret line="92" column="22" selection-start-line="92" selection-start-column="22" selection-end-line="92" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
+        <state />
+      </provider>
+      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/fromArg.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="2" selection-start-line="50" selection-start-column="2" selection-end-line="50" selection-end-column="2" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.65591395">
+          <caret line="46" column="2" selection-start-line="46" selection-start-column="2" selection-end-line="46" selection-end-column="2" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
