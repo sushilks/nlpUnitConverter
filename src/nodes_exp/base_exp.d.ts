@@ -5,24 +5,29 @@ interface ExpTokenType {
 interface ExpPropType {
     singleVerbEdge: boolean;
 }
+/*
 interface ExpArgType {
     type: string;
     extractionNode?: string;
     default?: string| number;
-}
+}*/
 
 interface ExpArgElement {
     type: string;
     extractionNode?: string;
     default?: string| number;
 }
-interface ExpArgType2 {
+interface ExpArgType {
     input: {
         [key: string]: ExpArgElement;
     },
     output: {
         [key: string]: ExpArgElement;
     }
+}
+
+interface ExpExecReturn {
+    [key: string]: any;
 }
 
 declare class ExpBase {
@@ -40,9 +45,9 @@ declare class ExpBase {
     getName(): string;
     static getName(): string;
     // Json repersenting the arugments needed by the app
-    static getArgs(): {[key: string]: ExpArgType};
+    static getArgs(): ExpArgType;
     // main executing point
-    exec(globalBucket: GlobalBucket): boolean;
+    exec(globalBucket: GlobalBucket): ExpExecReturn;
     //optional functions
     //  getMatchToken is needed if the tigger is not verbBase
     static getMatchToken(): ExpTokenType;

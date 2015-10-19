@@ -31,12 +31,15 @@ interface DBItem {
     _id : string;
     match: {[key: string]: string};
     extract: {[key: string]: string};
+    args: ExpArgType;
+/*
     args: {[key: string]: {
         type: string;
         extractionNode: string;
         default: string | number;
         }
     };
+    */
     prop: {
         singleVerbEdge: boolean;
     };

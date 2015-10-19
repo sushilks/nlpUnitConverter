@@ -71,7 +71,7 @@ var learnData: Array<string> = [];
   * Helper function to display the nodes'
   * Only for debugging
   */
-function parseNodes(dep: Dependency, tokens: Tokens, tknid: number, linkType: string, level: number) {
+function parseAndDisplayNodes(dep: Dependency, tokens: Tokens, tknid: number, linkType: string, level: number) {
     if (level === undefined) {
         level = 1;
     }
@@ -80,11 +80,14 @@ function parseNodes(dep: Dependency, tokens: Tokens, tknid: number, linkType: st
     for (var idx = 0; idx < level; idx++) {
         str = '\t' + str;
     }
-    //console.log(str);
+    console.log(str);
     for (var id in childNodes) {
-        parseNodes(dep, tokens, childNodes[id].tokenIdx, childNodes[id].type, level + 1);
+        parseAndDisplayNodes(dep, tokens, childNodes[id].tokenIdx, childNodes[id].type, level + 1);
     }
  }
+
+
+
 async function parse(data:{body: string}, globalBucket: GlobalBucket, dbge: boolean = false): Promise<boolean> {
     var pp = new NLPPP();
     var res = pp.read(data.body);
@@ -109,54 +112,54 @@ async function parse(data:{body: string}, globalBucket: GlobalBucket, dbge: bool
                 let dep = pp.getSentenceDep(idx);
                 let rootId = dep.getRootToken();
                 dbg(' \tRoot : ' + rootId);
-                parseNodes(dep, dep.getTokens(), rootId, 'root', 0);
+                //parseAndDisplayNodes(dep, dep.getTokens(), rootId, 'root', 0);
             }
         }
-    let rt = pp.getSentenceDep(0).getRootToken();
-    let log_dt = '';
-    if (dbg.enabled) {
-        dbg('--------------------------------------------------');
-        dbg('Processing :: ' + pp.getSentence(0) + ' ROOT:' +
-            rt + '[' + pp.getTokens(0).getToken(rt) + ']');
-    } else {
-        log_dt = 'Processing :: ' + pp.getSentence(0);
-    }
-    let nd = new Nodes(pp.getSentenceDep(0));
-    nd.processAllGrammar();
-    dbg("Done with processing Grammar");
-    // check if any hardcoded patterns match
-    nd.processAllExp();
-    dbg("Done with processing Explain");
-    // check if any of the database entries are matching
-    let dt = await nd.processAllExpDB(expDB, globalBucket);
-    dbg("Done with processing DBExplain");
-    {
-        log_dt += ' \tParsedMeaning[';
-        for (let idx in nd.expMatches) {
-            //console.log('   Exp[' + idx + '-' + nd.expMatches[idx].getName()
-            //    + ']::' + nd.expMatches[idx].text());
-            log_dt += nd.expMatches[idx].getName() + ' ';
+        let rt = pp.getSentenceDep(0).getRootToken();
+        let log_dt = '';
+        if (dbg.enabled) {
+            dbg('--------------------------------------------------');
+            dbg('Processing :: ' + pp.getSentence(0) + ' ROOT:' +
+                rt + '[' + pp.getTokens(0).getToken(rt) + ']');
+        } else {
+            log_dt = 'Processing :: ' + pp.getSentence(0);
         }
-        console.log(log_dt + ']');
-    }
+        let nd = new Nodes(pp.getSentenceDep(0));
+        nd.processAllGrammar();
+        dbg("Done with processing Grammar");
+        // check if any hardcoded patterns match
+        nd.processAllExp();
+        dbg("Done with processing Explain");
+        // check if any of the database entries are matching
+        let dt = await nd.processAllExpDB(expDB, globalBucket);
+        dbg("Done with processing DBExplain");
+        { // debug
+            log_dt += ' \tParsedMeaning[';
+            for (let idx in nd.expMatches) {
+                //console.log('   Exp[' + idx + '-' + nd.expMatches[idx].getName()
+                //    + ']::' + nd.expMatches[idx].text());
+                log_dt += nd.expMatches[idx].getName() + ' ';
+            }
+            console.log(log_dt + ']');
+        }
 
-    // just some debug prints
-    if (dbgGr.enabled || dbgExp.enabled) {
-        //dbgGr("List of Grammar Matches Found ")
-        for (let idx in nd.grMatches) {
-            let dbgSelect = dbgGr;
-            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
-                dbgSelect = dbgGrV;
+        // just some debug prints
+        if (dbgGr.enabled || dbgExp.enabled) {
+            //dbgGr("List of Grammar Matches Found ")
+            for (let idx in nd.grMatches) {
+                let dbgSelect = dbgGr;
+                if (nd.grMatches[idx].getName().match(/VerbBase/)) {
+                    dbgSelect = dbgGrV;
+                }
+                dbgSelect('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
+                    + '] Matched Text  ::' );//+ nd.grMatches[idx].dict());
             }
-            dbgSelect('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
-                + '] Matched Text  ::' );//+ nd.grMatches[idx].dict());
+            //dbgExp("List of Expresive Matches Found ")
+            for (let idx in nd.expMatches) {
+                dbgExp('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
+                    + '] Matched Text  ::' + nd.expMatches[idx].text());
+            }
         }
-        //dbgExp("List of Expresive Matches Found ")
-        for (let idx in nd.expMatches) {
-            dbgExp('\t Expresive IDX = ' + idx + ' :: Exp Type [' + nd.expMatches[idx].getName()
-                + '] Matched Text  ::' + nd.expMatches[idx].text());
-        }
-    }
         // execute all the exp matches
         for (let idx in nd.expMatches) {
             try {
@@ -168,40 +171,39 @@ async function parse(data:{body: string}, globalBucket: GlobalBucket, dbge: bool
             }
         }
 
-    // If failed to match
-    //  go through the learning routine.
-    let alreadyLearned = false;
-    for (let p of nd.expMatches) {
-        if (learnData[1] === p.name) {
-            alreadyLearned = true;
-        }
-    }
-    if (nd.expMatches.length === 0) {
-        console.log('   This Statement did not match any of the types that I am able to recognize.');
-    }
-
-    if (args.learn && !alreadyLearned && learnData.length !== 0) {
-        let v: Array<GrBase> = [];
-        for (let idx in nd.grMatches) {
-            if (nd.grMatches[idx].getName().match(/VerbBase/)) {
-                //console.log('   Verb in this statement :: ' + JSON.stringify(nd.grMatches[idx].processNode()));
-                v.push(nd.grMatches[idx]);
+        // If failed to match
+        //  go through the learning routine.
+        let alreadyLearned = false;
+        for (let p of nd.expMatches) {
+            if (learnData[1] === p.name) {
+                alreadyLearned = true;
             }
         }
-        /*
+        if (nd.expMatches.length === 0) {
+            console.log('   This Statement did not match any of the types that I am able to recognize.');
+        }
+
+        if (args.learn && !alreadyLearned && learnData.length !== 0) {
+            let v: Array<GrBase> = [];
+            for (let idx in nd.grMatches) {
+                if (nd.grMatches[idx].getName().match(/VerbBase/)) {
+                    //console.log('   Verb in this statement :: ' + JSON.stringify(nd.grMatches[idx].processNode()));
+                    v.push(nd.grMatches[idx]);
+                }
+            }
+            /*
           Call the learning Routing to collect the information and write it to the database.
         */
-        return expLearn.learn(pp.getSentence(0), v, learnData, nd.expMatches);
-    } else {
-        return true;
-    }
+            return expLearn.learn(pp.getSentence(0), v, learnData, nd.expMatches);
+        } else {
+            return true;
+        }
 
     } catch(e) {
         console.log(' Exception in eparser:parse e [' + e + ']');
         console.log('   -> ' + e.stack);
         return false;
     }
-
 }
 
 /**

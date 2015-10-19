@@ -24,17 +24,18 @@ class Units extends BaseExp {
     static getName(): string {
         return 'Units';
     }
-
-    static getMatchToken(): Array<string> {
-        return ['VerbBase'];
-    }
-    static getArgs(): {[key: string]: ExpArgType} {
+    static getArgs(): ExpArgType {
         return {
-            'unitsFor': {type: ''},
-            'units': {type: 'List'}
+            input: {
+                unitsFor: {type: ''},
+                units: {type: 'List'}
+            },
+            output: {
+
+            }
         };
     }
-    exec(globalBucket: GlobalBucket): boolean {
+    exec(globalBucket: GlobalBucket): ExpExecReturn {
         let gr = globalBucket.gr;
         //dbg('Adding to graph:' + this.getName());
         //dbg('Graph name:' + this.getUnitsFor());
@@ -47,7 +48,7 @@ class Units extends BaseExp {
         this.units.forEach((function (this_, x) {
             g.addNode(Utils.normalizeUnit(x), {unitFor: this_.unitsFor});
         }).bind(null, this));
-        return true;
+        return {};
     }
 }
 

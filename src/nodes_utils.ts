@@ -66,7 +66,7 @@ export function nodeInitGr(nmap: GrMapperType, fn: typeof GrBase) {
 // and then get the value of the node.
 export function getNodeValues(nodeList: Nodes, tknId: number) {
     let nd = nodeList.getNodeMap(tknId);
-    checkAndProcessNodeGrammar(nodeList, nd);
+    //checkAndProcessNodeGrammar(nodeList, nd);
     return nd.getValues();
 }
 
@@ -82,12 +82,12 @@ export function normalizeUnit(dt: string): string {
 
 // Check and make sure all the child nodes for the current nodes
 // have there grammar processed.
-export function checkAndProcessNodeGrammar(nodeList: Nodes, node: BaseNode) {
-    if (!node.isGrammarProcessingDone()) {
-        // do grammar processing of the child first
-        nodeList.processGr(node.getTokenId());
-    }
-}
+//export function checkAndProcessNodeGrammar(nodeList: Nodes, node: BaseNode) {
+//    if (!node.isGrammarProcessingDone()) {
+//        // do grammar processing of the child first
+//        nodeList.processGr(node.getTokenId());
+//    }
+//}
 /*
 // Check and make sure all the child nodes for the current nodes
 // have there grammar processed.

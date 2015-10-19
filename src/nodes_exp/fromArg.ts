@@ -1,6 +1,5 @@
 /// <reference path="../nodes.d.ts" />
 /// <reference path="base_exp.d.ts" />
-import {NodeStringDecoder} from "string_decoder";
 'use strict';
 
 import * as Utils from '../nodes_utils';
@@ -21,22 +20,10 @@ class FromArg extends BaseExp {
     static getName(): string {
         return 'fromArg';
     }
-    static getMatchToken(): Array<string> {
-        return ['VerbBase'];
-    }
-    static getArgs(): {[key: string]: ExpArgType} {
-        return {
-            'fromArg': { type: ''},
-            'fromArgValue' : {
-                type: 'Number',
-                extractionNode: 'fromArg',
-                default: 1
-            }
-        };
-/*
+    static getArgs(): ExpArgType {
         return {
             input: {
-                'fromArg': {type: ''},
+                'fromArg': {type: 'string'},
                 'fromArgValue': {
                     type: 'Number',
                     extractionNode: 'fromArg',
@@ -44,23 +31,20 @@ class FromArg extends BaseExp {
                 }
             },
             output: {
-                fromArg: { type: 'string'},
-                fromArgValue: {type: 'Number'}
+                dtName: { type: 'string' },
+                dtValue: { type: 'Number' }
             }
         };
-*/
-
-
     }
     static getProp(): ExpPropType {
         return {singleVerbEdge : true};
     }
 
-    exec(globalBucket: GlobalBucket): boolean {
+    exec(globalBucket: GlobalBucket): ExpExecReturn {
         let r = {};
         r[this.fromArg] = this.fromArgValue;
         dbg('fromArg::EXEC = ' + JSON.stringify(r));
-        return true;
+        return r;
     }
 }
 

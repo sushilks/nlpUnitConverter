@@ -50,5 +50,11 @@ One HubbleLength is 306593922 Parsec.
 One Furlong is 201 Meters.
 One HorseLength is 2.4 Meters.
 
-
+by default the output of QConv is displayed.
+convert 10 miles into foot and display the results in comma format.
+convert 10 miles into foot. Store the result as :result.
+convert 10 miles into foot and store the output as :result.
+Use comma format to process :result.
+use comma format to process :result and store output in :formatedResult.
+display :formatedResult.
 

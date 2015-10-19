@@ -10,6 +10,7 @@ import ExpDB from "./expdb";
 
 var assert = require('assert');
 var dbg = require('debug')('exp:learn');
+var dbgae = require('debug')('exp:learn:autoextract');
 
 
 async function readPattern(msg: string, vlist: Array<string>, learnData: Array<string>,
@@ -93,10 +94,10 @@ class ExpLearn {
 
 
     autoExtractMatch(verb: GrProcessNodeValueMap, res: LearnEntry, expMatches: Array<ExpBase>) {
-        /*console.log("---- > autoExtractMatch::verb " + JSON.stringify(verb));
-        console.log("---- > autoExtractMatch::res " + JSON.stringify(res));
-        console.log("---- > autoExtractMatch::expMatches " + JSON.stringify(expMatches));
-        */
+        dbgae("---- > autoExtractMatch::verb " + JSON.stringify(verb));
+        dbgae("---- > autoExtractMatch::res " + JSON.stringify(res));
+        dbgae("---- > autoExtractMatch::expMatches " + JSON.stringify(expMatches));
+
         let ekeys = Object.keys(res.extract);
 
 
@@ -111,7 +112,8 @@ class ExpLearn {
                 if (ekeys[idx] != '') {
                     let resItem = ekeys[idx];
                     let resVal = res.extract[resItem];
-                    let extArgs = res.args[resItem];
+                    let extArgs = res.args.input[resItem];
+                    // console.log(' == ' + JSON.stringify(res.args));
                     // console.log('     resItem = ' + resItem + ' v = ' + resVal + ' extArgs =' + JSON.stringify(extArgs));
                     // check for exact match first
                     if (!(extArgs.type && 'extractionNode' in extArgs)) {
@@ -121,6 +123,7 @@ class ExpLearn {
                         } else {
                             foundPtr = LearnUtils.findInTree(verb, resVal);
                         }
+                        dbgae(' For token "' + resVal + '" Found path:' + foundPtr);
                         if (foundPtr) {
                             res.extract[resItem] = foundPtr;
                         } else {
@@ -138,7 +141,7 @@ class ExpLearn {
                 if (ekeys[idx] != '') {
                     let resItem = ekeys[idx];
                     let resVal = res.extract[resItem];
-                    let extArgs = res.args[resItem];
+                    let extArgs = res.args.input[resItem];
 
                     // check for exact match first
                     if (extArgs.type === 'Number' && 'extractionNode' in extArgs) {
@@ -178,14 +181,13 @@ class ExpLearn {
             }
         }
         res.expExtract = expDep;
-        // console.log(' --- > RET = ' + JSON.stringify(res));
+        dbgae(' --- > RET = ' + JSON.stringify(res));
         LearnUtils.copyMatchTree(verb, res); //<MatchTreeData>res);
         delete res.expExtract;
-        //console.log(' RET = ' + JSON.stringify(res));
+        dbgae(' RET = ' + JSON.stringify(res));
         //return _this.readPattern('Regexp >', vlist, vres.match);
     }
 
-//    learn(stmt: string, verbMatches: Array<GrBase>, learnData: Array<string> = null, expMatches: Array<string>=null) {
     async learn(stmt: string, verbMatches: Array<GrBase>, learnData: Array<string> = null,
           expMatches: Array<ExpBase>=null): Promise<boolean> {
         //console.log('learn::verbMatches ' + JSON.stringify(Object.keys(verbMatches[0])));
@@ -233,10 +235,11 @@ class ExpLearn {
                 return false;
             } else {
                 vres.type = line;
-                let alistDict = nd.getArgs();
+                vres.args = nd.getArgs();
+                let alistDict = vres.args.input;
+                //console.log(' __________ ' + JSON.stringify(alistDict));
                 let prop = nd.getProp();
                 let alist = Object.keys(alistDict);
-                vres.args = alistDict;
                 let alistNoTags: Array<string> = [];
                 {
                     for (let k of alist) {
@@ -256,26 +259,7 @@ class ExpLearn {
                 }
                 //console.log('Node:[' + line + '] Args Needed :' + JSON.stringify(alist));
                 await readPattern('Select > ', alistNoTags, learnData, vres.extract);
-                /*
-                 let vlist = [];
-
-                 Object.keys(verbMatches[0].dict()).map(function(item) {
-                 if(!item.match(/^raw/)) {
-                 vlist.push(item);
-                 }
-                 });
-                 return _this.readPattern('Regexp >', vlist, vres.match);
-                 */
-                //return Utils.getStdin('>> Processing [' + vlist[0] + '] Regex >' )
-                //resolve(null);
             }
-//            let alist = [];
-
-            //.then(function(res) {
-            //        if (done) return false;
-            //        //console.log('LEARNED ::: ' + JSON.stringify(vres));
-            //        return _this.readPattern('Select > ', alist, vres.extract);
-            //    })
             // at this point we have the
             // verb and the argument
             this.autoExtractMatch(verbMatches[0].dict(), vres, expMatches)
@@ -287,110 +271,6 @@ class ExpLearn {
             console.log(e.stack);
             return false;
         };
-
-
-        /*
-        return new Promise(
-            (function(_this, resolve, reject) {
-                let vres: LearnEntry = {
-                    stmt: stmt,
-                    match: {},
-                    extract: {},
-                    type: null,
-                    args: null,
-                    prop: null
-                };
-                let vlist = [];
-                let alist = [];
-                let done = false;
-                Utils.getStdin('>> Do you want to learn this pattern (Yes/No)>', learnData)
-                .then(function(line: string) {
-                        if (line.match(/no/i)) {
-                            console.log('OK Will skip.')
-                            resolve(null);
-                            done = true;
-                        } else if (line.match(/yes/i)) {
-                            let k = Object.keys(_this.gExpFn);
-                            return Utils.getStdin('>> Select Node type (' + k + ')? ', learnData);
-                        } else {
-                            reject('invalid answer [' + line + ']')
-                            done = true;
-                        }
-                    })
-                .then(function(line: string) {
-                        if (done) return false;
-                        let nd;
-                        for (let key in _this.gExpFn) {
-                            if ( key.toLowerCase() === line.toLowerCase()) {
-                                nd = _this.gExpFn[key];
-                                line = key;
-                                break;
-                            }
-                        }
-                        if (!nd) {
-                            console.log('Unable to find definition for node [' + line + ']');
-                            reject('invalid Node ' + line);
-                            done = true;
-                        } else {
-                            vres.type = line;
-                            let alistDict = nd.getArgs();
-                            let prop = nd.getProp();
-                            let alist = Object.keys(alistDict);
-                            vres.args = alistDict;
-                            let alistNoTags = [];
-                            {
-                                for (let k of alist) {
-                                    //let kl = k.split(':');
-                                    if ('extractionNode' in alistDict[k] && 'type' in alistDict[k]) {
-                                        vres.extract[k] = alistDict[k].type + ':' + alistDict[k].extractionNode;
-                                   // }
-                                    //if (kl.length === 2 && kl[0] === 'Number' && alist.indexOf(kl[1])!== -1) {
-                                    //    vres.extract[k] = 'insert-extracted-NUM';
-                                    } else {
-                                        alistNoTags.push(k)
-                                    }
-                                }
-                                if (prop !== undefined && prop != {}) {
-                                    vres.prop = prop;
-                                }
-                            }
-                            //console.log('Node:[' + line + '] Args Needed :' + JSON.stringify(alist));
-                            return readPattern('Select > ', alistNoTags, learnData, vres.extract);
-                             //Object.keys(verbMatches[0].dict()).map(function(item) {
-                             //if(!item.match(/^raw/)) {
-                             //vlist.push(item);
-                            // }
-                            // });
-                            // return _this.readPattern('Regexp >', vlist, vres.match);
-                            //return Utils.getStdin('>> Processing [' + vlist[0] + '] Regex >' )
-                            //resolve(null);
-                        }
-                    })
-                //.then(function(res) {
-                //        if (done) return false;
-                //        //console.log('LEARNED ::: ' + JSON.stringify(vres));
-                //        return _this.readPattern('Select > ', alist, vres.extract);
-                //    })
-                .then(function(res) {
-                        // at this point we have the
-                        // verb and the argument
-                        _this.autoExtractMatch(verbMatches[0].dict(), vres, expMatches)
-                        if (done) return false;
-                        console.log('LEARNED :::' + JSON.stringify(vres));
-                        return _this.db.insert(vres);
-                        //return true;
-                    })
-                .then(function(res) {
-                        if (done) return false;
-                        resolve(res);
-                    })
-                    .catch(function(e) {
-                        console.log("Error :: " + e);
-                        console.log(e.stack);
-                    });
-
-            }).bind(null, this));
-*/
     }
 
 }

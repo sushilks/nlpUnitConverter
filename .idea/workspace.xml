@@ -5,10 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78effe0f-a68e-4422-915a-b7c8e9aee9c2" name="Default" comment="">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/nodes_exp/default.js" afterPath="$PROJECT_DIR$/src/nodes_exp/default.ts" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/nodes_exp/measure.js" afterPath="$PROJECT_DIR$/src/nodes_exp/measure.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/sample-2.txt" afterPath="$PROJECT_DIR$/data/sample-2.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/sample-3.txt" afterPath="$PROJECT_DIR$/data/sample-3.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/training.sh" afterPath="$PROJECT_DIR$/data/training.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lexp.db" afterPath="$PROJECT_DIR$/lexp.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/eparser.ts" afterPath="$PROJECT_DIR$/src/eparser.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exp_learn.ts" afterPath="$PROJECT_DIR$/src/exp_learn.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exp_learn_utils.d.ts" afterPath="$PROJECT_DIR$/src/exp_learn_utils.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/exp_learn_utils.ts" afterPath="$PROJECT_DIR$/src/exp_learn_utils.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes.d.ts" afterPath="$PROJECT_DIR$/src/nodes.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes.ts" afterPath="$PROJECT_DIR$/src/nodes.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/base_exp.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/base_exp.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/fromArg.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/fromArg.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/toArg.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/toArg.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_exp/units.ts" afterPath="$PROJECT_DIR$/src/nodes_exp/units.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_utils.d.ts" afterPath="$PROJECT_DIR$/src/nodes_utils.d.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nodes_utils.ts" afterPath="$PROJECT_DIR$/src/nodes_utils.ts" />
     </list>
     <ignored path="measure.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,162 +46,157 @@
     <favorites_list name="measure" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
+    <splitter split-orientation="horizontal" split-proportion="0.5509601">
       <split-first>
-        <splitter split-orientation="vertical" split-proportion="0.5">
-          <split-first>
-            <leaf>
-              <file leaf-file-name="units.ts" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/src/nodes_exp/units.ts">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.0">
-                      <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-                      <folding>
-                        <element signature="n#!!doc" expanded="true" />
-                      </folding>
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-              <file leaf-file-name="base_exp.d.ts" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.0">
-                      <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-                      <folding />
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-              <file leaf-file-name="toArg.ts" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/src/nodes_exp/toArg.ts">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.0">
-                      <caret line="44" column="39" selection-start-line="44" selection-start-column="39" selection-end-line="44" selection-end-column="39" />
-                      <folding>
-                        <element signature="n#!!doc" expanded="true" />
-                      </folding>
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-              <file leaf-file-name="base_exp.ts" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.ts">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="-17.703703">
-                      <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
-                      <folding>
-                        <element signature="n#!!doc" expanded="true" />
-                      </folding>
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-              <file leaf-file-name="fromArg.ts" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/src/nodes_exp/fromArg.ts">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.0">
-                      <caret line="50" column="2" selection-start-line="50" selection-start-column="2" selection-end-line="50" selection-end-column="2" />
-                      <folding>
-                        <element signature="n#!!doc" expanded="true" />
-                      </folding>
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-              <file leaf-file-name="nodes_utils.ts" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/src/nodes_utils.ts">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.0">
-                      <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
-                      <folding />
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-              <file leaf-file-name="relationMath.ts" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.ts">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.0">
-                      <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
-                      <folding>
-                        <element signature="n#!!doc" expanded="true" />
-                      </folding>
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-              <file leaf-file-name="README.2.md" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/README.2.md">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="-4.172414">
-                      <caret line="92" column="22" selection-start-line="92" selection-start-column="22" selection-end-line="92" selection-end-column="22" />
-                      <folding />
-                    </state>
-                  </provider>
-                  <provider editor-type-id="MarkdownPreviewEditor">
-                    <state />
-                  </provider>
-                  <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-                    <state />
-                  </provider>
-                  <provider editor-type-id="MultiMarkdownFxHtmlEditor">
-                    <state />
-                  </provider>
-                </entry>
-              </file>
-              <file leaf-file-name="measure.js" pinned="false" current-in-tab="false">
-                <entry file="file://$PROJECT_DIR$/src/nodes_exp/measure.js">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.0">
-                      <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="36" />
-                      <folding />
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-              <file leaf-file-name="qConvert.ts" pinned="false" current-in-tab="true">
-                <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.65591395">
-                      <caret line="46" column="2" selection-start-line="46" selection-start-column="2" selection-end-line="46" selection-end-column="2" />
-                      <folding>
-                        <element signature="n#!!doc" expanded="true" />
-                      </folding>
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-            </leaf>
-          </split-first>
-          <split-second>
-            <leaf>
-              <file leaf-file-name="qConvert.ts" pinned="false" current-in-tab="true">
-                <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
-                  <provider selected="true" editor-type-id="text-editor">
-                    <state vertical-scroll-proportion="0.12096774">
-                      <caret line="27" column="28" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
-                      <folding>
-                        <element signature="n#!!doc" expanded="true" />
-                      </folding>
-                    </state>
-                  </provider>
-                </entry>
-              </file>
-            </leaf>
-          </split-second>
-        </splitter>
-      </split-first>
-      <split-second>
         <leaf>
-          <file leaf-file-name="qConvert.ts" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
+          <file leaf-file-name="sample-2.txt" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/data/sample-2.txt">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.5627426">
-                  <caret line="29" column="43" selection-start-line="29" selection-start-column="43" selection-end-line="29" selection-end-column="43" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="training.sh" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/data/training.sh">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-13.074074">
+                  <caret line="43" column="106" selection-start-line="43" selection-start-column="106" selection-end-line="43" selection-end-column="106" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="exp_match.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/exp_match.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="eparser.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/eparser.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-16.962963">
+                  <caret line="78" column="102" selection-start-line="78" selection-start-column="102" selection-end-line="78" selection-end-column="102" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="nodes.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/nodes.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-114.296295">
+                  <caret line="305" column="14" selection-start-line="305" selection-start-column="14" selection-end-line="305" selection-end-column="14" />
                   <folding>
                     <element signature="n#!!doc" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="nodes_utils.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/nodes_utils.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="87" column="48" selection-start-line="87" selection-start-column="48" selection-end-line="87" selection-end-column="48" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="exp_learn_utils.ts" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.19168901">
+                  <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="nodes.d.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/nodes.d.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="exp_learn.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/exp_learn.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-18.88889">
+                  <caret line="123" column="56" selection-start-line="123" selection-start-column="56" selection-end-line="123" selection-end-column="56" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="exp_learn_utils.d.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.d.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="51" column="10" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="10" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="exp_learn.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/exp_learn.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="242" column="0" selection-start-line="242" selection-start-column="0" selection-end-line="242" selection-end-column="0" />
+                  <folding>
+                    <marker date="1445219340000" expanded="true" signature="7374:7475" placeholder="//..." />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="display.ts" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/nodes_exp/display.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.44631305">
+                  <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+                  <folding>
+                    <element signature="n#!!doc" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="exp_learn_utils.d.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.d.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="57" column="16" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="base_exp.d.ts" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="29" column="23" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -210,13 +223,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/data/sample-2.txt" />
-        <option value="$PROJECT_DIR$/data/sample-training.txt" />
-        <option value="$PROJECT_DIR$/src/nodes_gr/nummod.js" />
-        <option value="$PROJECT_DIR$/src/test/nummod_test.js" />
-        <option value="$PROJECT_DIR$/src/test/base_verb_test.js" />
-        <option value="$PROJECT_DIR$/src/test/util/test_utils.js" />
-        <option value="$PROJECT_DIR$/src/nodes_exp/relationMath.js" />
         <option value="$PROJECT_DIR$/src/test/nlppp_test.js" />
         <option value="$PROJECT_DIR$/tsconfig.json" />
         <option value="$PROJECT_DIR$/gulpfile.js" />
@@ -228,39 +234,46 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/dependency.ts" />
         <option value="$PROJECT_DIR$/src/dependency.d.ts" />
-        <option value="$PROJECT_DIR$/src/nodes.d.ts" />
         <option value="$PROJECT_DIR$/src/nodes_pos/base_node.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/relationMath.d.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/fromArg.js" />
         <option value="$PROJECT_DIR$/src/nodes_exp/toArg.js" />
         <option value="$PROJECT_DIR$/src/nodes_exp/qConvert.js" />
         <option value="$PROJECT_DIR$/src/test/units_test.js" />
-        <option value="$PROJECT_DIR$/src/exp_learn.ts" />
         <option value="$PROJECT_DIR$/src/test/measure_test.js" />
         <option value="$PROJECT_DIR$/src/test/relation_test.js" />
         <option value="$PROJECT_DIR$/src/test/default_test.js" />
-        <option value="$PROJECT_DIR$/src/exp_learn_utils.d.ts" />
         <option value="$PROJECT_DIR$/src/test/qconvert_test.js" />
-        <option value="$PROJECT_DIR$/data/training.sh" />
-        <option value="$PROJECT_DIR$/src/exp_learn_utils.ts" />
-        <option value="$PROJECT_DIR$/src/eparser.ts" />
-        <option value="$PROJECT_DIR$/src/nodes.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/default.js" />
-        <option value="$PROJECT_DIR$/src/nodes_exp/base_exp.ts" />
-        <option value="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" />
         <option value="$PROJECT_DIR$/build/nodes_utils.js" />
-        <option value="$PROJECT_DIR$/src/nodes_utils.ts" />
-        <option value="$PROJECT_DIR$/src/nodes_exp/measure.js" />
         <option value="$PROJECT_DIR$/src/nodes_exp/units.js" />
         <option value="$PROJECT_DIR$/src/exp_match.ts" />
         <option value="$PROJECT_DIR$/src/exp_match.d.ts" />
-        <option value="$PROJECT_DIR$/src/nodes_utils.d.ts" />
-        <option value="$PROJECT_DIR$/src/nodes_exp/units.ts" />
-        <option value="$PROJECT_DIR$/src/nodes_exp/toArg.ts" />
         <option value="$PROJECT_DIR$/README.2.md" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/measure.js" />
+        <option value="$PROJECT_DIR$/src/exp_learn_utils.d.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/formatComman.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/default.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/fromArg.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/measure.ts" />
         <option value="$PROJECT_DIR$/src/nodes_exp/qConvert.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/relationMath.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/toArg.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/units.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/base_exp.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/display.ts" />
+        <option value="$PROJECT_DIR$/data/sample-3.txt" />
+        <option value="$PROJECT_DIR$/src/nodes_utils.d.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_exp/variables.ts" />
+        <option value="$PROJECT_DIR$/src/nodes_utils.ts" />
+        <option value="$PROJECT_DIR$/src/nodes.ts" />
+        <option value="$PROJECT_DIR$/src/eparser.ts" />
+        <option value="$PROJECT_DIR$/data/sample-2.txt" />
+        <option value="$PROJECT_DIR$/data/training.sh" />
+        <option value="$PROJECT_DIR$/src/nodes.d.ts" />
+        <option value="$PROJECT_DIR$/src/exp_learn.ts" />
+        <option value="$PROJECT_DIR$/src/exp_learn_utils.ts" />
       </list>
     </option>
   </component>
@@ -336,7 +349,7 @@
     <scope name="build-src-test" pattern="!file[measure]:build/src//*&amp;&amp;!file[measure]:build/test//*&amp;&amp;!file[measure]:build/build//*" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="219" />
+    <option name="x" value="670" />
     <option name="y" value="23" />
     <option name="width" value="1581" />
     <option name="height" value="1177" />
@@ -646,16 +659,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="219" y="23" width="1581" height="1177" extended-state="0" />
-    <editor active="false" />
+    <frame x="670" y="23" width="1581" height="1177" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13205129" sideWeight="0.19302616" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13205129" sideWeight="0.8069739" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13205129" sideWeight="0.80774033" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298647" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32809612" sideWeight="0.50712025" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16129032" sideWeight="0.1509434" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13205129" sideWeight="0.19225967" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882413" sideWeight="0.49683544" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24362606" sideWeight="0.49287975" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24362606" sideWeight="0.49287975" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24920887" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286119" sideWeight="0.49683544" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2136076" sideWeight="0.5136116" order="3" side_tool="true" content_ui="tabs" />
@@ -723,7 +736,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/exp_learn.ts</url>
-          <line>109</line>
+          <line>110</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
       </breakpoints>
@@ -740,35 +753,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/data/sample-2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/nummod_test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="65" column="32" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/util/test_utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-23.037037">
-          <caret line="77" column="17" selection-start-line="77" selection-start-column="17" selection-end-line="77" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/sample-training.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tokens.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -832,23 +816,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="118" column="23" selection-start-line="118" selection-start-column="23" selection-end-line="118" selection-end-column="23" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.896552">
-          <caret line="136" column="155" selection-start-line="136" selection-start-column="155" selection-end-line="136" selection-end-column="155" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
-        <state />
-      </provider>
-      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gulpfile.js">
@@ -974,16 +941,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="10" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="10" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/measure_test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -998,36 +955,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/exp_learn.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="210" column="44" selection-start-line="210" selection-start-column="44" selection-end-line="210" selection-end-column="44" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/default_test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="30" column="18" selection-start-line="30" selection-start-column="18" selection-end-line="30" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="20" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="20" />
-          <folding>
-            <marker date="1444727063000" expanded="true" signature="41:242" placeholder="/*...*/" />
-            <marker date="1444727063000" expanded="true" signature="244:551" placeholder="//..." />
-            <marker date="1444727063000" expanded="true" signature="576:783" placeholder="..." />
-            <marker date="1444727063000" expanded="true" signature="784:1030" placeholder="/*...*/" />
-            <marker date="1444727063000" expanded="true" signature="1031:1318" placeholder="/*...*/" />
-            <marker date="1444727063000" expanded="true" signature="1344:1415" placeholder="..." />
-            <marker date="1444727063000" expanded="true" signature="1438:1708" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1039,54 +970,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/training.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.333333">
-          <caret line="258" column="44" selection-start-line="258" selection-start-column="44" selection-end-line="258" selection-end-column="44" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/relation_test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="134" column="15" selection-start-line="134" selection-start-column="15" selection-end-line="134" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/eparser.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.222222">
-          <caret line="130" column="28" selection-start-line="130" selection-start-column="28" selection-end-line="130" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.777779">
-          <caret line="173" column="9" selection-start-line="173" selection-start-column="9" selection-end-line="173" selection-end-column="9" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/default.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -1096,38 +983,6 @@
         <state vertical-scroll-proportion="0.88387096">
           <caret line="568" column="30" selection-start-line="568" selection-start-column="30" selection-end-line="568" selection-end-column="30" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/exp_match.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-          <folding>
-            <marker date="1444953271000" expanded="true" signature="76:3084" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="95:185" placeholder="..." />
-            <marker date="1444953271000" expanded="true" signature="111:184" placeholder="..." />
-            <marker date="1444953271000" expanded="true" signature="311:398" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="460:716" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="491:566" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="598:650" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="656:710" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="782:1038" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="813:888" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="920:972" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="978:1032" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="1087:1401" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="1449:1763" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="1808:1882" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="1934:2129" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="2038:2079" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="2184:2286" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="2340:2535" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="2444:2485" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="2584:2685" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="2734:2835" placeholder="{...}" />
-            <marker date="1444953271000" expanded="true" signature="2883:3082" placeholder="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1143,12 +998,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_utils.d.ts">
+    <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.49596775">
+          <caret line="136" column="155" selection-start-line="136" selection-start-column="155" selection-end-line="136" selection-end-column="155" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider editor-type-id="MultiMarkdownFxHtmlEditor">
+        <state />
+      </provider>
+      <provider editor-type-id="MultiMarkdownFxPreviewEditor">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.d.ts">
@@ -1159,46 +1023,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.ts">
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/fromArg.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.703703">
-          <caret line="50" column="4" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <marker date="1445042471000" expanded="true" signature="0:77" placeholder="//..." />
+            <marker date="1445042471000" expanded="true" signature="280:1371" placeholder="{...}" />
+            <marker date="1445042471000" expanded="true" signature="382:587" placeholder="{...}" />
+            <marker date="1445042471000" expanded="true" signature="617:650" placeholder="{...}" />
+            <marker date="1445042471000" expanded="true" signature="684:1090" placeholder="{...}" />
+            <marker date="1445042471000" expanded="true" signature="701:1083" placeholder="{...}" />
+            <marker date="1445042471000" expanded="true" signature="722:948" placeholder="{...}" />
+            <marker date="1445042471000" expanded="true" signature="801:934" placeholder="{&quot;type&quot;: 'Number'...}" />
+            <marker date="1445042471000" expanded="true" signature="970:1073" placeholder="{...}" />
+            <marker date="1445042471000" expanded="true" signature="1125:1172" placeholder="{...}" />
+            <marker date="1445042471000" expanded="true" signature="1226:1369" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_utils.ts">
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/measure.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/measure.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/units.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/toArg.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="39" selection-start-line="44" selection-start-column="39" selection-end-line="44" selection-end-column="39" />
+          <caret line="63" column="33" selection-start-line="63" selection-start-column="33" selection-end-line="63" selection-end-column="33" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -1208,17 +1056,121 @@
     <entry file="file://$PROJECT_DIR$/src/nodes_exp/relationMath.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="33" selection-start-line="44" selection-start-column="33" selection-end-line="44" selection-end-column="33" />
+          <caret line="127" column="0" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/toArg.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="78" column="18" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="18" />
+          <folding>
+            <marker date="1445042526000" expanded="true" signature="0:77" placeholder="//..." />
+            <marker date="1445042526000" expanded="true" signature="316:3640" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="436:755" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="785:816" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="850:1177" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="867:1170" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="888:1079" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="1101:1160" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="1230:3519" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="1304:1671" placeholder="//..." />
+            <marker date="1445042526000" expanded="true" signature="1759:3332" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="1928:3132" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="2439:2707" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="2737:2957" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="2974:3091" placeholder="//..." />
+            <marker date="1445042526000" expanded="true" signature="3610:3638" placeholder="{...}" />
+            <marker date="1445042526000" expanded="true" signature="3642:4602" placeholder="/*...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/default.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="1" selection-start-line="34" selection-start-column="1" selection-end-line="34" selection-end-column="1" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/units.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="51" column="30" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
+          <folding>
+            <marker date="1445042626000" expanded="true" signature="0:77" placeholder="//..." />
+            <marker date="1445042626000" expanded="true" signature="225:1951" placeholder="{...}" />
+            <marker date="1445042626000" expanded="true" signature="337:829" placeholder="{...}" />
+            <marker date="1445042626000" expanded="true" signature="495:788" placeholder="//..." />
+            <marker date="1445042626000" expanded="true" signature="872:958" placeholder="{...}" />
+            <marker date="1445042626000" expanded="true" signature="993:1021" placeholder="{...}" />
+            <marker date="1445042626000" expanded="true" signature="1052:1098" placeholder="{...}" />
+            <marker date="1445042626000" expanded="true" signature="1122:1155" placeholder="{...}" />
+            <marker date="1445042626000" expanded="true" signature="1183:1218" placeholder="{...}" />
+            <marker date="1445042626000" expanded="true" signature="1252:1346" placeholder="{...}" />
+            <marker date="1445042626000" expanded="true" signature="1366:1447" placeholder="{...}" />
+            <marker date="1445042626000" expanded="true" signature="1500:1710" placeholder="{...}" />
+            <marker date="1445042626000" expanded="true" signature="1510:1620" placeholder="//..." />
+            <marker date="1445042626000" expanded="true" signature="1711:1835" placeholder="/*...*/" />
+            <marker date="1445042626000" expanded="true" signature="1921:1949" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/variables.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_utils.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
+          <folding>
+            <marker date="1445043688000" expanded="true" signature="78:127" placeholder="..." />
+            <marker date="1445043688000" expanded="true" signature="154:388" placeholder="{...}" />
+            <marker date="1445043688000" expanded="true" signature="410:445" placeholder="..." />
+            <marker date="1445043688000" expanded="true" signature="470:570" placeholder="..." />
+            <marker date="1445043688000" expanded="true" signature="595:635" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.2.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.172414">
-          <caret line="92" column="22" selection-start-line="92" selection-start-column="22" selection-end-line="92" selection-end-column="22" />
+        <state vertical-scroll-proportion="-11.379311">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1232,28 +1184,110 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts">
+    <entry file="file://$PROJECT_DIR$/data/sample-3.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/fromArg.ts">
+    <entry file="file://$PROJECT_DIR$/src/exp_match.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="2" selection-start-line="50" selection-start-column="2" selection-end-line="50" selection-end-column="2" />
+          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_utils.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="87" column="48" selection-start-line="87" selection-start-column="48" selection-end-line="87" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-114.296295">
+          <caret line="305" column="14" selection-start-line="305" selection-start-column="14" selection-end-line="305" selection-end-column="14" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nodes_exp/qConvert.ts">
+    <entry file="file://$PROJECT_DIR$/src/eparser.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65591395">
-          <caret line="46" column="2" selection-start-line="46" selection-start-column="2" selection-end-line="46" selection-end-column="2" />
+        <state vertical-scroll-proportion="-16.962963">
+          <caret line="78" column="102" selection-start-line="78" selection-start-column="102" selection-end-line="78" selection-end-column="102" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/training.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.074074">
+          <caret line="43" column="106" selection-start-line="43" selection-start-column="106" selection-end-line="43" selection-end-column="106" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/sample-2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="51" column="10" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/base_exp.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="23" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nodes_exp/display.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44631305">
+          <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exp_learn.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-18.88889">
+          <caret line="123" column="56" selection-start-line="123" selection-start-column="56" selection-end-line="123" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/exp_learn_utils.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19168901">
+          <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

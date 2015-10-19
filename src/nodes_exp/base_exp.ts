@@ -23,7 +23,8 @@ class ExpBase {
     }
 
     static getMatchToken(): ExpTokenType {
-        return ['DEFAULT_'];//{'DEFAULT': {} };
+        return ['VerbBase'];
+//        return ['DEFAULT_'];//{'DEFAULT': {} };
     }
     static getProp(): ExpPropType {
         return null;
@@ -40,7 +41,7 @@ class ExpBase {
     getResult(): ExpMatch {
         return this.result;
     }
-    static getArgs(): {[key: string]: ExpArgType} {
+    static getArgs(): ExpArgType {
         console.log('Implement getArgs().');
         assert(1,0);
         return null;
@@ -48,12 +49,12 @@ class ExpBase {
     text(): string {
         return this.name + ' Data [' + JSON.stringify(this.result) + ']';
     }
-    exec(globalBucket: GlobalBucket): boolean {
+    exec(globalBucket: GlobalBucket): ExpExecReturn {
         //console.log('Adding to graph:' + this.getName());
         //console.log('Graph name:' + this.getUnitsFor());
         console.log('IMPLEMENT ME PLEASE');
         assert(1,0);
-        return true;
+        return {};
     }
 /*
     static checkValid(gr: NodeGraph): [boolean, ExpMatch] {

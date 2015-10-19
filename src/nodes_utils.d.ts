@@ -20,6 +20,9 @@ interface NodeGraph {
 
 interface GlobalBucket {
     gr: NodeGraph;
+    var: {[key: string]: any};
+    lastResult: ExpExecReturn;
+    //stack: --
 }
 declare class NLPClient {
     req(txt:string): {body: string};

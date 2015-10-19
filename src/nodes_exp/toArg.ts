@@ -20,16 +20,19 @@ class ToArg extends BaseExp {
     static getName(): string {
         return 'toArg';
     }
-    static getMatchToken(): Array<string> {
-        return ['VerbBase'];
-    }
-    static getArgs(): {[key: string]: ExpArgType} {
+    static getArgs(): ExpArgType {
         return {
-            'toArg': { type: ''},
-            'toArgValue' : {
-                type: 'Number',
-                extractionNode: 'toArg',
-                default: 1
+            input: {
+                'toArg': {type: ''},
+                'toArgValue': {
+                    type: 'Number',
+                    extractionNode: 'toArg',
+                    default: 1
+                },
+            },
+            output: {
+                dtName: { type: 'string' },
+                dtValue: { type: 'Number' }
             }
         };
     }
@@ -37,13 +40,13 @@ class ToArg extends BaseExp {
         return {singleVerbEdge : true};
     }
 
-    exec(globalBucket: GlobalBucket): boolean {
+    exec(globalBucket: GlobalBucket): ExpExecReturn {
         //console.log('\t IMPLEMENT THIS :: Adding to graph:' + this.getName());
         let r = {};
         //r[this.result.args.toArg.listStr[0]] = this.result.args.toArgValue.listStr[0];
         r[this.toArg] = this.toArgValue;
         dbg('fromArg::EXEC = ' + JSON.stringify(r));
-        return true;
+        return r;
     }
 }
 

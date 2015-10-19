@@ -55,7 +55,7 @@ interface LearnEntry {
     extract: {[key: string]: string};
     fixedExtract?: {[key: string]: string};
     type: string;
-    args: {[key: string]: ExpArgType};
+    args: ExpArgType;
     prop: ExpPropType;
     expExtract?: {[key: string] : Array<ExpBase>};
 }

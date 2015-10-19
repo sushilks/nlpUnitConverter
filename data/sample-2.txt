@@ -7,7 +7,7 @@ Units for Length are cm, km, mm.
 There are 1000 Meters in a KiloMeter.
 There are 100 centiMeters in a meter.
 One foot is equal to 12 inches.
-One inch is same as 2.54 cm.
+One inch makes 2.54 cm.
 12 line equals one inch.
 One yard equals 3 foot.
 One mile equals 5280 foot.

@@ -24,29 +24,19 @@ class QConvert extends BaseExp {
     static getName(): string {
         return 'QConv';
     }
-    static getMatchToken(): Array<string> {
-        return ['VerbBase'];
-    }
-    static getArgs(): {[key: string]: ExpArgType} {
-        return {
-            'convTo': {type:''},
-            'convFrom': {type:''},
-            'fromValue': { type: 'Number', extractionNode: 'convFrom', default: 1}
-        };
-/*
+    static getArgs(): ExpArgType {
         return {
             input: {
-                'convTo': {type: ''},
-                'convFrom': {type: ''},
+                'convTo': {type: 'string'},
+                'convFrom': {type: 'string'},
                 'fromValue': {type: 'Number', extractionNode: 'convFrom', default: 1}
             },
             output: {
                 'toValue': {type: 'Number'}
             }
         };
-*/
     }
-    exec(globalBucket: GlobalBucket): boolean {
+    exec(globalBucket: GlobalBucket): ExpExecReturn {
         let gr = globalBucket.gr;
         const verbose = true;
         //console.log('Adding to graph:' + this.getName());
@@ -80,12 +70,13 @@ class QConvert extends BaseExp {
                 }
                 //g.addEdge(nFrom, nTo, {conv: this.getConv()});
                 //g.addEdge(nTo, nFrom, {conv: 1.0/this.getConv()});
-                return;
+                return {};
             }
             if (g.hasNode(this.convFrom) && !g.hasNode(this.convTo)) failedNodes=this.convTo;
             if (!g.hasNode(this.convFrom) && g.hasNode(this.convTo)) failedNodes=this.convFrom;
         }
         console.log(this.getName() + ' :: ERROR Unable to find node [' + failedNodes + '] in translation between [' + this.convFrom + '] [' + this.convTo + ']');
+        return {};
     }
     static checkValidArguments(nodes: Nodes, match: ExpMatch, globalBucket: GlobalBucket) {
         return true;

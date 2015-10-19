@@ -113,7 +113,7 @@ class Nodes {
         //return new gNodeMapper[DEFAULT][0](this, tknId, level);
     }
 
-    public async processAllExpDB_(root: GrProcessNodeValueMap, db: ExpDB, globalBucket: GlobalBucket, mHistory: Array<string>,
+    public async processAllExpDB_(result, root: GrProcessNodeValueMap, db: ExpDB, globalBucket: GlobalBucket, mHistory: Array<string>,
                                   cnt: number = 0): Promise<boolean> {
         if (cnt > 20) {
             assert.equal(0, 1, 'Too much recurstion');
@@ -124,7 +124,7 @@ class Nodes {
         try {
             for (let dbItemKey in  Object.keys(dt)) {
                 let dbItem: DBItem = dt[dbItemKey];
-                let match: VerbDBMatchRet = LearnUtils.verbDBMatch(dbgdbm, root, this.expMatches, dbItem);
+                let match: VerbDBMatchRet = LearnUtils.verbDBMatch(dbgdbm, root, result.expMatches, dbItem);
                 if (match.matchType !== '') {
                     dbgexp('Found a match dbItem [' + JSON.stringify(match) + '] ');
                     dbgdb('Matching DB Entry:' + JSON.stringify(dbItem));
@@ -152,7 +152,14 @@ class Nodes {
                             mHistory.push(JSON.stringify([match.matchType, match.matchResult.args]));
                             match.matchResult.dbId = match.dbId;
                             let expHandle: ExpBase = new fn(this, match.matchResult);
-                            this.expMatches.push(expHandle);
+                            // todo: The exp matches are stored in a flat structure
+                            // there is no tie in to the structure of the sentense
+                            // Change to store in hierarcial structure corresponding to the
+                            // structur of the sentense.
+                            // Verb is a common root , in the case of verb it may be
+                            // good to store the matches in a node-edge combo ...
+                            // or a node-(edge list) type structure.
+                            result.expMatches.push(expHandle);
                             found = true;
                         }
                     } else {
@@ -164,7 +171,7 @@ class Nodes {
                 // resolve(true);
                 return true;
             } else {
-                return await this.processAllExpDB_(root, db, globalBucket, mHistory, cnt + 1);
+                return await this.processAllExpDB_(result, root, db, globalBucket, mHistory, cnt + 1);
             }
         } catch (e) {
             console.log('Error :: ' + e);
@@ -184,11 +191,13 @@ class Nodes {
             return false;
         }
         dbgdb(' - ROOT - ::' + JSON.stringify(root));
-
+        let res = {expMatches: []};
         // todo::
         // there should be a full crawl of the tree
         // making sure not to do repeated work
-        return await this.processAllExpDB_(root, db, globalBucket, mHistory);
+        // maybe a depth first type search is needed.
+        await this.processAllExpDB_(res, root, db, globalBucket, mHistory);
+        this.expMatches = res.expMatches;
     }
 
     public processAllExp(): void {
@@ -273,19 +282,19 @@ class Nodes {
         }
         this.processNodeGrammar(grTree.root.getNode())
         this.grMatches = grTree.root.getNode().getGrammarMatches();
-        // console.log(' After Process Gr:' + gm.length);
+        //console.log(' After Process Gr:' + this.grMatches.length);
         if (this.grMatches.length) {
             //let r =
                 this.grMatches[0].processNode(null);
-            // console.log(' r= ' + JSON.stringify(r));
+             //console.log(' r= ' + JSON.stringify(r));
         }
     }
 
 
     public processNodeGrammar(nd: BaseNode) {
         // find all the children and recurse
-        var children: {[idx: number]: LinkedNode}  = nd.getChildren();
-        var loc: any;
+        var children:{[idx: number]: LinkedNode} = nd.getChildren();
+        var loc:any;
         // let fromNodePOS = nd.getPOS();
         for (loc in children) {
             let c = children[loc];
@@ -300,7 +309,7 @@ class Nodes {
                     let v = mrule.fn.checkValid(this, nd, c.type, c.node);
                     if (v[0]) {
                         let grHandle = new mrule.fn(this, nd, c.type, c.node, <GrBaseMatch>v[1]);
-                        //console.log('FOUND :: ' + grHandle.getName() + ' adding to node:' + c.node.name + ' attach type ' + mrule.type);
+                        //console.log('FOUND :: ' + grHandle.getName() + ' adding to node:' + c.node.name + ' attach type ' + mrule.attachType);
                         if (mrule.attachType === 'parent') {
                             nd.addGrammarMatch(grHandle);
                         } else {
@@ -312,53 +321,6 @@ class Nodes {
             this.processNodeGrammar(c.node);
         }
     }
-
-
-    /** Process only one token "tknId" for grammar match
-     * @param tknId - Specify the token to process
-     * @returns {*} - return [true if match was found, grammar that matched]
-     */
-    public processGr(tknId: number): boolean {
-        assert.equal(0, 1); // the call below needs to be migrated to new fromat
-        return false;
-        /*
-         let tkn = this.tkn.getToken(tknId);
-         let pos = this.tkn.getTokenPOS(tknId);
-         let nd = this.getNodeMap(tknId);
-         if (nd.grProcessingOngoing) return false;
-         nd.grProcessingOngoing = true;
-         //console.trace("processGr: "+tknId);
-         let GRRules = Utils.findGrammarRules(gGrMapper, tkn, pos);
-         let ruleHitCount = 0;
-         if (GRRules.length) {
-         for (let GRM of GRRules)
-         {
-         let found = GRM.fn.checkValid(this, nd);
-         if (found[0]) {
-         dbg('  - gGrMapper Checking with tkn [' + tkn + ']');
-         dbg('\tFound ' + JSON.stringify(found[1]));
-         }
-         if (found[0]) {
-         let grHandle = new GRM.fn(this, nd, found[1]);
-         dbg('\tAdding Grammar Node:' + grHandle.getName());
-         nd.addGrammarMatch(grHandle);
-         this.grMatches.push(grHandle);
-         ruleHitCount++;
-         }
-         }
-         nd.setGrammarProcessingDone();
-         nd.grProcessingOngoing = false;
-         dbg('processGr:' + tknId + ' RETURN.');
-         return (ruleHitCount > 0);
-         } else {
-         dbg('  - gGrMapper no hit found for tkn [' + tkn + ']');
-         nd.setGrammarProcessingDone();
-         nd.grProcessingOngoing = false;
-         return false;
-         }*/
-    }
-
-
 }
 
 

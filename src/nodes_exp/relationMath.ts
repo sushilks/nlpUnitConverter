@@ -32,16 +32,18 @@ class relationMath extends BaseExp {
     static getName(): string {
         return 'Relation';
     }
-    static getMatchToken(): Array<string> {
-        return ['VerbBase'];
-    }
-    static getArgs(): {[key: string]: ExpArgType} {
+    static getArgs(): ExpArgType {
         return {
-            'nodeFrom': {type: 'node', extractionNode: 'fromArg'},
-            'nodeTo': {type: 'node', extractionNode: 'toArg'}
+            input: {
+                nodeFrom: {type: 'node', extractionNode: 'fromArg'},
+                nodeTo: {type: 'node', extractionNode: 'toArg'}
+            },
+            output: {
+
+            }
         };
     }
-    exec(globalBucket: GlobalBucket): boolean {
+    exec(globalBucket: GlobalBucket): ExpExecReturn {
         let gr = globalBucket.gr;
 //        console.log('Adding to graph:' + this.getName());
         let resData = this.myResult;

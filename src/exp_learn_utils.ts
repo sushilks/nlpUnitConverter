@@ -109,7 +109,7 @@ export function findInTree(tree: any, val: string): string {
 
 function findListInTree_(tree: any, val: Array<string>, key: string): string {
     let treeType = Object.prototype.toString.call(tree);
-    dbg(' findInTree_ Called for:' + key + ' tree=' + tree + ' type='+treeType);
+    dbg(' findListInTree_ Called for:' + key + ' tree=' + tree + ' type='+treeType);
     if (treeType === '[object Array]') {
         // array
         for (let idx in tree) {
@@ -145,9 +145,11 @@ function findListInTree_(tree: any, val: Array<string>, key: string): string {
                         }
                     }
                     let match = true;
-                    //console.log(' MATCH len=' + val.length + ' list.len = ' + list.length + ' data = ' + list);
+                    //console.log(' MATCH len=' + val.length + ' list.len = ' + list.length +
+                    //    ' val = ' + JSON.stringify(val) + ' data = ' + JSON.stringify(list));
+
                     if (list.length === val.length) {
-                        for (let itm of val) {
+                        for (let itm of list) {
                             if (val.indexOf(itm) === -1 ) {
                                 match = false;
                                 break;
@@ -559,7 +561,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
             let dt = extractTreeValue(verb, itmPath);
             res.matchResult.setArgStr(itm, dt);
         }
-        let dtArgs = dbItem.args;
+        //let dtArgs = dbItem.args;
         //if ('type' in dtArgs[itm] && dtArgs[itm].type.toLowerCase() === 'list') {
         //            dt = dt.split(' ');
         //        }
@@ -571,12 +573,12 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
     }
     // have found a match
     // check for argument being presented in extracted data
-    for (let key in dbItem.args) {
-        let schema = dbItem.args[key];
+    for (let key in dbItem.args.input) {
+        let schema = dbItem.args.input[key];
         let res_valid = res.matchResult.isArgValid(key);
         if (!res_valid && dbItem.fixedExtract !== undefined && dbItem.fixedExtract[key] !== undefined) {
             dbgdb(' ---> SCHEMA : key = ' + key + ' filedextract = ' + dbItem.fixedExtract[key] );
-            //res.matchResult.args[key] = {listStr: [dbItem.fixedExtract[key]]};
+            //res.matchResult.args.input[key] = {listStr: [dbItem.fixedExtract[key]]};
             res.matchResult.setArgStr(key, dbItem.fixedExtract[key]);
             res.matchResult._keys[key] = key;
             //res[key] = dbItem.fixedExtract[key];
@@ -588,7 +590,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
             return {matchType:'', dbId:'', matchResult:null };//return ['', {}];
         } else if (schema.default !== undefined && !res_valid) {
             //console.log(' res = '  + JSON.stringify(res));
-            //res.matchResult.args[key] = {listStr: [<string>schema.default]};
+            //res.matchResult.args.input[key] = {listStr: [<string>schema.default]};
             res.matchResult.setArgStr(key, <string>schema.default);
             // console.log(" DEFAULT USED ==== " + key)
             res.matchResult.defaultUsed.push(key);

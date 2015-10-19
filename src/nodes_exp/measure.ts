@@ -1,8 +1,9 @@
+/// <reference path="../nodes.d.ts" />
+/// <reference path="base_exp.d.ts" />
 'use strict';
 
-//import * as utils from './node_utils';
-var Utils = require('../nodes_utils');
-var BaseExp = require('./base_exp.js');
+import * as Utils from '../nodes_utils';
+import BaseExp from './base_exp';
 var assert = require('assert');
 var dbg = require('debug')('node:exp:measure');
 var Jsnx = require('jsnetworkx');
@@ -23,7 +24,7 @@ g.addEdge(n1, n2, {data....});
 class DefineMeasure extends BaseExp {
     subj: string;
     type: string;
-    constructor(nodes, matchResult) {
+    constructor(nodes: Nodes, matchResult: ExpMatch) {
         super(nodes, matchResult);
         this.name = DefineMeasure.getName();
         /*
@@ -36,14 +37,18 @@ class DefineMeasure extends BaseExp {
         this.subj = this.result.getArgStr('subj');
         this.type = this.result.getArgStr('type');
     }
-    static getName() {
+    static getName(): string {
         return 'Define';
     }
-    static getMatchToken() {
-        return ['VerbBase'];
-    }
-    static getArgs() {
-        return {'subj': {}, 'type': {}};
+    static getArgs(): ExpArgType {
+        return {
+            input: {
+                subj: {type: 'string'},
+                type: {type: 'string'}
+            },
+            output: {
+            }
+        };
     }
 
     createGraph(globalBucket: GlobalBucket, name: string, attr: any) {
@@ -55,14 +60,15 @@ class DefineMeasure extends BaseExp {
         return globalBucket.gr[name];
     }
 
-    exec(globalBucket) {
+    exec(globalBucket: GlobalBucket): ExpExecReturn {
         let gr = globalBucket.gr;
         //console.log('Adding to graph:' + this.getName());
         let g = this.createGraph(globalBucket, this.subj, { type : this.type});
         //console.log(' New Graph Name = ' + JSON.stringify(g.toString()));
+        return {};
     }
 
-    static checkValidArguments(nodes, match) {
+    static checkValidArguments(nodes: Nodes, match: ExpMatch, globalBucket: GlobalBucket) {
         return true;
     }
     /*
