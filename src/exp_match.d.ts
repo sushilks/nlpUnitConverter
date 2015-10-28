@@ -17,8 +17,9 @@ declare class ExpMatch {
     public getArgStrArray(key: string): Array<string>;
     public getArgStrLength(key: string): number;
     public getArgExpLength(key: string): number;
+    public setArgPath(key: string, path:string): void;
     public setArgStr(key: string, dt: string| Array<string>);
     public setArgExp(key: string, dt: ExpMatch| Array<ExpMatch>);
     public isDefaultUsed(key: string): boolean;
-
+    public setDefaultUsed(key: string);
     }

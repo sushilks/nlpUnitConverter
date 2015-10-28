@@ -50,12 +50,18 @@ interface VerbDBMatchRet {
 }
 
 interface LearnEntry {
-    stmt: string;
-    match: {[key: string]: string};
-    extract: {[key: string]: string};
-    fixedExtract?: {[key: string]: string};
-    type: string;
-    args: ExpArgType;
-    prop: ExpPropType;
-    expExtract?: {[key: string] : Array<ExpBase>};
+    stmt: string; // statement that was used to learn
+    match: {[key: string]: string}; // item to do exact match
+    extract: {[key: string]: string}; // items to extract
+    fixedExtract?: {[key: string]: string}; // Fixed values to put in extracted list
+    type: string; // Learned Node type
+    args: ExpArgType; // Arguments list of the Node // ?isn't this rudendant ?
+    prop: ExpPropType; // Properties associated with the Node // same here Rudendent
+    expExtract?: {[key: string] : Array<ExpBase>}; //result of the sub Nodes that where used when this learning was done // Why is it needed?
+    // when this match is triggered
+    // the results are attached to >
+    attachement?: {
+        includeBaseNode: boolean;
+        edgeList: Array<string>;
+    }
 }

@@ -57,6 +57,9 @@ class ExpMatch {
     public isArgValid(key: string): boolean {
         return this.isArgStrValid(key) || this.isArgExpValid(key);
     }
+    public setArgPath(key: string, path:string): void {
+        this._keys[key] = path;
+    }
     public getArgStr(key: string, idx = 0): string {
         if (!this.isArgStrValid(key)) return undefined;
         if (this.getArgStrLength(key) <= idx) {
@@ -90,5 +93,9 @@ class ExpMatch {
         else
             return false;
     }
+    public setDefaultUsed(key: string) {
+        this.defaultUsed.push(key);
+    }
+
 }
 export default ExpMatch;

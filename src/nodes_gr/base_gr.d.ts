@@ -18,6 +18,11 @@ interface GrProcessNodeValue {
     data: Array<GrProcessNodeValueMap>;
     dataValue: string;
     dataValueTagged: string;
+    partialExp?: Array<{
+        edgeList: Array<string>;
+        exp: ExpBase;
+        }>;
+
 }
 interface GrProcessNodeValueMap {[key:string]: GrProcessNodeValue}
 //declare class GrBase {}

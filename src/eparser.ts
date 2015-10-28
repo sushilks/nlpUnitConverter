@@ -131,7 +131,7 @@ async function parse(data:{body: string}, globalBucket: GlobalBucket, dbge: bool
         nd.processAllExp();
         dbg("Done with processing Explain");
         // check if any of the database entries are matching
-        let dt = await nd.processAllExpDB(expDB, globalBucket);
+        let root = await nd.processAllExpDB(expDB, globalBucket);
         dbg("Done with processing DBExplain");
         { // debug
             log_dt += ' \tParsedMeaning[';
@@ -194,7 +194,10 @@ async function parse(data:{body: string}, globalBucket: GlobalBucket, dbge: bool
             /*
           Call the learning Routing to collect the information and write it to the database.
         */
-            return expLearn.learn(pp.getSentence(0), v, learnData, nd.expMatches);
+            console.log(' ROOT = ' + JSON.stringify(root));
+           // console.log(' V = ' + JSON.stringify(v));
+            //return expLearn.learn(pp.getSentence(0), v, learnData, nd.expMatches);
+            return expLearn.learn(pp.getSentence(0), root, learnData);
         } else {
             return true;
         }

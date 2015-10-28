@@ -51,8 +51,8 @@ node $EPARSER -l -t 'how many meters makes a kilometer?' -L 'yes,QConv,meters,ki
 node $EPARSER -l -t 'There are 100 cents in one dollar.'  -L 'yes,fromArg,cents'
 node $EPARSER -l -t 'There are 100 cents in one dollar.'  -L 'yes,toArg,dollar'
 
-node $EPARSER -l -t 'How many Kilos are there in 30 Tons?' -L 'yes,fromArg,Tons'
-node $EPARSER -l -t 'How many Kilos are there in 30 Tons?' -L 'yes,toArg,Kilos'
+#node $EPARSER -l -t 'How many Kilos are there in 30 Tons?' -L 'yes,fromArg,Tons'
+#node $EPARSER -l -t 'How many Kilos are there in 30 Tons?' -L 'yes,toArg,Kilos'
 
 node $EPARSER -l -t 'twenty thousand moo makes 4000 boo.' -L 'yes,toArg,boo'
 node $EPARSER -l -t 'twenty thousand moo makes 4000 boo.' -L 'yes,fromArg,moo'

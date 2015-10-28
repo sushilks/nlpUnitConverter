@@ -10,6 +10,7 @@ import ExpDB from './expdb';
 import ExpMatch from './exp_match';
 import * as Utils from './nodes_utils';
 var dbg = require('debug')('exp:learn:util');
+var dbgcm = require('debug')('exp:learn:util:cmatch');
 var debug = require('debug');
 var sep = '.';
 function checkExpArgValid(ematch: ExpMatch, key: string): boolean {
@@ -28,8 +29,8 @@ function checkExpArgValid(ematch: ExpMatch, key: string): boolean {
 
 function treePathNormalize(r: string): string {
     return r.replace(/\.\d+\./g, '.')
-        .replace(/data\./g, '')
-        .replace(/^root./, '');
+        .replace(/data\./g, '');
+        //.replace(/^root./, '');
 }
 function findInTreeMatch(dt: string|Array<string>, val: RegExp|Array<string>): boolean {
     if (!(Array.isArray(val))) {
@@ -51,7 +52,7 @@ function findInTreeMatch(dt: string|Array<string>, val: RegExp|Array<string>): b
 
 function findInTree_(tree: any, val: RegExp, key: string): string {
     let treeType = Object.prototype.toString.call(tree);
-    dbg(' findInTree_ Called for:' + key + ' tree=' + tree + ' type='+treeType);
+    // dbg(' findInTree_ Called for:' + key + ' tree=' + tree + ' type='+treeType);
     if (treeType === '[object Array]') {
         // array
         for (let idx in tree) {
@@ -74,7 +75,7 @@ function findInTree_(tree: any, val: RegExp, key: string): string {
         // dictionary
         for (let k of k1) {
             if (k !== 'tokenId' && (!k.match(/dataValue/))) {
-                let ret = findInTree_(tree[k], val, key + '.' + k)
+                let ret = findInTree_(tree[k], val, (key === '') ? k : key + '.' + k)
                 if (ret) {
                     return ret;
                 }
@@ -99,7 +100,7 @@ function findInTree_(tree: any, val: RegExp, key: string): string {
 // value is string
 export function findInTree(tree: any, val: string): string {
     dbg(' Searching for val[' + val + '] in tree=' + tree);
-    let r = findInTree_(tree, new RegExp('^' + val + '$', 'i'), 'root');
+    let r = findInTree_(tree, new RegExp('^' + val + '$', 'i'), '');
     if (r) {
         let dt = treePathNormalize(r);
         return dt;
@@ -162,7 +163,7 @@ function findListInTree_(tree: any, val: Array<string>, key: string): string {
                       return key + '.dataList';
                 }
 
-                let ret = findListInTree_(tree[k], val, key + '.' + k)
+                let ret = findListInTree_(tree[k], val, (key === '') ? k : key + '.' + k)
                 if (ret) {
                     return ret;
                 }
@@ -184,12 +185,12 @@ function findListInTree_(tree: any, val: Array<string>, key: string): string {
 }
 
 
-// search and Find a specific value in the tree
+// search and Find a specific list of values in the tree
 // returns the full path of where the value was found
 // value is string
 export function findListInTree(tree: any, val: Array<string>): string {
     dbg(' Searching for val[' + JSON.stringify(val) + '] in tree=' + tree);
-    let r = findListInTree_(tree, val, 'root');
+    let r = findListInTree_(tree, val, '');
     if (r) {
         let dt = treePathNormalize(r);
         return dt;
@@ -213,7 +214,7 @@ function copyMatchTree_(extracted: Array<string>, tree: any, key: string): strin
         let k1 = Object.keys(tree);
 // dictionary
         for (let k of k1) {
-            let ret = copyMatchTree_(extracted, tree[k], key + '.' + k)
+            let ret = copyMatchTree_(extracted, tree[k], (key === '') ? k : key + '.' + k)
             if (ret) {
                 return ret;
             }
@@ -224,9 +225,9 @@ function copyMatchTree_(extracted: Array<string>, tree: any, key: string): strin
         return key;
     } else {
 //console.log(' CHECKED tree = ' + tree + '  val = ' + val);
-        let k = key.replace(/^./,'');
-        if (k.match(/token$/)) {
-//console.log('END for :' + k + ' [' + treePathNormalize(k) + ']');
+        let k = key.replace(/^\./,'');
+        if (k.match(/token$/) && k !== 'root.token') {
+            //console.log('END for :' + k + ' [' + treePathNormalize(k) + ']');
             let r = treePathNormalize(k).split('.');
             r.pop();
             extracted.push(r.join('.'));
@@ -248,42 +249,85 @@ function copyMatchTree_(extracted: Array<string>, tree: any, key: string): strin
  */
 
 export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) {
-    dbg('\tcopyMatchTree INPUT Verb::' + JSON.stringify(verb));
-    dbg('\tcopyMatchTree INPUT Dest::' + JSON.stringify(dest.extract));
+    dbgcm('\tcopyMatchTree INPUT Verb::' + JSON.stringify(verb));
+    dbgcm('\tcopyMatchTree INPUT Dest::' + JSON.stringify(dest.extract));
     let extracted: Array<RegExp> = [];
     let extractedStr: Array<string> = [];
+    let expPathPrefixList: {[key: string]: string} = {};
     for (let key in  dest.extract) {
         let d = dest.extract[key].replace(/dataValue$/,'*').replace(/\.token$/, '');
         extracted.push(new RegExp(d + '$'));
         extractedStr.push('^' + dest.extract[key].replace(/dataValue$/,'*').replace(/\.token$/, ''));
+        if (dest.extract[key].match(/^EXPNODE:/)) {
+            let k1 = dest.extract[key].split(':');
+            k1.shift();
+            let expType = k1.shift();
+            expPathPrefixList[expType] = treePathNormalize(k1.join(':'));
+        }
     }
     if (dest.expExtract) {
+        dbgcm('\tcopyMatchTree expExtract= ' + JSON.stringify(dest.expExtract));
         for (let key_ in  dest.expExtract) {
-            // console.log(' ----- >>> ' + JSON.stringify(dest.expExtract[key_]));
             let k = dest.expExtract[key_][0].result._keys;
             for (let key in k) {
-                let dt = k[key];
+                let prefix = expPathPrefixList[key_];
+                let dt = (prefix) ? prefix + '.' + k[key] : k[key];
                 let d = dt.replace(/dataValue$/, '*').replace(/\.token$/, '');
-                //console.log(' ------> KEY = ' + key + ' d=' + d);
                 extracted.push(new RegExp(d + '$'));
-                extractedStr.push('^' + dt.replace(/dataValue$/, '*').replace(/\.token$/, ''));
+                extractedStr.push('^' + d);
             }
         }
     }
 
 
-    dbg('\t\t EXTract = ' + JSON.stringify(extractedStr));
+    dbgcm('\tFields EXTract = ' + JSON.stringify(extractedStr));
     let vmatch: Array<string> = [];
     copyMatchTree_(vmatch, verb, '');
-    dbg('\t\t vmatch = ' + JSON.stringify(vmatch));
+    dbgcm('\tAll Match Targets = ' + JSON.stringify(vmatch));
     let singleVerbEdge = false;
     if (dest.prop && dest.prop.singleVerbEdge) singleVerbEdge = true;
+
+    let branchStart: string = ''; // should be just one
+    let branchEnd: Array<string> = []; // can be many
+    if (singleVerbEdge) {
+        // extract the start nodes
+        for (let ex of extractedStr) {
+            if (ex.length < branchStart.length || branchStart === '')
+                branchStart = ex; // start is the minimum size path.
+        }
+        branchStart = branchStart.replace('^','');
+        // extract the end nodes
+        for (let ex_ of extractedStr) {
+            let ex = ex_.replace('^','');
+            if (ex === branchStart) continue;
+            // end should include start
+            if (ex.indexOf(branchStart) === -1) continue;
+            // check all the existing end's
+            //   if one of them is sub set then this can replace that one.
+            let found = false;
+            for (let idx in branchEnd) {
+                if (ex.indexOf(branchEnd[idx]) === 0) {
+                    branchEnd[idx] = ex;
+                    found = true;
+                    break;
+                } else if (branchEnd[idx].indexOf(ex) === 0) {
+                    // ex is already covered by current branchEnd item
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+                branchEnd.push(ex);
+        }
+        dbgcm('\tBranchStart :' + branchStart);
+        dbgcm('\tBranchEnd :' + JSON.stringify(branchEnd));
+    }
 
     for (let vm of vmatch) {
         let match = false;
         for (let ex of extracted) {
             if (vm.match(ex)) {
-                dbg('matched   vm=' + vm + ' ex=' + ex);
+                dbgcm('\tExclude Targed  [vm=' + vm + '] it Matched Extract Field =[' + ex + ']');
                 match= true;
             }
         }
@@ -311,8 +355,40 @@ export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) 
         //3. compare all the entries
         //   match = ["verb.obj.nmod:to","verb.obj.nmod:to.numnode"]
 
+        // TODO: minbr approach change
+        // find the starting point in the branch
+        // and the ending point in the branch ..
+        // Ignore any thing that is higher than the starting point
+        // Ignore any thing that is not in the same branch
+        // Only match on things that are in the branch and and lower than
+        // the starting point.
 
+
+
+        // minBr - minimum branch or the edge
+        // along which we want to match when 'singleVerbEdge is set
+        //
+        // no match means that this is not being extracted
+        // single verb edge indicates its just an edge match which will be partial
         if (!match && singleVerbEdge) {
+
+            let ignoreTarget = false;
+            // if the targe is before the start
+            if (vm.length < branchStart.length)
+                ignoreTarget = true;
+            // if the target is not on the branch
+            if (vm.indexOf(branchStart) !== 0)
+                ignoreTarget = true;
+            // check if the target is in one of the expected branches
+            for (let idx in branchEnd) {
+                if (branchEnd[idx].indexOf(vm) === -1) {
+                    ignoreTarget = true;
+                    break;
+                }
+            }
+            dbgcm('vm = ' + vm + ' ignoreTarge = ' + ignoreTarget);
+            match = ignoreTarget;
+            /*
             // extract the comm branch
             let minBrArr: Array<string> = [];
             for (let ex of extractedStr) {
@@ -329,10 +405,11 @@ export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) 
                     //if (!s.match(/verb/)) {
                     minBrm1 = 'NOMATCH';
                 }
-
             }
-            dbg(' minBR = ' + minBr + '[' + minBrm1 + '] vm = ' + vm );
-
+            dbgcm('\t\tminBR = ' + minBr + '[' + minBrm1 + '] vm = ' + vm );
+            // min BRanch has the extraction path
+            // minBrm1 has one level less ...
+            //  i.e. minBR = ^verb:cop.nmod:to[^verb:cop]
             if (vm.match(new RegExp(minBrm1 + '$')) ) {
                 // accept this a an match
                 // vm = 'verb:cop' , minBr = '^verb:cob.nmod:to', minBrm1 = '^verb:cob'
@@ -353,18 +430,43 @@ export function copyMatchTree(verb: GrProcessNodeValueMap, dest: MatchTreeData) 
                     if (m1) match = true;
                     //console.log(' ======================== vm = ' + vm + ' ex=' + ex + ' m=' + m1 );
                 }
-            }
+            }*/
         }
         //console.log('Match = ' + match + ' for = ' + vm);
         if (!match) {
-            dbg('no-matched vm=' + vm + ' value:' + extractTreeValue(verb, vm + '.token'));
+            dbgcm('\tKeep Match Target [vm=' + vm + '] value:' + extractTreeValue(verb, vm + '.token'));
             // database does not allow '.' as KEY, replacing all '.' with '__'
             let v = extractTreeValue(verb, vm + '.token');
-            assert.notEqual(v, undefined, ' match data should ve extracted correctly, got undefined instead for key[' + vm + ')');
+            assert.notEqual(v, undefined, ' match data should ve extracted correctly, got undefined instead for key[' + vm + ']');
             dest.match[vm.replace(/\./g, '__')] = v;
         }
     }
-}
+
+    // find the part from BranchStart that will be removed from all the extracted + match nodes
+    if (singleVerbEdge) {
+        let ba = branchStart.split('.');
+        // use the last part of the aray for tag
+        // i.e. 'verb:root.subj.nmod:in' whould use 'nmod:in'
+        let branch_ = ba.pop(); // last element
+        let branch = ba.join('.');
+        // the reminder should be removed form the match/extract
+        let lMatch: any = {};
+        for (let k in dest.match) {
+            let v = dest.match[k];
+            let lk = k.replace(branch,'');
+            lMatch[lk] = v;
+        }
+        dest.match = lMatch;
+        // remove from extract
+        for (let k in dest.extract) {
+            let v = dest.extract[k];
+            dest.extract[k] = v.replace(branch,'');
+        }
+    }
+
+
+
+    }
 function extractTreeValue_(tree: any, key: Array<string>): string | Array<string> {
     if (key.length == 0) {
         return tree;
@@ -416,8 +518,59 @@ export function extractTreeValue(tree: any, key: string): string | Array<string>
     let k = key.split('.');
     let r = extractTreeValue_(tree, k);
     //console.log('extractTreeeValue-2 key=' + key + ' retVal = ' + JSON.stringify(r));
-    dbg('extractTreeeValue-2 key=' + key + ' retVal = ' + JSON.stringify(r));
+    dbg('\t\t\textractTreeeValue key=' + key + ' retVal = ' + JSON.stringify(r));
     return r;
+}
+
+
+function findExpNodes_(tree: any, expType: string, key:string, res: {[key: string]: ExpBase}): void {
+    let treeType = Object.prototype.toString.call(tree);
+    //console.log(' extractTreeValue_ Called for:' + key.join('.') + ' tree=' + tree +
+    // ' type='+treeType + ' keys=' +JSON.stringify(Object.keys(tree)));
+    if (treeType === '[object Array]') {
+        // array
+        for (let idx in tree) {
+            findExpNodes_(tree[idx], expType, key, res);
+        }
+    } else if (treeType === '[object Object]') {
+        //let k1 = Object.keys(tree);
+        //console.log(' k1 = ' + k1 + ' KEY = ' + key);
+        for (var k1 in tree) {
+            if (k1.match(/partialExp/)) {
+                for (let pe of tree[k1]) {
+                    let exp = pe.exp;
+                    if (pe.exp.name === expType) {
+                        res[key] = pe.exp;
+                    }
+                }
+            } else if (k1.match(/dataValue/) || k1.match(/token/)) {
+
+            } else {
+                let dt;
+                if (key === '') {
+                  dt = k1;
+                } else {
+                    dt = key + '.' + k1;
+                }
+                findExpNodes_(tree[k1], expType, dt, res);
+            }
+        }
+    }
+    return ;
+}
+// tree = tree created by nlp
+// key is a specific key pointing to data in the tree
+// some variability exist in the key such that array inex etc are serarched.
+
+export function findExpNodes(tree: any, expType: string): {[key: string]: ExpBase}  {
+    //console.log ('extractTreeeValue-1 key=' + key );
+    //console.log ('extractTreeeValue-1 tree=' + JSON.stringify(tree) );
+    let res: {[key: string]: ExpBase} = {};
+    let key = '';
+    findExpNodes_(tree, expType, key, res);
+    //console.log('extractTreeeValue-2 key=' + key + ' retVal = ' + JSON.stringify(r));
+    dbg('\t\t\t findExpNode type=' + expType + ' retVal = ' + JSON.stringify(res));
+    return res;
 }
 
 /*
@@ -485,8 +638,23 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
     // let extPathList = [];
     for (let k1 in dbItem.extract) {
         if (dbItem.extract[k1].match(/^EXPNODE/)) {
-            let eNode= dbItem.extract[k1].split(':')[1];
+            let ipa = dbItem.extract[k1].split(':');
+            let eNode= ipa[1];
             let expMatchFound = false ;
+            let expMatchList = findExpNodes(verb, eNode);
+            ipa.shift();
+            ipa.shift();
+            for (let k2 in expMatchList) {
+                    if (k2 === ipa.join(':')) {
+                        if (!expDep[eNode]) {
+                            expDep[eNode] = [];
+                        }
+                        //console.log(' =========== pushing key = ' + eNode + ' k2 = ' + k2 + ' path = ' + JSON.stringify(expMatchList[k2]));
+                        expDep[eNode].push(expMatchList[k2]);
+                        expMatchFound = true;
+                    }
+            }
+            /*
             for (let itm of expMatches) {
                 if (itm.name === eNode) {
                     expMatchFound = true;
@@ -498,7 +666,7 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
                     ///extPathList.push(itm.result._keys[eNode]);
                     //break;
                 }
-            }
+            }*/
             if (!expMatchFound) {
                 // if any of the exp node is not yet parsed no point going further
                 //return ['', {}];
@@ -550,7 +718,8 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
         let itmPath = dbItem.extract[itm];
         if (itmPath.match(/^EXPNODE:/)) {
             // console.log(' EXPNODE:::' + itmPath + ' expDep::: ' + Object.keys(expDep));
-            let k = itmPath.split(':')[1];
+            let ipa = itmPath.split(':');
+            let k = ipa[1];
             //console.log(' k = ' + k + ' -- ' + JSON.stringify(expDep[k]));
             let dt: Array<ExpMatch>  = [];
             for (let itm of expDep[k])
@@ -565,7 +734,8 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
         //if ('type' in dtArgs[itm] && dtArgs[itm].type.toLowerCase() === 'list') {
         //            dt = dt.split(' ');
         //        }
-        res.matchResult._keys[itm] = itmPath;
+        //res.matchResult._keys[itm] = itmPath;
+        res.matchResult.setArgPath(itm, itmPath);
         //res[itm] = dt;
         //resKey[itm] = itmPath;
         dbgdb(' extracting itm ' + itm + ' path=' + itmPath + ' got val:' + JSON.stringify(res.matchResult.args[itm]));
@@ -580,7 +750,8 @@ export function verbDBMatch(dbgdb, verb: GrProcessNodeValueMap, expMatches: Arra
             dbgdb(' ---> SCHEMA : key = ' + key + ' filedextract = ' + dbItem.fixedExtract[key] );
             //res.matchResult.args.input[key] = {listStr: [dbItem.fixedExtract[key]]};
             res.matchResult.setArgStr(key, dbItem.fixedExtract[key]);
-            res.matchResult._keys[key] = key;
+            res.matchResult.setArgPath(key, key);
+            //res.matchResult._keys[key] = key;
             //res[key] = dbItem.fixedExtract[key];
             //resKey[key] = key;
         }
