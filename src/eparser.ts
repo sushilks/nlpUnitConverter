@@ -125,13 +125,46 @@ async function parse(data:{body: string}, globalBucket: GlobalBucket, dbge: bool
             log_dt = 'Processing :: ' + pp.getSentence(0);
         }
         let nd = new Nodes(pp.getSentenceDep(0));
+        //console.log('ND before grammar = ' + JSON.stringify(nd));
+        // nd.dep, nd.tkn.tokens is populated form the results form the
+        // corenlp module, all the relation and the tokes are identified.
+        // This very much looks like the output of coreNLP
         nd.processAllGrammar();
+        // after this the nd.grMatches is populated
+        // this contains the full tree of the relations
+        //    items are fromNode, toNode[], link type of parent, match
+        // each grMatch node has a list of nodes it's connected to and the type of link that's connecting them
+        // The same view is transformed into a tree that is consumed in EXP node
+        //   by call ing 'processNode' on root a structure is created that has
+        //   [tokenId, token, data, dataValue, dataValueTagged']
+        //   dataValue and dataValueTagged are processed result of the grammar nodes at different levels.
+        /*
+        {
+            console.log('ND After Grammar = ');
+            for (let kidx in nd.grMatches) {
+                console.log('nd.grMatches[' + kidx + '] = ' + JSON.stringify(nd.grMatches[kidx]()));
+                let root: GrProcessNodeValueMap = {};
+
+                console.log('nd.PROCgrMatches[' + kidx + '] = ' + JSON.stringify(nd.grMatches[kidx]().processNode(root)));
+            }
+        }*/
         dbg("Done with processing Grammar");
         // check if any hardcoded patterns match
         nd.processAllExp();
+        //console.log('ND afer exp = ' + JSON.stringify(nd));
         dbg("Done with processing Explain");
         // check if any of the database entries are matching
         let root = await nd.processAllExpDB(expDB, globalBucket);
+        //console.log('ND afer ExpDB = ' + JSON.stringify(nd));
+        //console.log(' ROOT = ' + JSON.stringify(root));
+        // ProcessAllExp populates an entry .partialExp on the tree that was build by grammar parsing step
+        // it's also pushing all the matching exp into a global structure nd.expMatches which is populated by the
+        // exp nodes that matched.
+
+
+        // partial matches + exp matches should form a new tree structure.
+
+
         dbg("Done with processing DBExplain");
         { // debug
             log_dt += ' \tParsedMeaning[';
@@ -148,10 +181,10 @@ async function parse(data:{body: string}, globalBucket: GlobalBucket, dbge: bool
             //dbgGr("List of Grammar Matches Found ")
             for (let idx in nd.grMatches) {
                 let dbgSelect = dbgGr;
-                if (nd.grMatches[idx].getName().match(/VerbBase/)) {
+                if (nd.grMatches[idx]().getName().match(/VerbBase/)) {
                     dbgSelect = dbgGrV;
                 }
-                dbgSelect('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx].getName()
+                dbgSelect('\tGrammar IDX = ' + idx + ' :: Grammar Type [' + nd.grMatches[idx]().getName()
                     + '] Matched Text  ::' );//+ nd.grMatches[idx].dict());
             }
             //dbgExp("List of Expresive Matches Found ")
@@ -186,15 +219,14 @@ async function parse(data:{body: string}, globalBucket: GlobalBucket, dbge: bool
         if (args.learn && !alreadyLearned && learnData.length !== 0) {
             let v: Array<GrBase> = [];
             for (let idx in nd.grMatches) {
-                if (nd.grMatches[idx].getName().match(/VerbBase/)) {
+                if (nd.grMatches[idx]().getName().match(/VerbBase/)) {
                     //console.log('   Verb in this statement :: ' + JSON.stringify(nd.grMatches[idx].processNode()));
-                    v.push(nd.grMatches[idx]);
+                    v.push(nd.grMatches[idx]());
                 }
             }
             /*
           Call the learning Routing to collect the information and write it to the database.
         */
-            console.log(' ROOT = ' + JSON.stringify(root));
            // console.log(' V = ' + JSON.stringify(v));
             //return expLearn.learn(pp.getSentence(0), v, learnData, nd.expMatches);
             return expLearn.learn(pp.getSentence(0), root, learnData);

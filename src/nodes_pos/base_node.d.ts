@@ -3,23 +3,23 @@
 
 declare class BaseNode {
     name: string;
-    nodes: any;
+    get_nodes: ()=>any;
     tknId: number;
     level: number;
     children: {
         [key: number]: LinkedNode;
     };
-    parent: LinkedNode;
+    get_parent: ()=>LinkedNode;
     grProcessingOngoing: boolean;
     grProcessingDone: boolean;
-    grMatches: Array<GrBase>;
+    grMatches: Array<()=>GrBase>;
     constructor(nodes: any, tknId: number, level: number, noprocess: boolean);
     static getMatchToken(): string;
     tabs(): string;
     isGrammarProcessingDone(): boolean;
     setGrammarProcessingDone(b?: boolean): void;
     addGrammarMatch(gr: GrBase): void;
-    getGrammarMatches(): Array<GrBase>;
+    getGrammarMatches(): Array<()=>GrBase>;
     getChildren(): {
         [key: number]: LinkedNode;
     };

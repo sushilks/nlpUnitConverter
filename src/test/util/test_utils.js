@@ -22,13 +22,13 @@ export function parse(data, grMatch, dict = false, exp = false,  dbg = false) {
         for (let idx in nd.grMatches) {
             if (false) {
                 console.log('\t Grammar IDX = ' + idx + ' :: GR Type [' + nd.grMatches[idx].getName()
-                    + '] Matched Text  ::' + nd.grMatches[idx].text());
+                    + '] Matched Text  ::' + nd.grMatches[idx]().text());
             }
-            if (nd.grMatches[idx].getName().match(grMatch)) {
+            if (nd.grMatches[idx]().getName().match(grMatch)) {
                 if (dict) {
-                    res.push(nd.grMatches[idx].dict());
+                    res.push(nd.grMatches[idx]().dict());
                 } else {
-                    res.push(nd.grMatches[idx].text());
+                    res.push(nd.grMatches[idx]().text());
                 }
             }
         }

@@ -66,20 +66,20 @@ FS.readdirSync(normalizedPath + '/nodes_exp').forEach(function(file: string): vo
  */
 
 class Nodes {
-    public grMatches: Array<GrBase>;
+    public grMatches: Array<()=>GrBase>;
     public expMatches: Array<ExpBase>;
     private dep: Dependency;
-    private tknNodeMap: {[key: number]: BaseNode};
+    private tknNodeMap: {[key: number]: ()=>BaseNode};
     private rootToken: number;
     private tkn: Tokens;
-    private nd: BaseNode;
+    private nd: ()=>BaseNode;
     //  diGraph:  ;
     constructor(dep: Dependency) {
         this.tknNodeMap = {};
         this.dep = dep;
         this.rootToken = dep.getRootToken();
         this.tkn = dep.getTokens();
-        this.nd = this.process(this.rootToken, 1);
+        this.nd = (function(node_){return node_;}).bind(null, this.process(this.rootToken, 1));
         this.grMatches = [];
         /* store all the grammar matches */
         this.expMatches = [];
@@ -94,11 +94,11 @@ class Nodes {
     }
 
     public setNodeMap(tknId: number, node: BaseNode): void {
-        this.tknNodeMap[tknId] = node;
+        this.tknNodeMap[tknId] = (function(nd) { return nd }).bind(null, node);
     }
 
     public getNodeMap(tknId: number): BaseNode {
-        return this.tknNodeMap[tknId];
+        return this.tknNodeMap[tknId]();
     }
 
     public process(tknId: number, level: number): BaseNode {
@@ -326,7 +326,7 @@ class Nodes {
                     tokenId : -1,
                     token: '',
                     data : [
-                        this.grMatches[0].processNode(root)
+                        this.grMatches[0]().processNode(root)
                     ],
                     dataValue: '',
                     dataValueTagged: ''
@@ -351,7 +351,7 @@ class Nodes {
 
     public processAllExp(): void {
         for (let idx in this.grMatches) {
-            let gr: GrBase = this.grMatches[idx];
+            let gr: GrBase = this.grMatches[idx]();
             let grName: string = gr.getName();
             let grMatchToken: string = grName;
             let expList: Array<typeof ExpBase> = gExpMapper.match[grMatchToken];
@@ -411,13 +411,13 @@ class Nodes {
 
     /** Process all the tokens in order
      *  Try to match all the grammar rules
-     *
+     * this populates the node.grMatches section
      */
     public processAllGrammar() {
         let rootNode: number = this.dep.getRootToken();
         let grTree: GrTreeTop = {root: null, processedTokens: []};
         grTree.root = this.populateGrammarTree(grTree, grTree.root, rootNode, 'root');
-        // console.log(' ---- > ' + JSON.stringify(grTree));
+        //console.log(' ---- > ' + JSON.stringify(grTree));
         let matchedRules = Utils.findGrammarRules(gGrMapper, null, 'root', grTree.root.getNode());
         if (matchedRules.length) {
             for (let mrule of matchedRules) {
@@ -434,7 +434,7 @@ class Nodes {
         //console.log(' After Process Gr:' + this.grMatches.length);
         if (this.grMatches.length) {
             //let r =
-                this.grMatches[0].processNode(null);
+                this.grMatches[0]().processNode(null);
              //console.log(' r= ' + JSON.stringify(r));
         }
     }

@@ -30,7 +30,7 @@ interface GrProcessNodeValueMap {[key:string]: GrProcessNodeValue}
 declare class GrBase {
     fromNode: BaseNode;
     toNode: BaseNode;
-    nodes: any;
+    get_nodes: ()=>any;
     linkType: string;
     name: string;
     match: GrBaseMatch;

@@ -16,21 +16,21 @@ var dbg = require('debug')('node:pos:base');
 
 class BaseNode {
     name: string;
-    nodes: any;
+    get_nodes: ()=>any;
     tknId: number;
     level: number;
     children: {[key: number]: LinkedNode};
-    parent: LinkedNode;
+    get_parent: ()=>LinkedNode;
     grProcessingOngoing: boolean;
     grProcessingDone: boolean;
-    grMatches: Array<GrBase>;
+    grMatches: Array<()=>GrBase>;
     //nd:BaseNode;
 
     constructor(nodes: Nodes, tknId: number, level: number, noprocess: boolean) {
         let name = tknId + '_' + nodes.getTokens().getToken(tknId) + '_'
             + nodes.getTokens().getTokenPOS(tknId);
         this.name = (name === undefined) ? 'Unnamed-Node' : name;
-        this.nodes = nodes;
+        this.get_nodes = (function(nodes_) { return nodes_;}).bind(null,nodes);
         this.tknId = tknId;
         this.level = level;
         this.children = {};
@@ -66,9 +66,9 @@ class BaseNode {
         this.grProcessingDone = b;
     }
     addGrammarMatch(gr: GrBase) {
-        this.grMatches.push(gr);
+        this.grMatches.push((function(gr){ return gr;}).bind(null, gr));
     }
-    getGrammarMatches(): Array<GrBase> {
+    getGrammarMatches(): Array<()=>GrBase> {
         return this.grMatches;
     }
     getChildren(): {[key:number]:LinkedNode} {
@@ -86,17 +86,17 @@ class BaseNode {
         return Object.keys(this.children);
     }
     getToken(): string {
-        return this.nodes.tkn.getToken(this.tknId);
+        return this.get_nodes().tkn.getToken(this.tknId);
     }
     getTokenId(): number {
         return this.tknId;
     }
     getTokenPOS(): string {
-        return this.nodes.tkn.getTokenPOS(this.tknId);
+        return this.get_nodes().tkn.getTokenPOS(this.tknId);
     }
     getPOS(): string {
         return this.getTokenPOS();
-        //return this.nodes.tkn.getTokenPOS(this.tknId);
+        //return this.get_nodes().tkn.getTokenPOS(this.tknId);
     }
     // this function may be overwritten by inheritance.
     getValues(tagged=false): string {
@@ -105,7 +105,7 @@ class BaseNode {
         //console.log(' getValues called for :' + this.getToken() + ' [' + gr.length + ']');
         if (gr.length) {
             for (let gritm of gr) {
-                data.push(gritm.getValues(tagged));
+                data.push(gritm().getValues(tagged));
             }
             return data.join(' ');
         } else {
@@ -157,22 +157,24 @@ class BaseNode {
         }
     }
     getParent(): LinkedNode {
-        return this.parent;
+        return this.get_parent();
     }
     addParent(node: BaseNode, type: string) {
-        this.parent = {node :node, type : type} ;
+        this.get_parent = (function(node, type) {
+            return {node :node, type : type};
+        }).bind(null, node, type);
     }
     addChild(tkn: number, type: string) {
         dbg(this.tabs() + ' BASE:: addChild adding tkn:' + tkn + ' linktype:' + type);
         this.children[tkn] = {
             'type': type,
-            'node': this.nodes.process(tkn, this.level + 1),
+            'node': this.get_nodes().process(tkn, this.level + 1),
         };
         this.children[tkn].node.addParent(this, this.children[tkn].type);
     }
     // create the tree of all the nodes that are connected.
     process(tknid: number) {
-        let dep = this.nodes.dep;
+        let dep = this.get_nodes().dep;
         let children = dep.getChildNodes(tknid);
         for (let idx in children) {
             let tkn = children[idx].tokenIdx;

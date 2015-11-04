@@ -11,7 +11,7 @@ var dbg = require('debug')('node:gr:base');
 class GrBase {
     fromNode:BaseNode;
     toNode:BaseNode;
-    nodes:any;
+    get_nodes:() => any;
     linkType:string;
     name:string;
     match:GrBaseMatch;
@@ -20,7 +20,7 @@ class GrBase {
         this.fromNode = fromNode;
         this.toNode = toNode;
         this.linkType = linkType;
-        this.nodes = nodes;
+        this.get_nodes = (function(n) { return n;}).bind(null, nodes);
         this.match = result;
         this.name = 'BASE';
     }
@@ -73,7 +73,7 @@ class GrBase {
         for (let k of keys) {
             //console.log('k1=' + k + ' array=' + Array.isArray(data[k]));
             if (k === 'tokenId') {
-                let n = this.nodes.getNodeMap((<any>data)[k]);
+                let n = this.get_nodes().getNodeMap((<any>data)[k]);
                 //console.log('   k2 = ' + data[k] + ' ::' + n.getToken());
                 data.token = n.getToken();
 
@@ -85,7 +85,7 @@ class GrBase {
                     //console.log('    children ' + loc + ' type = ' + c.type + ' name=' + c.node.name + ' gr.len = ' + gr.length);
                     if (gr.length)
                         for (let gritm of gr) {
-                            data.data.push(gritm.processNode());
+                            data.data.push(gritm().processNode());
                         }
                 }
                 {
