@@ -206,6 +206,7 @@ async function parse(data:{body: string}, globalBucket: GlobalBucket, dbge: bool
 
         // If failed to match
         //  go through the learning routine.
+        //console.log(' ----0000- : ' + JSON.stringify(nd.expMatches));
         let alreadyLearned = false;
         for (let p of nd.expMatches) {
             if (learnData[1] === p.name) {
@@ -215,8 +216,10 @@ async function parse(data:{body: string}, globalBucket: GlobalBucket, dbge: bool
         if (nd.expMatches.length === 0) {
             console.log('   This Statement did not match any of the types that I am able to recognize.');
         }
-
-        if (args.learn && !alreadyLearned && learnData.length !== 0) {
+        if (args.learn &&
+            ((!alreadyLearned && learnData.length !== 0) ||
+                    nd.expMatches.length === 0
+            )){
             let v: Array<GrBase> = [];
             for (let idx in nd.grMatches) {
                 if (nd.grMatches[idx]().getName().match(/VerbBase/)) {
@@ -348,3 +351,4 @@ var rl = readline.createInterface({
 expLearn = new ExpLearn(expDB, Nodes.getGlobalExpMapper());
 
 main(args, nlp, globalBucket);
+
