@@ -1,4 +1,4 @@
-# nlpUnitConverter
+# nlpUnitConverter 
 Unit conversion tool based on a natural language interface.
 This is a work in progress, I have tried multiple approaches so the code may have some crud. 
 Some of the problems are still unsolved. 
@@ -10,6 +10,7 @@ After that if a question is asked about any type of conversion it's able to trav
 
 I am using this to investigate if it's possible to accept input from use in plain english and match it to grammar rules that translate it into specific instructions. 
 
+This project was just for self educational purpose, There are better approach to sovling this problem available now. There is no more development on this project, will start a new project on the same topic after I read up a bit. 
 ## To Setup
 
  npm install
